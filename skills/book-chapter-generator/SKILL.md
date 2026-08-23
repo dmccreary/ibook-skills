@@ -125,6 +125,31 @@ Analyze the data to identify:
 - **Concept clusters**: Groups of related concepts that should stay together
 - **Terminal concepts**: Concepts that nothing depends on (can be placed flexibly)
 
+#### 1.4a Compute Dependents Count Per Concept
+
+For every concept, compute its **dependents count** -- the number of *other*
+concepts that depend on it. This is the inverse of a concept's own
+prerequisite list, and it later drives per-concept word-count targets in
+`chapter-content-generator` (see `CONTENT-GENERATION-GUIDE.md`).
+
+Using the dependency-direction edge convention (`{from: dependent, to:
+prerequisite}`):
+
+```python
+from collections import defaultdict
+
+# dependents[concept_id] = how many OTHER concepts require concept_id
+dependents = defaultdict(int)
+for e in data['edges']:
+    dependents[e['to']] += 1
+
+# A concept with dependents[cid] == 0 is a terminal concept (nothing builds on it).
+# A concept with a high dependents[cid] is a foundational "hub" concept.
+```
+
+Carry this `dependents` map forward into Step 4 -- it is printed alongside
+each concept name in every chapter's "Concepts Covered" list.
+
 ### Step 2: Design Chapter Structure
 
 Design an optimal chapter structure following these principles:
@@ -333,9 +358,9 @@ For each chapter, create `/docs/chapters/[XX]-[url-path-name]/index.md` with thi
 
 This chapter covers the following [X] concepts from the learning graph:
 
-1. [Concept Name 1]
-2. [Concept Name 2]
-3. [Concept Name 3]
+1. [Concept Name 1] (12 dependents)
+2. [Concept Name 2] (0 dependents)
+3. [Concept Name 3] (4 dependents)
 [... continue for all concepts in this chapter ...]
 
 ## Prerequisites
@@ -359,6 +384,9 @@ TODO: Generate Chapter Content
 - Always include a blank line before markdown lists (MkDocs requirement)
 - Use relative paths for internal links
 - Concept names should match exactly as they appear in learning-graph.json
+- Each concept in "Concepts Covered" must be followed by its dependents
+  count in parentheses, e.g. `Concept Name (7 dependents)`, using the
+  `dependents` map computed in Step 1.4a
 - Maintain consistent heading hierarchy (# → ## → ###)
 
 #### 4.5 Update MkDocs Navigation
@@ -529,6 +557,7 @@ Before finalizing the chapter structure, verify:
 - [ ] MkDocs navigation is correctly updated
 - [ ] All markdown files have proper formatting (blank lines before lists, etc.)
 - [ ] Each chapter index.md includes all required sections
+- [ ] Each concept in "Concepts Covered" is annotated with its dependents count
 - [ ] User has approved the chapter design
 
 ## Example Usage
@@ -555,3 +584,4 @@ Before finalizing the chapter structure, verify:
 - It does NOT generate actual chapter content (that requires a separate skill)
 - The "TODO: Generate Chapter Content" marker indicates where content should be added later
 - Always preserve the concept list in each chapter index.md for use by content generation skills
+- The per-concept dependents count is not decorative: `chapter-content-generator` reads it to size each concept's word-count target (see `CONTENT-GENERATION-GUIDE.md`)
