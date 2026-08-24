@@ -1,0 +1,15 @@
+{
+  "sim_id": "microsim-library-routing-table",
+  "diagram_name": "MicroSim Library Routing Table",
+  "chapter_number": 23,
+  "chapter_title": "The MicroSim Generator and Metadata Schema",
+  "chapter_dir": "23-microsim-generator-metadata-schema",
+  "chapter_rel_dir": "chapters/23-microsim-generator-metadata-schema",
+  "library": "Mermaid",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "Demonstrate",
+  "learning_objective": "Demonstrate how a request's keywords route to one of several visualization libraries.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: workflow\n**sim-id:** microsim-library-routing-table<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nBloom Level: Apply (L3)\nBloom Verb: Demonstrate\n\nLearning objective: Demonstrate how a request's keywords route to one of several visualization libraries.\n\nVisual style: Left-to-right Mermaid flowchart\n\nNodes:\n1. \"Incoming Request\" (rounded rectangle)\n2. \"MicroSim Generator (Meta-Skill)\" (rounded rectangle, book's accent color)\n3. Six library nodes fanning out: \"p5.js\", \"Chart.js\", \"vis-network\", \"vis-timeline\", \"Leaflet\", \"Mermaid\" (rounded rectangles)\n\nEdges:\n- Incoming Request --> MicroSim Generator\n- MicroSim Generator --> each library node, each edge labeled with a matched keyword (e.g., \"dates, chronological\" -> vis-timeline; \"geographic, coordinates\" -> Leaflet)\n\nInteractivity requirement: every node MUST have a `click` directive opening an infobox — the request node shows an example request string, the generator node shows its routing job, each library node shows one example MicroSim it's best suited for.\n\nColor scheme: the generator node in the book's teal accent; library nodes in a consistent lighter shade.\n\nImplementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram."
+}

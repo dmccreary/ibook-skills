@@ -1,0 +1,15 @@
+{
+  "sim_id": "callout-marker-anatomy",
+  "diagram_name": "Callout Marker Anatomy",
+  "chapter_number": 26,
+  "chapter_title": "Interactive Infographic Overlays",
+  "chapter_dir": "26-interactive-infographic-overlays",
+  "chapter_rel_dir": "chapters/26-interactive-infographic-overlays",
+  "library": "p5.js",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "Explain",
+  "learning_objective": "Explain how a stored marker coordinate, a leader line, and a label work together on an annotation-free illustration.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: microsim\n**sim-id:** callout-marker-anatomy<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nBloom Level: Understand (L2)\nBloom Verb: Explain\n\nLearning objective: Explain how a stored marker coordinate, a leader line, and a label work together on an annotation-free illustration.\n\nCanvas layout:\n- Left (500px): a simple annotation-free illustration placeholder (a labeled rectangle standing in for a generated picture)\n- Right (200px): a small data table showing the currently selected marker's stored {x, y} coordinate\n\nInteractive controls:\n- Drag any of 3 example markers to a new position on the illustration\n- Toggle: \"Show leader lines\" on/off\n\nData Visibility Requirements:\n  Stage 1: Show the illustration with 3 markers placed at default coordinates\n  Stage 2: Show each marker's stored {x, y} coordinate in the side table, updating live as a marker is dragged\n  Stage 3: Show a leader line drawn from each marker to a label positioned outside the illustration\n\nBehavior:\n- Dragging a marker updates its stored coordinate in the side table instantly, demonstrating that position is data, not a pixel baked into the image\n- Toggling leader lines off/on shows labels floating disconnected vs. clearly connected to their markers\n\nInstructional Rationale: An Understand-level objective is best served by concrete data visibility (the coordinate table) rather than animation — dragging a marker and watching its stored value change makes \"position is data\" tangible.\n\nImplementation notes: Use p5.js; the illustration itself is a static placeholder rectangle, not a generated image, since the point is the marker/coordinate/leader-line relationship."
+}

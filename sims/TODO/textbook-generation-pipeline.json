@@ -1,0 +1,15 @@
+{
+  "sim_id": "textbook-generation-pipeline",
+  "diagram_name": "Textbook Generation Pipeline",
+  "chapter_number": 2,
+  "chapter_title": "AI Coding Agents and the Five Levels of Textbook Intelligence",
+  "chapter_dir": "02-ai-agents-textbook-intelligence",
+  "chapter_rel_dir": "chapters/02-ai-agents-textbook-intelligence",
+  "library": "Mermaid",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "Summarize",
+  "learning_objective": "Summarize the ordered stages of the textbook generation pipeline and where human review and quality gates sit within it.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: workflow\n**sim-id:** textbook-generation-pipeline<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nBloom Level: Understand (L2)\nBloom Verb: Summarize\n\nLearning objective: Summarize the ordered stages of the textbook generation pipeline and where human review and quality gates sit within it.\n\nVisual style: Left-to-right Mermaid flowchart with six process nodes and two decision diamonds\n\nNodes:\n1. \"Course Description\" (rounded rectangle)\n2. \"Learning Graph\" (rounded rectangle)\n3. \"Quality Gate: Graph Valid?\" (diamond) — branches back to Learning Graph on \"No\"\n4. \"Chapter Structure\" (rounded rectangle)\n5. \"Chapter Content\" (rounded rectangle)\n6. \"Quality Gate: Concepts Covered?\" (diamond) — branches back to Chapter Content on \"No\"\n7. \"Media and MicroSims\" (rounded rectangle)\n8. \"Deployment\" (rounded rectangle)\n\nInteractivity requirement: every node MUST have a `click` directive opening an infobox with that stage's one-sentence definition and which skill performs it (e.g., `click LearningGraph call showInfo(\"learning-graph\")`).\n\nColor scheme: process nodes in the book's teal accent; quality-gate diamonds in amber to signal a checkpoint; the \"No\" branch edges dashed red.\n\nImplementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram."
+}

@@ -865,6 +865,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Runbooks: The ibook Command">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-skill-installation-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Skill Installation Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1991,6 +2006,8 @@
       
         
       
+        
+      
     
     
     
@@ -2457,6 +2474,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Runbooks: The ibook Command">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-skill-installation-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Skill Installation Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2576,6 +2608,18 @@ This is <strong>skills versus commands</strong>: the distinction between a capab
 </div>
 <h2 id="runbooks-the-ibook-command">Runbooks: The ibook Command</h2>
 <p>Some commands don't perform work at all — they tell you what to do next. A <strong>runbook command</strong> reports the ordered steps of a process and identifies which step comes next, without performing the steps itself. The <strong>ibook runbook</strong> is this library's own instance: the command that inspects a textbook project and reports how far the build pipeline has progressed and which skill to run next. It can do that safely because of <strong>read-only state detection</strong>: inspecting a project to determine its progress without altering any file, so a status report can never cause damage — you can run <code>/ibook</code> as often as you like just to check in.</p>
+<h4 id="diagram-skill-installation-workflow">Diagram: Skill Installation Workflow</h4>
+<iframe src="../../sims/skill-installation-workflow/main.html" width="100%" height="480px" scrolling="no"></iframe>
+
+<details>
+<summary>Skill Installation Workflow (reused MicroSim)</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> skill-installation-workflow<br>
+<strong>Library:</strong> HTML/CSS/JavaScript<br>
+<strong>Status:</strong> Reused<br>
+<strong>Source:</strong> docs/sims/skill-installation-workflow</p>
+<p>Reused from this book's own MicroSim catalog. Learning objective: Summarize the steps from symbolic link installation through listing available skills.</p>
+</details>
 <h2 id="the-bk-command-family">The bk Command Family</h2>
 <p>Beyond skills and commands, this project installs a set of short shell utilities: the <strong>bk command family</strong>, the set of installed command-line utilities, each prefixed for recognition, that perform book maintenance tasks such as capturing a MicroSim screenshot or generating book metrics. You've already met the pattern behind them in Chapter 3's shell script wrapper — a short, memorable name standing in for a longer, more exact command.</p>
 <h2 id="cross-platform-testing-and-graceful-degradation">Cross-Platform Testing and Graceful Degradation</h2>

@@ -1078,6 +1078,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="CANVAS_HEIGHT and Iframe Height Synchronization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-microsim-design-quality-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: MicroSim Design Quality Checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1982,6 +1997,8 @@
       
         
       
+        
+      
     
     
     
@@ -2430,6 +2447,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="CANVAS_HEIGHT and Iframe Height Synchronization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-microsim-design-quality-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: MicroSim Design Quality Checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2584,6 +2616,18 @@ Chapter 21 got a MicroSim running. This chapter makes it accessible, correctly s
 <p><img alt="Kit holding up a tool with a knowing look" class="mascot-admonition-img" src="../../img/mascot/tip.png">
 Never hand-edit an iframe's <code>height</code> attribute to fix a clipping problem. Fix the <code>CANVAS_HEIGHT</code> comment in the simulation's own source instead, and let synchronization propagate the corrected value everywhere that simulation is embedded.</p>
 </div>
+<h4 id="diagram-microsim-design-quality-checklist">Diagram: MicroSim Design Quality Checklist</h4>
+<iframe src="../../sims/microsim-design-quality-checklist/main.html" width="100%" height="480px" scrolling="no"></iframe>
+
+<details>
+<summary>MicroSim Design Quality Checklist (reused MicroSim)</summary>
+<p>Type: infographic
+<strong>sim-id:</strong> microsim-design-quality-checklist<br>
+<strong>Library:</strong> p5.js<br>
+<strong>Status:</strong> Reused<br>
+<strong>Source:</strong> docs/sims/microsim-design-quality-checklist</p>
+<p>Reused from this book's own MicroSim catalog. Learning objective: Evaluate a MicroSim against the checklist items that later feed its automated quality score.</p>
+</details>
 <h2 id="responsive-layout-and-accessibility">Responsive Layout and Accessibility</h2>
 <p>A MicroSim has to work at whatever width its frame actually gets. <strong>Responsive sim layout</strong> means designing a simulation so it adapts to the width available, remaining usable on narrow screens and inside frames of different sizes. Readability depends on two more choices: <strong>accessible color schemes</strong> — color selections that remain distinguishable to readers with color vision differences and maintain sufficient contrast — and <strong>font size for readability</strong>: text sizing chosen so labels remain legible even when a simulation is displayed in a reduced frame. Finally, <strong>iframe control visibility</strong> confirms that a simulation's interface elements remain reachable when displayed at the frame height a page actually assigns, not just at the height it was designed and tested at.</p>
 <div class="admonition mascot-warning">

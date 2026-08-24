@@ -1219,6 +1219,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Hearing the Book: Text-to-Speech">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-pronounce-button-and-streaming-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Pronounce Button and Streaming Playback
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1982,6 +1997,8 @@
       
         
       
+        
+      
     
     
     
@@ -2466,6 +2483,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Hearing the Book: Text-to-Speech">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-pronounce-button-and-streaming-playback" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Pronounce Button and Streaming Playback
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2571,6 +2603,30 @@ Compressing an image with excess blank padding still leaves the padding in the f
 <p>Chapters 25 and 26 covered explore mode for an interactive overlay; there's a second mode built on the same markers. <strong>Overlay quiz mode</strong> is an interaction style in which a reader is asked to identify a named feature by selecting the correct marker, turning the same callout infrastructure from Chapter 26 into a self-check instead of a reference.</p>
 <h2 id="hearing-the-book-text-to-speech">Hearing the Book: Text-to-Speech</h2>
 <p>For a reader who'd rather listen than read, <strong>text-to-speech narration</strong> generates spoken audio of written material, offering an alternative to reading rather than a replacement for it. The specific voice that reads it is shaped by <strong>ElevenLabs voice settings</strong>: the parameters controlling a synthesized voice's identity, pacing, and expressiveness. Delivered through <strong>audio streaming playback</strong> — sound that begins playing before the whole file has downloaded — narration doesn't force a reader to wait through a long download before hearing the first word. At the smallest scale, a <strong>pronounce button</strong> is a small control beside a defined term that plays its spoken pronunciation, helping readers with unfamiliar vocabulary hear a term like "GraphRAG" or "idempotent" spoken correctly.</p>
+<h4 id="diagram-pronounce-button-and-streaming-playback">Diagram: Pronounce Button and Streaming Playback</h4>
+<iframe src="../../sims/pronounce-button-demo/main.html" width="100%" height="380px" scrolling="no"></iframe>
+
+<details>
+<summary>Pronounce Button and Streaming Playback</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> pronounce-button-demo<br>
+<strong>Library:</strong> p5.js<br>
+<strong>Status:</strong> Specified</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: Demonstrate</p>
+<p>Learning objective: Demonstrate how clicking a pronounce button begins audio streaming playback before the full narration has loaded.</p>
+<p>Canvas layout:
+- Top: three example glossary terms with a small speaker-icon pronounce button beside each ("GraphRAG", "idempotent", "Schemdraw")
+- Bottom: a horizontal progress bar representing streaming playback, with a "Downloaded" marker and a "Playback Position" marker</p>
+<p>Interactive controls:
+- Click any pronounce button to start its term's simulated playback
+- Button: "Simulate slow connection" (exaggerates the gap between download and playback markers)</p>
+<p>Behavior:
+- Clicking a pronounce button starts the "Playback Position" marker moving immediately, while the "Downloaded" marker fills in behind it more slowly — demonstrating that playback begins before the full file has downloaded
+- Hovering the progress bar shows an infobox explaining streaming playback vs. waiting for a full download</p>
+<p>Instructional Rationale: An Apply-level demonstration lets the reader trigger the behavior directly and see the two markers diverge, making "streaming" concrete instead of an abstract claim.</p>
+<p>Implementation notes: Use p5.js; no real audio is played, the markers simulate timing only.</p>
+</details>
 <h2 id="key-takeaways">Key Takeaways</h2>
 <ul>
 <li>A <strong>PowerPoint lecture deck</strong> with <strong>speaker notes</strong> serves the classroom; the <strong>illustrated story</strong> and <strong>graphic novel formats</strong>, built via <strong>generate-images.py</strong>, introduce ideas through narrative.</li>

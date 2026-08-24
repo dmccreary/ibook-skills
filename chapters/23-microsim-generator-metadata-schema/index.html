@@ -1081,6 +1081,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-microsim-library-routing-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: MicroSim Library Routing Table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1982,6 +1997,8 @@
       
         
       
+        
+      
     
     
     
@@ -2412,6 +2429,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Prerequisites">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-microsim-library-routing-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: MicroSim Library Routing Table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2544,6 +2576,30 @@
 <p><img alt="Kit waves hello with their tool satchel" class="mascot-admonition-img" src="../../img/mascot/welcome.png">
 You've met p5.js up close. This chapter shows you how a single request gets routed to p5.js, or Chart.js, or six other libraries — and everything that has to be true about a finished MicroSim before it counts as done. Right tool, right task!</p>
 </div>
+<h4 id="diagram-microsim-library-routing-table">Diagram: MicroSim Library Routing Table</h4>
+<iframe src="../../sims/microsim-library-routing-table/main.html" width="100%" height="480px" scrolling="no"></iframe>
+
+<details>
+<summary>MicroSim Library Routing Table</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> microsim-library-routing-table<br>
+<strong>Library:</strong> Mermaid<br>
+<strong>Status:</strong> Specified</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: Demonstrate</p>
+<p>Learning objective: Demonstrate how a request's keywords route to one of several visualization libraries.</p>
+<p>Visual style: Left-to-right Mermaid flowchart</p>
+<p>Nodes:
+1. "Incoming Request" (rounded rectangle)
+2. "MicroSim Generator (Meta-Skill)" (rounded rectangle, book's accent color)
+3. Six library nodes fanning out: "p5.js", "Chart.js", "vis-network", "vis-timeline", "Leaflet", "Mermaid" (rounded rectangles)</p>
+<p>Edges:
+- Incoming Request --&gt; MicroSim Generator
+- MicroSim Generator --&gt; each library node, each edge labeled with a matched keyword (e.g., "dates, chronological" -&gt; vis-timeline; "geographic, coordinates" -&gt; Leaflet)</p>
+<p>Interactivity requirement: every node MUST have a <code>click</code> directive opening an infobox — the request node shows an example request string, the generator node shows its routing job, each library node shows one example MicroSim it's best suited for.</p>
+<p>Color scheme: the generator node in the book's teal accent; library nodes in a consistent lighter shade.</p>
+<p>Implementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram.</p>
+</details>
 <h2 id="the-microsim-generator-one-meta-skill-many-libraries">The MicroSim Generator: One Meta-Skill, Many Libraries</h2>
 <p>The <strong>MicroSim generator</strong> is the meta-skill that routes a simulation request to the appropriate specialized guide and produces a complete package of files — a direct application of the meta-skill pattern from Chapter 7, this time routing by visualization type instead of by task category. That routing decision is <strong>visualization library routing</strong>: selecting the rendering technology best matched to a request, based on the kind of data and interaction described.</p>
 <div class="admonition mascot-thinking">

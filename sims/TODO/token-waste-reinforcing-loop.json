@@ -1,0 +1,15 @@
+{
+  "sim_id": "token-waste-reinforcing-loop",
+  "diagram_name": "Token Waste Reinforcing Loop",
+  "chapter_number": 24,
+  "chapter_title": "Visualization Libraries and Systems Diagrams",
+  "chapter_dir": "24-visualization-libraries-systems-diagrams",
+  "chapter_rel_dir": "chapters/24-visualization-libraries-systems-diagrams",
+  "library": "vis-network",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "Differentiate",
+  "learning_objective": "Differentiate a reinforcing loop from a balancing loop using this book's own token-waste example from Chapter 9.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: graph-model\n**sim-id:** token-waste-reinforcing-loop<br/>\n**Library:** vis-network<br/>\n**Status:** Specified\n\nBloom Level: Analyze (L4)\nBloom Verb: Differentiate\n\nLearning objective: Differentiate a reinforcing loop from a balancing loop using this book's own token-waste example from Chapter 9.\n\nPurpose: Show a concrete reinforcing loop (unchecked token waste compounding) and the balancing loop that counteracts it (chapter token budgeting), as two linked causal loop diagrams.\n\nNode types:\n1. Variable nodes (ellipses): \"Unnecessary Parallel Agents\", \"Startup Overhead Paid\", \"Tokens Remaining in Window\", \"Chapter Token Budgeting\", \"Cost Awareness\"\n\nEdge types:\n1. Reinforcing loop (solid arrows, labeled \"R\"): Unnecessary Parallel Agents -> Startup Overhead Paid -> (fewer) Tokens Remaining in Window -> pressure to rush -> more Unnecessary Parallel Agents\n2. Balancing loop (solid arrows, labeled \"B\"): Chapter Token Budgeting -> Cost Awareness -> fewer Unnecessary Parallel Agents\n\nInteractive features:\n- Hover any node to see its one-sentence definition\n- Click the \"R\" or \"B\" loop label to highlight that loop's full path and show its net effect (growth/collapse for R, stabilization for B)\n- Zoom and pan enabled\n\nLayout: Force-directed, two visually separated loops\nLegend: R (reinforcing, red arrows) vs. B (balancing, blue arrows)\n\nImplementation: vis-network JavaScript library, canvas 800x500px"
+}

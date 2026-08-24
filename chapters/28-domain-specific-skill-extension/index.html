@@ -1222,6 +1222,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Simulating a Breadboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-breadboard-tie-points-and-animated-current-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Breadboard Tie Points and Animated Current Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1982,6 +1997,8 @@
       
         
       
+        
+      
     
     
     
@@ -2448,6 +2465,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Simulating a Breadboard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-breadboard-tie-points-and-animated-current-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Breadboard Tie Points and Animated Current Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2568,6 +2600,32 @@ A <strong>domain vocabulary gap</strong> is the shortfall that appears when a ge
 <p><img alt="Kit holding up a tool with a knowing look" class="mascot-admonition-img" src="../../img/mascot/tip.png">
 This is the single most common beginner mistake with a real breadboard, and it's exactly what a tie-point-accurate simulation teaches safely before a learner ever touches actual hardware: two holes that look close together can be on entirely different internal rows.</p>
 </div>
+<h4 id="diagram-breadboard-tie-points-and-animated-current-flow">Diagram: Breadboard Tie Points and Animated Current Flow</h4>
+<iframe src="../../sims/breadboard-tie-points-current-flow/main.html" width="100%" height="520px" scrolling="no"></iframe>
+
+<details>
+<summary>Breadboard Tie Points and Animated Current Flow</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> breadboard-tie-points-current-flow<br>
+<strong>Library:</strong> p5.js<br>
+<strong>Status:</strong> Specified</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: Demonstrate</p>
+<p>Learning objective: Demonstrate which breadboard holes are electrically connected, and how current flows once a simple LED circuit is completed.</p>
+<p>Canvas layout:
+- A simplified breadboard grid (two power rails top and bottom, a central component area split into two halves by the center gap)
+- A battery, an LED, and a resistor pre-placed into example tie points, with jumper wires connecting them</p>
+<p>Interactive controls:
+- Click any hole to highlight every other hole internally connected to it (its full row or rail)
+- Button: "Complete the Circuit" — connects the final jumper wire
+- Button: "Reset"</p>
+<p>Behavior:
+- Clicking a hole highlights its entire internally-connected group in one color, with a label reading "Same tie point group" — clicking an adjacent-but-unconnected hole shows no highlight, reinforcing the tip above
+- Clicking "Complete the Circuit" animates small moving dots along the wire path from the battery through the resistor and LED and back, and the LED glows once current reaches it
+- If the circuit is left incomplete, no animation plays and an infobox explains which connection is missing</p>
+<p>Instructional Rationale: An Apply-level demonstrate objective fits a direct-manipulation simulation where the learner completes the circuit themselves and observes the consequence (the LED lighting), rather than only watching a pre-animated video.</p>
+<p>Implementation notes: Use p5.js; model tie points as a simple 2D array grouped by row; animate current as particles moving along a precomputed wire path once the circuit is complete.</p>
+</details>
 <p>Once components are placed correctly, <strong>animated current flow</strong> makes the circuit's behavior visible: a moving visual indication of charge traveling through a circuit, making an otherwise invisible process observable. For circuits whose signals switch between discrete states rather than varying continuously, <strong>digital circuit simulation</strong> models that switching behavior so a reader can observe it without building hardware, often alongside a <strong>voltage and current scope</strong>: a display panel plotting electrical quantities over time alongside the simulated circuit.</p>
 <h2 id="designing-and-scoring-a-hands-on-lab">Designing and Scoring a Hands-On Lab</h2>
 <p>A domain extension isn't complete without an activity a learner can actually do. <strong>Hands-on lab design</strong> means constructing a practical activity a learner can complete independently with a defined set of parts.</p>

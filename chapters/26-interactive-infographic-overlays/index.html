@@ -1162,6 +1162,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Positioning and Connecting Markers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-callout-marker-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Callout Marker Anatomy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1991,6 +2006,8 @@
       
         
       
+        
+      
     
     
     
@@ -2439,6 +2456,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Positioning and Connecting Markers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-callout-marker-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Callout Marker Anatomy
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2568,6 +2600,34 @@ Chapter 25 introduced the callout overlay engine. This chapter finishes the over
 If a marker sits slightly off from the feature it's labeling, fix its stored coordinate — never regenerate the underlying illustration just to nudge a label. That's the entire point of keeping markers in data instead of pixels.</p>
 </div>
 <p>When a label needs to sit outside the illustration itself, <strong>leader line rendering</strong> draws a connecting line from a marker to its label so the association is unambiguous, rather than leaving a reader to guess which label belongs to which point.</p>
+<h4 id="diagram-callout-marker-anatomy">Diagram: Callout Marker Anatomy</h4>
+<iframe src="../../sims/callout-marker-anatomy/main.html" width="100%" height="460px" scrolling="no"></iframe>
+
+<details>
+<summary>Callout Marker Anatomy</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> callout-marker-anatomy<br>
+<strong>Library:</strong> p5.js<br>
+<strong>Status:</strong> Specified</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: Explain</p>
+<p>Learning objective: Explain how a stored marker coordinate, a leader line, and a label work together on an annotation-free illustration.</p>
+<p>Canvas layout:
+- Left (500px): a simple annotation-free illustration placeholder (a labeled rectangle standing in for a generated picture)
+- Right (200px): a small data table showing the currently selected marker's stored {x, y} coordinate</p>
+<p>Interactive controls:
+- Drag any of 3 example markers to a new position on the illustration
+- Toggle: "Show leader lines" on/off</p>
+<p>Data Visibility Requirements:
+  Stage 1: Show the illustration with 3 markers placed at default coordinates
+  Stage 2: Show each marker's stored {x, y} coordinate in the side table, updating live as a marker is dragged
+  Stage 3: Show a leader line drawn from each marker to a label positioned outside the illustration</p>
+<p>Behavior:
+- Dragging a marker updates its stored coordinate in the side table instantly, demonstrating that position is data, not a pixel baked into the image
+- Toggling leader lines off/on shows labels floating disconnected vs. clearly connected to their markers</p>
+<p>Instructional Rationale: An Understand-level objective is best served by concrete data visibility (the coordinate table) rather than animation — dragging a marker and watching its stored value change makes "position is data" tangible.</p>
+<p>Implementation notes: Use p5.js; the illustration itself is a static placeholder rectangle, not a generated image, since the point is the marker/coordinate/leader-line relationship.</p>
+</details>
 <h2 id="exploring-an-overlay">Exploring an Overlay</h2>
 <p>Put those markers together into an interaction and you get <strong>overlay explore mode</strong>: an interaction style in which hovering or selecting a marker reveals explanatory information about that feature — the same minimum interactivity bar every diagram in this book has followed since Chapter 1.</p>
 <h2 id="finding-and-verifying-sources">Finding and Verifying Sources</h2>

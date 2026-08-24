@@ -1225,6 +1225,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Routing a Feature Request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-install-book-environment-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Install Book Environment Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1982,6 +1997,8 @@
       
         
       
+        
+      
     
     
     
@@ -2430,6 +2447,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Routing a Feature Request">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-install-book-environment-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Install Book Environment Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2543,6 +2575,18 @@ This entire book started as an empty folder. This chapter is the meta-skill that
 <p>The <strong>Book Installer Skill</strong> is the meta-skill that scaffolds a new book and installs individual site features on request — a meta-skill in exactly Chapter 7's sense, routing between many possible jobs instead of doing one fixed task. Its very first job on any new project is producing a <strong>textbook scaffold</strong>: the initial project structure created for a new book, including configuration, directory layout, and starter pages — the <code>mkdocs.yml</code>, <code>docs/</code> folder, and starter <code>index.md</code> that every other skill in this library then builds on top of.</p>
 <h2 id="routing-a-feature-request">Routing a Feature Request</h2>
 <p>Once a book exists, adding a capability to it is <strong>feature installation routing</strong>: matching a request for a site capability to the specific guide describing how to install it — "add a Kanban board" or "add Google Analytics" each route to a different installation guide inside the same meta-skill, the same routing-table pattern from Chapter 7 applied to site features instead of MicroSim libraries.</p>
+<h4 id="diagram-install-book-environment-dependencies">Diagram: Install Book Environment Dependencies</h4>
+<iframe src="../../sims/install-book-env/main.html" width="100%" height="480px" scrolling="no"></iframe>
+
+<details>
+<summary>Install Book Environment Dependencies (reused MicroSim)</summary>
+<p>Type: graph-model
+<strong>sim-id:</strong> install-book-env<br>
+<strong>Library:</strong> vis-network<br>
+<strong>Status:</strong> Reused<br>
+<strong>Source:</strong> docs/sims/install-book-env</p>
+<p>Reused from this book's own MicroSim catalog. Learning objective: Analyze the dependency graph of software components a textbook scaffold requires, from MkDocs to the skill library itself.</p>
+</details>
 <h2 id="knowing-whats-already-there">Knowing What's Already There</h2>
 <p>Before installing anything, it helps to know what's already present. <strong>Feature auto-detection</strong> examines a project to determine which capabilities are already installed, so a report reflects reality rather than assumption, performed by <strong>detect_features.py</strong>: the program that inspects a project and reports which site capabilities are installed. The result is a <strong>feature checklist</strong>: a generated document listing available site capabilities and marking which are present in a given book.</p>
 <div class="admonition mascot-thinking">

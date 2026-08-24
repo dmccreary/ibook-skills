@@ -1,0 +1,15 @@
+{
+  "sim_id": "hook-to-dashboard-pipeline",
+  "diagram_name": "From Hook to Dashboard",
+  "chapter_number": 9,
+  "chapter_title": "Measuring and Optimizing Token Usage",
+  "chapter_dir": "09-measuring-optimizing-tokens",
+  "chapter_rel_dir": "chapters/09-measuring-optimizing-tokens",
+  "library": "Mermaid",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "Summarize",
+  "learning_objective": "Summarize how a single skill-run event travels from a hook, into a log file, and out as a dashboard metric.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: workflow\n**sim-id:** hook-to-dashboard-pipeline<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nBloom Level: Understand (L2)\nBloom Verb: Summarize\n\nLearning objective: Summarize how a single skill-run event travels from a hook, into a log file, and out as a dashboard metric.\n\nVisual style: Left-to-right Mermaid flowchart\n\nNodes:\n1. \"Skill Runs\" (rounded rectangle)\n2. \"Skill Usage Hook\" (rounded rectangle)\n3. \"Stop Hook Fires\" (rounded rectangle)\n4. \"JSONL Usage Log (append one line)\" (rectangle, styled as a small file icon)\n5. \"Skill Usage Analytics (Python script)\" (rectangle)\n6. \"Token Usage Dashboard\" (rounded rectangle, book's accent color)\n\nEdges:\n- Skill Runs --> Skill Usage Hook\n- Skill Usage Hook --> Stop Hook Fires\n- Stop Hook Fires --> JSONL Usage Log (append one line)\n- JSONL Usage Log (append one line) --> Skill Usage Analytics (Python script)\n- Skill Usage Analytics (Python script) --> Token Usage Dashboard\n\nInteractivity requirement: every node MUST have a `click` directive opening an infobox with that stage's one-sentence definition, including a note on the Dashboard node that it also reports **elapsed time measurement** (duration) alongside token counts, since the two are recorded separately.\n\nColor scheme: process nodes in the book's teal accent; the log-file node styled distinctly (e.g., a folded-corner file shape) to signal storage rather than computation.\n\nImplementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram."
+}

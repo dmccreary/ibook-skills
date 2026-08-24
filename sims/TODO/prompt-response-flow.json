@@ -1,0 +1,15 @@
+{
+  "sim_id": "prompt-response-flow",
+  "diagram_name": "Prompt and Response Flow",
+  "chapter_number": 1,
+  "chapter_title": "Foundations of AI, Language Models, and Prompting",
+  "chapter_dir": "01-foundations-ai-language-models",
+  "chapter_rel_dir": "chapters/01-foundations-ai-language-models",
+  "library": "Mermaid",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "Differentiate",
+  "learning_objective": "Differentiate the role of a system prompt from a user prompt in a single model request, and explain why the response can vary.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: workflow\n**sim-id:** prompt-response-flow<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nPurpose: Show how a system prompt and a user prompt combine at request time, and why the same inputs don't guarantee the same output.\n\nBloom Level: Analyze (L4)\nBloom Verb: Differentiate\n\nLearning objective: Differentiate the role of a system prompt from a user prompt in a single model request, and explain why the response can vary.\n\nVisual style: Left-to-right Mermaid flowchart\n\nNodes:\n1. \"System Prompt\" (rounded rectangle) — persistent role and constraints for the session\n2. \"User Prompt\" (rounded rectangle) — the specific request for this turn\n3. \"Tokenization\" (rectangle) — both inputs are split into tokens\n4. \"Language Model\" (rounded rectangle, larger) — predicts the next tokens, sampling from a probability distribution\n5. \"Response\" (rounded rectangle) — the generated text returned to the user\n6. \"Same inputs, next run\" (dashed rectangle, off to the side, connecting back into the Language Model node) — represents nondeterminism\n\nEdges:\n- System Prompt --> Tokenization\n- User Prompt --> Tokenization\n- Tokenization --> Language Model\n- Language Model --> Response\n- \"Same inputs, next run\" -.-> Language Model (dashed edge, styled differently, with label \"may produce a different Response\")\n\nInteractivity requirement: every node MUST have a `click` directive wired to an infobox callback showing that node's glossary-style definition. For example: `click LanguageModel call showInfo(\"language-model\")` where the infobox pulls the matching term from the chapter glossary.\n\nColor scheme: System Prompt and User Prompt in two distinguishable blues; Language Model in the book's accent color; Response in green; the dashed nondeterminism branch in amber to signal \"this varies.\"\n\nImplementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, each opening a shared infobox panel below the diagram."
+}

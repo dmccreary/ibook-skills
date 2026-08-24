@@ -1,0 +1,15 @@
+{
+  "sim_id": "meta-skill-routing-table",
+  "diagram_name": "Meta-Skill Routing Table",
+  "chapter_number": 7,
+  "chapter_title": "Progressive Disclosure and Meta-Skill Routing",
+  "chapter_dir": "07-progressive-disclosure-meta-skills",
+  "chapter_rel_dir": "chapters/07-progressive-disclosure-meta-skills",
+  "library": "Mermaid",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "Demonstrate",
+  "learning_objective": "Demonstrate how a meta-skill's routing table matches a request's trigger keywords to exactly one on-demand guide.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: workflow\n**sim-id:** meta-skill-routing-table<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nBloom Level: Apply (L3)\nBloom Verb: Demonstrate\n\nLearning objective: Demonstrate how a meta-skill's routing table matches a request's trigger keywords to exactly one on-demand guide.\n\nVisual style: Left-to-right Mermaid flowchart\n\nNodes:\n1. \"Incoming Request\" (rounded rectangle)\n2. \"microsim-generator (Meta-Skill)\" (rounded rectangle, book's accent color)\n3. \"Trigger Keyword Table\" (rectangle, styled as a small table)\n4. Five guide nodes fanning out: \"p5.js Guide\", \"Chart.js Guide\", \"vis-network Guide\", \"Mermaid Guide\", \"Timeline Guide\" (rounded rectangles)\n\nEdges:\n- Incoming Request --> microsim-generator (Meta-Skill)\n- microsim-generator (Meta-Skill) --> Trigger Keyword Table\n- Trigger Keyword Table --> each of the five guide nodes, each edge labeled with the keyword that routes there (e.g., \"p5, simulation, interactive canvas\" -> p5.js Guide)\n\nInteractivity requirement: every node MUST have a `click` directive opening an infobox — the request node shows an example request string, the meta-skill node shows its one-sentence job description, each guide node shows what kind of MicroSim it produces.\n\nColor scheme: the meta-skill node in the book's teal accent; the five guide nodes in a consistent lighter shade so they read as siblings; matched-edge highlighting on click.\n\nImplementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram."
+}

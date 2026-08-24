@@ -1012,6 +1012,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Voice and Tone">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-worked-example-determining-reading-level-from-a-course-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Worked Example — Determining Reading Level from a Course Description
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1991,6 +2006,8 @@
       
         
       
+        
+      
     
     
     
@@ -2457,6 +2474,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Voice and Tone">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-worked-example-determining-reading-level-from-a-course-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Worked Example — Determining Reading Level from a Course Description
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2571,6 +2603,18 @@ Without a shared content generation guide, 31 separately generated chapters woul
 <p>Two structured formats carry visual requirements from a chapter's text into a later generation step. A <strong>diagram specification block</strong> is a structured description of a required visual placed inside a chapter, later read by a generator to produce the actual simulation — every <code>&lt;details markdown="1"&gt;</code> block with a <code>Status: Specified</code> field you've seen throughout this book is exactly this. A <strong>drawing specification block</strong> is the same idea applied to a required static illustration rather than an interactive one. Neither is useful without deliberate <strong>chapter image placement</strong>: deciding where illustrations appear within a chapter so they support the surrounding explanation, rather than floating disconnected from the text that needs them.</p>
 <h2 id="voice-and-tone">Voice and Tone</h2>
 <p>Underneath the structure sits a writing register: <strong>encouraging tone</strong>, a writing register that remains supportive and accessible, reducing the chance a reader abandons difficult material. You've seen it explicitly in every <code>mascot-encourage</code> admonition, but it's meant to run through the whole chapter's prose, not just Kit's lines.</p>
+<h4 id="diagram-worked-example-determining-reading-level-from-a-course-description">Diagram: Worked Example — Determining Reading Level from a Course Description</h4>
+<iframe src="../../sims/worked-example-determining-reading-level-from-course-description/main.html" width="100%" height="480px" scrolling="no"></iframe>
+
+<details>
+<summary>Worked Example: Determining Reading Level (reused MicroSim)</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> worked-example-determining-reading-level-from-course-description<br>
+<strong>Library:</strong> p5.js<br>
+<strong>Status:</strong> Reused<br>
+<strong>Source:</strong> docs/sims/worked-example-determining-reading-level-from-course-description</p>
+<p>Reused from this book's own MicroSim catalog. Learning objective: Apply the declared reading level from a course description to judge whether a chapter draft matches it.</p>
+</details>
 <h2 id="reviewing-a-chapter-before-it-ships">Reviewing a Chapter Before It Ships</h2>
 <p>Once a chapter is drafted, the <strong>chapter review workflow</strong> is the author-led inspection of generated chapter material before dependent artifacts such as quizzes and simulations are produced — reviewing a chapter before it becomes the input to three or four other skills catches a problem once, cheaply, instead of downstream, expensively. That review checks a chapter against <strong>content quality standards</strong>: the criteria generated text must meet, covering prerequisite respect, cognitive coverage, example count, and formatting. Two measurements support that check directly: a <strong>chapter reading level audit</strong> measures textual difficulty across chapters and flags those that diverge from the declared target, and <strong>chapter metrics</strong> are per-chapter measurements such as word count, illustration count, and equation count, used to detect uneven coverage.</p>
 <div class="admonition mascot-tip">

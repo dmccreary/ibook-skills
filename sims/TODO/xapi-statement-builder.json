@@ -1,0 +1,15 @@
+{
+  "sim_id": "xapi-statement-builder",
+  "diagram_name": "xAPI Statement Builder",
+  "chapter_number": 2,
+  "chapter_title": "AI Coding Agents and the Five Levels of Textbook Intelligence",
+  "chapter_dir": "02-ai-agents-textbook-intelligence",
+  "chapter_rel_dir": "chapters/02-ai-agents-textbook-intelligence",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "Construct",
+  "learning_objective": "Construct a valid actor-verb-object xAPI statement and identify which field, if populated with a real name, would cross into regulated per-student data.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: microsim\n**sim-id:** xapi-statement-builder<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nBloom Level: Apply (L3)\nBloom Verb: Construct\n\nLearning objective: Construct a valid actor-verb-object xAPI statement and identify which field, if populated with a real name, would cross into regulated per-student data.\n\nCanvas layout:\n- Top: three dropdowns labeled Actor, Verb, Object\n- Middle: the assembled statement rendered as a sentence, e.g. \"anonymous-session-4471 completed quiz-token-basics\"\n- Bottom: a toggle labeled \"Use real student name instead of session ID\"\n\nInteractive controls:\n- Dropdown: Actor (anonymous-session-4471, anonymous-session-8820, or \"Type a name...\")\n- Dropdown: Verb (completed, hovered, clicked, answered)\n- Dropdown: Object (quiz-token-basics, diagram-node-llm, microsim-context-window)\n- Toggle: real name vs. session ID for the Actor field\n\nBehavior:\n- When the toggle is set to \"real name\" and any name is typed, the statement sentence highlights in red and a message reads \"This statement now identifies a specific student — outside this project's 2.99 design target\"\n- When using a session ID, the statement stays in the book's normal accent color with the message \"Anonymous and aggregable — safe for concept-understanding analytics\"\n\nInstructional Rationale: An Apply-level construct-the-statement task makes the abstract actor/verb/object shape concrete, and the toggle turns the \"2.99 versus Level 3\" distinction from Chapter 2's prose into something the reader manipulates directly.\n\nImplementation notes: Use p5.js; no real data is stored or transmitted, this is a conceptual builder only."
+}

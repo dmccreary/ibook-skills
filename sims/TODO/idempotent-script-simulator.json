@@ -1,0 +1,15 @@
+{
+  "sim_id": "idempotent-script-simulator",
+  "diagram_name": "Idempotent Script Simulator",
+  "chapter_number": 3,
+  "chapter_title": "Python Fundamentals for Skill Automation",
+  "chapter_dir": "03-python-fundamentals-automation",
+  "chapter_rel_dir": "chapters/03-python-fundamentals-automation",
+  "library": "p5.js",
+  "bloom_level": "Analyze (L4)",
+  "bloom_verb": "Differentiate",
+  "learning_objective": "Differentiate the end state produced by an idempotent script from a non-idempotent one after running each multiple times.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: microsim\n**sim-id:** idempotent-script-simulator<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nBloom Level: Analyze (L4)\nBloom Verb: Differentiate\n\nLearning objective: Differentiate the end state produced by an idempotent script from a non-idempotent one after running each multiple times.\n\nCanvas layout:\n- Left half: \"Non-Idempotent Script\" panel showing a growing list of \"Added row: taxonomy-names.json\" entries\n- Right half: \"Idempotent Script\" panel showing the same target list, capped at one entry no matter how many times it runs\n\nInteractive controls:\n- Button: \"Run Non-Idempotent Script\" (appends a new duplicate entry every click)\n- Button: \"Run Idempotent Script\" (checks for an existing entry first; only adds once)\n- Button: \"Reset Both\"\n- Counter showing how many times each button has been clicked\n\nBehavior:\n- Clicking \"Run Non-Idempotent Script\" repeatedly grows the left list with visibly duplicated entries, and after 3+ clicks a warning label appears: \"State has diverged from a single clean run\"\n- Clicking \"Run Idempotent Script\" repeatedly keeps the right list at exactly one entry, with a label: \"Same end state, no matter how many times you run it\"\n- Hovering either panel shows an infobox explaining what real script behavior it represents\n\nInstructional Rationale: An Analyze-level side-by-side comparison lets the reader directly observe divergent end states from the same repeated action, which is the core insight idempotency prose alone cannot make concrete.\n\nImplementation notes: Use p5.js; both panels share the same click count so the contrast is visible at every step."
+}

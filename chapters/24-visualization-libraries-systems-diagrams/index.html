@@ -1120,6 +1120,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Causal Loop Diagrams: Reinforcing and Balancing Loops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-token-waste-reinforcing-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Token Waste Reinforcing Loop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1982,6 +1997,8 @@
       
         
       
+        
+      
     
     
     
@@ -2430,6 +2447,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Causal Loop Diagrams: Reinforcing and Balancing Loops">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-token-waste-reinforcing-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Token Waste Reinforcing Loop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2556,6 +2588,32 @@ Chapter 23 toured most of the MicroSim generator's libraries. This chapter finis
 Token waste from Chapter 9 is a reinforcing loop left unchecked — small inefficiencies compound across a whole book. Chapter token budgeting is the balancing loop that catches it. Most real systems, including this one's own production pipeline, are a mix of both loop types working against each other.</p>
 </div>
 <p>When the same loop shape shows up across many unrelated domains, it's worth naming: a <strong>systems archetype</strong> is a recurring pattern of interacting loops that appears across many different domains and produces a characteristic behavior, regardless of the specific subject it's describing.</p>
+<h4 id="diagram-token-waste-reinforcing-loop">Diagram: Token Waste Reinforcing Loop</h4>
+<iframe src="../../sims/token-waste-reinforcing-loop/main.html" width="100%" height="480px" scrolling="no"></iframe>
+
+<details>
+<summary>Token Waste Reinforcing Loop</summary>
+<p>Type: graph-model
+<strong>sim-id:</strong> token-waste-reinforcing-loop<br>
+<strong>Library:</strong> vis-network<br>
+<strong>Status:</strong> Specified</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: Differentiate</p>
+<p>Learning objective: Differentiate a reinforcing loop from a balancing loop using this book's own token-waste example from Chapter 9.</p>
+<p>Purpose: Show a concrete reinforcing loop (unchecked token waste compounding) and the balancing loop that counteracts it (chapter token budgeting), as two linked causal loop diagrams.</p>
+<p>Node types:
+1. Variable nodes (ellipses): "Unnecessary Parallel Agents", "Startup Overhead Paid", "Tokens Remaining in Window", "Chapter Token Budgeting", "Cost Awareness"</p>
+<p>Edge types:
+1. Reinforcing loop (solid arrows, labeled "R"): Unnecessary Parallel Agents -&gt; Startup Overhead Paid -&gt; (fewer) Tokens Remaining in Window -&gt; pressure to rush -&gt; more Unnecessary Parallel Agents
+2. Balancing loop (solid arrows, labeled "B"): Chapter Token Budgeting -&gt; Cost Awareness -&gt; fewer Unnecessary Parallel Agents</p>
+<p>Interactive features:
+- Hover any node to see its one-sentence definition
+- Click the "R" or "B" loop label to highlight that loop's full path and show its net effect (growth/collapse for R, stabilization for B)
+- Zoom and pan enabled</p>
+<p>Layout: Force-directed, two visually separated loops
+Legend: R (reinforcing, red arrows) vs. B (balancing, blue arrows)</p>
+<p>Implementation: vis-network JavaScript library, canvas 800x500px</p>
+</details>
 <h2 id="runnable-labs">Runnable Labs</h2>
 <p>Not every interactive element in a textbook is a diagram — some are exercises a reader actively edits and runs. A <strong>Docker Python lab</strong> is an interactive exercise in which a reader edits and runs code inside a contained environment directly from a textbook page, and its content is a <strong>runnable code block</strong>: a code sample a reader can execute in place and modify, rather than only read.</p>
 <h2 id="matching-interaction-to-cognitive-demand">Matching Interaction to Cognitive Demand</h2>

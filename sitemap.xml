@@ -2,1134 +2,1042 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/about/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/claude-usage-limits/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/contact/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/course-description/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/faq/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/getting-started/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/glossary/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/license/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/references/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/vscode-setup/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/appendices/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/appendices/imaging-agent-delegation/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/appendices/skill-refactor-fable-5/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/appendices/skill-portability-strategy/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/01-foundations-ai-language-models/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/02-ai-agents-textbook-intelligence/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/03-python-fundamentals-automation/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/04-dev-tools-editor-git-basics/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/05-mkdocs-deployment-analytics/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/06-agent-skill-fundamentals/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/07-progressive-disclosure-meta-skills/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/08-token-budgets-usage-limits/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/09-measuring-optimizing-tokens/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/10-building-testing-portable-skills/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/11-distributing-skills-commands/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/12-writing-course-description/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/13-blooms-taxonomy-instructional-design/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/14-learning-graphs-concept-enumeration/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/15-learning-graph-formats-taxonomy/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/16-learning-graph-quality-validation/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/17-chapter-structure-content-elements/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/18-chapter-content-quality-review/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/19-faqs-curated-references/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/20-glossaries-and-quizzes/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/21-microsim-anatomy-p5js-basics/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/22-p5js-controls-microsim-quality/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/23-microsim-generator-metadata-schema/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/24-visualization-libraries-systems-diagrams/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/25-verified-infographic-pipeline/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/26-interactive-infographic-overlays/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/27-slide-decks-stories-audio-media/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/28-domain-specific-skill-extension/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/29-book-installer-features/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/30-session-logs-book-metrics/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/31-publishing-announcing-book/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/appendix-a-claude-on-pi/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/appendix-b-claude-on-wsl/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/appendix-c-user-global-claude/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/appendix-d-parallel-execution/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/chapters/appendix-d-parallel-execution/quiz/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/consolidation-plan/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/img/cover-image-prompt/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/img/mascot/character-sheet/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/img/mascot/image-prompts/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/book-metrics/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/chapter-metrics/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/concept-list/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/concept-taxonomy/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/course-description-assessment/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/details-analysis/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/diagram-details/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/diagram-table/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/faq-coverage-gaps/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/faq-quality-report/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/glossary-quality-report/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/mascot-test/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/microsim-quality-report/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/progress/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/quality-metrics/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/quiz-generation-report/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/learning-graph/taxonomy-distribution/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/easy-diagrams/execution-plan/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/easy-diagrams/generation-report/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/easy-diagrams/specs/12-microsim-file-relationship-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/execution-plan/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/generation-report/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/06-average-dependencies-distribution-bar-chart/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/06-dag-validation-algorithm-visualization/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/06-linear-chain-vs-network-structure-comparison/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/06-taxonomy-distribution-pie-chart/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/06-terminal-nodes-identification-chart/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/07-adding-taxonomy-to-csv-workflow-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/07-learning-graph-json-schema-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/08-mkdocs-build-process-workflow-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/08-mkdocs-github-pages-deployment-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/09-git-workflow-for-skill-development/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/09-security-zones-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/09-skill-directory-structure-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/10-chapter-index-file-structure-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/10-chapter-organization-workflow-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/11-faq-question-pattern-analysis-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/12-p5-js-architecture-and-execution-model/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/13-skill-installation-workflow-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/ibook-skills/learning-graph/medium-diagrams/specs/13-terminal-workflow-for-textbook-development/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/add-events-to-timeline/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/adding-a-site-mascot/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/book-chapter-generator-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/book-metrics-skill-creation/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/chapter-content-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/course-description-quality-infographic/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/course-description-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/create-infographic-generator-pi-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/create-mermaid-generator-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/create-microsim-standardization-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/create-microsim-type-selector-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/fix-group-colors/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-chapter-10-content/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-chapter-11-content-log/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-chapter-12-content-log/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-chapter-8-content/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-chapter-9-content/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-chapter-structure/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-claude-skill-timeline/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-content-for-6-7/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-content-for-chapters-1-5/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-diagram-skill-priorities/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-microsim-index-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-references/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/generate-timeline-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/infographic-candidates-list/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/marp-generator-prompt/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/microsim-matcher-skill-creation/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/missing-microsim-generators/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/quiz-generation/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/readme-generator-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/refactor-skills/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/references-generator-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/run-glossary-generator-skill/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/suggest-timeline-placement/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/update-skill-descriptions/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/upgrade-the-book-installer-help/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/using-hooks-to-track-activities/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/prompts/venn-diagram-skill-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/research/skills-in-context-window/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/TODO/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/microsim-build-queue/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/4-hour-token-window-visualization/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/5-hour-token-window-visualization/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/adding-taxonomy-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/admonition-types-interactive-reference/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/algorithm-visualization-with-step-controls-microsim/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/average-dependencies-distribution/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/basic-microsim-template-structure/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/bloom-s-taxonomy-1956-vs-2001-comparison/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/bloom-s-taxonomy-application-distribution-in-quality-courses/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/bloom-s-taxonomy-distribution-analyzer-chart/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/book-build-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/book-levels/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/certificate-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/chapter-content-generation-timeline/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/chapter-index-structure/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/chapter-organization-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/claude-code-memory-layers/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/claude-code-timeline/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/claude-code-tshirt-design/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/claude-code-workflow-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/color-accessibility-checker-microsim/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/color-wheel-with-named-colors/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/command-line-interface-basics-interactive-infographic/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/concept-count-by-course-duration/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/concept-depth-distribution-analysis/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/concept-granularity-spectrum-visualization/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/concept-label-length-optimization/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/concept-label-quality-checklist/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/concept-length-histogram/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/conceptid-vs-conceptlabel-comparison/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/course-description-quality-rubric-visualization/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/course-description-quality-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/cover-image-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/csv-file-format-example-with-validation/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/csv-to-json-conversion-mapping-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/dag-vs-cyclic-graph-comparison/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/dependency-mapping-decision-tree/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/dependency-mapping-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/dependency-pattern-examples/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/dublin-core-metadata-field-reference-card/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/evolution-of-ai-approaches-timeline/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/faq-pattern-analysis/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/five-levels-of-textbook-intelligence-visual-model/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/git-branching-and-merging-visualization-microsim/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/git-workflow-skill-development/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/graph-color-test/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/graph-viewer/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/grid-overlay-test/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/install-book-env/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/interactive-directory-navigation-practice-microsim/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/interactive-exercise-generator-microsim/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/interactive-learning-element-types-comparison/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/interactive-quiz-question-constructor-microsim/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/iso-11179-principles-comparison-table-infographic/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/iterative-prompt-refinement-metrics/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/learning-graph-json-schema/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/learning-graph-quality-score-calculator-microsim/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/learning-graph-structure-visualization/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/linear-chain-vs-network/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/lower-order-vs-higher-order-thinking-skills/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/material-theme-features-interactive-comparison/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/microsim-design-quality-checklist/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/microsim-file-relationship-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/mkdocs-build-process/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/mkdocs-github-pages-deployment/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/orphaned-nodes-identification/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/p5js-architecture/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/permission-bits-visual-infographic/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/prompt-engineering-iterative-refinement-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/python-learning-graph-processing-pipeline/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/responsive-iframe-embedding-microsim/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/security-zones-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/sine-function-plot/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-context-window/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-directory-structure/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-file-anatomy-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-impact-chart/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-installation-locations-and-priority/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-installation-workflow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-invocation-and-execution-lifecycle/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-package-contents-checklist/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-permission-matrix/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skill-testing-workflow-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/skills-vs-commands-decision-tree/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/taxonomy-distribution-pie/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/terminal-workflow-textbook/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/test-world-cities/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/three-color-dfs/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/token-consumption-timeline-for-complete-textbook-project/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/topic-to-concept-expansion-example/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/topic-to-concept-expansion-process/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/transformer-architecture-diagram/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/vs-code-interface-layout-for-textbook-development/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/sims/worked-example-determining-reading-level-from-course-description/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/book-chapter-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/book-installer/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/book-metrics-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/chapter-content-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/course-description-analyzer/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/diagram-reports-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/faq-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/glossary-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/install-learning-graph-viewer/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/install-mkdocs-template/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/learning-graph-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/linkedin-announcement-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/quiz-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/readme-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/book/reference-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/bubble-chart-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/causal-loop-microsim-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/celebration-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/chartjs-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/comparison-table-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/concept-classifier/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/map-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/math-function-plotter-plotly/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/mermaid-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/microsim-add-icons/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/microsim-matcher/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/microsim-p5/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/microsim-screen-capture/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/microsim-standardization/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/timeline-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/venn-diagram-generator/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/microsims/vis-network/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/specialized-skills/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/specialized-skills/install-skill-tracker/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/skill-descriptions/specialized-skills/moving-rainbow/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/slides/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/slides/ibook-skills-overview/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/slides/ibook-skills-overview/slides/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/workshops/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/workshops/fast-start-with-claude-desktop/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/workshops/intelligent-textbook-cheat-sheet/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/workshops/intelligent-textbook-workshop-outline/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/workshops/quick-start/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/workshops/tips-and-tricks/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/ibook-skills/workshops/workshop-prework/</loc>
-         <lastmod>2026-08-22</lastmod>
+         <lastmod>2026-08-24</lastmod>
     </url>
 </urlset>

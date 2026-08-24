@@ -970,6 +970,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="The Learning Graph Quality Score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-learning-graph-quality-score-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Learning Graph Quality Score Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1982,6 +1997,8 @@
       
         
       
+        
+      
     
     
     
@@ -2448,6 +2465,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="The Learning Graph Quality Score">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-learning-graph-quality-score-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Learning Graph Quality Score Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2588,6 +2620,18 @@ A chain length of 25 doesn't mean 25 chapters of straight-line reading — remem
 </div>
 <h2 id="the-learning-graph-quality-score">The Learning Graph Quality Score</h2>
 <p>All of these checks roll up into one number: the <strong>learning graph quality score</strong>, a composite rating derived from structural checks such as absence of loops, connectivity, and dependency density. That score, along with the individual measurements behind it, is written to a <strong>quality metrics report</strong>: the generated document presenting structural measurements of a graph together with recommendations for improvement — this project's own quality gate for the entire learning graph stage of the pipeline.</p>
+<h4 id="diagram-learning-graph-quality-score-calculator">Diagram: Learning Graph Quality Score Calculator</h4>
+<iframe src="../../sims/learning-graph-quality-score-calculator-microsim/main.html" width="100%" height="480px" scrolling="no"></iframe>
+
+<details>
+<summary>Learning Graph Quality Score Calculator (reused MicroSim)</summary>
+<p>Type: microsim
+<strong>sim-id:</strong> learning-graph-quality-score-calculator-microsim<br>
+<strong>Library:</strong> p5.js<br>
+<strong>Status:</strong> Reused<br>
+<strong>Source:</strong> docs/sims/learning-graph-quality-score-calculator-microsim</p>
+<p>Reused from this book's own MicroSim catalog. Learning objective: Apply the structural checks from this chapter to see how each one moves the composite learning graph quality score.</p>
+</details>
 <h2 id="reviewing-before-you-build-workflow-and-remediation">Reviewing Before You Build: Workflow and Remediation</h2>
 <p>Automated checks catch structural defects; they don't catch a concept that's simply wrong or a category that's misnamed. That's what the <strong>graph review workflow</strong> is for: the author-led inspection of a generated structure before content generation begins, when corrections are still inexpensive. Its cheapest phase happens earliest — <strong>concept list review</strong>: examining and editing the enumerated ideas before dependencies are assigned, since later changes propagate through every downstream artifact once chapters and content are built on top of them.</p>
 <div class="admonition mascot-tip">

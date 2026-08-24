@@ -1,0 +1,15 @@
+{
+  "sim_id": "verified-infographic-pipeline-phases",
+  "diagram_name": "The Eight-Phase Verified Infographic Pipeline",
+  "chapter_number": 25,
+  "chapter_title": "Text-to-Image Models and the Verified Infographic Pipeline",
+  "chapter_dir": "25-verified-infographic-pipeline",
+  "chapter_rel_dir": "chapters/25-verified-infographic-pipeline",
+  "library": "Mermaid",
+  "bloom_level": "Understand (L2)",
+  "bloom_verb": "Summarize",
+  "learning_objective": "Summarize the eight ordered phases that separate claim verification from image rendering.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: workflow\n**sim-id:** verified-infographic-pipeline-phases<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nBloom Level: Understand (L2)\nBloom Verb: Summarize\n\nLearning objective: Summarize the eight ordered phases that separate claim verification from image rendering.\n\nVisual style: Top-to-bottom Mermaid flowchart, eight numbered stages\n\nNodes:\n1. \"1. Claim Planning\" (rounded rectangle)\n2. \"2. Source Discovery\" (rounded rectangle)\n3. \"3. Per-Claim Verification\" (rounded rectangle)\n4. \"4. Verification Report\" (rounded rectangle)\n5. \"5. Layout Specification Lock\" (rounded rectangle, amber — the last text-only stage)\n6. \"6. Verbatim Text Prompt\" (rounded rectangle)\n7. \"7. Image Generation (single call)\" (rounded rectangle, book's accent color)\n8. \"8. Rendered Image Audit\" (rounded rectangle)\n\nEdges: sequential 1 --> 2 --> 3 --> 4 --> 5 --> 6 --> 7 --> 8, with a dashed \"reject/revise\" edge from 3 back to 1 for a claim that fails verification\n\nInteractivity requirement: every node MUST have a `click` directive opening an infobox with that phase's one-sentence definition, and phases 1-6 should be visually grouped (background band) as \"text-only,\" with phase 7 marked as \"the only image-model call.\"\n\nColor scheme: text-only phases in the book's teal accent; phase 7 (image generation) in a distinct warm color to emphasize it happens exactly once; phase 8 in green (audit/verification).\n\nImplementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram."
+}

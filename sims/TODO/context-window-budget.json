@@ -1,0 +1,15 @@
+{
+  "sim_id": "context-window-budget",
+  "diagram_name": "Context Window Budget",
+  "chapter_number": 1,
+  "chapter_title": "Foundations of AI, Language Models, and Prompting",
+  "chapter_dir": "01-foundations-ai-language-models",
+  "chapter_rel_dir": "chapters/01-foundations-ai-language-models",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "Demonstrate",
+  "learning_objective": "Demonstrate why content beyond a model's context-window limit becomes unavailable to it.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: microsim\n**sim-id:** context-window-budget<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nPurpose: Let a reader experiment with how different files \"spend\" a fixed context-window budget.\n\nBloom Level: Apply (L3)\nBloom Verb: Demonstrate\n\nLearning objective: Demonstrate why content beyond a model's context-window limit becomes unavailable to it.\n\nCanvas layout:\n- Left (350px): A single vertical bar representing the context window, filling from the bottom up as items are added, capped at a labeled maximum (default 50,000 tokens)\n- Right (250px): A checklist of five sample items with token-cost sliders: \"System prompt (2,000)\", \"Course description (3,500)\", \"Learning graph JSON (18,000)\", \"One chapter draft (4,500)\", \"Conversation history (variable, slider 0-30,000)\"\n\nInteractive controls:\n- Checkbox next to each of the five items to add/remove it from the bar\n- Slider for \"Conversation history\" (0 to 30,000 tokens)\n- Display: total tokens used vs. the window maximum, in a large readable number\n\nDefault parameters:\n- Window maximum: 50,000 tokens (labeled \"example window size — real windows vary by model\")\n- All checkboxes start unchecked except \"System prompt\"\n\nBehavior:\n- As items are checked, the bar fills proportionally and shows a stacked-color segment per item\n- If the total would exceed the maximum, the bar turns red past the limit and a message reads \"These items no longer fit — the model cannot see them\"\n- Hovering any bar segment shows an infobox with that item's exact token count and one sentence about what it contains\n\nInstructional Rationale: A parameter-exploration pattern fits the Apply-level objective because the reader must actively combine values and observe the consequence (overflow) rather than watch a fixed demonstration. This also reinforces the token-tokenization pairing from the diagram above it.\n\nImplementation notes:\n- Use p5.js; store items as an array of {name, tokens, checked} objects\n- Responsive: bar height and control panel width recalculate on window resize"
+}

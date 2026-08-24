@@ -1294,6 +1294,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Before You Announce: The Launch Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-book-launch-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Book Launch Checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1991,6 +2006,8 @@
       
         
       
+        
+      
     
     
     
@@ -2466,6 +2483,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Before You Announce: The Launch Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-book-launch-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Book Launch Checklist
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2587,6 +2619,32 @@ AP style spells out numbers under ten, capitalizes specific titles but not gener
 <p><img alt="Kit holding up a caution paw" class="mascot-admonition-img" src="../../img/mascot/warning.png">
 A LinkedIn post that goes out before deployment verification (Chapter 29) has actually confirmed the live site works risks sending your very first readers to a broken link. Run the launch checklist all the way through, in order, before a single announcement goes out.</p>
 </div>
+<h4 id="diagram-book-launch-checklist">Diagram: Book Launch Checklist</h4>
+<iframe src="../../sims/book-launch-checklist/main.html" width="100%" height="480px" scrolling="no"></iframe>
+
+<details>
+<summary>Book Launch Checklist</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> book-launch-checklist<br>
+<strong>Library:</strong> Mermaid<br>
+<strong>Status:</strong> Specified</p>
+<p>Bloom Level: Evaluate (L5)
+Bloom Verb: Justify</p>
+<p>Learning objective: Justify why each launch-checklist item must pass before an announcement goes out, in the correct order.</p>
+<p>Visual style: Top-to-bottom Mermaid flowchart styled as a checklist</p>
+<p>Nodes:
+1. "mkdocs build --strict passes" (rounded rectangle)
+2. "Deployment verified live" (rounded rectangle)
+3. "book-metrics.json regenerated" (rounded rectangle)
+4. "README regenerated from metrics" (rounded rectangle)
+5. "Announcement drafted" (rounded rectangle)
+6. "Announcement preview image checked" (rounded rectangle)
+7. "Publish" (rounded rectangle, book's accent color, final node)</p>
+<p>Edges: strictly sequential 1 --&gt; 2 --&gt; 3 --&gt; 4 --&gt; 5 --&gt; 6 --&gt; 7</p>
+<p>Interactivity requirement: every node MUST have a <code>click</code> directive opening an infobox explaining why that specific step must complete before the next one, referencing the relevant earlier chapter (e.g., node 1 references Chapter 29's strict build mode, node 2 references Chapter 29's deployment verification).</p>
+<p>Color scheme: all checklist nodes in a consistent teal until clicked, then briefly highlight green to simulate "checked off"; final "Publish" node in a distinct accent color.</p>
+<p>Implementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram.</p>
+</details>
 <h2 id="after-launch-continuous-improvement">After Launch: Continuous Improvement</h2>
 <p>Publishing isn't the end of a book's story. <strong>Continuous book improvement</strong> means using measurements, reader feedback, and usage data to revise a book and the skills that produced it after release — the quiz analytics from Chapter 20, the FAQ coverage gaps from Chapter 19, and the reading-level audits from Chapter 30 all exist to feed exactly this ongoing loop.</p>
 <h2 id="the-capstone-your-own-intelligent-textbook">The Capstone: Your Own Intelligent Textbook</h2>

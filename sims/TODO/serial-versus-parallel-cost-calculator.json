@@ -1,0 +1,15 @@
+{
+  "sim_id": "serial-versus-parallel-cost-calculator",
+  "diagram_name": "Serial Versus Parallel Cost Calculator",
+  "chapter_number": 8,
+  "chapter_title": "Token Budgets and Usage Limits",
+  "chapter_dir": "08-token-budgets-usage-limits",
+  "chapter_rel_dir": "chapters/08-token-budgets-usage-limits",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "Calculate",
+  "learning_objective": "Calculate the total token cost of a task run serially versus in parallel, and identify the agent-count threshold where parallel execution stops paying off.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: microsim\n**sim-id:** serial-versus-parallel-cost-calculator<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nBloom Level: Apply (L3)\nBloom Verb: Calculate\n\nLearning objective: Calculate the total token cost of a task run serially versus in parallel, and identify the agent-count threshold where parallel execution stops paying off.\n\nCanvas layout:\n- Top: three sliders — \"Number of sub-tasks\" (1-20), \"Tokens of real work per sub-task\" (1,000-50,000), \"Startup overhead per agent\" (default 12,000, adjustable 5,000-20,000)\n- Middle: two bar totals side by side, \"Serial Total\" and \"Parallel Total,\" in tokens\n- Bottom: a one-line verdict, e.g. \"Parallel costs 84,000 more tokens for this workload\" or \"Parallel and serial cost about the same here\"\n\nData Visibility Requirements:\n  Stage 1: Show each sub-task's work-token cost as an individual small bar\n  Stage 2: Show serial total = (work-tokens x sub-tasks) + (1 x startup overhead)\n  Stage 3: Show parallel total = (work-tokens x sub-tasks) + (sub-tasks x startup overhead)\n  Final: Show the numeric difference and which approach is cheaper at the current slider settings\n\nInteractive controls:\n- Three sliders described above\n- Toggle: \"Show formula\" to reveal the two total formulas as live-updating equations\n\nBehavior:\n- Moving any slider recomputes both totals instantly and updates the verdict line\n- When sub-tasks = 1, both totals are equal (parallel overhead of one agent equals serial overhead of one agent), and the sim highlights this as \"no benefit from parallel with only one sub-task\"\n\nInstructional Rationale: An Apply-level calculator lets the reader plug in this chapter's own example numbers (a 350-term glossary, a 12-chapter book) and see the real crossover point, rather than trusting the \"roughly 38% more\" figure on faith.\n\nImplementation notes: Use p5.js; all math is simple arithmetic, no external data needed; responsive layout for slider and bar widths."
+}

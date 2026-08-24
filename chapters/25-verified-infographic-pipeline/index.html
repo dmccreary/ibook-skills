@@ -1141,6 +1141,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="The One-Shot Generation Risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-the-eight-phase-verified-infographic-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: The Eight-Phase Verified Infographic Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1991,6 +2006,8 @@
       
         
       
+        
+      
     
     
     
@@ -2439,6 +2456,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="The One-Shot Generation Risk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-the-eight-phase-verified-infographic-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: The Eight-Phase Verified Infographic Pipeline
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2566,6 +2598,33 @@ This chapter is about the moment images stopped being decoration and started bei
 <p><img alt="Kit holding up a caution paw" class="mascot-admonition-img" src="../../img/mascot/warning.png">
 This is Chapter 2's hallucination warning, made visually undeniable. The <strong>baked-in text problem</strong> means wording is permanently fixed into pixels, so any error requires regenerating the whole picture and cannot be audited by a reader the way a wrong number in a paragraph could be quietly fixed. Never trust a one-shot generated infographic's numbers without checking them against a real source first.</p>
 </div>
+<h4 id="diagram-the-eight-phase-verified-infographic-pipeline">Diagram: The Eight-Phase Verified Infographic Pipeline</h4>
+<iframe src="../../sims/verified-infographic-pipeline-phases/main.html" width="100%" height="440px" scrolling="no"></iframe>
+
+<details>
+<summary>The Eight-Phase Verified Infographic Pipeline</summary>
+<p>Type: workflow
+<strong>sim-id:</strong> verified-infographic-pipeline-phases<br>
+<strong>Library:</strong> Mermaid<br>
+<strong>Status:</strong> Specified</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: Summarize</p>
+<p>Learning objective: Summarize the eight ordered phases that separate claim verification from image rendering.</p>
+<p>Visual style: Top-to-bottom Mermaid flowchart, eight numbered stages</p>
+<p>Nodes:
+1. "1. Claim Planning" (rounded rectangle)
+2. "2. Source Discovery" (rounded rectangle)
+3. "3. Per-Claim Verification" (rounded rectangle)
+4. "4. Verification Report" (rounded rectangle)
+5. "5. Layout Specification Lock" (rounded rectangle, amber — the last text-only stage)
+6. "6. Verbatim Text Prompt" (rounded rectangle)
+7. "7. Image Generation (single call)" (rounded rectangle, book's accent color)
+8. "8. Rendered Image Audit" (rounded rectangle)</p>
+<p>Edges: sequential 1 --&gt; 2 --&gt; 3 --&gt; 4 --&gt; 5 --&gt; 6 --&gt; 7 --&gt; 8, with a dashed "reject/revise" edge from 3 back to 1 for a claim that fails verification</p>
+<p>Interactivity requirement: every node MUST have a <code>click</code> directive opening an infobox with that phase's one-sentence definition, and phases 1-6 should be visually grouped (background band) as "text-only," with phase 7 marked as "the only image-model call."</p>
+<p>Color scheme: text-only phases in the book's teal accent; phase 7 (image generation) in a distinct warm color to emphasize it happens exactly once; phase 8 in green (audit/verification).</p>
+<p>Implementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram.</p>
+</details>
 <h2 id="separating-facts-from-pixels-the-verified-infographic-pipeline">Separating Facts From Pixels: The Verified Infographic Pipeline</h2>
 <p>The fix isn't to avoid text-to-image models — it's to change the order of operations. <strong>Separating facts from pixels</strong> is the design rule that content is decided and verified in text before any picture is produced, so the image generator never chooses a figure on its own. That rule is implemented as the <strong>verified infographic pipeline</strong>: a staged process producing a factual poster in which claims are planned, sourced, verified, and locked before a single image is generated, and the result is audited afterward. It begins with the <strong>claim planning phase</strong>: the initial stage listing every factual assertion a planned poster will make, before any source is even consulted.</p>
 <div class="admonition mascot-thinking">
