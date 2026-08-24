@@ -9,7 +9,7 @@ human-readable classifierName values in the output. Without this file,
 taxonomy IDs will be used as fallback (which is usually wrong).
 """
 
-VERSION = "1.04"
+VERSION = "1.05"
 
 import csv
 import json
@@ -134,7 +134,29 @@ def csv_to_json(csv_path: str, json_path: str, color_config: dict = None,
     ]
     default_colors = {str(i + 1): color for i, color in enumerate(DEFAULT_PALETTE)}
 
-    taxonomy_colors = color_config if color_config is not None else default_colors
+    # color_config may be the legacy flat format {tax_id: "ColorName"} or a
+    # richer format {tax_id: {"color": "ColorName", "classifierName": "..."}}
+    # (used by some existing projects' color-config.json). Normalize to a
+    # flat tax_id -> color-string map, and harvest any embedded
+    # classifierName values as a taxonomy-names source -- lower priority
+    # than an explicitly-provided taxonomy_names.json, so that file can
+    # still override. Passing the raw nested dict straight through as a
+    # "color" (the previous behavior) produces an invalid learning-graph.json
+    # that violates the schema and silently breaks group coloring in the
+    # viewer -- this was found and fixed while regenerating an existing
+    # project's learning-graph.json.
+    color_config_names = {}
+    if color_config is not None:
+        taxonomy_colors = {}
+        for tax_id, value in color_config.items():
+            if isinstance(value, dict):
+                taxonomy_colors[tax_id] = value.get('color', 'DimGray')
+                if value.get('classifierName'):
+                    color_config_names[tax_id] = value['classifierName']
+            else:
+                taxonomy_colors[tax_id] = value
+    else:
+        taxonomy_colors = default_colors
 
     # Default taxonomy ID to classifier name mapping
     # Supports both text codes (FOUND, DEF, etc.) and numeric IDs (1, 2, etc.)
@@ -176,8 +198,12 @@ def csv_to_json(csv_path: str, json_path: str, color_config: dict = None,
         '10': 'Extended Topics',
     }
 
-    # Merge user-provided taxonomy names with defaults (user names take precedence)
+    # Merge taxonomy names: built-in defaults, then names embedded in
+    # color_config (if any), then an explicit taxonomy_names.json -- each
+    # source overrides the previous, so an explicitly-provided file always
+    # wins if both it and color_config supply a name for the same tax_id.
     all_taxonomy_names = default_taxonomy_names.copy()
+    all_taxonomy_names.update(color_config_names)
     if taxonomy_names:
         all_taxonomy_names.update(taxonomy_names)
 
@@ -255,7 +281,9 @@ def csv_to_json(csv_path: str, json_path: str, color_config: dict = None,
 
     # Dark backgrounds need white text for contrast; everything else uses black.
     # Includes the new distinct palette plus a few legacy pastel colors retained
-    # for back-compat with older color-config.json files.
+    # for back-compat with older color-config.json files. Checked first (exact,
+    # hand-tuned) before falling back to computed luminance for any other named
+    # color or hex code -- see font_color_for() below.
     DARK_BACKGROUND_COLORS = {
         'SteelBlue', 'DarkSlateBlue', 'DarkGreen', 'DarkGoldenrod', 'Teal',
         'DodgerBlue', 'Crimson', 'DarkRed', 'MediumPurple', 'Indigo',
@@ -265,8 +293,47 @@ def csv_to_json(csv_path: str, json_path: str, color_config: dict = None,
         'Plum', 'LightCoral',
     }
 
+    # Hex values for common CSS color names NOT in the curated 24-color
+    # palette above (e.g. plain "red", "purple", "indigo" as used directly
+    # in a project's color-config.json). Used only as a luminance-lookup
+    # fallback -- not exhaustive, just the common simple names a project is
+    # likely to use directly rather than through the curated palette.
+    NAMED_COLOR_HEX = {
+        'red': '#FF0000', 'orange': '#FFA500', 'gold': '#FFD700',
+        'green': '#008000', 'cyan': '#00FFFF', 'blue': '#0000FF',
+        'indigo': '#4B0082', 'violet': '#EE82EE', 'purple': '#800080',
+        'brown': '#A52A2A', 'teal': '#008080', 'olive': '#808000',
+        'yellow': '#FFFF00', 'pink': '#FFC0CB', 'magenta': '#FF00FF',
+        'navy': '#000080', 'maroon': '#800000', 'lime': '#00FF00',
+        'silver': '#C0C0C0', 'tan': '#D2B48C', 'khaki': '#F0E68C',
+        'coral': '#FF7F50', 'salmon': '#FA8072', 'turquoise': '#40E0D0',
+        'plum': '#DDA0DD', 'orchid': '#DA70D6', 'beige': '#F5F5DC',
+        'gray': '#808080', 'grey': '#808080', 'black': '#000000',
+        'white': '#FFFFFF',
+    }
+
+    def luminance_font_color(hex_color: str) -> str:
+        """Perceptual luminance (ITU-R BT.601) -> black or white text."""
+        h = hex_color.lstrip('#')
+        if len(h) == 3:
+            h = ''.join(c * 2 for c in h)
+        if len(h) != 6:
+            return 'black'
+        try:
+            r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+        except ValueError:
+            return 'black'
+        luminance = 0.299 * r + 0.587 * g + 0.114 * b
+        return 'white' if luminance < 128 else 'black'
+
     def font_color_for(color: str) -> str:
-        return 'white' if color in DARK_BACKGROUND_COLORS else 'black'
+        if color in DARK_BACKGROUND_COLORS:
+            return 'white'
+        if color.startswith('#'):
+            return luminance_font_color(color)
+        if color.lower() in NAMED_COLOR_HEX:
+            return luminance_font_color(NAMED_COLOR_HEX[color.lower()])
+        return 'black'
 
     for tax_id, color in taxonomy_colors.items():
         # Only include groups that are actually used
