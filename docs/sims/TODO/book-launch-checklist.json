@@ -1,0 +1,15 @@
+{
+  "sim_id": "book-launch-checklist",
+  "diagram_name": "Book Launch Checklist",
+  "chapter_number": 31,
+  "chapter_title": "Publishing and Announcing a Finished Book",
+  "chapter_dir": "31-publishing-announcing-book",
+  "chapter_rel_dir": "chapters/31-publishing-announcing-book",
+  "library": "Mermaid",
+  "bloom_level": "Evaluate (L5)",
+  "bloom_verb": "Justify",
+  "learning_objective": "Justify why each launch-checklist item must pass before an announcement goes out, in the correct order.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: workflow\n**sim-id:** book-launch-checklist<br/>\n**Library:** Mermaid<br/>\n**Status:** Specified\n\nBloom Level: Evaluate (L5)\nBloom Verb: Justify\n\nLearning objective: Justify why each launch-checklist item must pass before an announcement goes out, in the correct order.\n\nVisual style: Top-to-bottom Mermaid flowchart styled as a checklist\n\nNodes:\n1. \"mkdocs build --strict passes\" (rounded rectangle)\n2. \"Deployment verified live\" (rounded rectangle)\n3. \"book-metrics.json regenerated\" (rounded rectangle)\n4. \"README regenerated from metrics\" (rounded rectangle)\n5. \"Announcement drafted\" (rounded rectangle)\n6. \"Announcement preview image checked\" (rounded rectangle)\n7. \"Publish\" (rounded rectangle, book's accent color, final node)\n\nEdges: strictly sequential 1 --> 2 --> 3 --> 4 --> 5 --> 6 --> 7\n\nInteractivity requirement: every node MUST have a `click` directive opening an infobox explaining why that specific step must complete before the next one, referencing the relevant earlier chapter (e.g., node 1 references Chapter 29's strict build mode, node 2 references Chapter 29's deployment verification).\n\nColor scheme: all checklist nodes in a consistent teal until clicked, then briefly highlight green to simulate \"checked off\"; final \"Publish\" node in a distinct accent color.\n\nImplementation: Mermaid flowchart with per-node click handlers rendered inside the MicroSim's main.html, opening a shared infobox panel below the diagram."
+}

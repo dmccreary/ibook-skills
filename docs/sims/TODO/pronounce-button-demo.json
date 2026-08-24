@@ -1,0 +1,15 @@
+{
+  "sim_id": "pronounce-button-demo",
+  "diagram_name": "Pronounce Button and Streaming Playback",
+  "chapter_number": 27,
+  "chapter_title": "Slide Decks, Stories, and Audio Media",
+  "chapter_dir": "27-slide-decks-stories-audio-media",
+  "chapter_rel_dir": "chapters/27-slide-decks-stories-audio-media",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "Demonstrate",
+  "learning_objective": "Demonstrate how clicking a pronounce button begins audio streaming playback before the full narration has loaded.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: microsim\n**sim-id:** pronounce-button-demo<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nBloom Level: Apply (L3)\nBloom Verb: Demonstrate\n\nLearning objective: Demonstrate how clicking a pronounce button begins audio streaming playback before the full narration has loaded.\n\nCanvas layout:\n- Top: three example glossary terms with a small speaker-icon pronounce button beside each (\"GraphRAG\", \"idempotent\", \"Schemdraw\")\n- Bottom: a horizontal progress bar representing streaming playback, with a \"Downloaded\" marker and a \"Playback Position\" marker\n\nInteractive controls:\n- Click any pronounce button to start its term's simulated playback\n- Button: \"Simulate slow connection\" (exaggerates the gap between download and playback markers)\n\nBehavior:\n- Clicking a pronounce button starts the \"Playback Position\" marker moving immediately, while the \"Downloaded\" marker fills in behind it more slowly — demonstrating that playback begins before the full file has downloaded\n- Hovering the progress bar shows an infobox explaining streaming playback vs. waiting for a full download\n\nInstructional Rationale: An Apply-level demonstration lets the reader trigger the behavior directly and see the two markers diverge, making \"streaming\" concrete instead of an abstract claim.\n\nImplementation notes: Use p5.js; no real audio is played, the markers simulate timing only."
+}

@@ -1,0 +1,15 @@
+{
+  "sim_id": "breadboard-tie-points-current-flow",
+  "diagram_name": "Breadboard Tie Points and Animated Current Flow",
+  "chapter_number": 28,
+  "chapter_title": "\"Domain-Specific Skill Extension: Electronics Case Study\"",
+  "chapter_dir": "28-domain-specific-skill-extension",
+  "chapter_rel_dir": "chapters/28-domain-specific-skill-extension",
+  "library": "p5.js",
+  "bloom_level": "Apply (L3)",
+  "bloom_verb": "Demonstrate",
+  "learning_objective": "Demonstrate which breadboard holes are electrically connected, and how current flows once a simple LED circuit is completed.",
+  "completion_status": "specified",
+  "extracted_date": "2026-08-22",
+  "specification": "Type: microsim\n**sim-id:** breadboard-tie-points-current-flow<br/>\n**Library:** p5.js<br/>\n**Status:** Specified\n\nBloom Level: Apply (L3)\nBloom Verb: Demonstrate\n\nLearning objective: Demonstrate which breadboard holes are electrically connected, and how current flows once a simple LED circuit is completed.\n\nCanvas layout:\n- A simplified breadboard grid (two power rails top and bottom, a central component area split into two halves by the center gap)\n- A battery, an LED, and a resistor pre-placed into example tie points, with jumper wires connecting them\n\nInteractive controls:\n- Click any hole to highlight every other hole internally connected to it (its full row or rail)\n- Button: \"Complete the Circuit\" — connects the final jumper wire\n- Button: \"Reset\"\n\nBehavior:\n- Clicking a hole highlights its entire internally-connected group in one color, with a label reading \"Same tie point group\" — clicking an adjacent-but-unconnected hole shows no highlight, reinforcing the tip above\n- Clicking \"Complete the Circuit\" animates small moving dots along the wire path from the battery through the resistor and LED and back, and the LED glows once current reaches it\n- If the circuit is left incomplete, no animation plays and an infobox explains which connection is missing\n\nInstructional Rationale: An Apply-level demonstrate objective fits a direct-manipulation simulation where the learner completes the circuit themselves and observes the consequence (the LED lighting), rather than only watching a pre-animated video.\n\nImplementation notes: Use p5.js; model tie points as a simple 2D array grouped by row; animate current as particles moving along a precomputed wire path once the circuit is complete."
+}
