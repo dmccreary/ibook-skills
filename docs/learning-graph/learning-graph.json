@@ -114,2857 +114,3427 @@
       "id": 1,
       "label": "Artificial Intelligence",
       "group": "FOUND",
-      "shape": "box"
+      "shape": "box",
+      "cis": 103499
     },
     {
       "id": 2,
       "label": "Large Language Model",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 83151
     },
     {
       "id": 3,
       "label": "Token",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 511
     },
     {
       "id": 4,
       "label": "Tokenization",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 5,
       "label": "Context Window",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 151
     },
     {
       "id": 6,
       "label": "Prompt",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 37216
     },
     {
       "id": 7,
       "label": "Prompt Engineering",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 27291
     },
     {
       "id": 8,
       "label": "System Prompt",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 9923
     },
     {
       "id": 9,
       "label": "Nondeterminism in LLM Output",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 218
     },
     {
       "id": 10,
       "label": "Hallucination",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 152
     },
     {
       "id": 11,
       "label": "Grounding and Verification",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 65
     },
     {
       "id": 12,
       "label": "Python",
       "group": "PYTOOL",
-      "shape": "box"
+      "shape": "box",
+      "cis": 350
     },
     {
       "id": 13,
       "label": "Markdown Formatting",
       "group": "PLATFORM",
-      "shape": "box"
+      "shape": "box",
+      "cis": 23396
     },
     {
       "id": 14,
       "label": "Terminal Commands",
       "group": "PLATFORM",
-      "shape": "box"
+      "shape": "box",
+      "cis": 836
     },
     {
       "id": 15,
       "label": "Directory Navigation",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 599
     },
     {
       "id": 16,
       "label": "Shell Scripting",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 95
     },
     {
       "id": 17,
       "label": "Git",
       "group": "PLATFORM",
-      "shape": "box"
+      "shape": "box",
+      "cis": 64
     },
     {
       "id": 18,
       "label": "Git Repository Structure",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 29
     },
     {
       "id": 19,
       "label": "Version Control Basics",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 9
     },
     {
       "id": 20,
       "label": "GitHub Integration",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 17
     },
     {
       "id": 21,
       "label": "Visual Studio Code",
       "group": "PLATFORM",
-      "shape": "box"
+      "shape": "box",
+      "cis": 3
     },
     {
       "id": 22,
       "label": "VS Code Terminal",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 23,
       "label": "AI Coding Agent",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 17311
     },
     {
       "id": 24,
       "label": "Tool Use by Agents",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 9897
     },
     {
       "id": 25,
       "label": "Agentic Workflow",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 7390
     },
     {
       "id": 26,
       "label": "Human in the Loop",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 42
     },
     {
       "id": 27,
       "label": "Claude Code Interface",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 18
     },
     {
       "id": 28,
       "label": "IDE Agent Integration",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 29,
       "label": "Chat Versus Agent Interfaces",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 30,
       "label": "Iterative Refinement",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 41
     },
     {
       "id": 31,
       "label": "Intelligent Textbook",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 20218
     },
     {
       "id": 32,
       "label": "Level 1 Static Content",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 415
     },
     {
       "id": 33,
       "label": "Level 2 Interactive Content",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 413
     },
     {
       "id": 34,
       "label": "Level 3 Adaptive Content",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 410
     },
     {
       "id": 35,
       "label": "Level 4 Chatbot Integration",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 4
     },
     {
       "id": 36,
       "label": "Level 5 Autonomous AI",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 2
     },
     {
       "id": 37,
       "label": "Five Levels of Intelligence",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 38,
       "label": "Experience API",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 2
     },
     {
       "id": 39,
       "label": "Learning Record Store",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 40,
       "label": "Open Educational Resources",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 13
     },
     {
       "id": 41,
       "label": "Creative Commons Licensing",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 12
     },
     {
       "id": 42,
       "label": "Textbook Generation Pipeline",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 4864
     },
     {
       "id": 43,
       "label": "Quality Gate",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 40
     },
     {
       "id": 44,
       "label": "MkDocs",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 85
     },
     {
       "id": 45,
       "label": "MkDocs Material Theme",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 36
     },
     {
       "id": 46,
       "label": "mkdocs.yml Configuration",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 17
     },
     {
       "id": 47,
       "label": "Navigation Structure",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 5
     },
     {
       "id": 48,
       "label": "Blank Line Before Lists",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 49,
       "label": "Agent Skill",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 2443
     },
     {
       "id": 50,
       "label": "Agent Skills Open Standard",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 17
     },
     {
       "id": 51,
       "label": "SKILL.md File",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1105
     },
     {
       "id": 52,
       "label": "YAML Frontmatter",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 559
     },
     {
       "id": 53,
       "label": "Skill Name Field",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 3
     },
     {
       "id": 54,
       "label": "Skill Description Field",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 541
     },
     {
       "id": 55,
       "label": "Skill License Field",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 56,
       "label": "Compatibility Field",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 57,
       "label": "Skill Metadata Field",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 58,
       "label": "Allowed Tools Field",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 6
     },
     {
       "id": 59,
       "label": "Vendor Extension Fields",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 60,
       "label": "Frontmatter Contract",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 61,
       "label": "Skill Directory Structure",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 308
     },
     {
       "id": 62,
       "label": "References Directory",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 236
     },
     {
       "id": 63,
       "label": "Scripts Directory",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 47
     },
     {
       "id": 64,
       "label": "Assets Directory",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 3
     },
     {
       "id": 65,
       "label": "Progressive Disclosure",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 227
     },
     {
       "id": 66,
       "label": "Metadata Loading Budget",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 75
     },
     {
       "id": 67,
       "label": "Body Loading Budget",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 68,
       "label": "Reference Loading Budget",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 3
     },
     {
       "id": 69,
       "label": "Skill Trigger Matching",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 232
     },
     {
       "id": 70,
       "label": "Trigger Keyword Table",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 173
     },
     {
       "id": 71,
       "label": "False Trigger Misfire",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 5
     },
     {
       "id": 72,
       "label": "Meta-Skill",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 147
     },
     {
       "id": 73,
       "label": "Skill Routing Table",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 25
     },
     {
       "id": 74,
       "label": "On-Demand Guide Loading",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 2
     },
     {
       "id": 75,
       "label": "Thirty Skill Loading Limit",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 74
     },
     {
       "id": 76,
       "label": "Skill Consolidation",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 73
     },
     {
       "id": 77,
       "label": "Archived Skill",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 2
     },
     {
       "id": 78,
       "label": "Skill Alias Map",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 79,
       "label": "Model Selection Per Skill",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 2
     },
     {
       "id": 80,
       "label": "Opus Versus Sonnet Routing",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 81,
       "label": "Skill Versioning",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 3
     },
     {
       "id": 82,
       "label": "Skill Workflow Instructions",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 3
     },
     {
       "id": 83,
       "label": "Skill Execution Context",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 57
     },
     {
       "id": 84,
       "label": "Skill Composition",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 85,
       "label": "Skill Naming Conventions",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 86,
       "label": "Supporting Assets in Skills",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 87,
       "label": "Reference Docs in Skills",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 88,
       "label": "Template Files in Skills",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 89,
       "label": "Skill Library",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 70
     },
     {
       "id": 90,
       "label": "Skill Library Maintenance",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 2
     },
     {
       "id": 91,
       "label": "Skills Versus Prompts",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 1
     },
     {
       "id": 92,
       "label": "Skill Discoverability",
-      "group": "SKARCH"
+      "group": "SKARCH",
+      "cis": 32
     },
     {
       "id": 93,
       "label": "Skill Creator Skill",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 94,
       "label": "Writing a Skill Description",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 22
     },
     {
       "id": 95,
       "label": "Description Trigger Testing",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 21
     },
     {
       "id": 96,
       "label": "Skill Evaluation Harness",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 16
     },
     {
       "id": 97,
       "label": "Skill Benchmarking",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 4
     },
     {
       "id": 98,
       "label": "Skill Variance Analysis",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 3
     },
     {
       "id": 99,
       "label": "Skill Testing and Debugging",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 11
     },
     {
       "id": 100,
       "label": "Skill Failure Modes",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 4
     },
     {
       "id": 101,
       "label": "Error Analysis in Skills",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 3
     },
     {
       "id": 102,
       "label": "Improving Skill Quality",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 2
     },
     {
       "id": 103,
       "label": "Skill Packaging",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 19
     },
     {
       "id": 104,
       "label": "Skill Distribution Methods",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 105,
       "label": "Symbolic Link Installation",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 17
     },
     {
       "id": 106,
       "label": "Global Skill Installation",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 12
     },
     {
       "id": 107,
       "label": "Project-Specific Skills",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 2
     },
     {
       "id": 108,
       "label": "bk-install-skills Script",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 3
     },
     {
       "id": 109,
       "label": "Stale Symlink Cleanup",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 110,
       "label": "Listing Available Skills",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 9
     },
     {
       "id": 111,
       "label": "Invoking a Skill",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 8
     },
     {
       "id": 112,
       "label": "Slash Command Invocation",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 7
     },
     {
       "id": 113,
       "label": "Claude Command",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 6
     },
     {
       "id": 114,
       "label": "Command Definition File",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 115,
       "label": "Skills Versus Commands",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 116,
       "label": "Runbook Command",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 3
     },
     {
       "id": 117,
       "label": "ibook Runbook",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 2
     },
     {
       "id": 118,
       "label": "Read-Only State Detection",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 119,
       "label": "Skill Portability",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 12
     },
     {
       "id": 120,
       "label": "AGENTS.md Convention",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 2
     },
     {
       "id": 121,
       "label": "OpenAI Codex",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 122,
       "label": "Google Antigravity",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 123,
       "label": "Cursor IDE",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 124,
       "label": "GitHub Copilot",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 125,
       "label": "Cross-Platform Skill Testing",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 3
     },
     {
       "id": 126,
       "label": "Graceful Capability Degradation",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 2
     },
     {
       "id": 127,
       "label": "Image Understanding Dependency",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 128,
       "label": "Permission Management",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 5
     },
     {
       "id": 129,
       "label": "Script Execution Permissions",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 2
     },
     {
       "id": 130,
       "label": "Security in Skill Execution",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 131,
       "label": "File Access Permissions",
-      "group": "SKDEV"
+      "group": "SKDEV",
+      "cis": 1
     },
     {
       "id": 132,
       "label": "Token Budget",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 139
     },
     {
       "id": 133,
       "label": "Token Cost Model",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 51
     },
     {
       "id": 134,
       "label": "Input Versus Output Tokens",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 135,
       "label": "Token Frugality Principle",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 34
     },
     {
       "id": 136,
       "label": "Claude Pro Plan Limits",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 10
     },
     {
       "id": 137,
       "label": "Claude Max Plan Limits",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 138,
       "label": "Four-Hour Usage Window",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 4
     },
     {
       "id": 139,
       "label": "Five-Hour Usage Window",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 140,
       "label": "Tokens Per Minute Limit",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 3
     },
     {
       "id": 141,
       "label": "Rate Limit Handling",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 2
     },
     {
       "id": 142,
       "label": "Context Window Management",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 10
     },
     {
       "id": 143,
       "label": "Context Compaction",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 144,
       "label": "Sub-Agent Startup Overhead",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 25
     },
     {
       "id": 145,
       "label": "Serial Agent Execution",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 11
     },
     {
       "id": 146,
       "label": "Parallel Agent Execution",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 9
     },
     {
       "id": 147,
       "label": "Serial Versus Parallel Tradeoff",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 8
     },
     {
       "id": 148,
       "label": "Marginal Token Cost",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 4
     },
     {
       "id": 149,
       "label": "Glossary Token Benchmark",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 2
     },
     {
       "id": 150,
       "label": "Token Cost Per Term",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 151,
       "label": "File Layout as Token Strategy",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 6
     },
     {
       "id": 152,
       "label": "Separate References Files",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 2
     },
     {
       "id": 153,
       "label": "Separate Quiz Files",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 154,
       "label": "Batch Script Substitution",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 10
     },
     {
       "id": 155,
       "label": "Deterministic Work Offloading",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 8
     },
     {
       "id": 156,
       "label": "Quality Gate Short-Circuit",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 4
     },
     {
       "id": 157,
       "label": "Cached Quality Score",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 158,
       "label": "Selective File Reading",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 2
     },
     {
       "id": 159,
       "label": "Grep Before Read",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 160,
       "label": "Token Cost Estimation",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 4
     },
     {
       "id": 161,
       "label": "Skill Usage Hook",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 32
     },
     {
       "id": 162,
       "label": "Stop Hook",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 163,
       "label": "JSONL Usage Log",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 22
     },
     {
       "id": 164,
       "label": "Skill Usage Analytics",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 17
     },
     {
       "id": 165,
       "label": "Elapsed Time Measurement",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 7
     },
     {
       "id": 166,
       "label": "Token Usage Dashboard",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 6
     },
     {
       "id": 167,
       "label": "Cost Per Book Estimate",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 3
     },
     {
       "id": 168,
       "label": "Budget-Constrained Authoring",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 2
     },
     {
       "id": 169,
       "label": "Token Waste Antipatterns",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 2
     },
     {
       "id": 170,
       "label": "Optimizing Claude Usage",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 171,
       "label": "Token Management Strategies",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 2
     },
     {
       "id": 172,
       "label": "Chapter Token Budgeting",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 173,
       "label": "Python Standard Library",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 102
     },
     {
       "id": 174,
       "label": "pip Package Management",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 6
     },
     {
       "id": 175,
       "label": "Virtual Environment",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 176,
       "label": "Shebang Line",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 6
     },
     {
       "id": 177,
       "label": "Command-Line Arguments",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 5
     },
     {
       "id": 178,
       "label": "Python Scripts in Skills",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 44
     },
     {
       "id": 179,
       "label": "Model Versus Script Division",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 5
     },
     {
       "id": 180,
       "label": "Deterministic Computation",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 4
     },
     {
       "id": 181,
       "label": "Idempotent Script Design",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 2
     },
     {
       "id": 182,
       "label": "Script Exit Codes",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 2
     },
     {
       "id": 183,
       "label": "Dry Run Mode",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 184,
       "label": "Verbose Output Mode",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 185,
       "label": "JSON Serialization",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 94
     },
     {
       "id": 186,
       "label": "CSV Parsing in Python",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 2
     },
     {
       "id": 187,
       "label": "Markdown Parsing in Python",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 2
     },
     {
       "id": 188,
       "label": "Regular Expressions",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 189,
       "label": "File Globbing",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 190,
       "label": "Path Handling",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 191,
       "label": "Shell Script Wrapper",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 3
     },
     {
       "id": 192,
       "label": "bk Command Family",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 193,
       "label": "Course Description",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 4779
     },
     {
       "id": 194,
       "label": "Course Title",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 44
     },
     {
       "id": 195,
       "label": "Target Audience Definition",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 46
     },
     {
       "id": 196,
       "label": "Reading Level Specification",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 40
     },
     {
       "id": 197,
       "label": "Course Prerequisites",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 5
     },
     {
       "id": 198,
       "label": "Main Topics Covered",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 43
     },
     {
       "id": 199,
       "label": "Topics Excluded From Scope",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 1
     },
     {
       "id": 200,
       "label": "Descriptive Context",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 1
     },
     {
       "id": 201,
       "label": "Learning Outcomes",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 4595
     },
     {
       "id": 202,
       "label": "Bloom's Taxonomy",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 2469
     },
     {
       "id": 203,
       "label": "Bloom's 1956 Original",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 1080
     },
     {
       "id": 204,
       "label": "Bloom's 2001 Revision",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 1079
     },
     {
       "id": 205,
       "label": "Remember Level",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 309
     },
     {
       "id": 206,
       "label": "Understand Level",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 261
     },
     {
       "id": 207,
       "label": "Apply Level",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 213
     },
     {
       "id": 208,
       "label": "Analyze Level",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 146
     },
     {
       "id": 209,
       "label": "Evaluate Level",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 98
     },
     {
       "id": 210,
       "label": "Create Level",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 50
     },
     {
       "id": 211,
       "label": "Action Verbs for Outcomes",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 1
     },
     {
       "id": 212,
       "label": "Cognitive Level Distribution",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 47
     },
     {
       "id": 213,
       "label": "Capstone Project",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 2
     },
     {
       "id": 214,
       "label": "Course Description Rubric",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 3
     },
     {
       "id": 215,
       "label": "Course Description Score",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 2
     },
     {
       "id": 216,
       "label": "Course Description Analyzer",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 1
     },
     {
       "id": 217,
       "label": "Instructional Scaffolding",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 30
     },
     {
       "id": 218,
       "label": "Define Before Display Rule",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 1
     },
     {
       "id": 219,
       "label": "Worked Examples",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 10
     },
     {
       "id": 220,
       "label": "Practice Exercises",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 9
     },
     {
       "id": 221,
       "label": "Reading Level Consistency",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 4
     },
     {
       "id": 222,
       "label": "Flesch-Kincaid Grade Level",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 2
     },
     {
       "id": 223,
       "label": "Pedagogical Mascot",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 9
     },
     {
       "id": 224,
       "label": "Mascot Voice and Placement",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 5
     },
     {
       "id": 225,
       "label": "Mascot Admonition Types",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 2
     },
     {
       "id": 226,
       "label": "Mascot Self-Introduction",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 1
     },
     {
       "id": 227,
       "label": "Learning Pathway",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 967
     },
     {
       "id": 228,
       "label": "Assessing Student Understanding",
-      "group": "CDESIGN"
+      "group": "CDESIGN",
+      "cis": 40
     },
     {
       "id": 229,
       "label": "Learning Graph",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 963
     },
     {
       "id": 230,
       "label": "Concept",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 245
     },
     {
       "id": 231,
       "label": "Concept Label",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 14
     },
     {
       "id": 232,
       "label": "Title Case Convention",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 11
     },
     {
       "id": 233,
       "label": "Label Length Limit",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 234,
       "label": "Atomic Concept",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 2
     },
     {
       "id": 235,
       "label": "Concept Granularity",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 236,
       "label": "Concept Enumeration",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 40
     },
     {
       "id": 237,
       "label": "Concept List File",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 4
     },
     {
       "id": 238,
       "label": "ConceptID Field",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 19
     },
     {
       "id": 239,
       "label": "Learning Dependency",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 124
     },
     {
       "id": 240,
       "label": "Dependency Edge",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 119
     },
     {
       "id": 241,
       "label": "Prerequisite Relationship",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 4
     },
     {
       "id": 242,
       "label": "Pipe-Delimited Dependencies",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 2
     },
     {
       "id": 243,
       "label": "Learning Graph CSV Format",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 244,
       "label": "Directed Acyclic Graph",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 51
     },
     {
       "id": 245,
       "label": "Cycle Detection",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 12
     },
     {
       "id": 246,
       "label": "Self-Dependency Check",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 247,
       "label": "Foundational Concept",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 248,
       "label": "Terminal Node",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 249,
       "label": "Orphaned Node",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 11
     },
     {
       "id": 250,
       "label": "Disconnected Subgraph",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 10
     },
     {
       "id": 251,
       "label": "Linear Chain Detection",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 252,
       "label": "Indegree Analysis",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 12
     },
     {
       "id": 253,
       "label": "Outdegree Analysis",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 254,
       "label": "Dependency Chain Length",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 255,
       "label": "Average Dependencies",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 10
     },
     {
       "id": 256,
       "label": "Learning Graph Quality Score",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 9
     },
     {
       "id": 257,
       "label": "Quality Metrics Report",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 4
     },
     {
       "id": 258,
       "label": "Graph Remediation",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 3
     },
     {
       "id": 259,
       "label": "Concept Taxonomy",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 15
     },
     {
       "id": 260,
       "label": "TaxonomyID",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 9
     },
     {
       "id": 261,
       "label": "Taxonomy Category Naming",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 262,
       "label": "Taxonomy Distribution",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 3
     },
     {
       "id": 263,
       "label": "Category Over-Representation",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 264,
       "label": "taxonomy-names.json File",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 265,
       "label": "color-config.json File",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 266,
       "label": "Learning Graph JSON Schema",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 63
     },
     {
       "id": 267,
       "label": "Metadata Section",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 2
     },
     {
       "id": 268,
       "label": "Groups Section",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 2
     },
     {
       "id": 269,
       "label": "Nodes Section",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 16
     },
     {
       "id": 270,
       "label": "Edges Section",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 16
     },
     {
       "id": 271,
       "label": "vis-network JSON Format",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 15
     },
     {
       "id": 272,
       "label": "Dublin Core Metadata",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 273,
       "label": "Learning Graph Viewer",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 3
     },
     {
       "id": 274,
       "label": "Graph Legend and Colors",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 275,
       "label": "Concept Search in Viewer",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 276,
       "label": "Learning Graph Generator",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 3
     },
     {
       "id": 277,
       "label": "Graph Review Workflow",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 2
     },
     {
       "id": 278,
       "label": "Concept List Review",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 279,
       "label": "Learning Graph as Roadmap",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 2
     },
     {
       "id": 280,
       "label": "Multiple Learning Pathways",
-      "group": "LGRAPH"
+      "group": "LGRAPH",
+      "cis": 1
     },
     {
       "id": 281,
       "label": "analyze-graph.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 282,
       "label": "csv-to-json.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 283,
       "label": "add-taxonomy.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 284,
       "label": "validate-learning-graph.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 6
     },
     {
       "id": 285,
       "label": "taxonomy-distribution.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 286,
       "label": "check-loops.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 287,
       "label": "JSON Schema Validation",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 5
     },
     {
       "id": 288,
       "label": "Book Chapter Generator",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 168
     },
     {
       "id": 289,
       "label": "Chapter Structure Design",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 167
     },
     {
       "id": 290,
       "label": "Chapter Concept Assignment",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 3
     },
     {
       "id": 291,
       "label": "Concept Coverage Exactly Once",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 292,
       "label": "Dependency-Ordered Chapters",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 2
     },
     {
       "id": 293,
       "label": "Chapter Index File",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 149
     },
     {
       "id": 294,
       "label": "Chapter Summary",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 12
     },
     {
       "id": 295,
       "label": "Chapter Concept List",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 296,
       "label": "Chapter Content Generator",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 97
     },
     {
       "id": 297,
       "label": "Section Organization",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 11
     },
     {
       "id": 298,
       "label": "Prerequisite Ordering in Text",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 299,
       "label": "Admonition Blocks",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 12
     },
     {
       "id": 300,
       "label": "Note and Tip Admonitions",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 301,
       "label": "Question Admonition",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 302,
       "label": "Details Disclosure Block",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 9
     },
     {
       "id": 303,
       "label": "Math Equation Support",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 6
     },
     {
       "id": 304,
       "label": "MathJax Configuration",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 305,
       "label": "LaTeX Equation Syntax",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 2
     },
     {
       "id": 306,
       "label": "Equation Numbering",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 307,
       "label": "Content Element Types",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 9
     },
     {
       "id": 308,
       "label": "Diagram Specification Block",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 7
     },
     {
       "id": 309,
       "label": "Drawing Specification Block",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 310,
       "label": "Chapter Review Workflow",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 2
     },
     {
       "id": 311,
       "label": "Document Status Indicator",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 312,
       "label": "Content Generation Guide",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 313,
       "label": "Instructor Guide",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 12
     },
     {
       "id": 314,
       "label": "Lesson Plan",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 7
     },
     {
       "id": 315,
       "label": "Supplementary Content",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 4
     },
     {
       "id": 316,
       "label": "Chapter Image Placement",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 8
     },
     {
       "id": 317,
       "label": "Chapter Reading Level Audit",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 318,
       "label": "Content Quality Standards",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 2
     },
     {
       "id": 319,
       "label": "Encouraging Tone",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 320,
       "label": "Chapter Navigation Entry",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 1
     },
     {
       "id": 321,
       "label": "Chapter Metrics",
-      "group": "CONTENT"
+      "group": "CONTENT",
+      "cis": 37
     },
     {
       "id": 322,
       "label": "Glossary",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 19
     },
     {
       "id": 323,
       "label": "Glossary Generator",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 2
     },
     {
       "id": 324,
       "label": "ISO 11179 Standards",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 6
     },
     {
       "id": 325,
       "label": "Precise Definition",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 326,
       "label": "Concise Definition",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 327,
       "label": "Distinct Definition",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 328,
       "label": "Non-Circular Definition",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 329,
       "label": "Definitions Without Rules",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 330,
       "label": "Term Extraction",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 2
     },
     {
       "id": 331,
       "label": "Glossary Term Ordering",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 332,
       "label": "Glossary Anchor Links",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 333,
       "label": "Glossary Quality Report",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 334,
       "label": "FAQ",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 7
     },
     {
       "id": 335,
       "label": "FAQ Generator",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 3
     },
     {
       "id": 336,
       "label": "FAQ Categorization",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 337,
       "label": "FAQ Coverage Gaps",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 338,
       "label": "Chatbot Training JSON",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 2
     },
     {
       "id": 339,
       "label": "Retrieval Augmented Generation",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 340,
       "label": "Quiz",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 18
     },
     {
       "id": 341,
       "label": "Quiz Generator",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 3
     },
     {
       "id": 342,
       "label": "Multiple-Choice Question",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 8
     },
     {
       "id": 343,
       "label": "Distractor Design",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 3
     },
     {
       "id": 344,
       "label": "Distractor Plausibility",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 2
     },
     {
       "id": 345,
       "label": "Answer Distribution Balance",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 346,
       "label": "Quiz Bloom Distribution",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 347,
       "label": "Quiz Explanation Text",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 348,
       "label": "Quiz Bank JSON",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 349,
       "label": "Quiz Analytics",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 350,
       "label": "Reference Generator",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 8
     },
     {
       "id": 351,
       "label": "Curated Reference List",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 6
     },
     {
       "id": 352,
       "label": "Crediting Pedagogical Authors",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 353,
       "label": "URL Verification",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 2
     },
     {
       "id": 354,
       "label": "Wikipedia as a Source",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 355,
       "label": "Reference File Separation",
-      "group": "SUPPORT"
+      "group": "SUPPORT",
+      "cis": 1
     },
     {
       "id": 356,
       "label": "MicroSim",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 377
     },
     {
       "id": 357,
       "label": "MicroSim Directory Structure",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 148
     },
     {
       "id": 358,
       "label": "main.html File",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 14
     },
     {
       "id": 359,
       "label": "style.css File",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 16
     },
     {
       "id": 360,
       "label": "script.js File",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 95
     },
     {
       "id": 361,
       "label": "data.json File",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 362,
       "label": "MicroSim metadata.json",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 7
     },
     {
       "id": 363,
       "label": "MicroSim index.md File",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 13
     },
     {
       "id": 364,
       "label": "File Separation Principle",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 3
     },
     {
       "id": 365,
       "label": "Inline Code Antipattern",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 366,
       "label": "MicroSim Metadata Schema",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 4
     },
     {
       "id": 367,
       "label": "Search Metadata Section",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 368,
       "label": "Educational Metadata Section",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 369,
       "label": "Technical Metadata Section",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 370,
       "label": "MicroSim Generator",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 30
     },
     {
       "id": 371,
       "label": "Visualization Library Routing",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 19
     },
     {
       "id": 372,
       "label": "Ambiguous Term Clarification",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 373,
       "label": "p5.js Library",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 36
     },
     {
       "id": 374,
       "label": "p5.js Setup Function",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 13
     },
     {
       "id": 375,
       "label": "p5.js Draw Loop",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 5
     },
     {
       "id": 376,
       "label": "Canvas Container Sizing",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 7
     },
     {
       "id": 377,
       "label": "p5.js Built-In Controls",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 6
     },
     {
       "id": 378,
       "label": "Slider Control",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 379,
       "label": "Button Control",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 380,
       "label": "Checkbox Control",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 381,
       "label": "Dropdown Select Control",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 382,
       "label": "Text Input Control",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 383,
       "label": "Seeded Randomness",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 384,
       "label": "Chart.js Library",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 385,
       "label": "Plotly Library",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 386,
       "label": "vis-network Library",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 10
     },
     {
       "id": 387,
       "label": "vis-timeline Library",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 388,
       "label": "Leaflet Map Library",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 389,
       "label": "Mermaid Diagram Syntax",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 390,
       "label": "Venn Diagram Generator",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 391,
       "label": "Bubble Chart Matrix",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 392,
       "label": "Comparison Table Sim",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 393,
       "label": "Clickable Matrix Table",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 394,
       "label": "Causal Loop Diagram",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 5
     },
     {
       "id": 395,
       "label": "Reinforcing Loop",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 396,
       "label": "Balancing Loop",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 397,
       "label": "Systems Archetype",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 398,
       "label": "Concept Classifier Sim",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 399,
       "label": "Celebration Animation",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 400,
       "label": "Docker Python Lab",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 401,
       "label": "Runnable Code Block",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 402,
       "label": "Bloom Level to Interaction",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 403,
       "label": "Iframe Embedding",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 9
     },
     {
       "id": 404,
       "label": "CANVAS_HEIGHT Directive",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 3
     },
     {
       "id": 405,
       "label": "Iframe Height Synchronization",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 406,
       "label": "Responsive Sim Layout",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 3
     },
     {
       "id": 407,
       "label": "Fullscreen Sim Button",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 408,
       "label": "Accessible Color Schemes",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 409,
       "label": "Font Size for Readability",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 410,
       "label": "MicroSim Screen Capture",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 7
     },
     {
       "id": 411,
       "label": "Batch Screenshot Capture",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 412,
       "label": "MicroSim Index Catalog",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 413,
       "label": "MicroSim Quality Score",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 13
     },
     {
       "id": 414,
       "label": "MicroSim Standardization",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 415,
       "label": "Visual Layout Review",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 416,
       "label": "Iframe Control Visibility",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 417,
       "label": "Diagram Coverage Report",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 418,
       "label": "Sim Lifecycle Status",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 5
     },
     {
       "id": 419,
       "label": "Sim Scaffolding Workflow",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 4
     },
     {
       "id": 420,
       "label": "Batch Sim Generation",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 2
     },
     {
       "id": 421,
       "label": "Sequential Sim Execution",
-      "group": "MSIM"
+      "group": "MSIM",
+      "cis": 1
     },
     {
       "id": 422,
       "label": "extract-sim-specs.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 2
     },
     {
       "id": 423,
       "label": "generate-sim-scaffold.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 424,
       "label": "add-iframes-to-chapter.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 425,
       "label": "sync-iframe-heights.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 426,
       "label": "validate-sims.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 427,
       "label": "calculate-quality-score.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 428,
       "label": "generate-sims-index.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 429,
       "label": "update-mkdocs-nav.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 430,
       "label": "diagram-report.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 431,
       "label": "Batch Utility Token Savings",
-      "group": "TOKEN"
+      "group": "TOKEN",
+      "cis": 1
     },
     {
       "id": 432,
       "label": "Text-to-Image Model",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 129
     },
     {
       "id": 433,
       "label": "Text Rendering in Images",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 38
     },
     {
       "id": 434,
       "label": "Image Prompt Engineering",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 13
     },
     {
       "id": 435,
       "label": "One-Shot Generation Risk",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 62
     },
     {
       "id": 436,
       "label": "Fact Fabrication Rate",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 24
     },
     {
       "id": 437,
       "label": "Baked-In Text Problem",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 37
     },
     {
       "id": 438,
       "label": "Separating Facts From Pixels",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 22
     },
     {
       "id": 439,
       "label": "Verified Infographic Pipeline",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 21
     },
     {
       "id": 440,
       "label": "Claim Planning Phase",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 14
     },
     {
       "id": 441,
       "label": "Source Discovery Phase",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 13
     },
     {
       "id": 442,
       "label": "Passage-Level Verification",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 12
     },
     {
       "id": 443,
       "label": "Claim Verification Report",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 11
     },
     {
       "id": 444,
       "label": "Layout Specification Lock",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 6
     },
     {
       "id": 445,
       "label": "Verbatim Text Prompt",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 4
     },
     {
       "id": 446,
       "label": "Substitution Prohibition",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 447,
       "label": "Asymmetric Content Handling",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 448,
       "label": "Rendered Image Audit",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 2
     },
     {
       "id": 449,
       "label": "Source Sidecar File",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 2
     },
     {
       "id": 450,
       "label": "Audit Trail Preservation",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 451,
       "label": "Interactive Infographic Overlay",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 14
     },
     {
       "id": 452,
       "label": "Annotation-Free Illustration",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 453,
       "label": "Callout Overlay Engine",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 8
     },
     {
       "id": 454,
       "label": "Grid Overlay Engine",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 455,
       "label": "Callout Marker Coordinates",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 3
     },
     {
       "id": 456,
       "label": "Leader Line Rendering",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 457,
       "label": "Overlay Explore Mode",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 3
     },
     {
       "id": 458,
       "label": "Overlay Quiz Mode",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 459,
       "label": "Editable Marker Positions",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 460,
       "label": "Freely-Licensed Images",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 7
     },
     {
       "id": 461,
       "label": "Wikimedia Commons Sourcing",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 462,
       "label": "Government Archive Images",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 463,
       "label": "Image Attribution",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 464,
       "label": "Cover Image Generation",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 7
     },
     {
       "id": 465,
       "label": "Site Logo and Favicon",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 2
     },
     {
       "id": 466,
       "label": "Social Media Preview Card",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 3
     },
     {
       "id": 467,
       "label": "Open Graph Meta Tags",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 468,
       "label": "Image Compression",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 3
     },
     {
       "id": 469,
       "label": "MARP Slide Deck",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 7
     },
     {
       "id": 470,
       "label": "Slide Deck Publishing",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 471,
       "label": "PowerPoint Lecture Deck",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 5
     },
     {
       "id": 472,
       "label": "Speaker Notes",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 473,
       "label": "Illustrated Story Format",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 3
     },
     {
       "id": 474,
       "label": "Graphic Novel Format",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 475,
       "label": "Text-to-Speech Narration",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 4
     },
     {
       "id": 476,
       "label": "ElevenLabs Voice Settings",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 477,
       "label": "Audio Streaming Playback",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 478,
       "label": "Pronounce Button",
-      "group": "MEDIA"
+      "group": "MEDIA",
+      "cis": 1
     },
     {
       "id": 479,
       "label": "generate-favicon.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 480,
       "label": "trim-padding-from-image.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 481,
       "label": "compress-images.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 482,
       "label": "crop-screenshot.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 483,
       "label": "generate-images.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 484,
       "label": "Domain-Specific Skill",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 45
     },
     {
       "id": 485,
       "label": "Core Versus Domain Skills",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 3
     },
     {
       "id": 486,
       "label": "Domain Vocabulary Gap",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 487,
       "label": "Project-Local Skill Directory",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 488,
       "label": "Domain Skill Standards",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 489,
       "label": "Circuit Schematic Generation",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 4
     },
     {
       "id": 490,
       "label": "Schemdraw Library",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 3
     },
     {
       "id": 491,
       "label": "Prose to Circuit Translation",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 2
     },
     {
       "id": 492,
       "label": "Schematic Verification",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 493,
       "label": "Solderless Breadboard",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 16
     },
     {
       "id": 494,
       "label": "Breadboard Tie Points",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 10
     },
     {
       "id": 495,
       "label": "Component Placement",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 5
     },
     {
       "id": 496,
       "label": "Jumper Wire Routing",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 4
     },
     {
       "id": 497,
       "label": "Animated Current Flow",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 3
     },
     {
       "id": 498,
       "label": "Digital Circuit Simulation",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 2
     },
     {
       "id": 499,
       "label": "Voltage and Current Scope",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 500,
       "label": "Hands-On Lab Design",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 8
     },
     {
       "id": 501,
       "label": "Lab Rubric Scoring",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 5
     },
     {
       "id": 502,
       "label": "Parts Kit Buildability",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 503,
       "label": "Frontmatter Quality Score",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 504,
       "label": "Automated Work Item Filing",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 2
     },
     {
       "id": 505,
       "label": "TODO Backlog Generation",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 506,
       "label": "Domain Skill Case Study",
-      "group": "DOMAIN"
+      "group": "DOMAIN",
+      "cis": 1
     },
     {
       "id": 507,
       "label": "MkDocs Plugins",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 4
     },
     {
       "id": 508,
       "label": "Search Configuration",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 509,
       "label": "Code Syntax Highlighting",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 510,
       "label": "Image Zoom Lightbox",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 511,
       "label": "Comment System",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 512,
       "label": "Page Feedback Widget",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 513,
       "label": "Custom 404 Page",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 514,
       "label": "About Page",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 515,
       "label": "Home Page Template",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 516,
       "label": "Site Build Command",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 15
     },
     {
       "id": 517,
       "label": "Local Development Server",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 518,
       "label": "Strict Build Mode",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 4
     },
     {
       "id": 519,
       "label": "Book Installer Skill",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 6
     },
     {
       "id": 520,
       "label": "Textbook Scaffold",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 521,
       "label": "Feature Installation Routing",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 4
     },
     {
       "id": 522,
       "label": "Feature Auto-Detection",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 3
     },
     {
       "id": 523,
       "label": "Feature Checklist",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 524,
       "label": "Git Add Command",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 4
     },
     {
       "id": 525,
       "label": "Git Commit",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 3
     },
     {
       "id": 526,
       "label": "Git Push",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 527,
       "label": "Git Status",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 528,
       "label": "Git Branching",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 2
     },
     {
       "id": 529,
       "label": "Never Use Master Branch",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 530,
       "label": "GitHub Pages Deployment",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 9
     },
     {
       "id": 531,
       "label": "gh-deploy Command",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 4
     },
     {
       "id": 532,
       "label": "Deployment Verification",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 3
     },
     {
       "id": 533,
       "label": "Google Analytics GA4",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 2
     },
     {
       "id": 534,
       "label": "Measurement ID",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 535,
       "label": "GitHub Projects Kanban",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 536,
       "label": "Auto-Commit Hook",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 537,
       "label": "CLAUDE.md Project Memory",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 2
     },
     {
       "id": 538,
       "label": "Project Instruction Files",
-      "group": "PLATFORM"
+      "group": "PLATFORM",
+      "cis": 1
     },
     {
       "id": 539,
       "label": "detect_features.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 540,
       "label": "analyze-reading-levels.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 541,
       "label": "Book Metrics",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 35
     },
     {
       "id": 542,
       "label": "book-metrics.json Hub",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 9
     },
     {
       "id": 543,
       "label": "Canonical Metrics Principle",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 7
     },
     {
       "id": 544,
       "label": "Word Count Metric",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 2
     },
     {
       "id": 545,
       "label": "Equivalent Page Count",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 546,
       "label": "Equation Count",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 547,
       "label": "Chapter Metrics Report",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 548,
       "label": "Site Metrics Collection",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 2
     },
     {
       "id": 549,
       "label": "book-metrics.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 550,
       "label": "collect-site-metrics.py",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 1
     },
     {
       "id": 551,
       "label": "Book Status Report",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 552,
       "label": "Book Publisher Skill",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 10
     },
     {
       "id": 553,
       "label": "README Generation",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 3
     },
     {
       "id": 554,
       "label": "Repository Badges",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 555,
       "label": "Getting Started Section",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 556,
       "label": "LinkedIn Announcement Post",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 4
     },
     {
       "id": 557,
       "label": "LinkedIn Carousel Document",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 2
     },
     {
       "id": 558,
       "label": "Carousel Slide Patterns",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 559,
       "label": "Press Release",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 2
     },
     {
       "id": 560,
       "label": "AP Style Writing",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 561,
       "label": "Announcement Preview Image",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 562,
       "label": "Book Completion Workflow",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 3
     },
     {
       "id": 563,
       "label": "Book Launch Checklist",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 2
     },
     {
       "id": 564,
       "label": "Session Logging",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 4
     },
     {
       "id": 565,
       "label": "Session Log Format",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 2
     },
     {
       "id": 566,
       "label": "Design Decision Record",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 567,
       "label": "analyze-skills.py Script",
-      "group": "PYTOOL"
+      "group": "PYTOOL",
+      "cis": 3
     },
     {
       "id": 568,
       "label": "Skill Usage Report",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 2
     },
     {
       "id": 569,
       "label": "Continuous Book Improvement",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     },
     {
       "id": 570,
       "label": "Capstone Textbook Project",
-      "group": "PUBLISH"
+      "group": "PUBLISH",
+      "cis": 1
     }
   ],
   "edges": [
