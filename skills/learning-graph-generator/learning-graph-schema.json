@@ -113,6 +113,11 @@
           "level": {
             "type": "integer",
             "description": "Optional hierarchical level for layout purposes"
+          },
+          "cis": {
+            "type": "integer",
+            "description": "Concept Impact Score: a PageRank-style recursive importance measure over the dependency graph, computed as 1 plus the sum of the CIS of every concept that directly depends on this one (transitively capturing how much of the book's total understanding ultimately rests on this concept). Minimum value is 1 (a terminal concept with no dependents). Computed automatically by csv-to-json.py during learning-graph.json generation -- see the 'Predicting Concept Content Size' paper (Definition 3, Proposition 1) for the full derivation.",
+            "minimum": 1
           }
         }
       }
@@ -126,12 +131,12 @@
         "properties": {
           "from": {
             "type": "integer",
-            "description": "Source node ID (prerequisite concept)",
+            "description": "Source node ID (dependent concept -- the concept that requires 'to' as a prerequisite). CORRECTED 2026-08-24: earlier versions of this schema had 'from'/'to' reversed relative to how every skill in this project (book-chapter-generator, chapter-content-generator) and every generated learning-graph.json actually uses these fields. The edge direction is DEPENDENCY, not enablement: edge {from: 5, to: 1} means concept 5 depends on concept 1, i.e. concept 1 must be learned first. See the 'CRITICAL: Edge Direction' warnings in book-chapter-generator/SKILL.md and chapter-content-generator/SKILL.md.",
             "minimum": 1
           },
           "to": {
             "type": "integer",
-            "description": "Target node ID (dependent concept)",
+            "description": "Target node ID (prerequisite concept -- the concept 'from' depends on). See the note on 'from' above.",
             "minimum": 1
           },
           "arrows": {

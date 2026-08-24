@@ -5,7 +5,12 @@ description: Generates a comprehensive learning graph from a course description,
 
 # Learning Graph Generator
 
-**Version:** 0.06
+**Version:** 1.06
+
+### Changelog
+
+- **v1.06** — **BREAKING:** `csv-to-json.py` (bumped to v1.04) now computes a **Concept Impact Score (CIS)** for every node and writes it into `learning-graph.json` as `node.cis`. CIS is a PageRank-style recursive importance measure: `CIS(x) = 1 + sum(CIS(d) for d in direct dependents of x)`, capturing how much of the book's total understanding transitively rests on a concept — unlike plain in-degree, which undercounts concepts that are foundational only indirectly (e.g. "Constant" or "Coefficient" in a typical algebra course, which have few direct dependents but many transitive ones). Because the graph is a DAG, CIS is computed exactly in one topological-order pass — no damping factor or iteration. Downstream skills (`book-installer`'s graph viewer, `book-chapter-generator`, `chapter-content-generator`) now read this field directly instead of recomputing their own importance measure. See the schema's `nodes[].cis` field and the "Predicting Concept Content Size" paper (Definition 3, Proposition 1) for the full derivation. This is a breaking change to the `learning-graph.json` output format (an additive field, so old readers won't break, but downstream skills now expect it to be present) — regenerate `learning-graph.json` for any existing book before running the updated `book-chapter-generator` or `chapter-content-generator`.
+- **v0.06** — (prior history not tracked in this changelog format)
 
 You are tasked with generating a comprehensive high-quality learning graph from a course description.
 A learning graph is the foundational data structure for intelligent textbooks that can recommend learning paths.
@@ -316,7 +321,7 @@ The groups section creates a legend of concept types with distinct colors for vi
 - The groups section uses taxonomy IDs (e.g., "FOUND", "DEF") as keys
 - Each group must have a `classifierName` field containing a **descriptive human-readable name** (e.g., "Foundation Concepts", NOT just "FOUND")
 - Each group must have a `color` field using **named CSS colors** (NOT hex codes like "#E74C3C")
-- Each group should have a `font` object with a `color` field — `white` on dark backgrounds, `black` on light backgrounds. `csv-to-json.py` v0.04+ picks the right font color automatically based on the background.
+- Each group should have a `font` object with a `color` field — `white` on dark backgrounds, `black` on light backgrounds. `csv-to-json.py` v1.04+ picks the right font color automatically based on the background.
 
 **Key structure:**
 - **Group key**: Use the TaxonomyID from the CSV (uppercase, no spaces, e.g., "FOUND")
@@ -326,7 +331,7 @@ The groups section creates a legend of concept types with distinct colors for vi
 
 ### Recommended distinct palette (24 colors)
 
-The default palette in `csv-to-json.py` v0.04+ is hand-tuned so that adjacent legend rows never collide and same-hue families are separated by lightness. It comfortably supports up to 24 distinct categories. Use this palette (or a subset, in this order, via `color-config.json`) to keep visual clarity even with many taxonomies:
+The default palette in `csv-to-json.py` v1.04+ is hand-tuned so that adjacent legend rows never collide and same-hue families are separated by lightness. It comfortably supports up to 24 distinct categories. Use this palette (or a subset, in this order, via `color-config.json`) to keep visual clarity even with many taxonomies:
 
 | Position | Color (CSS name) | Suggested category family | Font |
 |---|---|---|---|
@@ -359,7 +364,7 @@ The default palette in `csv-to-json.py` v0.04+ is hand-tuned so that adjacent le
 
 - **Subject-family hue grouping** — cool blues for foundations and infrastructure, greens for build/architecture, yellows/golds for the data band, reds for security, purples for project/process, oranges/browns for the AI cluster, an accent (DeepPink) for knowledge graphs as connective tissue, neutral gray for emerging.
 - **Within each hue family, lightness alternates** so neighbors never collide (Gold → DarkGoldenrod, DodgerBlue → LightSkyBlue, MediumPurple → Indigo, etc.).
-- **Dark backgrounds get white text, light backgrounds get black text** — `csv-to-json.py` v0.04+ enforces this automatically. The dark set covers SteelBlue, DarkSlateBlue, DarkGreen, DarkGoldenrod, Teal, DodgerBlue, Crimson, DarkRed, MediumPurple, Indigo, DarkOrchid, OliveDrab, SaddleBrown, Tomato, DeepPink, DimGray.
+- **Dark backgrounds get white text, light backgrounds get black text** — `csv-to-json.py` v1.04+ enforces this automatically. The dark set covers SteelBlue, DarkSlateBlue, DarkGreen, DarkGoldenrod, Teal, DodgerBlue, Crimson, DarkRed, MediumPurple, Indigo, DarkOrchid, OliveDrab, SaddleBrown, Tomato, DeepPink, DimGray.
 
 ### color-config.json (recommended)
 
@@ -430,10 +435,11 @@ This command will:
 4. Auto-generate the groups section based on the taxonomies in the CSV
 5. Create nodes with proper group references (using TaxonomyIDs)
 6. Create edges based on the dependencies
-7. Output a complete learning-graph.json file conforming to the schema
-8. WARN if any taxonomy ID is missing a human-readable name
+7. **Compute the Concept Impact Score (CIS) for every node** and attach it as `node.cis` (see Changelog above)
+8. Output a complete learning-graph.json file conforming to the schema
+9. WARN if any taxonomy ID is missing a human-readable name
 
-Verify that the file [learning-graph.json](./learning-graph.json) is present and valid.
+Verify that the file [learning-graph.json](./learning-graph.json) is present and valid. The console output will list the top 10 concepts by CIS — sanity-check that these are genuinely foundational concepts for the course (widely-depended-upon ideas), not narrow terminal topics. If a narrow/advanced concept tops the CIS list, the edge direction is very likely inverted (see the `book-chapter-generator` skill's edge-direction validation for how to diagnose this).
 
 Optional: You can validate the JSON against the schema using:
 ```bash

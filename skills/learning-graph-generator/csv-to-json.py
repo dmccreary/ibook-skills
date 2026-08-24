@@ -9,12 +9,75 @@ human-readable classifierName values in the output. Without this file,
 taxonomy IDs will be used as fallback (which is usually wrong).
 """
 
-VERSION = "0.04"
+VERSION = "1.04"
 
 import csv
 import json
+from collections import defaultdict, deque
 from typing import Dict, List
 from datetime import datetime
+
+
+def calculate_cis(nodes: List[dict], edges: List[dict]) -> Dict[int, int]:
+    """
+    Compute the Concept Impact Score (CIS) for every node: a PageRank-style
+    recursive importance measure over the concept dependency DAG.
+
+        CIS(x) = 1 + sum(CIS(d) for d in direct_dependents(x))
+
+    A concept's impact is itself (1) plus the combined impact of every
+    concept that depends on it, computed transitively. This captures how
+    much of the book's total understanding ultimately rests on a concept,
+    which plain in-degree (direct dependents only) undercounts for concepts
+    that are foundational only transitively (few direct dependents but many
+    indirect ones -- e.g. "Constant" or "Coefficient" in a typical algebra
+    course).
+
+    Because a learning graph is a DAG (never contains a cycle), CIS has an
+    exact closed-form solution computable in a single topological-order
+    pass -- no PageRank damping factor or iteration is required. See the
+    "Predicting Concept Content Size" paper (Definition 3, Proposition 1)
+    for the full derivation.
+
+    Edge convention (matches every other skill in this project): edge['from']
+    is the DEPENDENT concept, edge['to'] is its PREREQUISITE. Edge
+    {from: 5, to: 1} means concept 5 depends on concept 1. NEVER invert this
+    -- see the "CRITICAL: Edge Direction" warnings in book-chapter-generator
+    and chapter-content-generator.
+    """
+    node_ids = [n['id'] for n in nodes]
+
+    dependents_of = defaultdict(list)  # prereq_id -> [dependent_id, ...]
+    prereqs_of = defaultdict(list)     # dependent_id -> [prereq_id, ...]
+    for e in edges:
+        dependents_of[e['to']].append(e['from'])
+        prereqs_of[e['from']].append(e['to'])
+
+    # Process nodes in an order where every node is scored only after all of
+    # its dependents are already scored -- terminal concepts (nothing
+    # depends on them) first, foundational hub concepts last.
+    remaining = {nid: len(dependents_of[nid]) for nid in node_ids}
+    cis: Dict[int, int] = {}
+    queue = deque([nid for nid in node_ids if remaining[nid] == 0])
+
+    while queue:
+        nid = queue.popleft()
+        cis[nid] = 1 + sum(cis[d] for d in dependents_of[nid])
+        for prereq in prereqs_of[nid]:
+            remaining[prereq] -= 1
+            if remaining[prereq] == 0:
+                queue.append(prereq)
+
+    if len(cis) != len(node_ids):
+        unscored = [nid for nid in node_ids if nid not in cis]
+        raise ValueError(
+            f"CIS computation only scored {len(cis)}/{len(node_ids)} nodes -- "
+            f"the graph likely contains a cycle (unscored IDs: {unscored[:10]}"
+            f"{'...' if len(unscored) > 10 else ''}). Run analyze-graph.py or "
+            f"validate-learning-graph.sh to verify DAG structure before retrying."
+        )
+
+    return cis
 
 
 def csv_to_json(csv_path: str, json_path: str, color_config: dict = None,
@@ -160,6 +223,11 @@ def csv_to_json(csv_path: str, json_path: str, color_config: dict = None,
                     }
                     edges.append(edge)
 
+    # Compute and attach the Concept Impact Score to every node
+    cis_scores = calculate_cis(nodes, edges)
+    for node in nodes:
+        node['cis'] = cis_scores[node['id']]
+
     # Create metadata section
     default_metadata = {
         'title': 'Learning Graph',
@@ -257,6 +325,11 @@ def csv_to_json(csv_path: str, json_path: str, color_config: dict = None,
     print(f"   - {len(foundational_ids)} foundational concepts")
     print(f"\nFoundational concept IDs: {foundational_ids}")
     print(f"Groups: {list(groups.keys())}")
+
+    top_cis = sorted(nodes, key=lambda n: -n['cis'])[:10]
+    print(f"\nTop 10 concepts by Concept Impact Score (CIS):")
+    for n in top_cis:
+        print(f"   - {n['label']} (id {n['id']}): CIS={n['cis']}")
 
     # IMPORTANT: Warn about missing human-readable names
     if missing_names:
