@@ -18,7 +18,7 @@ from typing import Dict, List, Tuple, Any
 from datetime import datetime
 
 # Version of the Book Metrics Generator
-VERSION = "0.08"
+VERSION = "0.09"
 
 # Version of the book-metrics.json file format (see book-metrics.schema.json).
 # Bump only on a breaking change to the JSON structure, not on every code change.
@@ -42,6 +42,7 @@ class BookMetricsGenerator:
         self.learning_graph_dir = self.docs_dir / "learning-graph"
         self.sims_dir = self.docs_dir / "sims"
         self.stories_dir = self.docs_dir / "stories"
+        self.labs_dir = self.docs_dir / "labs"
         self.mascot_dir = self.docs_dir / "img" / "mascot"
         self.glossary_file = self.docs_dir / "glossary.md"
         self.faq_file = self.docs_dir / "faq.md"
@@ -439,6 +440,26 @@ class BookMetricsGenerator:
 
         return count
 
+    def count_labs(self) -> int:
+        """Count hands-on lab pages in docs/labs.
+
+        Each lab is a subdirectory containing an index.md file (e.g.
+        docs/labs/01-hello-world/index.md). The top-level index.md is not
+        counted.
+
+        Returns:
+            Number of lab directories
+        """
+        if not self.labs_dir.exists():
+            return 0
+
+        count = 0
+        for item in self.labs_dir.iterdir():
+            if item.is_dir() and (item / "index.md").exists():
+                count += 1
+
+        return count
+
     def count_chapter_quizzes(self) -> int:
         """Count chapters that have a quiz.md file.
 
@@ -776,6 +797,7 @@ class BookMetricsGenerator:
         chapter_quizzes = self.count_chapter_quizzes()
         ref_files, ref_entries = self.count_chapter_references()
         stories = self.count_stories()
+        labs = self.count_labs()
         appendices = self.count_appendices()
         mascot_images = self.count_mascot_images()
         development_stage = self.get_development_stage()
@@ -812,7 +834,7 @@ class BookMetricsGenerator:
         md += "Chapter-only metrics show what students see in the main chapters.\n\n"
 
         md += "## Book Composition\n\n"
-        md += "The twelve tracked elements of an intelligent textbook. The **Status** column "
+        md += "The thirteen tracked elements of an intelligent textbook. The **Status** column "
         md += "shows whether each element is *Required*, *Recommended*, or *Optional*; a ⚠️ marks "
         md += "a required element that is still missing.\n\n"
         md += "| # | Element | Value | Status | Notes |\n"
@@ -829,6 +851,7 @@ class BookMetricsGenerator:
         md += f"| 10 | Mascot | {mascot_images if mascot_images else 'None'} | Optional | Mascot image poses in docs/img/mascot/ |\n"
         md += f"| 11 | Appendices | {appendices} | Optional | Appendix pages |\n"
         md += f"| 12 | Development Stage | {development_stage} | {status_cell('Required', development_stage, ('Not specified',))} | From mkdocs.yml or course-description.md |\n"
+        md += f"| 13 | Labs | {labs} | Optional | Hands-on lab pages in docs/labs/ |\n"
 
         md += "\n## Student-Facing Content Metrics\n\n"
         md += "Excludes administrative directories (`prompts/`, `learning-graph/`).\n\n"
@@ -875,7 +898,8 @@ class BookMetricsGenerator:
         md += "- **Words** *(required)*: All words in student-facing markdown files (excluding code blocks and URLs)\n"
         md += "- **Mascot** *(optional)*: Image files (poses) in docs/img/mascot/\n"
         md += "- **Appendices** *(optional)*: Pages in the appendices/ directory (excluding index.md)\n"
-        md += "- **Development Stage** *(required)*: `development_stage` value in mkdocs.yml (or course-description.md); shows 'Not specified' if absent\n\n"
+        md += "- **Development Stage** *(required)*: `development_stage` value in mkdocs.yml (or course-description.md); shows 'Not specified' if absent\n"
+        md += "- **Labs** *(optional)*: Hands-on lab directories in docs/labs/ with index.md files\n\n"
 
         md += "### Content Metrics\n\n"
         md += "- **Diagrams**: H4 headers starting with '#### Diagram:'\n"
@@ -974,6 +998,7 @@ class BookMetricsGenerator:
             "chapters": chapter_count,
             "microsims": microsims,
             "stories": self.count_stories(),
+            "labs": self.count_labs(),
             "glossaryTerms": self.count_glossary_terms(),
             "faqs": self.count_faqs(),
             "quizQuestions": self.count_quiz_questions(),
@@ -1175,7 +1200,11 @@ def main():
     generator.generate_metrics()
 
     print(f"\n✅ Book metrics generation version {VERSION} complete!")
-    print("\nUpdates in v0.08:")
+    print("\nUpdates in v0.09:")
+    print("  - Added Labs tracking: hands-on lab directories under docs/labs/")
+    print("    (each with an index.md) are now element #13 in the Book")
+    print("    Composition table and the 'labs' total in book-metrics.json.")
+    print("\nPrevious updates (v0.08):")
     print("  - NEW canonical docs/learning-graph/book-metrics.json - the single")
     print("    source of truth for book-wide totals. Fully machine-owned and")
     print("    overwritten each run; validates against book-metrics.schema.json.")

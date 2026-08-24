@@ -20,7 +20,7 @@
     "metricsGeneratedBy": {
       "type": "string",
       "description": "Human-readable provenance string identifying the program and version that produced this file.",
-      "examples": ["Book Metrics Python Program v0.08"]
+      "examples": ["Book Metrics Python Program v0.09"]
     },
     "metricsGeneratedOn": {
       "type": "string",
@@ -40,6 +40,7 @@
         "chapters",
         "microsims",
         "stories",
+        "labs",
         "glossaryTerms",
         "faqs",
         "quizQuestions",
@@ -80,6 +81,11 @@
           "type": "integer",
           "minimum": 0,
           "description": "Story directories under docs/stories/ that contain an index.md."
+        },
+        "labs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Hands-on lab directories under docs/labs/ that contain an index.md."
         },
         "glossaryTerms": {
           "type": "integer",

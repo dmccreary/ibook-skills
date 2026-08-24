@@ -41,7 +41,7 @@ Optional inputs that enrich the metrics (each is counted only if present):
 
 - `docs/learning-graph/learning-graph.csv` (concepts)
 - `docs/glossary.md` (glossary terms), `docs/faq.md` (FAQs)
-- `docs/sims/` (MicroSims), `docs/stories/` (stories)
+- `docs/sims/` (MicroSims), `docs/stories/` (stories), `docs/labs/` (hands-on labs)
 - `docs/img/mascot/` (mascot poses), `docs/appendices/` (appendix pages)
 - per-chapter `quiz.md` and `references.md`
 - `mkdocs.yml` `extra.development_stage` (development stage)
@@ -65,7 +65,7 @@ elsewhere. If `bk-generate-book-metrics` reports "command not found", make sure
 
 ## Book Composition
 
-`book-metrics.md` opens with a **Book Composition** table covering the twelve
+`book-metrics.md` opens with a **Book Composition** table covering the thirteen
 tracked elements of an intelligent textbook, each labeled *Required*,
 *Recommended*, or *Optional* (a required element that is still missing is
 flagged with ⚠️):
@@ -84,6 +84,7 @@ flagged with ⚠️):
 | 10 | Mascot | Optional | Image poses in docs/img/mascot/ |
 | 11 | Appendices | Optional | Pages in appendices/ (excluding index.md) |
 | 12 | Development Stage | Required | mkdocs.yml `extra.development_stage` or course-description.md |
+| 13 | Labs | Optional | Hands-on lab directories in docs/labs/ with index.md |
 
 ## Student-Facing Content Metrics
 
@@ -120,7 +121,7 @@ clobbering author content).
 {
   "$schema": "https://raw.githubusercontent.com/dmccreary/ibook-skills/main/src/book-metrics/book-metrics.schema.json",
   "metricsVersion": "1.0",
-  "metricsGeneratedBy": "Book Metrics Python Program v0.08",
+  "metricsGeneratedBy": "Book Metrics Python Program v0.09",
   "metricsGeneratedOn": "June 03, 2026 at 10:13 AM",
   "metricsGeneratedOnISO": "2026-06-03T10:13:00",
   "metrics": {
@@ -128,6 +129,7 @@ clobbering author content).
     "chapters": 12,
     "microsims": 18,
     "stories": 2,
+    "labs": 12,
     "glossaryTerms": 200,
     "faqs": 40,
     "quizQuestions": 120,
