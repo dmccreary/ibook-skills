@@ -213,58 +213,54 @@ relax a rule to make the check pass.
 ## Concept Depth & Word-Count Targets
 
 Not every concept deserves equal space. A concept that many other concepts
-depend on needs more careful explanation — a shaky foundation cascades into
-everything built on top of it — while a leaf concept that nothing depends on
-can be treated more lightly.
+depend on — directly or transitively — needs more careful explanation, since
+a shaky foundation cascades into everything built on top of it, while a leaf
+concept that nothing depends on can be treated more lightly.
 
-### Computing a concept's dependent count
+**This is now driven by each concept's Concept Impact Score (CIS)**, a
+PageRank-style recursive importance measure computed by
+`learning-graph-generator` (v1.06+) and written into `learning-graph.json` as
+`node.cis`: `CIS(x) = 1 + sum(CIS(d) for d in direct dependents of x)`. CIS
+supersedes a plain dependents count because it captures *transitive* impact —
+a concept with only one or two direct dependents can still be highly
+foundational if those dependents themselves have many dependents, which raw
+in-degree misses entirely.
 
-For a concept `c` in `docs/learning-graph/learning-graph.csv`, count how many
-*other* rows list `c` in their `Dependencies` column. Call this `d_c` — the
-number of downstream concepts that depend on `c`.
+`book-chapter-generator` (v1.0.0+) writes each concept's CIS into its
+chapter's "Concepts Covered" table, and `chapter-content-generator` (v1.09+)
+converts CIS into a per-concept word-count and required-element budget in its
+**Elaboration Budget** step (Step 2.3b): CIS is normalized globally against
+the book's maximum CIS into an Elaboration Score `E(c)`, then assigned a tier:
 
-### Target word-count formula
+| Tier | `E(c)` range | Target words | Required elements |
+|------|--------------|---------------|--------------------|
+| A (full treatment) | `>= 0.5` | 500-750 | worked example + diagram/chart/table/MicroSim |
+| B (standard) | `0.2 <= E(c) < 0.5` | 250-400 | worked example |
+| C (brief) | `< 0.2` | 120-200 | clear definition; example optional |
 
-```
-words(c) = W_min + (W_max - W_min) × ln(1 + min(d_c, D_cap)) / ln(1 + D_cap)
-```
+A chapter's total word count is the **sum** of its concepts' individual
+targets, not an independent flat number — a chapter with several Tier A
+concepts will naturally run longer than one of mostly Tier C concepts, and
+that variation is intentional, not something to normalize away.
 
-- `W_min = 150` — floor, for concepts with `d_c = 0`
-- `W_max = 600` — ceiling, for heavily-depended-on hub concepts
-- `D_cap = 8` — dependents beyond this add no further length, so a handful of
-  outlier hubs (this book has concepts with 20-40 dependents) don't blow up
-  the target
-
-Log scaling matters here because dependent counts are heavily skewed — median
-is 1, but a few hub concepts run past 20. A linear formula would let those
-outliers dominate; the log compresses the tail while still rewarding the 0-3
-range where most concepts live.
-
-| Dependents ($d_c$) | Target words | Concept role |
-|---|---|---|
-| 0 | 150 | Leaf / definitional |
-| 1 | ~290 | Median concept |
-| 2 | ~375 | — |
-| 3 | ~435 | — |
-| 5 | ~520 | — |
-| 8+ | 600 | Foundational hub (capped) |
-
-Applied across a 570-concept graph at ~16 concepts/chapter, this formula
-averages ~300 words/concept and ~4,900 words/chapter — in line with typical
-textbook chapter length, without requiring a flat per-concept word count.
+For the exact normalization formula, tier cut-points, and worked table
+format, see `skills/chapter-content-generator/SKILL.md`, Step 2.3b
+("Compute the Elaboration Budget (CIS-Driven)") — that skill is the
+canonical source; this section is a summary so writers know the *why*
+without duplicating the math in two places that could drift out of sync.
 
 ## Anti-Padding & Writing Style Rules
 
 Models inflate text to hit word-count targets, producing repetitive and
 sometimes hallucinated content. All generating agents must follow these rules.
 
-1. **Quality over quantity.** Word-count targets (see *Concept Depth &
-   Word-Count Targets* above) are guidelines, not requirements. A dense,
-   correct chapter beats a padded one at the target length. Never inflate
-   length artificially — a hub concept should reach its target through a
-   worked example or MicroSim walkthrough, never restated prose, and a leaf
-   concept should stop once it is correctly explained even if that's well
-   under its target.
+1. **Quality over quantity.** Per-concept Elaboration Budgets (see *Concept
+   Depth & Word-Count Targets* above) are guidelines, not requirements. A
+   dense, correct chapter beats a padded one at the target length. Never
+   inflate length artificially — a Tier A concept should reach its target
+   through a worked example or MicroSim walkthrough, never restated prose,
+   and a Tier C concept should stop once it is correctly explained even if
+   that's well under its target.
 2. **Expand by showing, not telling.** If a chapter is genuinely thin, add a
    concrete worked example, another MicroSim, or more technical detail. Never
    expand by restating earlier paragraphs, summarizing what was just said, or
