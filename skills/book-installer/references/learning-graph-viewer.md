@@ -12,16 +12,19 @@ Installs a complete interactive graph viewer into `/docs/sims/graph-viewer/` by 
 
 ## Viewer Version
 
-Current template version: **v0.04** (batched DataSet updates, loading-message indicator, version badge in top-right corner).
+Current template version: **v1.04** (CIS-based node sizing, batched DataSet updates, loading-message indicator, version badge in top-right corner).
 
 When you ship a behavior change to the viewer templates, bump this number in **three** places so future debugging can trace which version of the viewer is deployed where:
 
 1. The version in this file (the line above).
-2. `references/assets/main.html` — the `<div id="viewer-version">v0.04</div>` line.
+2. `references/assets/main.html` — the `<div id="viewer-version">v1.04</div>` line.
 3. The changelog entry below.
+
+Remember there are **two copies** of the template files (`references/assets/` and `references/learning-graph-viewer-templates/`) that must be kept byte-identical — Step 2 below copies from `references/assets/`, so that is the one that actually ships, but keep both in sync.
 
 ### Changelog
 
+- **v1.04** — **BREAKING:** Node size (font size + margin, `box` shape is auto-sized around its label so this is what actually changes the rendered box dimensions) now scales with each node's **Concept Impact Score** (`node.cis`, added by `learning-graph-generator` v1.06+). Higher-CIS concepts render as slightly larger boxes. Uses `log(cis+1)` normalization, not raw CIS, because CIS is heavy-tailed (roughly half of concepts in a typical graph sit at the minimum value) — linear scaling would make that entire lower half visually indistinguishable. Range is deliberately modest (font 12-22px, margin 4-10px) to stay legible in a 200+ node force-directed graph; see `cisNormalized()`, `CIS_FONT_MIN/MAX`, `CIS_MARGIN_MIN/MAX` in `script.js`. Verified empirically (not just assumed) that: (a) vis-network's native `nodes.scaling`/`value` mechanism has **no visible effect on `box`-shaped nodes** — only `dot`/icon-style shapes respond to it, so per-node `font.size` is the correct mechanism for this project's box-style nodes; (b) per-node `font: {size: N}` correctly **merges** with (does not replace) the group-level `font.color`, so existing group color-coding is unaffected. Graphs generated before `learning-graph-generator` v1.06 have no `cis` field on their nodes — `cisNormalized()` treats a missing/undefined `cis` as `1` (the minimum), so those graphs render at a uniform `CIS_FONT_MIN` size with no error, just no size variation, until `learning-graph.json` is regenerated.
 - **v0.04** — Fixed slow check-all/uncheck-all (batched `DataSet.update(array)` instead of per-item calls). Added `Loading concepts and edges…` indicator removed on `stabilizationIterationsDone`. Added version badge in top-right corner. Precomputed `nodesWithDeps` / `groupCounts` at load. Assigned explicit integer IDs to edges so batched updates can target them.
 - **v0.03** — Initial template split from inline code into `references/assets/` (commit `89275ae6`).
 
@@ -161,6 +164,7 @@ docs/sims/graph-viewer/
 | Graph keeps spinning | Physics timeout missing | script.js disables physics after 5s (built-in) |
 | Checkbox toggling slow | Per-item DataSet.update() calls | Use batched array update (built-in) |
 | Graph not loading | Wrong JSON path | script.js expects `../../learning-graph/learning-graph.json` |
+| All nodes render the same size | `learning-graph.json` predates `learning-graph-generator` v1.06 (no `node.cis` field) | Regenerate `learning-graph.json` (re-run `csv-to-json.py` v1.04+) |
 
 ## Dependencies
 

@@ -11,6 +11,27 @@ let visibleGroups = new Set();
 let nodesWithDeps = new Set(); // set of node IDs that have outgoing edges
 let groupCounts = {};          // { groupId: count } for legend labels
 
+// CIS (Concept Impact Score) node-sizing configuration.
+// Nodes use the 'box' shape, which vis-network auto-sizes to fit its label
+// text -- the built-in nodes.scaling/value mechanism has NO visible effect
+// on box-shaped nodes (verified empirically), so importance is instead
+// conveyed by scaling font size and margin directly per node. Values are
+// log-normalized (not raw CIS) because CIS is heavy-tailed: on a typical
+// ~200-concept graph, roughly half of all concepts sit at the minimum CIS
+// value of 1, and a linear scale would make that entire lower half
+// indistinguishable while one or two hub concepts dominate the range.
+const CIS_FONT_MIN = 12;
+const CIS_FONT_MAX = 22;
+const CIS_MARGIN_MIN = 4;
+const CIS_MARGIN_MAX = 10;
+
+// Returns a 0..1 normalized importance score for a raw CIS value, given the
+// maximum CIS across the whole graph.
+function cisNormalized(cis, maxCis) {
+    if (!maxCis || maxCis <= 1) return 0;
+    return Math.log(cis + 1) / Math.log(maxCis + 1);
+}
+
 // Load the learning graph data
 async function loadGraph() {
     try {
@@ -34,6 +55,17 @@ async function loadGraph() {
         groupCounts = {};
         allNodes.forEach(n => {
             groupCounts[n.group] = (groupCounts[n.group] || 0) + 1;
+        });
+
+        // Size each node's font/margin by its Concept Impact Score, if present.
+        // Older learning-graph.json files without a 'cis' field render at a
+        // uniform size (cisNormalized returns 0 for undefined/1 values, so
+        // every node lands at CIS_FONT_MIN -- no error, just no size variation).
+        const maxCis = Math.max(1, ...allNodes.map(n => n.cis || 1));
+        allNodes.forEach(n => {
+            const t = cisNormalized(n.cis || 1, maxCis);
+            n.font = { ...(n.font || {}), size: Math.round(CIS_FONT_MIN + t * (CIS_FONT_MAX - CIS_FONT_MIN)) };
+            n.margin = Math.round(CIS_MARGIN_MIN + t * (CIS_MARGIN_MAX - CIS_MARGIN_MIN));
         });
 
         initializeNetwork();
