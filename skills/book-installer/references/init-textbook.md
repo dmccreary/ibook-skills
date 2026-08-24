@@ -58,6 +58,8 @@ Relative to the project root the user is in:
 ├── {{REPO_NAME}}.code-workspace   # VS Code workspace file
 ├── mkdocs.yml                     # rendered from assets/init-textbook/mkdocs.yml
 ├── .gitignore                     # Python / MkDocs / OS / editor ignore patterns
+├── CONTENT-GENERATION-GUIDE.md    # read-before-generating rules: CIS-driven word-count
+│                                   # targets, anti-padding, MicroSim, and Markdown rules
 ├── plugins/
 │   └── social_override.py         # MkDocs hook: per-page og:image / twitter:image override
 └── docs/
@@ -324,6 +326,19 @@ sensibly:
   CSS file. The scaffold uses a single Material palette pair (indigo/orange
   by default, easily swapped) and lets the user opt into dark mode later
   via book-installer if they want it.
+- **`CONTENT-GENERATION-GUIDE.md` ships from birth, not bolted on later.**
+  This file used to be created only by the `learning-mascot` feature (#30),
+  which meant any book that skipped a mascot had no home for the
+  content-generation rules that `chapter-content-generator` and
+  `book-chapter-generator` actually depend on — most importantly the
+  CIS-driven Elaboration Budget (Step 2.3b of `chapter-content-generator`),
+  which needs the anti-padding rules right next to it to keep agents from
+  padding low-tier concepts to "feel complete." Scaffolding it at project
+  birth means every book gets these rules regardless of whether it ever adds
+  a mascot. If `learning-mascot` is installed later, it inserts its
+  `## Learning Mascot` and `## Quality Assurance & Validation` sections into
+  this existing file rather than creating a second copy (see
+  `learning-mascot.md`, Step 7).
 
 ## MicroSim Status Indicators
 
@@ -397,6 +412,7 @@ book-installer/
         ├── .gitignore                         # Python, MkDocs, OS, editor ignores
         ├── project.code-workspace             # VS Code workspace (renamed to {{REPO_NAME}}.code-workspace)
         ├── mkdocs.yml                         # the main config template
+        ├── CONTENT-GENERATION-GUIDE.md        # copied to project root, {{SITE_NAME}} substituted
         └── docs/
             ├── index.md
             ├── about.md

@@ -254,6 +254,7 @@ Each guide contains:
 **Creates:**
 - mkdocs.yml (side nav, search, admonitions, arithmatex, exclude_docs, schema URI)
 - docs/ tree: index, about, course-description, contact, license, chapters/, learning-graph/, sims/, css/extra.css, img/ (cover + license badge)
+- CONTENT-GENERATION-GUIDE.md (CIS-driven word-count targets, anti-padding rules, MicroSim and Markdown rules — read by book-chapter-generator and chapter-content-generator)
 - plugins/social_override.py hook (per-page og:/twitter: image override)
 - .gitignore and VS Code workspace file
 - MicroSim status-indicator plumbing (scaffold/built/approved)

@@ -1,6 +1,6 @@
 ---
 name: learning-mascot
-description: Guides users through designing a pedagogical agent (learning mascot) for their intelligent textbook, generating AI image prompts, and implementing the mascot using custom CSS admonitions with body-floated images.  Also describes how the CONTENT-GENERATION-GUIDE.md is created.
+description: Guides users through designing a pedagogical agent (learning mascot) for their intelligent textbook, generating AI image prompts, and implementing the mascot using custom CSS admonitions with body-floated images.  Also describes how the mascot section of CONTENT-GENERATION-GUIDE.md is added.
 ---
 
 # Learning Mascot (Pedagogical Agent)
@@ -669,9 +669,36 @@ build.
 
 ### Step 7: Add Character Guidelines to CONTENT-GENERATION-GUIDE.md
 
-To ensure consistent mascot usage across AI-generated content, add a section to the project's `CONTENT-GENERATION-GUIDE.md`. The section MUST include a **Mascot File Index** that links to every textbook file this skill produces, so future agents working in the repo can find the canonical artifacts in one lookup instead of re-discovering them via globbing.
+To ensure consistent mascot usage across AI-generated content, add a section
+to the project's `CONTENT-GENERATION-GUIDE.md`.
 
-**Do not abridge the template below.** The three sections that carry the most
+**Check whether the file already exists first.** Since `init-textbook`
+(book-installer feature #0) now scaffolds `CONTENT-GENERATION-GUIDE.md` at
+project birth with a base template (Concept Depth & Word-Count Targets,
+Anti-Padding & Writing Style Rules, MicroSims, Markdown Formatting Rules),
+the file almost always exists by the time this skill runs:
+
+- **File exists (the normal case):** Insert the mascot block below
+  immediately **after the file's opening header paragraph and before the
+  first existing `##` section** (an HTML comment in the base template marks
+  this exact spot). Do **not** re-add Anti-Padding, MicroSims, or Markdown
+  Formatting Rules sections — the base template already has them, and a
+  second copy would drift out of sync with the first over time. Also add one
+  sentence to the file's opening paragraph noting that instructor-facing
+  content is exempt from mascot guidance, if that sentence isn't already
+  there.
+- **File does not exist (older project, scaffolded before this feature
+  existed):** Create it from scratch using
+  `skills/book-installer/assets/init-textbook/CONTENT-GENERATION-GUIDE.md` as
+  the base (substitute `{{SITE_NAME}}`), then insert the mascot block the
+  same way.
+
+The mascot block MUST include a **Mascot File Index** that links to every
+textbook file this skill produces, so future agents working in the repo can
+find the canonical artifacts in one lookup instead of re-discovering them via
+globbing.
+
+**Do not abridge the template below.** The two sections that carry the most
 weight are the ones most likely to be trimmed as "boilerplate":
 
 - **Mascot Admonition Guidelines** — the per-pose instructional-design rules.
@@ -680,8 +707,6 @@ weight are the ones most likely to be trimmed as "boilerplate":
   valuable part of the file.
 - **Quality Assurance & Validation** — makes the placement rules enforceable
   instead of aspirational.
-- **Anti-Padding & Writing Style Rules** — the standing defense against
-  word-count inflation in generated chapters.
 
 Fill in every `{{PLACEHOLDER}}` from the Step 2 Q&A. Where the template gives
 an example phrase in a **Tone** line, replace it with one in the character's
@@ -866,35 +891,15 @@ is clearly too short or too long for the 1-3 sentence rule.
 If the validator reports issues, fix the chapter and re-run it until it exits
 clean. Do not report completion on a chapter that still fails, and do not
 relax a rule to make the check pass.
-
-## Anti-Padding & Writing Style Rules
-
-Models inflate text to hit word-count targets, which produces repetitive and
-sometimes hallucinated content. All generating agents must follow these rules.
-
-1. **Quality over quantity.** Word-count targets are guidelines, not
-   requirements. A dense, correct 1,500-word chapter beats a repetitive
-   3,500-word one. Never inflate length artificially.
-2. **Expand by showing, not telling.** If a chapter is genuinely thin, add a
-   concrete worked example, another MicroSim, or more technical detail. Never
-   expand by restating earlier paragraphs, summarizing what was just said, or
-   adding generic filler.
-3. **No formulaic templates.** Avoid boilerplate scaffolding like "Let's talk
-   about X. The concept of X is fundamental…". Weave concepts into flowing
-   narrative prose.
-4. **Examples over prose.** When explaining abstract logic, prefer a short
-   commented example to a long descriptive passage.
-
-## Markdown Formatting Rules
-
-1. **List spacing.** EVERY Markdown list — bulleted or numbered — MUST have a
-   blank line before it. MkDocs will not render the list otherwise.
-2. **Image paths.** Markdown images resolve relative to the source `.md` file;
-   raw HTML `<img src>` resolves relative to the rendered URL. See the Mascot
-   Admonition Format section above.
-3. **Admonition bodies** are indented four spaces, with the mascot image on
-   the first line of the body.
 ```
+
+**Stop here — do not append Anti-Padding, MicroSims, or Markdown Formatting
+Rules sections.** Those already exist in the base `CONTENT-GENERATION-GUIDE.md`
+template (or were added when you created the file from that template in the
+"file does not exist" branch above); the base template's Markdown Formatting
+Rules section already covers the Markdown-vs-raw-HTML image path distinction
+that mascot admonitions rely on. Two `## Markdown Formatting Rules` headings
+in one file is a sign this step went wrong.
 
 ### Step 8: Verify the Implementation
 
@@ -1008,7 +1013,7 @@ The `CONTENT-GENERATION-GUIDE.md` file at the project root MUST also contain a *
 
 ## Step 10: Update the CLAUDE.md File
 
-After the `CONTENT-GENERATION-GUIDE.md` has been created, add the following to the CLAUDE.md file:
+After the `CONTENT-GENERATION-GUIDE.md` mascot section has been added (Step 7), add the following to the CLAUDE.md file:
 
 ```
 Before generating content for the chapters, lesson plans, quizzes, FAQ or other student facing text,
