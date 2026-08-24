@@ -7,6 +7,12 @@ license:
 
 # Book Chapter Generator
 
+**Version:** 1.0.0
+
+### Changelog
+
+- **v1.0.0** — **BREAKING:** First tracked version number for this skill. Step 1.4a no longer computes its own "dependents count" from the edge list — it now reads the pre-computed **Concept Impact Score (CIS)** directly from each node's `cis` field in `learning-graph.json` (added by `learning-graph-generator` v1.06+). CIS is a strictly better importance signal than raw dependents count: it captures *transitive* impact (a concept with few direct dependents can still be highly foundational if those dependents themselves have many dependents), which plain dependents-count undercounts. The "Concepts Covered" section in each generated chapter's `index.md` (Step 4.4) is now a **markdown table** with `Concept` and `CIS Score` columns, replacing the old numbered list with a `(N dependents)` suffix. Requires `learning-graph.json` to have been regenerated with `learning-graph-generator` v1.06+ (nodes missing a `cis` field will read as `cis=1`, the minimum — check the console output when loading the graph and regenerate if every concept shows 1).
+
 ## Overview
 
 This skill creates a comprehensive chapter structure for intelligent textbooks by analyzing the course description, learning graph, and concept taxonomy. It designs an optimal chapter outline that ensures all concepts are covered exactly once, respects dependency relationships, and distributes content appropriately across chapters.
@@ -125,30 +131,34 @@ Analyze the data to identify:
 - **Concept clusters**: Groups of related concepts that should stay together
 - **Terminal concepts**: Concepts that nothing depends on (can be placed flexibly)
 
-#### 1.4a Compute Dependents Count Per Concept
+#### 1.4a Read Concept Impact Score (CIS) Per Concept
 
-For every concept, compute its **dependents count** -- the number of *other*
-concepts that depend on it. This is the inverse of a concept's own
-prerequisite list, and it later drives per-concept word-count targets in
-`chapter-content-generator` (see `CONTENT-GENERATION-GUIDE.md`).
-
-Using the dependency-direction edge convention (`{from: dependent, to:
-prerequisite}`):
+Every node in `learning-graph.json` carries a pre-computed **`cis`** field
+(added by `learning-graph-generator` v1.06+) -- the Concept Impact Score, a
+PageRank-style recursive importance measure: `CIS(x) = 1 + sum(CIS(d) for d
+in direct dependents of x)`. Unlike a simple dependents count (direct
+dependents only), CIS captures *transitive* impact: a concept with only 1-2
+direct dependents can still have a very high CIS if those dependents
+themselves have many dependents. This is why CIS, not raw dependents count,
+now drives per-concept word-count and non-text-element targets in
+`chapter-content-generator`.
 
 ```python
-from collections import defaultdict
+# cis[concept_id] = the concept's pre-computed Concept Impact Score
+cis = {n['id']: n.get('cis', 1) for n in data['nodes']}
 
-# dependents[concept_id] = how many OTHER concepts require concept_id
-dependents = defaultdict(int)
-for e in data['edges']:
-    dependents[e['to']] += 1
-
-# A concept with dependents[cid] == 0 is a terminal concept (nothing builds on it).
-# A concept with a high dependents[cid] is a foundational "hub" concept.
+# A concept with cis[cid] == 1 is a terminal concept (nothing transitively
+# builds on it). A concept with a high cis[cid] is a foundational "hub"
+# concept -- large amounts of the book's content ultimately rest on it,
+# even if its direct dependents count is small.
 ```
 
-Carry this `dependents` map forward into Step 4 -- it is printed alongside
-each concept name in every chapter's "Concepts Covered" list.
+**Sanity check:** if every concept shows `cis == 1`, `learning-graph.json`
+predates `learning-graph-generator` v1.06 and needs to be regenerated before
+proceeding -- do not fall back to computing your own dependents count.
+
+Carry this `cis` map forward into Step 4 -- it is placed alongside each
+concept name in every chapter's "Concepts Covered" table.
 
 ### Step 2: Design Chapter Structure
 
@@ -358,10 +368,12 @@ For each chapter, create `/docs/chapters/[XX]-[url-path-name]/index.md` with thi
 
 This chapter covers the following [X] concepts from the learning graph:
 
-1. [Concept Name 1] (12 dependents)
-2. [Concept Name 2] (0 dependents)
-3. [Concept Name 3] (4 dependents)
-[... continue for all concepts in this chapter ...]
+| Concept | CIS Score |
+|---------|-----------|
+| [Concept Name 1] | 187 |
+| [Concept Name 2] | 1 |
+| [Concept Name 3] | 42 |
+[... continue for all concepts in this chapter, in pedagogical order ...]
 
 ## Prerequisites
 
@@ -384,9 +396,11 @@ TODO: Generate Chapter Content
 - Always include a blank line before markdown lists (MkDocs requirement)
 - Use relative paths for internal links
 - Concept names should match exactly as they appear in learning-graph.json
-- Each concept in "Concepts Covered" must be followed by its dependents
-  count in parentheses, e.g. `Concept Name (7 dependents)`, using the
-  `dependents` map computed in Step 1.4a
+- "Concepts Covered" is a markdown table with `Concept` and `CIS Score`
+  columns (not a numbered list) -- one row per concept, in the same
+  pedagogical order used elsewhere in this chapter, using the `cis` map
+  read in Step 1.4a. Always include the blank line before the table
+  (MkDocs requirement).
 - Maintain consistent heading hierarchy (# → ## → ###)
 
 #### 4.5 Update MkDocs Navigation
@@ -557,7 +571,7 @@ Before finalizing the chapter structure, verify:
 - [ ] MkDocs navigation is correctly updated
 - [ ] All markdown files have proper formatting (blank lines before lists, etc.)
 - [ ] Each chapter index.md includes all required sections
-- [ ] Each concept in "Concepts Covered" is annotated with its dependents count
+- [ ] "Concepts Covered" is a table with `Concept` and `CIS Score` columns (not a numbered list)
 - [ ] User has approved the chapter design
 
 ## Example Usage
@@ -584,4 +598,4 @@ Before finalizing the chapter structure, verify:
 - It does NOT generate actual chapter content (that requires a separate skill)
 - The "TODO: Generate Chapter Content" marker indicates where content should be added later
 - Always preserve the concept list in each chapter index.md for use by content generation skills
-- The per-concept dependents count is not decorative: `chapter-content-generator` reads it to size each concept's word-count target (see `CONTENT-GENERATION-GUIDE.md`)
+- The per-concept CIS Score column is not decorative: `chapter-content-generator` reads it to size each concept's word-count target and non-text-element requirements (see `chapter-content-generator/SKILL.md`, "Elaboration Budget")
