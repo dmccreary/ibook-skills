@@ -43,6 +43,16 @@ Before generating the guide, collect these details from the project. Read `mkdoc
 
 #### Mascot Variables (if mascot exists)
 
+!!! note "The mascot prose in this template is *derived*, not canonical"
+    The instructor-facing description of how often the mascot appears is a
+    plain-language summary for teachers. The authoritative rules live in
+    `$BK_HOME/skills/book-installer/references/mascot-placement-rules.md`.
+    If the counts there change, update the summary prose in this template to
+    match — never the other way around. Note also that the instructor's guide
+    itself contains no mascot admonitions beyond the single embedding tip in
+    Step 5; instructor-facing content is exempt from mascot placement.
+
+
 Check if `docs/img/mascot/` and `docs/css/mascot.css` exist. If yes, populate:
 
 | Variable | Source | Example |
@@ -217,7 +227,7 @@ Every chapter follows a consistent structure:
 <!-- END IF -->
 6. **Main content** — The core instructional material, written at a {{READING_LEVEL}} reading level. Includes tables, real-world examples, and embedded MicroSims.
 <!-- IF HAS_MASCOT -->
-7. **Mascot admonitions** — Throughout the chapter, {{MASCOT_SHORT_NAME}} appears 5–6 times to highlight key insights (thinking), offer practical tips (tip), provide encouragement on harder concepts (encourage), and warn about common mistakes (warning).
+7. **Mascot admonitions** — Throughout the chapter, {{MASCOT_SHORT_NAME}} appears a handful of times (fewer than ten, and fewer still in shorter chapters) to highlight key insights (thinking), offer practical tips (tip), provide encouragement on harder concepts (encourage), and warn about common mistakes (warning).
 8. **Key takeaways** — A numbered summary of the most important concepts, preceded by a celebration from {{MASCOT_SHORT_NAME}}.
 <!-- ELSE -->
 8. **Key takeaways** — A numbered summary of the most important concepts.
@@ -637,14 +647,14 @@ A **pedagogical agent** is a character that appears throughout a textbook to gui
 | Type | Color | Purpose | Frequency |
 |------|-------|---------|-----------|
 | Welcome | Green | Introduces the chapter | Every chapter opening |
-| Thinking | Orange | Highlights key insights | 1–2 per chapter |
-| Tip | Green | Shares practical advice | As needed |
-| Warning | Red | Alerts to common mistakes | As needed |
+| Thinking | Orange | Highlights key insights | 1–4 per chapter |
+| Tip | Green | Shares practical advice | As the material warrants |
+| Warning | Red | Alerts to common mistakes | As the material warrants |
 | Encourage | Blue | Supports on harder concepts | Where students may struggle |
 | Celebration | Purple | Celebrates progress | Every chapter ending |
-| Neutral | Gray | General notes | As needed |
+| Neutral | Gray | General notes | Rarely |
 
-{{MASCOT_SHORT_NAME}} appears no more than 5–6 times per chapter to avoid overuse. Mascot admonitions are never placed back-to-back.
+{{MASCOT_SHORT_NAME}} appears fewer than ten times in any chapter, and appears less often in shorter chapters. Mascot admonitions are never placed back-to-back.
 
 ### Tips for Teachers
 

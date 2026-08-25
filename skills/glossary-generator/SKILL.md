@@ -3,9 +3,13 @@ name: glossary-generator
 description: Generates a glossary from the learning graph's concept list with ISO 11179-compliant definitions (precise, concise, non-circular). Use after the learning graph concept list is finalized.
 model: sonnet
 license: 
+metadata:
+  ibook.version: "1.0"
 ---
 
 # Glossary Generator
+
+**Version:** 1.0
 
 Generate a comprehensive glossary of terms from a learning graph's concept list with ISO 11179-compliant definitions.
 

@@ -3,13 +3,17 @@ name: book-chapter-generator
 description: Designs the chapter structure for an intelligent textbook by analyzing the learning graph and concept dependencies. Use after the learning graph is complete and before generating chapter content.
 model: sonnet
 license: 
+metadata:
+  ibook.version: "1.1.0"
 ---
 
 # Book Chapter Generator
 
-**Version:** 1.0.0
+**Version:** 1.1.0
 
 ### Changelog
+
+- **v1.1.0** — Version is now tracked in the SKILL.md frontmatter as `metadata.ibook.version`. It lives under `metadata:` rather than a bare `version:` key because strict packaging validation rejects any frontmatter key outside the six spec fields, which would block the skill from claude.ai, the Skills API, and `package_skill.py`. No behavioural change.
 
 - **v1.0.0** — **BREAKING:** First tracked version number for this skill. Step 1.4a no longer computes its own "dependents count" from the edge list — it now reads the pre-computed **Concept Impact Score (CIS)** directly from each node's `cis` field in `learning-graph.json` (added by `learning-graph-generator` v1.06+). CIS is a strictly better importance signal than raw dependents count: it captures *transitive* impact (a concept with few direct dependents can still be highly foundational if those dependents themselves have many dependents), which plain dependents-count undercounts. The "Concepts Covered" section in each generated chapter's `index.md` (Step 4.4) is now a **markdown table** with `Concept` and `CIS Score` columns, replacing the old numbered list with a `(N dependents)` suffix. Requires `learning-graph.json` to have been regenerated with `learning-graph-generator` v1.06+ (nodes missing a `cis` field will read as `cis=1`, the minimum — check the console output when loading the graph and regenerate if every concept shows 1).
 

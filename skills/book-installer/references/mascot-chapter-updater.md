@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Guide Claude through adding mascot admonitions to an existing chapter
+Guide the agent through adding mascot admonitions to an existing chapter
 markdown file. This is the natural follow-on to `learning-mascot.md`: once
 the mascot images, CSS, and test page are in place, this guide walks through
 retrofitting real chapter content with the six pose admonitions in the
@@ -42,29 +42,21 @@ Do **not** use this guide when:
   real chapter is painful.
 - Chapter file to update, identified by absolute path.
 
-## Placement Rules (from learning-mascot.md)
+## Placement Rules
 
-| Context | Admonition | Target frequency per chapter |
-|---|---|---|
-| Chapter opening / welcome | `mascot-welcome` | Exactly 1 |
-| Key concept or insight | `mascot-thinking` | 1–3 |
-| Helpful tip or shortcut | `mascot-tip` | 0–2 |
-| Common mistake / pitfall | `mascot-warning` | 0–2 |
-| Difficult section | `mascot-encouraging` | 0–2 |
-| End-of-chapter wrap-up | `mascot-celebration` | 0–1 |
-| General note / aside | `mascot-neutral` | 0–1 |
+**Read the canonical placement rules before placing any admonition:**
 
-**Hard limits:**
+    $BK_HOME/skills/book-installer/references/mascot-placement-rules.md
 
-- Maximum 5–6 mascot admonitions per chapter total.
-- Never place two mascot admonitions back-to-back (no empty line separator
-  between them). Always at least one paragraph of regular prose between
-  any two mascot admonitions.
-- Never use a mascot admonition for purely decorative purposes. Each one
-  must carry a message the reader gains something from.
-- Body text inside the admonition should be 1–3 sentences. Longer than
-  that and the admonition starts to feel like the primary content,
-  defeating its purpose as a guide character interjection.
+That file is the single source of truth for which pose carries which
+pedagogical job, how many of each belong in a chapter, and the hard limits on
+total count, back-to-back placement, and body length. It is shared by every
+skill in this library.
+
+**Do not restate its tables or counts in this guide.** A second copy drifts
+out of sync within weeks — that drift is exactly what the single-source rule
+exists to prevent. If a rule seems wrong, change it in the canonical file so
+every skill picks the change up at once.
 
 ## Workflow
 
@@ -146,8 +138,9 @@ standard form:
 
 Rules for the body text:
 
-- Write in the mascot's voice as established in `CLAUDE.md` (if present)
-  or `learning-mascot.md`. Do not invent a new personality.
+- Write in the mascot's voice as established in
+  `docs/img/mascot/character-sheet.md` (the canonical identity document) or
+  the book's `CONTENT-GENERATION-GUIDE.md`. Do not invent a new personality.
 - Reference the chapter's actual content specifically — "voltage divider"
   not "this topic". Generic mascot text is worse than no mascot text.
 - End `mascot-welcome` with a preview of what the reader will learn.
@@ -162,13 +155,13 @@ Rules for the body text:
 Run the validation script against the edited chapter:
 
 ```sh
-python3 ../ibook-skills/skills/book-installer/scripts/validate-chapter-mascots.py \
+python3 "$BK_HOME/skills/book-installer/scripts/validate-chapter-mascots.py" \
     docs/chapters/01-intro/index.md
 ```
 
-The script reports:
+The script enforces the caps defined in `mascot-placement-rules.md`. It reports:
 
-- Total mascot admonition count (flags if > 6).
+- Total mascot admonition count (flags anything at or above the ceiling).
 - Count by type (flags if more than one `mascot-welcome` or `mascot-celebration`).
 - Back-to-back placements (flags with line numbers).
 - Admonitions with suspicious body text (too short, too long, or missing
@@ -227,9 +220,11 @@ Reasonable placement:
 3. `mascot-warning` — at the top of `## Common Mistakes with Sign Conventions`.
 4. `mascot-celebration` — at the end of `## Summary`.
 
-Total: 4. Under the 5–6 ceiling, no back-to-backs, one of each relevant
-type. `mascot-tip` and `mascot-encouraging` are skipped because this
-chapter has no natural fit for them — forcing them in would be decorative.
+Total: 4. Comfortably under the ceiling, no back-to-backs, one of each
+relevant type. `mascot-tip` and `mascot-encourage` are skipped because this
+short chapter has no natural fit for them — forcing them in would be
+decorative. A longer chapter with more distinct sections would legitimately
+carry more.
 
 ## Outputs this guide produces
 

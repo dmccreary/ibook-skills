@@ -2,9 +2,13 @@
 name: docx-to-web-publisher
 description: Converts .docx files (papers, briefs, reports) into styled React component pages in a Next.js content-catalog site. Use when publishing a Word document as a structured web page.
 model: sonnet
+metadata:
+  ibook.version: "1.0"
 ---
 
 # docx-to-web Publisher
+
+**Version:** 1.0
 
 Convert a .docx document into a fully structured, styled web page within a
 Next.js site that uses a content catalog pattern (product array, detail page

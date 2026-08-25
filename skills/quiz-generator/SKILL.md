@@ -3,11 +3,13 @@ name: quiz-generator
 description: Generates multiple-choice quiz questions for each chapter, aligned to the learning graph and distributed across Bloom's Taxonomy levels. Use after chapter content and the learning graph both exist.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 model: sonnet
+metadata:
+  ibook.version: "0.5"
 ---
 
 # Quiz Generator for Intelligent Textbooks
 
-**Version:** 0.4
+**Version:** 0.5
 
 ## Overview
 1. For each markdown chapter, generate interactive multiple-choice quizzes for textbook chapters with quality distractor analysis.
@@ -77,7 +79,7 @@ Log the start time for the session report.
 
 #### Step 1.2: Indicate Skill Running
 
-Notify the user: "Quiz Generator Skill v0.4 running in serial mode."
+Notify the user: "Quiz Generator Skill v0.5 running in serial mode."
 
 #### Step 1.3: Read Shared Context
 
@@ -755,7 +757,7 @@ Export the session information to `logs/quiz-generator-YYYY-MM-DD.md`:
 
 Notify the user:
 
-"Quiz Generator v0.4 complete!
+"Quiz Generator v0.5 complete!
 
 - **Mode:** Serial (1 agent)
 - **Elapsed time:** X minutes Y seconds
@@ -858,7 +860,7 @@ Session logged to `logs/quiz-generator-YYYY-MM-DD.md`"
 **Claude (using this skill):**
 
 1. Captures start time
-2. Notifies: "Quiz Generator Skill v0.4 running in serial mode."
+2. Notifies: "Quiz Generator Skill v0.5 running in serial mode."
 3. Reads shared context (course description, learning graph, glossary)
 4. Scans chapter directories, finds 23 chapters
 5. Assesses content readiness (all chapters 2000+ words)
@@ -869,7 +871,7 @@ Session logged to `logs/quiz-generator-YYYY-MM-DD.md`"
 10. Updates mkdocs.yml navigation
 11. Captures end time
 12. Writes session log
-13. Reports: "Quiz Generator v0.4 complete! Mode: Serial. Time: 33m. Questions: 230. Quality: 82/100."
+13. Reports: "Quiz Generator v0.5 complete! Mode: Serial. Time: 33m. Questions: 230. Quality: 82/100."
 
 ### Single Chapter Mode
 

@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """Validate mascot admonition placement in a chapter markdown file.
 
-Checks the rules from learning-mascot.md:
-- Total count <= 6
+Enforces the canonical rules defined in
+book-installer/references/mascot-placement-rules.md:
+- Fewer than 10 mascot admonitions per chapter (MAX_TOTAL is the ceiling)
 - Only one mascot-welcome and one mascot-celebration per chapter
 - No two mascot admonitions back-to-back
 - Each mascot admonition includes a mascot-admonition-img image, written either
-  as Markdown `![alt](path){ class="mascot-admonition-img" }` (the form
-  learning-mascot.md mandates) or as a raw HTML <img> tag (legacy chapters)
+  as Markdown `![alt](path){ class="mascot-admonition-img" }` (the mandated
+  form) or as a raw HTML <img> tag (tolerated in pre-existing chapters)
 - Body text is 1-3 sentences (warn if clearly too short or too long)
+
+If a limit here disagrees with mascot-placement-rules.md, that file wins —
+update this script to match it, never the reverse.
 
 Usage:
     validate-chapter-mascots.py <path-to-chapter.md>
@@ -21,21 +25,33 @@ import re
 import sys
 from pathlib import Path
 
-POSE_TYPES = {
+# "mascot-encourage" is the canonical class — it is the one defined in
+# mascot.css, so it is the only one that actually renders with the right
+# styling. "mascot-encouraging" appeared in an older guide by mistake and is
+# accepted here only so pre-existing chapters keep validating; it is reported
+# as a warning so those chapters get corrected.
+CANONICAL_POSE_TYPES = {
     "mascot-welcome",
     "mascot-thinking",
     "mascot-tip",
     "mascot-warning",
-    "mascot-encouraging",
-    "mascot-encourage",  # legacy name
+    "mascot-encourage",
     "mascot-celebration",
     "mascot-neutral",
 }
+DEPRECATED_POSE_TYPES = {"mascot-encouraging": "mascot-encourage"}
+POSE_TYPES = CANONICAL_POSE_TYPES | set(DEPRECATED_POSE_TYPES)
 
-MAX_TOTAL = 6
+# Fewer than 10 per chapter. Longer chapters may legitimately approach this;
+# short chapters should sit well below it.
+MAX_TOTAL = 9
 SINGLETON_TYPES = {"mascot-welcome", "mascot-celebration"}
 ADMONITION_RE = re.compile(r"^!!!\s+(mascot-[a-z]+)\b")
 SENTENCE_RE = re.compile(r"[.!?](?:\s|$)")
+# The Chapter 1 self-introduction is a documented exception to the 1-3 sentence
+# rule: it enumerates every pose-role as a numbered list. Recognise it by that
+# list so the validator does not contradict mascot-placement-rules.md.
+SELF_INTRO_RE = re.compile(r"^\s+\d+\.\s+\*\*", re.MULTILINE)
 # learning-mascot.md mandates Markdown image syntax with attr_list:
 #     ![alt](path){ class="mascot-admonition-img" }
 # Raw HTML <img> is still accepted so pre-existing chapters keep validating.
@@ -91,7 +107,18 @@ def validate(path: Path) -> int:
 
     # Total count
     if len(adms) > MAX_TOTAL:
-        flags.append(f"Total mascot admonitions: {len(adms)} (limit is {MAX_TOTAL})")
+        flags.append(
+            f"Total mascot admonitions: {len(adms)} "
+            f"(ceiling is {MAX_TOTAL} — fewer than 10 per chapter)"
+        )
+
+    # Deprecated class names render unstyled because mascot.css does not define them
+    for a in adms:
+        if a["type"] in DEPRECATED_POSE_TYPES:
+            flags.append(
+                f"{a['type']} at line {a['line']}: not defined in mascot.css and "
+                f"will render unstyled — use {DEPRECATED_POSE_TYPES[a['type']]}"
+            )
 
     # Singleton types
     from collections import Counter
@@ -146,8 +173,15 @@ def validate(path: Path) -> int:
             )
             continue
 
+        is_self_intro = (
+            a["type"] == "mascot-welcome"
+            and bool(SELF_INTRO_RE.search("\n".join(a["body"])))
+        )
+
         sc = sentence_count(body_text)
-        if sc == 0:
+        if is_self_intro:
+            pass  # Chapter 1 self-introduction: length cap does not apply
+        elif sc == 0:
             flags.append(
                 f"{a['type']} at line {a['line']}: body text has no sentence "
                 f"terminator (., !, ?)"

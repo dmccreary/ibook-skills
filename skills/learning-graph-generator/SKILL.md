@@ -1,13 +1,17 @@
 ---
 name: learning-graph-generator
 description: Generates a comprehensive learning graph from a course description, including 300-600 concepts with dependencies, taxonomy categorization, and quality validation reports. Use this when the user wants to create a structured knowledge graph for educational content.
+metadata:
+  ibook.version: "1.07"
 ---
 
 # Learning Graph Generator
 
-**Version:** 1.06
+**Version:** 1.07
 
 ### Changelog
+
+- **v1.07** — Version is now tracked in the SKILL.md frontmatter as `metadata.ibook.version`. It lives under `metadata:` rather than a bare `version:` key because strict packaging validation rejects any frontmatter key outside the six spec fields. No behavioural change.
 
 - **v1.06** — **BREAKING:** `csv-to-json.py` (bumped to v1.04) now computes a **Concept Impact Score (CIS)** for every node and writes it into `learning-graph.json` as `node.cis`. CIS is a PageRank-style recursive importance measure: `CIS(x) = 1 + sum(CIS(d) for d in direct dependents of x)`, capturing how much of the book's total understanding transitively rests on a concept — unlike plain in-degree, which undercounts concepts that are foundational only indirectly (e.g. "Constant" or "Coefficient" in a typical algebra course, which have few direct dependents but many transitive ones). Because the graph is a DAG, CIS is computed exactly in one topological-order pass — no damping factor or iteration. Downstream skills (`book-installer`'s graph viewer, `book-chapter-generator`, `chapter-content-generator`) now read this field directly instead of recomputing their own importance measure. See the schema's `nodes[].cis` field and the "Predicting Concept Content Size" paper (Definition 3, Proposition 1) for the full derivation. This is a breaking change to the `learning-graph.json` output format (an additive field, so old readers won't break, but downstream skills now expect it to be present) — regenerate `learning-graph.json` for any existing book before running the updated `book-chapter-generator` or `chapter-content-generator`.
 - **v0.06** — (prior history not tracked in this changelog format)

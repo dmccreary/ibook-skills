@@ -2,9 +2,29 @@
 name: book-installer
 description: Installs and configures intelligent-textbook infrastructure - scaffold a brand-new MkDocs Material textbook (init textbook), install any of 40 features (math, mascot, learning graph viewer, Google Analytics GA4, custom 404, kanban board), and generate book metrics. Routes to the appropriate installation guide.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
+metadata:
+  ibook.version: "1.0"
 ---
 
 # Book Installer
+
+**Version:** 1.0
+
+### Changelog
+
+- **v1.0** — First tracked version number for this skill. Adds
+  `references/mascot-placement-rules.md` as the single canonical source for when
+  and how often a learning mascot may appear, plus
+  `scripts/render-mascot-guide.py` (renders those rules into a book's
+  `CONTENT-GENERATION-GUIDE.md` between sentinel comments so the copy is
+  regenerated, never hand-edited). The per-chapter ceiling is raised from 6 to 9
+  admonitions for longer chapters, and `scripts/validate-chapter-mascots.py` now
+  reports the deprecated `-encouraging` spelling of the encourage pose class —
+  which `mascot.css` never defined, so it rendered unstyled — and exempts the
+  Chapter 1 self-introduction
+  from the 1-3 sentence cap it always violated. Version is tracked under
+  `metadata:` rather than a bare `version:` key, which strict packaging
+  validation rejects.
 
 ## Overview
 
@@ -135,7 +155,8 @@ Match the user's request to the appropriate installation guide:
 | 404, error page, not found, custom 404, page not found | `references/custom-404-page.md` | Add custom 404 page with mascot |
 | document status, page status, status indicators, status dots, nav status, page lifecycle, review workflow | `references/document-status.md` | Add colored status dots to nav sidebar |
 | kanban, project board, kanban board, project management, github project, task board, milestones, 34 | `references/kanban-board.md` | Create GitHub Projects Kanban board for textbook development |
-| mascot chapter, update chapter, retrofit mascot, place mascot, add mascot to chapter, mascot placement, 35 | `references/mascot-chapter-updater.md` | Retrofit an existing chapter with mascot admonitions using placement rules |
+| mascot chapter, update chapter, retrofit mascot, place mascot, add mascot to chapter, 35 | `references/mascot-chapter-updater.md` | Retrofit an existing chapter with mascot admonitions using placement rules |
+| mascot placement rules, mascot rules, how often mascot, mascot frequency, which mascot pose, mascot admonition guidelines | `references/mascot-placement-rules.md` | **Canonical** single-source rules for when/how often each mascot pose is used (read, never restate) |
 | about page, about, about.md, about this book, author bio, cite this book, citation, 36 | `references/about-page.md` | Generate professional about page with motivation, bio, and citations |
 | slide generator, slides, slide deck, slide viewer, presentation, generate slides, install slide viewer, 37 | `references/slide-generator.md` | Install the slide-viewer MicroSim and generate slides.md decks for chapters |
 | reading level, readability, flesch kincaid, grade level, reading analysis, 38 | `references/reading-level-analysis.md` | Analyze chapter reading level consistency |
@@ -351,7 +372,7 @@ Each guide contains:
 - AI image generation prompts for consistent mascot poses
 - Implementation via inline images, custom CSS admonitions, or JavaScript auto-detection
 - A mascot test page with automated transparency/4 px trim checks and all seven admonition previews
-- CLAUDE.md character guidelines for consistent AI-generated content
+- CONTENT-GENERATION-GUIDE.md character guidelines for consistent AI-generated content, with the placement rules rendered from `references/mascot-placement-rules.md`
 
 **Features:**
 - Subject-specific mascot suggestions with reasoning
@@ -570,9 +591,25 @@ Each guide contains:
 - Chapter `index.md` files with real content (not just scaffold) — guide checks line counts before generating
 - Optional: mascot installed via `learning-mascot.md`
 
+### mascot-placement-rules.md
+
+**Purpose:** The single source of truth for when a learning mascot may appear, how often, and which pose carries which pedagogical job
+
+**Used by:** `learning-mascot.md`, `mascot-chapter-updater.md`, `instructors-guide.md`, and the `chapter-content-generator` skill — all of which reference this file rather than restating its rules
+
+**Contains:**
+- The admonition format and the Markdown-vs-raw-HTML image path rules
+- The placement table (context → pose → per-chapter count)
+- Hard limits: fewer than 10 admonitions per chapter, no back-to-back placement, one welcome and one celebration, 1-3 sentence bodies
+- Per-pose instructional-design rules for all seven poses
+- The one-time Chapter 1 self-introduction pattern
+- The post-generation validation rule
+
+**Important:** never copy this file's tables or counts into another skill or into a book by hand. Skills reference it by path; books receive a rendered copy via `scripts/render-mascot-guide.py`, spliced between sentinel comments so it can be regenerated. Run `scripts/bk-check-mascot-rules` from the repo root to verify no restatement has crept back in.
+
 ### mascot-chapter-updater.md
 
-**Purpose:** Retrofit an existing chapter markdown file with mascot admonitions in the right places, following the placement rules from learning-mascot.md
+**Purpose:** Retrofit an existing chapter markdown file with mascot admonitions in the right places, following the canonical `references/mascot-placement-rules.md`
 
 **Creates:**
 - In-place edits to the specified chapter file only (no new files)
@@ -580,10 +617,10 @@ Each guide contains:
 
 **Features:**
 - LLM-driven workflow for semantic placement (no regex auto-insertion)
-- Enforces hard limits: ≤6 admonitions per chapter, one welcome and one celebration maximum, no back-to-back placements
+- Enforces the hard limits defined in `references/mascot-placement-rules.md` (total ceiling, one welcome and one celebration maximum, no back-to-back placements)
 - Image-path guidance for directory-URL rendering (counts `../` from rendered page)
 - Voice and body-text rules: 1-3 sentences, in-character, specific to chapter content
-- Validation via `scripts/validate-chapter-mascots.py` that flags count limits, back-to-backs, missing `<img>` tags, and body-text length
+- Validation via `scripts/validate-chapter-mascots.py` that flags count limits, back-to-backs, missing mascot images, and body-text length
 
 **Prerequisites:**
 - Mascot images present in `docs/img/mascot/` or `docs/img/mascots/`

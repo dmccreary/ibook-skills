@@ -1,9 +1,13 @@
 ---
 name: reference-generator
 description: Generates 10 curated academic references per chapter, prioritizing Wikipedia plus credited textbook authors known for innovative explanations, with relevance descriptions, stored in chapter references.md files. Use when an intelligent textbook chapter needs citations.
+metadata:
+  ibook.version: "1.0"
 ---
 
 # Reference Generator
+
+**Version:** 1.0
 
 ## Overview
 

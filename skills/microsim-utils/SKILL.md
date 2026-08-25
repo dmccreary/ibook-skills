@@ -1,9 +1,13 @@
 ---
 name: microsim-utils
 description: Utility tools for MicroSim management including quality validation, screenshot capture, icon management, index page generation, iframe height synchronization, iframe control-visibility testing, visual layout review, and diagram/MicroSim coverage reports across chapters. Routes to the appropriate utility based on the task needed.
+metadata:
+  ibook.version: "1.0"
 ---
 
 # MicroSim Utilities
+
+**Version:** 1.0
 
 ## Overview
 

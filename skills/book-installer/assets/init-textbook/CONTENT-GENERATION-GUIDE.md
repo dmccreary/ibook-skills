@@ -9,10 +9,17 @@ is exempt from any persona/mascot guidance this file may later define.
 
 <!--
   No learning mascot has been added yet. If this book adds one via the
-  `book-installer` "learning-mascot" feature, that skill inserts a
-  "## Learning Mascot" section (and a matching "## Quality Assurance &
-  Validation" section) directly below this comment -- do not add mascot
-  content here manually.
+  `book-installer` "learning-mascot" feature, that skill replaces this comment
+  with a "## Learning Mascot" section containing the book's character identity
+  followed by the placement rules, rendered by:
+
+      python3 "$BK_HOME/skills/book-installer/scripts/render-mascot-guide.py"
+
+  The rules arrive between BEGIN/END "mascot-placement-rules" sentinel comments
+  and are regenerated from the single canonical source at
+  book-installer/references/mascot-placement-rules.md. Never write mascot
+  placement rules here by hand, and never edit inside the sentinels -- the next
+  re-render discards those edits.
 -->
 
 ---

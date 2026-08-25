@@ -3,9 +3,13 @@ name: faq-generator
 description: Generates a FAQ set for an intelligent textbook from course content, learning graph, and glossary terms. Use after the learning graph and glossary exist and at least 30% of chapters are written.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 model: sonnet
+metadata:
+  ibook.version: "1.0"
 ---
 
 # FAQ Generator
+
+**Version:** 1.0
 
 Generate comprehensive, categorized FAQs from textbook content and chatbot-ready JSON exports.  Place the
 FAQs into the file docs/faq.md.  Log the results of the session to `logs/faq.md`.
