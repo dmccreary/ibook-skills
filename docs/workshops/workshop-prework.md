@@ -505,10 +505,10 @@ What skills do you know about for building intelligent textbooks and MicroSims?
 
 ### Test 6: List All Skills
 
-You can also use the `/skills` command:
+You can also list them from the shell:
 
 ```
-/skills
+bk-list-skills
 ```
 
 !!! success "Expected Result"

@@ -87,10 +87,15 @@ The focus is on **using** these tools through Claude Skills rather than writing 
 
 There are two ways to list your installed skills:
 
-1. **Ask Claude directly**: Type "What skills do you know about? Check the ~/.claude/skills/ area."
-2. **Use the /skills slash command**: Install the custom `/skills` command by running `bk-install-skills` (which symlinks all slash commands into `~/.claude/commands/`), then type `/skills` in Claude Code
+1. **Ask Claude directly**: Type "What skills do you know about?" — skill names and descriptions are injected into context at session start, so no lookup is needed.
+2. **Run `bk-list-skills`**: prints every installed skill from the command line.
 
-The slash command provides formatted output organized by category, showing all user and project-specific skills.
+`bk-list-skills` provides formatted output organized by category, showing all user and project-specific skills.
+
+!!! note "The `/skills` slash command was removed"
+    Earlier versions shipped a `/skills` command. It has been retired — use
+    `bk-list-skills` or just ask Claude. `/ibook` is now the only slash
+    command this repository installs.
 
 **Example output**:
 ```

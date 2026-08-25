@@ -46,8 +46,7 @@ Codex-skills/
 ├── scripts/                       # Utility scripts
 │   └── bk-install-skills         # Symlinks skills into every agent present
 ├── commands/                      # Slash commands
-│   ├── ibook.md                  # /ibook runbook command
-│   └── skills.md                 # /skills command definition
+│   └── ibook.md                  # /ibook runbook command
 └── mkdocs.yml                    # MkDocs configuration
 ```
 

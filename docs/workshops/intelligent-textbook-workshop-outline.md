@@ -55,7 +55,7 @@ The following shows how these tools also depend on other systems.
 [Fullscreen](../sims/install-book-env/main.html)
 
 - Verify Claude Code installation
-- List available skills with `/skills` command
+- List available skills with `bk-list-skills`
 - Review course description format
 - Clone starter template or create new MkDocs project
 

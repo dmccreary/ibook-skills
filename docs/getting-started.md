@@ -363,39 +363,33 @@ You have 8 skills installed in ~/.claude/skills/:
   8. quiz-generator - Generates quiz content
 ```
 
-## Add the /skills Command
+## Add the /ibook Command
 
-Claude Code allows you to add custom slash commands that execute scripts. You can add a `/skills` command that lists all available skills.
-
-The custom slash command system works by:
-1. Creating a command definition file in `~/.claude/commands/` (or `.claude/commands/` in your project)
-2. Having an executable script in your `$PATH` that the command calls
-
-The `list-skills.sh` script provides this functionality and is automatically installed to `~/.local/bin` when you run `bk-install-scripts`.
-
-To enable the `/skills` (and `/ibook`) slash commands:
+Claude Code allows you to add custom slash commands defined by markdown files in
+`~/.claude/commands/` (or `.claude/commands/` inside a project). This repository
+ships one: `/ibook`, the runbook that tells you which skill to run next.
 
 **Option 1: Install globally (recommended):**
 ```sh
 bk-install-skills
 ```
 
-In addition to symlinking every skill into `~/.claude/skills/`, this symlinks
-every command in `commands/*.md` into `~/.claude/commands/` — so `/skills`,
-`/ibook`, and any future command become available globally. (The `list-skills.sh`
-helper used by `/skills` is installed separately by `bk-install-scripts`.)
+In addition to symlinking every skill into each agent's skills directory, this
+symlinks every command in `commands/*.md` into `~/.claude/commands/` — so
+`/ibook` and any future command become available globally.
 
 **Option 2: Install for a specific project:**
 ```sh
 mkdir -p .claude/commands
-cp $BK_HOME/commands/skills.md .claude/commands/skills.md
+cp $BK_HOME/commands/ibook.md .claude/commands/ibook.md
 ```
 
-Note: The `list-skills.sh` script must be in your `$PATH` (which it will be if you followed the prerequisites and ran `bk-install-scripts`).
+To list installed skills there is no slash command — ask Claude directly, or run
+`bk-list-skills` from the shell.
 
-## Sample Skill Slash Command Execution
+## Sample Slash Command Execution
 
-I just type '/sk` into Claude Code and you should see the code listed
+Type `/ib` into Claude Code and the `/ibook` command should be listed
 
 ![](img/claude-code-skill-command.png)
 
@@ -451,8 +445,9 @@ ls ~/.claude/skills/
 # Should list all installed skills (learning-graph-generator, glossary-generator, etc.)
 ```
 
-**4. Test the /skills command in Claude Code:**
-Type `/skills` in Claude Code and it should list all available skills.
+**4. Test the /ibook command in Claude Code:**
+Type `/ibook` in Claude Code and it should show the textbook build runbook.
+To list installed skills, run `bk-list-skills` or just ask Claude.
 
 ## Configuring Permissions
 
@@ -507,18 +502,19 @@ If you get `command not found` when trying to run `bk-*` commands:
 If skills don't appear when you try to use them:
 
 1. Check that symlinks were created: `ls -la ~/.claude/skills/`
-2. Re-run the installation: `cd $BK_HOME/scripts && ./install-ibook-skills.sh`
+2. Re-run the installation: `bk-install-skills`
 3. Restart Claude Code
-4. Try listing skills with `/skills` command or ask Claude: "What skills do you have access to?"
+4. Ask Claude: "What skills do you have access to?", or run `bk-list-skills`
 
-### /skills command not working
+### /ibook command not working
 
-If the `/skills` slash command doesn't work:
+If the `/ibook` slash command doesn't work:
 
-1. Check that `list-skills.sh` is in your PATH: `which list-skills.sh`
-2. Check that the command file exists: `ls ~/.claude/commands/skills.md`
-3. Re-run: `bk-install-skills`
-4. Restart Claude Code
+1. Check that the command file exists: `ls ~/.claude/commands/ibook.md`
+2. Re-run: `bk-install-skills`
+3. Restart Claude Code
+
+(There is no `/skills` command; it was retired. Use `bk-list-skills`.)
 
 ### Permission denied when running scripts
 
@@ -536,7 +532,7 @@ Once you have successfully installed the skills and utilities, you can:
 3. **Create interactive simulations** - Use the `microsim-p5` skill
 4. **Generate course content** - Use the `glossary-generator`, `quiz-generator`, and `faq-generator` skills
 
-For detailed documentation on each skill, visit the [skills documentation](https://dmccreary.github.io/ibook-skills/) or use the `/skills` command in Claude Code.
+For detailed documentation on each skill, visit the [skills documentation](https://dmccreary.github.io/ibook-skills/) or run `bk-list-skills`.
 
 
 
