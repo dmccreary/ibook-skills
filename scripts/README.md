@@ -80,18 +80,31 @@ All `bk*` scripts require `$BK_HOME` to be set and provide consistent colored ou
 **Skill Management:**
 - `bk-analyze-skill-usage` - Generate skill usage analysis report
 - `bk-install-skills` - Install skills into every agent present (Claude Code, Codex, Antigravity)
+- `bk-list-skills` - List installed skills with their descriptions
 
 **Script Management:**
 - `bk-install-scripts` - Install bk* scripts to ~/.local/bin
 - `bk` - Main menu for all utilities
 
 **Textbook Building:**
-- `bk-book-status` - Display textbook workflow status
+- `bk-status` - Display textbook workflow status
 - `bk-generate-book-metrics` - Generate book metrics report
+- `bk-check-loops` - Verify the learning graph is a DAG (no cycles)
+- `bk-diagram-reports` - Report diagram/MicroSim coverage across chapters
+
+**Quality Checks:**
+- `bk-microsim-quality-report-generator` - Score every MicroSim and write a report
+- `bk-check-mascot-rules` - Enforce single-source mascot placement rules
+- `bk-check-social-cover` - Verify Open Graph tags on a published book's cover page
+- `bk-check-social-media` - Verify Open Graph tags in a MicroSim's main.html
+
+**Environment Setup:**
+- `bk-install-mkdocs` - Install Miniconda + a `mkdocs` env with mkdocs-material
 
 **Image Processing:**
 - `bk-resize-images` - Compress images for web
 - `bk-capture-screenshot` - Capture MicroSim screenshots
+- `bk-batch-capture-screenshots` - Capture screenshots for many MicroSims at once
 
 **Plugin Installation:**
 - `bk-install-social-override-plugin` - Install MkDocs social override plugin
@@ -114,7 +127,7 @@ Build/Book Utilities
 BK_HOME: $HOME/Documents/ws/ibook-skills
 
   1. bk-resize-images              Compress large images to ~300KB PNG format
-  2. bk-book-status                Display intelligent textbook building workflow status
+  2. bk-status                     Display intelligent textbook building workflow status
 ```
 
 ### bk-install-scripts
@@ -197,21 +210,146 @@ bk-analyze-skill-usage /path/to/logs      # Use custom log directory
 - Recent skill usage table (last 20 invocations)
 - Insights about frequently used and slowest skills
 
-### bk-book-status
+### bk-status
 
-Displays the status of intelligent textbook building workflow by running a Python analysis script.
+Displays the status of the intelligent textbook building workflow by running a Python analysis script.
 
 **Requirements:** `$BK_HOME` must be set, Python 3 installed
 
 **Usage:**
 ```bash
-bk-book-status
+bk-status                 # Analyze the current directory
+bk-status /path/to/book   # Analyze a specific book directory
 ```
 
 **Features:**
-- Validates `$BK_HOME/src/site-metrics/book-status.py` exists
+- Validates `$BK_HOME/src/book-status/book-status.py` exists
 - Checks for Python 3 availability
 - Runs workflow status analysis
+
+### bk-list-skills
+
+Lists every installed skill with its description, read from the YAML frontmatter
+of each `SKILL.md`.
+
+**Requirements:** `$BK_HOME` must be set
+
+**Usage:**
+```bash
+bk-list-skills               # Names with descriptions
+bk-list-skills --names-only  # Names only
+bk-list-skills --full        # Full detail
+bk-list-skills --json        # Machine-readable output
+```
+
+### bk-check-loops
+
+Checks a vis-network learning-graph JSON file for cycles. Learning graphs must be
+Directed Acyclic Graphs, so any loop indicates a broken concept dependency.
+
+**Requirements:** Python 3; `src/learning-graph/check-loops.py`
+
+**Usage:**
+```bash
+bk-check-loops                                  # docs/learning-graph/learning-graph.json
+bk-check-loops path/to/learning-graph.json      # Explicit path
+```
+
+**Exit codes:** `0` when the graph is a valid DAG, `1` when loops are found.
+
+### bk-diagram-reports
+
+Analyzes chapter markdown for diagram and MicroSim specifications, then writes
+table and detail reports on coverage across the book.
+
+**Requirements:** `$BK_HOME` must be set, Python 3; `src/diagram-reports/diagram-report.py`
+
+**Usage:**
+```bash
+cd /path/to/textbook
+bk-diagram-reports
+```
+
+### bk-microsim-quality-report-generator
+
+Scores every MicroSim in the repository and writes a quality report to
+`docs/learning-graph/microsim-quality-report.md`, then opens it.
+
+**Requirements:** Python 3; `src/book-metrics/microsim-quality-report.py`
+
+**Usage:**
+```bash
+bk-microsim-quality-report-generator
+```
+
+**Output:** total MicroSim count, average quality score, and a breakdown of
+perfect-scoring sims.
+
+### bk-check-mascot-rules
+
+Enforces that the mascot placement rules live in exactly one place:
+`skills/book-installer/references/mascot-placement-rules.md`. Every other skill
+must reference that file rather than restating its tables, counts, or per-pose
+rules. Also detects hand-edits to a rendered `CONTENT-GENERATION-GUIDE.md` block.
+
+**Requirements:** `$BK_HOME` must be set (falls back to the script's parent directory)
+
+**Usage:**
+```bash
+bk-check-mascot-rules
+```
+
+**Exit codes:** `0` clean, `1` if any restatement or hand-edit is found.
+
+### bk-check-social-cover
+
+Verifies the Open Graph tags on a published book's **cover page** — `og:title`,
+`og:description`, and `og:image` — including recommended length ranges.
+
+The `og:image` basename on the home page must be exactly `cover.png`; any other
+filename is an error.
+
+**Usage:**
+```bash
+bk-check-social-cover algebra-1                            # Resolves the GitHub Pages URL
+bk-check-social-cover https://dmccreary.github.io/algebra-1/
+```
+
+**Exit codes:** `0` when tags pass, `1` on a violation.
+
+### bk-check-social-media
+
+Verifies Open Graph tags inside a **MicroSim's** `main.html`, checking presence
+and length of `og:title`, `og:description`, and `og:image`, and validating image
+dimensions (1200x630, a 1.91:1 ratio, is recommended).
+
+**Usage:**
+```bash
+cd /path/to/microsim && bk-check-social-media
+bk-check-social-media /path/to/microsim
+```
+
+### bk-install-mkdocs
+
+Installs a complete MkDocs environment: downloads Miniconda if absent, creates a
+Python 3 environment named `mkdocs`, installs `mkdocs` and `mkdocs-material`,
+then prints the installed versions to verify. Detects OS and architecture.
+
+**Usage:**
+```bash
+bk-install-mkdocs
+```
+
+### bk-batch-capture-screenshots
+
+Captures screenshots for a batch of MicroSims that lack PNG images, rather than
+one at a time.
+
+> **⚠️ Currently non-functional.** This script hardcodes an absolute path to
+> `capture_screenshot.sh` in the retired `microsim-screen-capture` skill, which
+> was consolidated into `microsim-utils`. It also hardcodes one developer's
+> repository path and a fixed list of MicroSim names. Use
+> `bk-capture-screenshot` per MicroSim until this is rewritten.
 
 ### bk-resize-images
 
