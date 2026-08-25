@@ -1342,6 +1342,8 @@
         
       
         
+      
+        
           
         
       
@@ -2923,9 +2925,9 @@
 <p>Installing Claude Skills involves two steps:</p>
 <ol>
 <li><strong>Clone the repository</strong>: Use <code>git clone https://github.com/dmccreary/ibook-skills.git</code> to download the skills</li>
-<li><strong>Run the installation script</strong>: Navigate to the <code>scripts/</code> directory and run <code>./install-ibook-skills.sh</code></li>
+<li><strong>Run the installation script</strong>: <code>scripts/bk-install-skills</code></li>
 </ol>
-<p>This creates symbolic links from your <code>~/.claude/skills/</code> directory to the cloned skills, making them available across all your projects. For project-specific installation, modify the script to point to your project's <code>.claude/skills/</code> directory instead.</p>
+<p>This creates symbolic links from each agent's skills directory to the cloned skills, making them available across all your projects. It installs into every agent present on your machine — <code>~/.claude/skills/</code> for Claude Code, <code>~/.codex/skills/</code> for OpenAI Codex, and <code>~/.gemini/antigravity/skills/</code> for Google Antigravity — so a skill edited here is picked up by all of them. Use <code>--only claude</code> to narrow it, or <code>--dry-run</code> to preview. For project-specific installation, symlink the <code>skills/*</code> directories into your project's own <code>.claude/skills/</code> directory instead.</p>
 <p><strong>Example</strong>: After installation, you can invoke skills using slash commands like <code>/skill learning-graph-generator</code>.</p>
 <p>See the <a href="../getting-started/">getting started guide</a> for detailed installation instructions.</p>
 <h3 id="what-will-i-be-able-to-do-after-completing-this-course">What will I be able to do after completing this course?</h3>
@@ -2968,10 +2970,16 @@
 <h3 id="how-do-i-list-the-skills-i-have-installed">How do I list the skills I have installed?</h3>
 <p>There are two ways to list your installed skills:</p>
 <ol>
-<li><strong>Ask Claude directly</strong>: Type "What skills do you know about? Check the ~/.claude/skills/ area."</li>
-<li><strong>Use the /skills slash command</strong>: Install the custom <code>/skills</code> command by running <code>bk-install-skills</code> (which symlinks all slash commands into <code>~/.claude/commands/</code>), then type <code>/skills</code> in Claude Code</li>
+<li><strong>Ask Claude directly</strong>: Type "What skills do you know about?" — skill names and descriptions are injected into context at session start, so no lookup is needed.</li>
+<li><strong>Run <code>bk-list-skills</code></strong>: prints every installed skill from the command line.</li>
 </ol>
-<p>The slash command provides formatted output organized by category, showing all user and project-specific skills.</p>
+<p><code>bk-list-skills</code> provides formatted output organized by category, showing all user and project-specific skills.</p>
+<div class="admonition note">
+<p class="admonition-title">The <code>/skills</code> slash command was removed</p>
+<p>Earlier versions shipped a <code>/skills</code> command. It has been retired — use
+<code>bk-list-skills</code> or just ask Claude. <code>/ibook</code> is now the only slash
+command this repository installs.</p>
+</div>
 <p><strong>Example output</strong>:
 </p><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>

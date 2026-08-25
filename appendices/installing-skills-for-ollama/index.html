@@ -9,13 +9,13 @@
         <meta name="author" content="Dan McCreary">
       
       
-        <link rel="canonical" href="https://dmccreary.github.io/ibook-skills/chapters/appendix-a-claude-on-pi/">
+        <link rel="canonical" href="https://dmccreary.github.io/ibook-skills/appendices/installing-skills-for-ollama/">
       
       
-        <link rel="prev" href="../31-publishing-announcing-book/">
+        <link rel="prev" href="../">
       
       
-        <link rel="next" href="../appendix-b-claude-on-wsl/">
+        <link rel="next" href="../skill-portability-strategy/">
       
       
       <link rel="icon" href="../../img/favicon.ico">
@@ -23,7 +23,7 @@
     
     
       
-        <title>Appendix A - Claude on Raspberry Pi - Agent Skills for Intelligent Textbooks</title>
+        <title>Installing Skills for Ollama - Agent Skills for Intelligent Textbooks</title>
       
     
     
@@ -72,11 +72,11 @@
       
         <meta property="og:type" content="website">
       
-        <meta property="og:title" content="Appendix A - Claude on Raspberry Pi - Agent Skills for Intelligent Textbooks">
+        <meta property="og:title" content="Installing Skills for Ollama - Agent Skills for Intelligent Textbooks">
       
         <meta property="og:description" content="Portable AI agent skills for building intelligent textbooks — tested on Claude, OpenAI Codex, Google Antigravity, Gemini and Cursor.">
       
-        <meta property="og:image" content="https://dmccreary.github.io/ibook-skills/assets/images/social/chapters/appendix-a-claude-on-pi/index.png">
+        <meta property="og:image" content="https://dmccreary.github.io/ibook-skills/assets/images/social/appendices/installing-skills-for-ollama.png">
       
         <meta property="og:image:type" content="image/png">
       
@@ -84,15 +84,15 @@
       
         <meta property="og:image:height" content="630">
       
-        <meta property="og:url" content="https://dmccreary.github.io/ibook-skills/chapters/appendix-a-claude-on-pi/">
+        <meta property="og:url" content="https://dmccreary.github.io/ibook-skills/appendices/installing-skills-for-ollama/">
       
         <meta name="twitter:card" content="summary_large_image">
       
-        <meta name="twitter:title" content="Appendix A - Claude on Raspberry Pi - Agent Skills for Intelligent Textbooks">
+        <meta name="twitter:title" content="Installing Skills for Ollama - Agent Skills for Intelligent Textbooks">
       
         <meta name="twitter:description" content="Portable AI agent skills for building intelligent textbooks — tested on Claude, OpenAI Codex, Google Antigravity, Gemini and Cursor.">
       
-        <meta name="twitter:image" content="https://dmccreary.github.io/ibook-skills/assets/images/social/chapters/appendix-a-claude-on-pi/index.png">
+        <meta name="twitter:image" content="https://dmccreary.github.io/ibook-skills/assets/images/social/appendices/installing-skills-for-ollama.png">
       
     
     
@@ -123,7 +123,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#running-claude-on-the-raspberry-pi" class="md-skip">
+        <a href="#installing-skills-for-ollama" class="md-skip">
           Skip to content
         </a>
       
@@ -158,7 +158,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Appendix A - Claude on Raspberry Pi
+              Installing Skills for Ollama
             
           </span>
         </div>
@@ -351,944 +351,182 @@
       
   
   
-    
   
   
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
   
-    
-    
+  
+    <a href="../../chapters/" class="md-nav__link">
       
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-    
-    
-    
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
-        
-          
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
-              
   
   <span class="md-ellipsis">
     Chapters
   </span>
   
 
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            Chapters
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../01-foundations-ai-language-models/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    1. Foundations of AI, Language Models, and Prompting
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../02-ai-agents-textbook-intelligence/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    2. AI Coding Agents and the Five Levels of Textbook Intelligence
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../03-python-fundamentals-automation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    3. Python Fundamentals for Skill Automation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../04-dev-tools-editor-git-basics/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    4. Development Tools: Editor, Terminal, and Git Basics
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../05-mkdocs-deployment-analytics/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    5. MkDocs Site Features, Deployment, and Analytics
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../06-agent-skill-fundamentals/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    6. Agent Skill Fundamentals
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../07-progressive-disclosure-meta-skills/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    7. Progressive Disclosure and Meta-Skill Routing
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../08-token-budgets-usage-limits/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    8. Token Budgets and Usage Limits
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../09-measuring-optimizing-tokens/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    9. Measuring and Optimizing Token Usage
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../10-building-testing-portable-skills/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    10. Building and Testing Portable Skills
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../11-distributing-skills-commands/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    11. Distributing Skills and Building Commands
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../12-writing-course-description/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    12. Writing a Course Description
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../13-blooms-taxonomy-instructional-design/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    13. Bloom's Taxonomy and Instructional Design
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../14-learning-graphs-concept-enumeration/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    14. Learning Graphs and Concept Enumeration
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../15-learning-graph-formats-taxonomy/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    15. Learning Graph Data Formats and Taxonomy
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../16-learning-graph-quality-validation/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    16. Learning Graph Quality Validation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../17-chapter-structure-content-elements/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    17. Chapter Structure and Content Elements
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../18-chapter-content-quality-review/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    18. Chapter Content Quality and Review
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../19-faqs-curated-references/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    19. FAQs and Curated References
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../20-glossaries-and-quizzes/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    20. Glossaries and Quizzes
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../21-microsim-anatomy-p5js-basics/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    21. MicroSim Anatomy and p5.js Basics
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../22-p5js-controls-microsim-quality/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    22. p5.js Controls and MicroSim Quality
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../23-microsim-generator-metadata-schema/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    23. The MicroSim Generator and Metadata Schema
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../24-visualization-libraries-systems-diagrams/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    24. Visualization Libraries and Systems Diagrams
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../25-verified-infographic-pipeline/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    25. Text-to-Image Models and the Verified Infographic Pipeline
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../26-interactive-infographic-overlays/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    26. Interactive Infographic Overlays
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../27-slide-decks-stories-audio-media/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    27. Slide Decks, Stories, and Audio Media
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../28-domain-specific-skill-extension/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    28. Domain-Specific Skill Extension: Electronics Case Study
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../29-book-installer-features/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    29. Book Installer Features
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../30-session-logs-book-metrics/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    30. Session Logs and Book Metrics
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../31-publishing-announcing-book/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    31. Publishing and Announcing a Finished Book
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
       
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+        <span class="md-nav__icon md-icon"></span>
       
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Appendix A - Claude on Raspberry Pi
-  </span>
+    </a>
   
 
-      </a>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../appendix-b-claude-on-wsl/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Appendix B - Claude on WSL
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../appendix-c-user-global-claude/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Appendix C - User Global Claude
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../appendix-d-parallel-execution/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Appendix D - Parallel Execution
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -2094,6 +1332,8 @@
       
   
   
+    
+  
   
   
     
@@ -2117,29 +1357,255 @@
     
     
       
-        
-        
-      
     
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
-  
-  
-    <a href="../../appendices/" class="md-nav__link">
-      
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   <span class="md-ellipsis">
     Appendices
   </span>
   
 
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Appendices
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
       
-        <span class="md-nav__icon md-icon"></span>
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
-    </a>
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Installing Skills for Ollama
+  </span>
   
 
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Installing Skills for Ollama
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-key-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Key Discovery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-skill-discovery-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Skill Discovery Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-portable-skills-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Portable Skills Directory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-setup-for-this-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended Setup for This Repository
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommended Setup for This Repository">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-configure-opencode-to-read-the-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Configure OpenCode to Read the Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-link-skills-into-the-portable-user-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Link Skills into the Portable User Directory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-import-skills-into-open-webui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 3: Import Skills into Open WebUI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-a-small-ollama-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a Small Ollama Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-portability-strategy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Portability Strategy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skill-refactor-fable-5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skill Refactor with Fable 5
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../imaging-agent-delegation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Delegating Image Generation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -2265,6 +1731,101 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-key-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Key Discovery
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-skill-discovery-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Skill Discovery Works
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-portable-skills-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Portable Skills Directory
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommended-setup-for-this-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Recommended Setup for This Repository
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommended Setup for This Repository">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-configure-opencode-to-read-the-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 1: Configure OpenCode to Read the Repository
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-link-skills-into-the-portable-user-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 2: Link Skills into the Portable User Directory
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-import-skills-into-open-webui" class="md-nav__link">
+    <span class="md-ellipsis">
+      Option 3: Import Skills into Open WebUI
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choosing-a-small-ollama-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Choosing a Small Ollama Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verification
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2278,7 +1839,7 @@
                   
 
   
-    <a href="https://github.com/dmccreary/ibook-skills/blob/main/docs/chapters/appendix-a-claude-on-pi/index.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/dmccreary/ibook-skills/blob/main/docs/appendices/installing-skills-for-ollama.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -2286,11 +1847,257 @@
   
 
 
-<h1 id="running-claude-on-the-raspberry-pi">Running Claude on the Raspberry Pi</h1>
-<h1 id="step-1-install-npm">Step 1: Install npm</h1>
-<h1 id="step-2-install-claude">Step 2: Install Claude</h1>
-<h1 id="copycutpaste-key">Copy/Cut/Paste Key</h1>
-<p>this is a test, c, </p>
+<h1 id="installing-skills-for-ollama">Installing Skills for Ollama</h1>
+<h2 id="the-key-discovery">The Key Discovery</h2>
+<p>Ollama does not discover or load Agent Skills by itself. Ollama runs a language
+model and provides APIs such as chat completion and tool calling. A separate
+<strong>agent harness</strong>—for example, OpenCode, Codex, Claude Code, Goose, OpenClaw, or
+Open WebUI—finds the skills, tells the model which skills are available, and
+loads the selected instructions.</p>
+<p>Consequently, this command starts a model but does not scan a skills directory:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ollama<span class="w"> </span>run<span class="w"> </span>qwen3.5:9b
+</code></pre></div></td></tr></tbody></table></div>
+<p>To use skills, run the Ollama model through a skills-aware agent:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ollama<span class="w"> </span>launch<span class="w"> </span>opencode<span class="w"> </span>--model<span class="w"> </span>qwen3.5:9b
+</code></pre></div></td></tr></tbody></table></div>
+<p>or:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ollama<span class="w"> </span>launch<span class="w"> </span>codex<span class="w"> </span>--model<span class="w"> </span>qwen3.5:9b
+</code></pre></div></td></tr></tbody></table></div>
+<p>Ollama maintains a current list of its supported
+<a href="https://docs.ollama.com/integrations">agent integrations</a>. The Agent Skills
+standard defines the contents of a skill directory, but the agent harness
+decides which directories to search.</p>
+<div class="admonition info">
+<p class="admonition-title">Model runtime versus agent harness</p>
+<p><strong>Ollama</strong> loads model weights, performs inference, and supports function
+calling. The <strong>agent harness</strong> scans for <code>SKILL.md</code>, builds the skill catalog,
+gives the model file and shell tools, and manages the agent loop. Skills are
+therefore a harness capability, not a property stored in the model weights.</p>
+</div>
+<h2 id="how-skill-discovery-works">How Skill Discovery Works</h2>
+<p>The open <a href="https://agentskills.io/specification">Agent Skills specification</a>
+defines a skill as a directory containing at least one file named exactly
+<code>SKILL.md</code>:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code>skill-name/
+├── SKILL.md
+├── scripts/       # optional
+├── references/    # optional
+└── assets/        # optional
+</code></pre></div></td></tr></tbody></table></div>
+<p>A skills-aware agent normally uses
+<a href="https://agentskills.io/client-implementation/adding-skills-support">progressive disclosure</a>:</p>
+<ol>
+<li>At session startup, the harness scans its configured skill roots and reads
+   only each skill's <code>name</code> and <code>description</code>.</li>
+<li>The harness places this compact catalog in the model's context or exposes it
+   through a skill-loading tool.</li>
+<li>When a request matches a description, the model asks the harness to load the
+   complete <code>SKILL.md</code>.</li>
+<li>Referenced scripts, templates, and documentation are loaded only when the
+   skill needs them.</li>
+</ol>
+<p>The model does not independently search the filesystem. It can only see the
+catalog and tools supplied by the harness.</p>
+<h2 id="the-portable-skills-directory">The Portable Skills Directory</h2>
+<p>The most widely supported cross-client convention is:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code># Project-specific skills
+&lt;project&gt;/.agents/skills/&lt;skill-name&gt;/SKILL.md
+
+# Skills available to the current user in every project
+~/.agents/skills/&lt;skill-name&gt;/SKILL.md
+</code></pre></div></td></tr></tbody></table></div>
+<p>Client-native directories also exist:</p>
+<table>
+<thead>
+<tr>
+<th>Agent harness</th>
+<th>Project directory</th>
+<th>User directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenCode</td>
+<td><code>.opencode/skills/</code></td>
+<td><code>~/.config/opencode/skills/</code></td>
+</tr>
+<tr>
+<td>Codex</td>
+<td><code>.agents/skills/</code></td>
+<td><code>~/.agents/skills/</code> and <code>$CODEX_HOME/skills/</code></td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td><code>.claude/skills/</code></td>
+<td><code>~/.claude/skills/</code></td>
+</tr>
+</tbody>
+</table>
+<p>OpenCode additionally scans <code>.agents/skills/</code> and <code>.claude/skills/</code> at both
+project and user scope. It can also load an arbitrary directory configured in
+<code>opencode.json</code>. See the current
+<a href="https://opencode.ai/docs/skills">OpenCode skill discovery documentation</a>.</p>
+<p>For a broader comparison of agent-specific locations and precedence rules, see
+<a href="../skill-portability-strategy/">Agent Skill Portability Strategy</a>.</p>
+<h2 id="recommended-setup-for-this-repository">Recommended Setup for This Repository</h2>
+<p>The skills in this repository use supporting scripts, references, templates,
+and schemas. Install or link the complete skill directories; copying only the
+<code>SKILL.md</code> files will leave many workflows incomplete.</p>
+<h3 id="option-1-configure-opencode-to-read-the-repository">Option 1: Configure OpenCode to Read the Repository</h3>
+<p>OpenCode provides the simplest direct-directory configuration. Create an
+<code>opencode.json</code> file in the project where OpenCode will run:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://opencode.ai/config.json"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"skills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">"/Users/dan/Documents/ws/ibook-skills/skills"</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></tbody></table></div>
+<p>Then launch OpenCode through Ollama:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ollama<span class="w"> </span>launch<span class="w"> </span>opencode<span class="w"> </span>--model<span class="w"> </span>qwen3.5:9b
+</code></pre></div></td></tr></tbody></table></div>
+<p>This keeps <code>/Users/dan/Documents/ws/ibook-skills/skills/</code> as the single source
+of truth. Edits in the repository become available without copying the skill
+collection. Do not add <code>skills/archived/</code> as a separate source; archived skills
+are retained for reference and should not be advertised alongside their active
+meta-skills.</p>
+<h3 id="option-2-link-skills-into-the-portable-user-directory">Option 2: Link Skills into the Portable User Directory</h3>
+<p>For Codex, OpenCode, Gemini CLI, Cursor, and GitHub Copilot, place links to the
+active skill directories under:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>~/.agents/skills/
+</code></pre></div></td></tr></tbody></table></div>
+<p>The resulting layout should resemble:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code>~/.agents/skills/
+├── book-installer -&gt; /Users/dan/Documents/ws/ibook-skills/skills/book-installer
+├── microsim-generator -&gt; /Users/dan/Documents/ws/ibook-skills/skills/microsim-generator
+├── chapter-content-generator -&gt; /Users/dan/Documents/ws/ibook-skills/skills/chapter-content-generator
+└── ...
+</code></pre></div></td></tr></tbody></table></div>
+<p>The repository's <code>scripts/bk-install-skills</code> script currently installs links
+under <code>~/.claude/skills/</code>. To use that script for a portable Ollama-backed
+agent, change its <code>TARGET_DIR</code> to <code>~/.agents/skills/</code>, or extend it to install
+to both locations. Preserve its exclusion of <code>skills/archived/</code>.</p>
+<p>After installing the links, launch Codex with Ollama:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>ollama<span class="w"> </span>launch<span class="w"> </span>codex<span class="w"> </span>--model<span class="w"> </span>qwen3.5:9b
+</code></pre></div></td></tr></tbody></table></div>
+<p>Ollama's <a href="https://docs.ollama.com/integrations/codex">Codex integration guide</a>
+also documents persistent profiles and manual <code>codex --oss</code> configuration.</p>
+<h3 id="option-3-import-skills-into-open-webui">Option 3: Import Skills into Open WebUI</h3>
+<p>Open WebUI manages skills in its Workspace rather than scanning
+<code>~/.agents/skills/</code>:</p>
+<ol>
+<li>Open <strong>Workspace → Skills</strong>.</li>
+<li>Create a skill or import its Markdown.</li>
+<li>Attach the skill to an Open WebUI model, or select it for an individual chat.</li>
+<li>Enable native function calling when using model-attached, lazily loaded
+   skills.</li>
+</ol>
+<p>Open WebUI injects a skill directly when it is selected for a chat. For a skill
+attached to a model, it advertises a manifest and lets the model call the
+<code>view_skill</code> tool to retrieve the full instructions. That lazy-loading path
+requires native function calling. See
+<a href="https://docs.openwebui.com/features/workspace/skills/">Open WebUI Skills</a>.</p>
+<p>Open WebUI is convenient for instruction-only skills. It is less convenient
+for this repository's resource-rich skills unless their supporting files and
+execution environment are also made available to the model.</p>
+<h2 id="choosing-a-small-ollama-model">Choosing a Small Ollama Model</h2>
+<p>A model does not need to be trained specifically on Agent Skills. It needs to
+follow detailed instructions and, when the harness uses lazy activation, call
+tools reliably. Ollama identifies compatible models with the <strong>Tools</strong> label in
+its <a href="https://ollama.com/search?c=tools">model catalog</a>.</p>
+<p>Practical compact candidates include:</p>
+<table>
+<thead>
+<tr>
+<th>Model family</th>
+<th>Useful sizes</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen 3.5</td>
+<td>4B, 9B</td>
+<td>Strong general starting point; prefer 9B for multi-step skills</td>
+</tr>
+<tr>
+<td>Ministral 3</td>
+<td>3B, 8B, 14B</td>
+<td>Edge-oriented models with tool support</td>
+</tr>
+<tr>
+<td>Granite 4</td>
+<td>1B, 3B</td>
+<td>Compact tool-capable models; 3B is the more practical choice</td>
+</tr>
+<tr>
+<td>Llama 3.2</td>
+<td>3B</td>
+<td>Small general model with tool support</td>
+</tr>
+<tr>
+<td>Command R7B</td>
+<td>7B</td>
+<td>Compact model designed for retrieval and tool-oriented work</td>
+</tr>
+<tr>
+<td>LFM 2.5</td>
+<td>8B</td>
+<td>Edge model designed for reliable tool calling</td>
+</tr>
+</tbody>
+</table>
+<p>Very small function-calling models can emit a correctly structured tool call
+but still struggle to choose the right skill, follow a long workflow, or
+recover after a failed command. The skills in this repository include
+multi-stage educational workflows and can load substantial reference material.
+An 8B–9B model is therefore a more realistic starting point than a sub-3B
+model.</p>
+<p>Context length matters as much as parameter count. Ollama recommends at least a
+64K-token context window for its Codex integration. A short context may fit the
+skill catalog but truncate the activated instructions, project files, tool
+results, or conversation history.</p>
+<h2 id="verification">Verification</h2>
+<p>After installation, start a new agent session from a working directory where
+the skills should be visible. Ask the agent:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>List the available skills related to MicroSims and explain which skill you
+would use to create a Chart.js educational simulation. Do not create files.
+</code></pre></div></td></tr></tbody></table></div>
+<p>A successful installation should produce an answer based on the descriptions
+of <code>microsim-generator</code> and related utilities. If the skill is missing, check:</p>
+<ul>
+<li>The selected application is an agent harness, not a plain <code>ollama run</code>
+  session.</li>
+<li>The skill root is one the harness scans or is explicitly configured.</li>
+<li>Every active skill is a directory containing an uppercase <code>SKILL.md</code>.</li>
+<li>The frontmatter contains a valid <code>name</code> and a specific <code>description</code>.</li>
+<li>The directory name matches the frontmatter <code>name</code>.</li>
+<li>Skill permissions and the harness's skill-loading tool are enabled.</li>
+<li>Native function calling is enabled when the harness uses a tool to activate
+  skills.</li>
+<li>The model has enough context space for the selected workflow.</li>
+</ul>
+<p>The central troubleshooting question is: <strong>Which component is responsible for
+skill discovery?</strong> If the answer is merely “Ollama,” a skills-aware harness is
+still missing.</p>
 
 
 
@@ -2331,7 +2138,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../31-publishing-announcing-book/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 31. Publishing and Announcing a Finished Book">
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -2341,20 +2148,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                31. Publishing and Announcing a Finished Book
+                Overview
               </div>
             </div>
           </a>
         
         
           
-          <a href="../appendix-b-claude-on-wsl/" class="md-footer__link md-footer__link--next" aria-label="Next: Appendix B - Claude on WSL">
+          <a href="../skill-portability-strategy/" class="md-footer__link md-footer__link--next" aria-label="Next: Skill Portability Strategy">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Appendix B - Claude on WSL
+                Skill Portability Strategy
               </div>
             </div>
             <div class="md-footer__button md-icon">

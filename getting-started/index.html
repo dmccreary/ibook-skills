@@ -578,18 +578,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#add-the-skills-command" class="md-nav__link">
+  <a href="#add-the-ibook-command" class="md-nav__link">
     <span class="md-ellipsis">
-      Add the /skills Command
+      Add the /ibook Command
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#sample-skill-slash-command-execution" class="md-nav__link">
+  <a href="#sample-slash-command-execution" class="md-nav__link">
     <span class="md-ellipsis">
-      Sample Skill Slash Command Execution
+      Sample Slash Command Execution
     </span>
   </a>
   
@@ -651,9 +651,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#skills-command-not-working" class="md-nav__link">
+  <a href="#ibook-command-not-working" class="md-nav__link">
     <span class="md-ellipsis">
-      /skills command not working
+      /ibook command not working
     </span>
   </a>
   
@@ -1685,6 +1685,8 @@
         
       
         
+      
+        
           
         
       
@@ -2049,18 +2051,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#add-the-skills-command" class="md-nav__link">
+  <a href="#add-the-ibook-command" class="md-nav__link">
     <span class="md-ellipsis">
-      Add the /skills Command
+      Add the /ibook Command
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#sample-skill-slash-command-execution" class="md-nav__link">
+  <a href="#sample-slash-command-execution" class="md-nav__link">
     <span class="md-ellipsis">
-      Sample Skill Slash Command Execution
+      Sample Slash Command Execution
     </span>
   </a>
   
@@ -2122,9 +2124,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#skills-command-not-working" class="md-nav__link">
+  <a href="#ibook-command-not-working" class="md-nav__link">
     <span class="md-ellipsis">
-      /skills command not working
+      /ibook command not working
     </span>
   </a>
   
@@ -2224,9 +2226,10 @@ Run <code>bk-install-scripts</code> to install book-building commands</p>
 <p>Type <code>bk</code> and you should see a list of the book building commmands</p>
 <h3 id="step-4-install-claude-skills">Step 4: Install Claude Skills</h3>
 <p>To install skills globally, you just need to type the following command</p>
-<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>bk-install-ibook-skills
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>bk-install-skills
 </code></pre></div></td></tr></tbody></table></div>
-<p>This will install all the book builder scripts in your ~/.claude/skills directory</p>
+<p>This installs every skill into each agent present on your machine — <code>~/.claude/skills/</code>,
+<code>~/.codex/skills/</code>, and <code>~/.gemini/antigravity/skills/</code>.</p>
 <h3 id="step-5-verify-installation">Step 5 Verify installation</h3>
 <p>Check that everything is working correctly by asking Claude what skills it knows about.</p>
 <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -2351,29 +2354,51 @@ These are scripts prefixed with <code>bk-</code> that help you manage and build 
 <p>The first option will allow you to work on many different intelligent textbook projects without duplicating the skills on your local computer. It is highly recommended.</p>
 <p>The only reason that you might want to use the second option for specific projects is if you are doing complex development such as creating different versions of these skills.</p>
 <h2 id="skill-installation-for-all-projects">Skill Installation for ALL Projects</h2>
-<p>We will do this by creating symbolic links from your home Claude directory (<code>~/.claude/skills/</code>) to the skills in the cloned repository.</p>
+<p>We will do this by creating symbolic links from each agent's skills directory to the
+skills in the cloned repository.</p>
 <p>Run the installation script:</p>
-<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="nv">$BK_HOME</span>/scripts
-./install-ibook-skills.sh
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>bk-install-skills
 </code></pre></div></td></tr></tbody></table></div>
-<p>You will see a log of all the skills that were correctly installed:</p>
-<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span>
-<span class="normal">5</span>
-<span class="normal">6</span>
-<span class="normal">7</span>
-<span class="normal">8</span></pre></div></td><td class="code"><div><pre><span></span><code>Created symlink: ~/.claude/skills/faq-generator -&gt; $HOME/Documents/ws/ibook-skills/skills/faq-generator
-Created symlink: ~/.claude/skills/glossary-generator -&gt; $HOME/Documents/ws/ibook-skills/skills/glossary-generator
-Created symlink: ~/.claude/skills/intelligent-textbook -&gt; $HOME/Documents/ws/ibook-skills/skills/intelligent-textbook
-Created symlink: ~/.claude/skills/intelligent-textbook-creator -&gt; $HOME/Documents/ws/ibook-skills/skills/intelligent-textbook-creator
-Created symlink: ~/.claude/skills/learning-graph-generator -&gt; $HOME/Documents/ws/ibook-skills/skills/learning-graph-generator
-Created symlink: ~/.claude/skills/microsim-p5 -&gt; $HOME/Documents/ws/ibook-skills/skills/microsim-p5
-Created symlink: ~/.claude/skills/moving-rainbow -&gt; $HOME/Documents/ws/ibook-skills/skills/moving-rainbow
-Created symlink: ~/.claude/skills/quiz-generator -&gt; $HOME/Documents/ws/ibook-skills/skills/quiz-generator
+<p>It installs into every agent present on the machine, so the three stay in sync:</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span></pre></div></td><td class="code"><div><pre><span></span><code>▸ Claude Code -&gt; ~/.claude/skills
+    linked book-chapter-generator
+    linked book-installer
+    linked chapter-content-generator
+    ...
+    14 linked, 0 already current, 0 pruned
+    1 slash command(s) -&gt; ~/.claude/commands
+
+▸ OpenAI Codex -&gt; ~/.codex/skills
+    14 linked, 0 already current, 0 pruned
+    wrapped command ibook as a Codex skill
+
+▸ Google Antigravity -&gt; ~/.gemini/antigravity/skills
+    14 linked, 0 already current, 0 pruned
+
+Summary: 42 linked, 0 already current, 0 pruned, 2 extra(s)
+Served: claude codex antigravity
+✓ All selected agents are current.
 </code></pre></div></td></tr></tbody></table></div>
+<p>Agents that aren't installed on the machine are skipped. Narrow the run with
+<code>--only claude</code>, preview it with <code>--dry-run</code>, or inspect current state with
+<code>--list</code>.</p>
 <h2 id="getting-updates">Getting Updates</h2>
 <p>These skills will be updated frequently. To install the latest release, just run git pull:</p>
 <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -2384,8 +2409,8 @@ git<span class="w"> </span>pull
 <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
 <span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nb">cd</span><span class="w"> </span><span class="nv">$BK_HOME</span>/scripts
-./bk-install-scripts<span class="w">      </span><span class="c1"># For book-building utilities</span>
-./install-ibook-skills.sh<span class="w"> </span><span class="c1"># For Claude skills</span>
+./bk-install-scripts<span class="w">   </span><span class="c1"># For book-building utilities</span>
+./bk-install-skills<span class="w">    </span><span class="c1"># For agent skills</span>
 </code></pre></div></td></tr></tbody></table></div>
 <h2 id="details-of-the-installation-script">Details of the Installation script</h2>
 <p>The script will create a set of symbolic link commands, one for each skill file in this repo.</p>
@@ -2479,28 +2504,25 @@ path where the links are created.</p>
   7. moving-rainbow - Creates moving rainbow animations
   8. quiz-generator - Generates quiz content
 </code></pre></div></td></tr></tbody></table></div>
-<h2 id="add-the-skills-command">Add the /skills Command</h2>
-<p>Claude Code allows you to add custom slash commands that execute scripts. You can add a <code>/skills</code> command that lists all available skills.</p>
-<p>The custom slash command system works by:
-1. Creating a command definition file in <code>~/.claude/commands/</code> (or <code>.claude/commands/</code> in your project)
-2. Having an executable script in your <code>$PATH</code> that the command calls</p>
-<p>The <code>list-skills.sh</code> script provides this functionality and is automatically installed to <code>~/.local/bin</code> when you run <code>bk-install-scripts</code>.</p>
-<p>To enable the <code>/skills</code> (and <code>/ibook</code>) slash commands:</p>
+<h2 id="add-the-ibook-command">Add the /ibook Command</h2>
+<p>Claude Code allows you to add custom slash commands defined by markdown files in
+<code>~/.claude/commands/</code> (or <code>.claude/commands/</code> inside a project). This repository
+ships one: <code>/ibook</code>, the runbook that tells you which skill to run next.</p>
 <p><strong>Option 1: Install globally (recommended):</strong>
 </p><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>bk-install-skills
 </code></pre></div></td></tr></tbody></table></div><p></p>
-<p>In addition to symlinking every skill into <code>~/.claude/skills/</code>, this symlinks
-every command in <code>commands/*.md</code> into <code>~/.claude/commands/</code> — so <code>/skills</code>,
-<code>/ibook</code>, and any future command become available globally. (The <code>list-skills.sh</code>
-helper used by <code>/skills</code> is installed separately by <code>bk-install-scripts</code>.)</p>
+<p>In addition to symlinking every skill into each agent's skills directory, this
+symlinks every command in <code>commands/*.md</code> into <code>~/.claude/commands/</code> — so
+<code>/ibook</code> and any future command become available globally.</p>
 <p><strong>Option 2: Install for a specific project:</strong>
 </p><div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>.claude/commands
-cp<span class="w"> </span><span class="nv">$BK_HOME</span>/commands/skills.md<span class="w"> </span>.claude/commands/skills.md
+cp<span class="w"> </span><span class="nv">$BK_HOME</span>/commands/ibook.md<span class="w"> </span>.claude/commands/ibook.md
 </code></pre></div></td></tr></tbody></table></div><p></p>
-<p>Note: The <code>list-skills.sh</code> script must be in your <code>$PATH</code> (which it will be if you followed the prerequisites and ran <code>bk-install-scripts</code>).</p>
-<h2 id="sample-skill-slash-command-execution">Sample Skill Slash Command Execution</h2>
-<p>I just type '/sk` into Claude Code and you should see the code listed</p>
+<p>To list installed skills there is no slash command — ask Claude directly, or run
+<code>bk-list-skills</code> from the shell.</p>
+<h2 id="sample-slash-command-execution">Sample Slash Command Execution</h2>
+<p>Type <code>/ib</code> into Claude Code and the <code>/ibook</code> command should be listed</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../img/claude-code-skill-command.png" data-desc-position="bottom"><img alt="" src="../img/claude-code-skill-command.png"></a></p>
 <p><strong>Result:</strong></p>
 <div class="highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -2568,8 +2590,9 @@ bk-book-status<span class="w"> </span>--help<span class="w">  </span><span class
 <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code>ls<span class="w"> </span>~/.claude/skills/
 <span class="c1"># Should list all installed skills (learning-graph-generator, glossary-generator, etc.)</span>
 </code></pre></div></td></tr></tbody></table></div><p></p>
-<p><strong>4. Test the /skills command in Claude Code:</strong>
-Type <code>/skills</code> in Claude Code and it should list all available skills.</p>
+<p><strong>4. Test the /ibook command in Claude Code:</strong>
+Type <code>/ibook</code> in Claude Code and it should show the textbook build runbook.
+To list installed skills, run <code>bk-list-skills</code> or just ask Claude.</p>
 <h2 id="configuring-permissions">Configuring Permissions</h2>
 <p>The default Claude Code permission behavior is very strict and will prompt you for many operations. For efficient workflow when working on textbook projects, you can configure permissions to be more permissive.</p>
 <p><strong>IMPORTANT</strong>: Only use permissive settings when working in a safe, version-controlled directory (like a Git repository). This way, you can always revert unwanted changes.</p>
@@ -2621,18 +2644,18 @@ Type <code>/skills</code> in Claude Code and it should list all available skills
 <p>If skills don't appear when you try to use them:</p>
 <ol>
 <li>Check that symlinks were created: <code>ls -la ~/.claude/skills/</code></li>
-<li>Re-run the installation: <code>cd $BK_HOME/scripts &amp;&amp; ./install-ibook-skills.sh</code></li>
+<li>Re-run the installation: <code>bk-install-skills</code></li>
 <li>Restart Claude Code</li>
-<li>Try listing skills with <code>/skills</code> command or ask Claude: "What skills do you have access to?"</li>
+<li>Ask Claude: "What skills do you have access to?", or run <code>bk-list-skills</code></li>
 </ol>
-<h3 id="skills-command-not-working">/skills command not working</h3>
-<p>If the <code>/skills</code> slash command doesn't work:</p>
+<h3 id="ibook-command-not-working">/ibook command not working</h3>
+<p>If the <code>/ibook</code> slash command doesn't work:</p>
 <ol>
-<li>Check that <code>list-skills.sh</code> is in your PATH: <code>which list-skills.sh</code></li>
-<li>Check that the command file exists: <code>ls ~/.claude/commands/skills.md</code></li>
+<li>Check that the command file exists: <code>ls ~/.claude/commands/ibook.md</code></li>
 <li>Re-run: <code>bk-install-skills</code></li>
 <li>Restart Claude Code</li>
 </ol>
+<p>(There is no <code>/skills</code> command; it was retired. Use <code>bk-list-skills</code>.)</p>
 <h3 id="permission-denied-when-running-scripts">Permission denied when running scripts</h3>
 <p>If you get permission denied errors:</p>
 <ol>
@@ -2647,7 +2670,7 @@ Type <code>/skills</code> in Claude Code and it should list all available skills
 <li><strong>Create interactive simulations</strong> - Use the <code>microsim-p5</code> skill</li>
 <li><strong>Generate course content</strong> - Use the <code>glossary-generator</code>, <code>quiz-generator</code>, and <code>faq-generator</code> skills</li>
 </ol>
-<p>For detailed documentation on each skill, visit the <a href="https://dmccreary.github.io/ibook-skills/">skills documentation</a> or use the <code>/skills</code> command in Claude Code.</p>
+<p>For detailed documentation on each skill, visit the <a href="https://dmccreary.github.io/ibook-skills/">skills documentation</a> or run <code>bk-list-skills</code>.</p>
 
 
 
