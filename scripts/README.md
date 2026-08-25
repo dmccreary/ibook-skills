@@ -342,14 +342,31 @@ bk-install-mkdocs
 
 ### bk-batch-capture-screenshots
 
-Captures screenshots for a batch of MicroSims that lack PNG images, rather than
-one at a time.
+Captures screenshots for every MicroSim that does not have one yet, by calling
+`bk-capture-screenshot` once per MicroSim.
 
-> **⚠️ Currently non-functional.** This script hardcodes an absolute path to
-> `capture_screenshot.sh` in the retired `microsim-screen-capture` skill, which
-> was consolidated into `microsim-utils`. It also hardcodes one developer's
-> repository path and a fixed list of MicroSim names. Use
-> `bk-capture-screenshot` per MicroSim until this is rewritten.
+MicroSims are discovered by globbing `<sims-dir>/*/main.html`, so there is no
+list to maintain. A MicroSim counts as done when `<name>/<name>.png` exists.
+Each sim's target height is read from the iframe in its `index.md`, so batch
+output matches the height the page actually renders at.
+
+**Requirements:** `bk-capture-screenshot` on PATH or beside this script; Google Chrome
+
+**Usage:**
+```bash
+bk-batch-capture-screenshots                    # ./docs/sims
+bk-batch-capture-screenshots path/to/docs/sims  # explicit directory
+bk-batch-capture-screenshots --force            # recapture existing PNGs
+bk-batch-capture-screenshots --dry-run          # list what would be done
+bk-batch-capture-screenshots --delay 5          # JS render delay, seconds
+bk-batch-capture-screenshots --height 700       # one height for every sim
+```
+
+**Exit codes:** `0` all captures succeeded or nothing to do, `1` if any capture
+failed, `2` on a usage error.
+
+Directories without a `main.html` are reported as skipped rather than ignored,
+so a broken MicroSim is visible instead of silently absent.
 
 ### bk-resize-images
 

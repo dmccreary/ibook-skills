@@ -1,85 +1,149 @@
-#!/bin/bash
-# Batch Screenshot Capture for MicroSims
-# Captures screenshots for all MicroSims that don't have PNG images
+#!/usr/bin/env bash
+# bk-batch-capture-screenshots
+#
+# Capture screenshots for every MicroSim in a book that does not have one yet,
+# by calling bk-capture-screenshot once per MicroSim.
+#
+# MicroSims are discovered by globbing <sims-dir>/*/main.html -- there is no
+# hardcoded list to maintain. A MicroSim is considered done when
+# <sims-dir>/<name>/<name>.png already exists; use --force to recapture.
+#
+# Each MicroSim's target height is read from the iframe in its index.md, which
+# is what bk-capture-screenshot recommends, so batch output matches the height
+# the page actually renders at. --height overrides this for every sim.
+#
+# USAGE
+#   bk-batch-capture-screenshots                    # ./docs/sims
+#   bk-batch-capture-screenshots path/to/docs/sims  # explicit directory
+#   bk-batch-capture-screenshots --force            # recapture existing PNGs
+#   bk-batch-capture-screenshots --dry-run          # list what would be done
+#   bk-batch-capture-screenshots --delay 5          # JS render delay, seconds
+#   bk-batch-capture-screenshots --height 700       # force one height
+#
+# Exit codes: 0 all captures succeeded (or nothing to do), 1 if any failed.
 
-SIMS_DIR="/Users/dan/Documents/ws/ibook-skills/docs/sims"
-CAPTURE_SCRIPT="/Users/dan/.claude/skills/microsim-screen-capture/scripts/capture_screenshot.sh"
+set -uo pipefail
 
-# List of MicroSims needing screenshots
-MICROSIMS=(
-  "adding-taxonomy-workflow"
-  "average-dependencies-distribution"
-  "book-levels"
-  "chapter-index-structure"
-  "chapter-organization-workflow"
-  "claude-code-timeline"
-  "concept-length-histogram"
-  "course-description-quality-workflow"
-  "dag-validation-algorithm"
-  "faq-pattern-analysis"
-  "git-workflow-skill-development"
-  "graph-viewer"
-  "learning-graph-json-schema"
-  "linear-chain-vs-network"
-  "microsim-file-relationship-diagram"
-  "mkdocs-build-process"
-  "mkdocs-github-pages-deployment"
-  "orphaned-nodes-identification"
-  "p5js-architecture"
-  "security-zones-diagram"
-  "skill-directory-structure"
-  "skill-installation-workflow"
-  "taxonomy-distribution-pie"
-  "terminal-workflow-textbook"
-  "test-world-cities"
-)
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; RED='\033[0;31m'; NC='\033[0m'
 
-echo "========================================"
-echo "Batch MicroSim Screenshot Capture"
-echo "========================================"
-echo "Total MicroSims to process: ${#MICROSIMS[@]}"
-echo ""
+SIMS_DIR=""
+FORCE=false
+DRY_RUN=false
+DELAY=3
+HEIGHT=""
 
-SUCCESS_COUNT=0
-FAIL_COUNT=0
+usage() { sed -n '2,25p' "$0" | sed 's/^# \{0,1\}//'; exit 0; }
 
-for microsim in "${MICROSIMS[@]}"; do
-  microsim_path="$SIMS_DIR/$microsim"
-
-  echo "----------------------------------------"
-  echo "Processing: $microsim"
-  echo "----------------------------------------"
-
-  if [ ! -d "$microsim_path" ]; then
-    echo "✗ ERROR: Directory not found: $microsim_path"
-    ((FAIL_COUNT++))
-    continue
-  fi
-
-  if [ ! -f "$microsim_path/main.html" ]; then
-    echo "✗ ERROR: main.html not found in $microsim"
-    ((FAIL_COUNT++))
-    continue
-  fi
-
-  # Run capture script
-  bash "$CAPTURE_SCRIPT" "$microsim_path"
-
-  if [ $? -eq 0 ]; then
-    echo "✓ Screenshot captured successfully"
-    ((SUCCESS_COUNT++))
-  else
-    echo "✗ Screenshot capture failed"
-    ((FAIL_COUNT++))
-  fi
-
-  echo ""
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --force)   FORCE=true; shift ;;
+        --dry-run) DRY_RUN=true; shift ;;
+        --delay)   DELAY="${2:?--delay needs a value}"; shift 2 ;;
+        --height)  HEIGHT="${2:?--height needs a value}"; shift 2 ;;
+        -h|--help) usage ;;
+        -*) printf '%bError: unknown option: %s%b\n' "$RED" "$1" "$NC" >&2; exit 2 ;;
+        *)  SIMS_DIR="$1"; shift ;;
+    esac
 done
 
-echo "========================================"
-echo "SUMMARY"
-echo "========================================"
-echo "✓ Successful: $SUCCESS_COUNT"
-echo "✗ Failed: $FAIL_COUNT"
-echo "Total: ${#MICROSIMS[@]}"
-echo "========================================"
+[ -n "$SIMS_DIR" ] || SIMS_DIR="docs/sims"
+
+if [ ! -d "$SIMS_DIR" ]; then
+    printf '%bError: sims directory not found: %s%b\n' "$RED" "$SIMS_DIR" "$NC" >&2
+    printf 'Run this from a textbook project root, or pass the path explicitly.\n' >&2
+    exit 1
+fi
+
+# bk-capture-screenshot normally sits beside this script; fall back to PATH.
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+if [ -x "$HERE/bk-capture-screenshot" ]; then
+    CAPTURE="$HERE/bk-capture-screenshot"
+elif command -v bk-capture-screenshot >/dev/null 2>&1; then
+    CAPTURE="$(command -v bk-capture-screenshot)"
+else
+    printf '%bError: bk-capture-screenshot not found%b\n' "$RED" "$NC" >&2
+    printf 'Install the bk* scripts first: $BK_HOME/scripts/bk-install-scripts\n' >&2
+    exit 1
+fi
+
+# Target height from the MicroSim's own iframe, e.g. height="500px".
+height_from_index() {
+    local idx="$1/index.md" h
+    [ -f "$idx" ] || return 1
+    h=$(grep -oE 'height="[0-9]+p?x?"' "$idx" | head -1 | grep -oE '[0-9]+')
+    [ -n "$h" ] && printf '%s' "$h"
+}
+
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+printf '%bBatch MicroSim Screenshot Capture%b\n' "$GREEN" "$NC"
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+printf 'Sims directory: %b%s%b\n' "$YELLOW" "$SIMS_DIR" "$NC"
+$FORCE   && printf '%bRecapturing existing screenshots (--force)%b\n' "$YELLOW" "$NC"
+$DRY_RUN && printf '%bDRY RUN — no screenshots will be captured%b\n' "$YELLOW" "$NC"
+printf '\n'
+
+ok=0; failed=0; skipped=0; missing=0
+declare -a failed_names=()
+
+shopt -s nullglob
+for main_html in "$SIMS_DIR"/*/main.html; do
+    dir=$(dirname "$main_html")
+    name=$(basename "$dir")
+    png="$dir/$name.png"
+
+    if [ -f "$png" ] && ! $FORCE; then
+        skipped=$((skipped + 1)); continue
+    fi
+
+    h="$HEIGHT"
+    [ -n "$h" ] || h=$(height_from_index "$dir") || h=""
+
+    if $DRY_RUN; then
+        printf '%b would capture%b %-42s %s\n' "$YELLOW" "$NC" "$name" \
+            "${h:+height=$h}"
+        ok=$((ok + 1)); continue
+    fi
+
+    printf '%b▸ %s%b\n' "$BLUE" "$name" "$NC"
+    if [ -n "$h" ]; then
+        "$CAPTURE" "$dir" "$DELAY" "$h" >/dev/null 2>&1
+    else
+        "$CAPTURE" "$dir" "$DELAY" >/dev/null 2>&1
+    fi
+    rc=$?
+
+    # Trust the capture script's status first; the file check catches the case
+    # where it exits 0 without actually writing the PNG.
+    if [ "$rc" -eq 0 ] && [ -f "$png" ]; then
+        printf '  %b✓%b %s\n' "$GREEN" "$NC" "$(basename "$png") ($(ls -lh "$png" | awk '{print $5}'))"
+        ok=$((ok + 1))
+    else
+        printf '  %b✗%b capture failed\n' "$RED" "$NC"
+        failed=$((failed + 1)); failed_names+=("$name")
+    fi
+done
+shopt -u nullglob
+
+# A directory with no main.html is not a MicroSim; report it so a broken one
+# is not silently invisible.
+shopt -s nullglob
+for d in "$SIMS_DIR"/*/; do
+    [ -f "$d/main.html" ] || { missing=$((missing + 1)); \
+        printf '%b○%b %s has no main.html — skipped\n' "$YELLOW" "$NC" "$(basename "$d")"; }
+done
+shopt -u nullglob
+
+printf '\n%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+if $DRY_RUN; then
+    printf '%bWould capture:%b %d   %balready have PNG:%b %d\n' "$GREEN" "$NC" "$ok" "$YELLOW" "$NC" "$skipped"
+else
+    printf '%bCaptured:%b %d   %bfailed:%b %d   %balready had PNG:%b %d\n' \
+        "$GREEN" "$NC" "$ok" "$RED" "$NC" "$failed" "$YELLOW" "$NC" "$skipped"
+fi
+[ "$missing" -gt 0 ] && printf '%bNot MicroSims (no main.html):%b %d\n' "$YELLOW" "$NC" "$missing"
+if [ "$failed" -gt 0 ]; then
+    printf '%bFailed:%b %s\n' "$RED" "$NC" "${failed_names[*]}"
+    printf 'Re-run one by hand for the full error: bk-capture-screenshot %s/<name>\n' "$SIMS_DIR"
+fi
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+[ "$failed" -eq 0 ]
