@@ -1,257 +1,363 @@
-#!/bin/bash
-# bk-install-skills
+#!/usr/bin/env bash
+# bk-install-skills — one installer for every agent that loads these skills.
 #
-# Creates symbolic links in ~/.claude/skills/ for all skill directories in $BK_HOME/skills/
-# Validates links and warns about any broken symlinks
+# Symlinks each active skill in $BK_HOME/skills/ into the skills directory of
+# every supported agent: Claude Code, OpenAI Codex, and Google Antigravity.
+#
+# WHY INSTALL TO ALL AGENTS BY DEFAULT
+#   These agents are frequently used together against the same repository. An
+#   installer that serves only the agent that happened to invoke it leaves the
+#   other two pointing at a stale skill set the moment a skill is added,
+#   renamed, or archived. The repo is the single source of truth, so every
+#   agent present on the machine is refreshed on every run.
+#
+#   "Present" means the agent's home directory exists (~/.claude, ~/.codex,
+#   ~/.gemini). Absent agents are skipped, not created -- use --all to force.
+#
+# USAGE
+#   bk-install-skills                      every agent present on this machine
+#   bk-install-skills --only claude,codex  just the named agents
+#   bk-install-skills --all                include agents not yet present
+#   bk-install-skills --dry-run            report actions, change nothing
+#   bk-install-skills --list               show agents and their status
+#   bk-install-skills --help
+#
+# Replaces the former bk-install-skills / -codex / -antigravity trio.
 
-set -e  # Exit on error
+set -euo pipefail
 
-# Colors for output
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; RED='\033[0;31m'; NC='\033[0m'
 
-# Check if BK_HOME is set
-if [ -z "$BK_HOME" ]; then
-    echo -e "${RED}Error: BK_HOME environment variable is not set.${NC}"
-    echo "Please set BK_HOME to the root directory of your ibook-skills repository."
-    echo "Example: export BK_HOME=$HOME/Documents/ws/ibook-skills"
-    exit 1
-fi
+KNOWN_AGENTS="claude codex antigravity"
 
-# Check if BK_HOME directory exists
-if [ ! -d "$BK_HOME" ]; then
-    echo -e "${RED}Error: BK_HOME directory does not exist: $BK_HOME${NC}"
-    exit 1
-fi
+agent_label() {
+    case "$1" in
+        claude)      printf 'Claude Code' ;;
+        codex)       printf 'OpenAI Codex' ;;
+        antigravity) printf 'Google Antigravity' ;;
+    esac
+}
 
-# Check if skills directory exists
-if [ ! -d "$BK_HOME/skills" ]; then
-    echo -e "${RED}Error: $BK_HOME/skills directory does not exist${NC}"
-    exit 1
-fi
+# Where the agent looks for skills.
+agent_target() {
+    case "$1" in
+        claude)      printf '%s' "$HOME/.claude/skills" ;;
+        codex)       printf '%s' "$HOME/.codex/skills" ;;
+        antigravity) printf '%s' "$HOME/.gemini/antigravity/skills" ;;
+    esac
+}
 
-SKILLS_DIR="$BK_HOME/skills"
-TARGET_DIR="$HOME/.claude/skills"
+# Directory whose existence means "this agent is installed here".
+agent_home() {
+    case "$1" in
+        claude)      printf '%s' "$HOME/.claude" ;;
+        codex)       printf '%s' "$HOME/.codex" ;;
+        antigravity) printf '%s' "$HOME/.gemini" ;;
+    esac
+}
 
-echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}Installing Claude Skills${NC}"
-echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
-echo -e "BK_HOME: ${YELLOW}$BK_HOME${NC}"
-echo -e "Source:  ${YELLOW}$SKILLS_DIR${NC}"
-echo -e "Target:  ${YELLOW}$TARGET_DIR${NC}"
-echo ""
+is_known_agent() {
+    local a
+    for a in $KNOWN_AGENTS; do [ "$a" = "$1" ] && return 0; done
+    return 1
+}
 
-# Create the target directory if it doesn't exist
-if [ ! -d "$TARGET_DIR" ]; then
-    echo -e "${GREEN}Creating directory: $TARGET_DIR${NC}"
-    mkdir -p "$TARGET_DIR"
-fi
+# ── Arguments ─────────────────────────────────────────────────
+DRY_RUN=false
+FORCE_ALL=false
+LIST_ONLY=false
+SELECTED=""
 
-# Clean up old/broken symlinks first
-echo -e "${BLUE}Cleaning up old symlinks...${NC}"
-cleanup_count=0
-declare -a cleaned_links=()
+usage() { sed -n '2,28p' "$0" | sed 's/^# \{0,1\}//'; exit 0; }
 
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --only)
+            [ $# -ge 2 ] || { printf '%bError: --only needs a value%b\n' "$RED" "$NC" >&2; exit 2; }
+            SELECTED=$(printf '%s' "$2" | tr ',' ' '); shift 2 ;;
+        --only=*)
+            SELECTED=$(printf '%s' "${1#*=}" | tr ',' ' '); shift ;;
+        --all)     FORCE_ALL=true; shift ;;
+        --dry-run) DRY_RUN=true; shift ;;
+        --list)    LIST_ONLY=true; shift ;;
+        -h|--help) usage ;;
+        *) printf '%bError: unknown option: %s%b\n' "$RED" "$1" "$NC" >&2
+           printf 'Try --help.\n' >&2; exit 2 ;;
+    esac
+done
+
+[ -n "$SELECTED" ] || SELECTED="$KNOWN_AGENTS"
+for a in $SELECTED; do
+    is_known_agent "$a" || {
+        printf '%bError: unknown agent: %s%b\n' "$RED" "$a" "$NC" >&2
+        printf 'Known agents: %s\n' "$KNOWN_AGENTS" >&2; exit 2; }
+done
+
+# ── Repository root ───────────────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="${BK_HOME:-$(cd "$SCRIPT_DIR/.." && pwd -P)}"
+SKILLS_DIR="$REPO_ROOT/skills"
+COMMANDS_DIR="$REPO_ROOT/commands"
+
+[ -d "$SKILLS_DIR" ] || {
+    printf '%bError: skills directory does not exist: %s%b\n' "$RED" "$SKILLS_DIR" "$NC" >&2
+    printf 'Set BK_HOME to the ibook-skills checkout, e.g.\n' >&2
+    printf '  export BK_HOME="$HOME/Documents/ws/ibook-skills"\n' >&2
+    exit 1; }
+
+# ── Active skills ─────────────────────────────────────────────
+# An active skill is a direct child of skills/ containing SKILL.md. This
+# naturally excludes skills/archived/ (retired skills consolidated into
+# meta-skills) and any stray directory without a skill definition.
+SKILL_DIRS=()
 shopt -s nullglob
-for link in "$TARGET_DIR"/*; do
-    if [ -L "$link" ]; then
-        link_name=$(basename "$link")
-        link_target=$(readlink "$link")
-
-        # Check if symlink is broken OR if it points to a location that no longer exists in source
-        if [ ! -e "$link" ]; then
-            # Broken symlink - target doesn't exist
-            rm "$link"
-            cleaned_links+=("$link_name (broken)")
-            ((++cleanup_count))
-        elif [[ "$link_target" == "$SKILLS_DIR"* ]] || [[ "$link_target" == *"/ibook-skills/skills/"* ]]; then
-            # Symlink points to our skills directory - check if source skill still exists
-            source_skill_name=$(basename "$link_target")
-            if [ ! -d "$SKILLS_DIR/$source_skill_name" ]; then
-                # Source skill no longer exists (renamed or removed)
-                rm "$link"
-                cleaned_links+=("$link_name (stale - source removed)")
-                ((++cleanup_count))
-            fi
-        fi
-    fi
+for skill_file in "$SKILLS_DIR"/*/SKILL.md; do
+    SKILL_DIRS+=("$(dirname "$skill_file")")
 done
 shopt -u nullglob
 
-if [ "$cleanup_count" -gt 0 ]; then
-    echo -e "${YELLOW}Cleaned up $cleanup_count old symlink(s):${NC}"
-    for cleaned in "${cleaned_links[@]}"; do
-        echo -e "  - ${YELLOW}$cleaned${NC}"
+[ ${#SKILL_DIRS[@]} -gt 0 ] || {
+    printf '%bError: no active skills found in %s%b\n' "$RED" "$SKILLS_DIR" "$NC" >&2; exit 1; }
+
+is_active_skill() {
+    local d
+    for d in "${SKILL_DIRS[@]}"; do
+        [ "$(basename "$d")" = "$1" ] && return 0
     done
-    echo ""
-else
-    echo -e "${GREEN}✓${NC} No stale symlinks found"
-    echo ""
-fi
+    return 1
+}
 
-# Counter for installed skills
-installed_count=0
-declare -a installed_skills=()
-
-# Create symbolic links for each skill folder
-echo -e "${BLUE}Creating skill symlinks...${NC}"
-shopt -s nullglob
-for skill_dir in "$SKILLS_DIR"/*; do
-    if [ -d "$skill_dir" ]; then
-        skill_name=$(basename "$skill_dir")
-
-        # archived/ holds retired skills consolidated into meta-skills; never load them
-        case "$skill_name" in
-            archived) continue ;;
-        esac
-
-        target_link="$TARGET_DIR/$skill_name"
-
-        # Remove existing symlink if it exists
-        if [ -L "$target_link" ]; then
-            rm "$target_link"
-        elif [ -e "$target_link" ]; then
-            echo -e "${YELLOW}⚠${NC}  Warning: $target_link exists but is not a symlink. Skipping."
-            continue
+# ── --list ────────────────────────────────────────────────────
+if $LIST_ONLY; then
+    printf '%bKnown agents%b (source: %s, %d active skills)\n\n' \
+        "$BLUE" "$NC" "$SKILLS_DIR" "${#SKILL_DIRS[@]}"
+    for a in $KNOWN_AGENTS; do
+        t=$(agent_target "$a")
+        if [ -d "$(agent_home "$a")" ]; then status="${GREEN}present${NC}"; else status="${YELLOW}absent${NC}"; fi
+        n=0
+        if [ -d "$t" ]; then
+            shopt -s nullglob
+            for l in "$t"/*; do [ -L "$l" ] && n=$((n + 1)); done
+            shopt -u nullglob
         fi
-
-        # Create the symbolic link
-        ln -s "$skill_dir" "$target_link"
-        echo -e "${GREEN}✓${NC} $skill_name -> $skill_dir"
-        installed_skills+=("$skill_name")
-        ((++installed_count))
-    fi
-done
-shopt -u nullglob
-
-echo ""
-echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
-
-# Check if any skills were installed
-if [ "$installed_count" -eq 0 ]; then
-    echo -e "${YELLOW}No skill directories found in $BK_HOME/skills/${NC}"
+        printf '  %-12s %b  %s (%d symlink(s))\n' "$a" "$status" "$t" "$n"
+    done
     exit 0
 fi
 
-echo -e "${GREEN}Successfully installed $installed_count skill link(s) to $TARGET_DIR${NC}"
-echo ""
+# ── Helpers ───────────────────────────────────────────────────
+run() { if $DRY_RUN; then printf '    %b[dry-run]%b %s\n' "$YELLOW" "$NC" "$*"; else "$@"; fi; }
 
-# List the installed skills
-echo -e "${BLUE}Installed skills:${NC}"
-for skill in "${installed_skills[@]}"; do
-    echo -e "  - ${GREEN}$skill${NC}"
-done
+TOTAL_LINKED=0; TOTAL_CURRENT=0; TOTAL_REMOVED=0; TOTAL_CONFLICTS=0; TOTAL_EXTRAS=0
+SKIPPED_AGENTS=""; SERVED_AGENTS=""
 
-echo ""
-echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
+# Link every active skill into $1, pruning links this repo no longer owns.
+link_skills_into() {
+    local target="$1" linked=0 current=0 removed=0 link name tgt skill_dir skill_name
 
-# Check for broken symlinks in ~/.claude/skills
-echo -e "${BLUE}Checking for broken symlinks in $TARGET_DIR...${NC}"
-broken_count=0
-declare -a broken_links=()
+    run mkdir -p "$target"
+    [ -d "$target" ] || { $DRY_RUN || return 1; }
 
-shopt -s nullglob
-for link in "$TARGET_DIR"/*; do
-    if [ -L "$link" ] && [ ! -e "$link" ]; then
-        link_name=$(basename "$link")
-        broken_links+=("$link_name")
-        ((broken_count++))
-    fi
-done
-shopt -u nullglob
-
-if [ "$broken_count" -gt 0 ]; then
-    echo -e "${RED}⚠ Found $broken_count broken symlink(s):${NC}"
-    for broken in "${broken_links[@]}"; do
-        echo -e "  - ${RED}$broken${NC} (points to non-existent location)"
-    done
-    echo ""
-    echo -e "${YELLOW}To remove broken links, run:${NC}"
-    echo "  find ~/.claude/skills -xtype l -delete"
-else
-    echo -e "${GREEN}✓${NC} No broken symlinks found"
-fi
-
-# ── Slash-command symlinks ────────────────────────────────────
-# Symlink every commands/*.md into ~/.claude/commands/ so slash commands
-# (e.g. /skills, /ibook) are usable globally. Mirrors the skills logic:
-# replace existing symlinks, warn+skip real files, skip archived *-old.md.
-echo ""
-echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
-echo -e "${BLUE}Installing slash-command symlinks...${NC}"
-COMMANDS_DIR="$BK_HOME/commands"
-COMMANDS_TARGET="$HOME/.claude/commands"
-
-if [ -d "$COMMANDS_DIR" ]; then
-    mkdir -p "$COMMANDS_TARGET"
-
-    # Clean up stale command symlinks whose source no longer exists
-    shopt -s nullglob
-    for link in "$COMMANDS_TARGET"/*.md; do
-        if [ -L "$link" ]; then
-            link_target=$(readlink "$link")
-            if [[ "$link_target" == "$COMMANDS_DIR"* ]] && [ ! -e "$link" ]; then
-                rm "$link"
-                echo -e "${YELLOW}Cleaned stale command link:${NC} $(basename "$link")"
+    # Prune broken links, and live links to skills we no longer ship.
+    if [ -d "$target" ]; then
+        shopt -s nullglob dotglob
+        for link in "$target"/*; do
+            [ -L "$link" ] || continue
+            name=$(basename "$link"); tgt=$(readlink "$link")
+            if [ ! -e "$link" ]; then
+                run rm -- "$link"
+                printf '    %bpruned%b %s (broken)\n' "$YELLOW" "$NC" "$name"
+                removed=$((removed + 1))
+            elif case "$tgt" in "$SKILLS_DIR"/*) true ;; *) false ;; esac && ! is_active_skill "$name"; then
+                run rm -- "$link"
+                printf '    %bpruned%b %s (no longer an active skill)\n' "$YELLOW" "$NC" "$name"
+                removed=$((removed + 1))
             fi
-        fi
-    done
-    shopt -u nullglob
+        done
+        shopt -u nullglob dotglob
+    fi
 
-    cmd_count=0
-    declare -a installed_cmds=()
+    for skill_dir in "${SKILL_DIRS[@]}"; do
+        skill_name=$(basename "$skill_dir")
+        link="$target/$skill_name"
+
+        if [ -L "$link" ] && [ "$(readlink "$link")" = "$skill_dir" ]; then
+            current=$((current + 1)); continue
+        fi
+        if [ -L "$link" ]; then
+            run rm -- "$link"
+        elif [ -e "$link" ]; then
+            printf '    %bconflict%b %s exists and is not a symlink; left unchanged\n' "$RED" "$NC" "$link" >&2
+            TOTAL_CONFLICTS=$((TOTAL_CONFLICTS + 1)); continue
+        fi
+        run ln -s "$skill_dir" "$link"
+        printf '    %blinked%b %s\n' "$GREEN" "$NC" "$skill_name"
+        linked=$((linked + 1))
+    done
+
+    printf '    %d linked, %d already current, %d pruned\n' "$linked" "$current" "$removed"
+    TOTAL_LINKED=$((TOTAL_LINKED + linked))
+    TOTAL_CURRENT=$((TOTAL_CURRENT + current))
+    TOTAL_REMOVED=$((TOTAL_REMOVED + removed))
+}
+
+# Claude reads slash commands from ~/.claude/commands/*.md.
+extras_claude() {
+    local target="$HOME/.claude/commands" cmd_file cmd_name link n=0
+    [ -d "$COMMANDS_DIR" ] || { printf '    %bskip%b no commands/ directory\n' "$YELLOW" "$NC"; return 0; }
+    run mkdir -p "$target"
+
     shopt -s nullglob
+    for link in "$target"/*.md; do
+        [ -L "$link" ] || continue
+        case "$(readlink "$link")" in
+            "$COMMANDS_DIR"/*) [ -e "$link" ] || { run rm -- "$link"
+                printf '    %bpruned%b command %s\n' "$YELLOW" "$NC" "$(basename "$link")"; } ;;
+        esac
+    done
     for cmd_file in "$COMMANDS_DIR"/*.md; do
         cmd_name=$(basename "$cmd_file")
-
-        # Skip archived/legacy commands (e.g. skills-old.md) so they
-        # do not show up as live slash commands.
-        case "$cmd_name" in
-            *-old.md) continue ;;
-        esac
-
-        target_cmd="$COMMANDS_TARGET/$cmd_name"
-
-        if [ -L "$target_cmd" ]; then
-            rm "$target_cmd"
-        elif [ -e "$target_cmd" ]; then
-            echo -e "${YELLOW}⚠${NC}  Warning: $target_cmd exists but is not a symlink. Skipping."
-            continue
+        case "$cmd_name" in *-old.md) continue ;; esac   # retired slash commands
+        link="$target/$cmd_name"
+        if [ -L "$link" ]; then
+            run rm -- "$link"
+        elif [ -e "$link" ]; then
+            printf '    %bconflict%b %s is not a symlink; left unchanged\n' "$RED" "$NC" "$link" >&2
+            TOTAL_CONFLICTS=$((TOTAL_CONFLICTS + 1)); continue
         fi
-
-        ln -s "$cmd_file" "$target_cmd"
-        echo -e "${GREEN}✓${NC} /${cmd_name%.md} -> $cmd_file"
-        installed_cmds+=("/${cmd_name%.md}")
-        ((++cmd_count))
+        run ln -s "$cmd_file" "$link"
+        n=$((n + 1))
     done
     shopt -u nullglob
+    printf '    %d slash command(s) -> %s\n' "$n" "$target"
+    TOTAL_EXTRAS=$((TOTAL_EXTRAS + n))
+}
 
-    if [ "$cmd_count" -gt 0 ]; then
-        echo -e "${GREEN}Installed $cmd_count command link(s):${NC} ${installed_cmds[*]}"
-    else
-        echo -e "${YELLOW}No command links created${NC}"
+# A wrapper is ours if its marker names any checkout's commands/<name>.md.
+# Matching the suffix rather than the exact path keeps the wrapper adoptable
+# after the repository is moved or renamed (this repo was once claude-skills);
+# the marker is rewritten with the current path on every run.
+marker_is_ours() {
+    [ -f "$1" ] || return 1
+    case "$(cat "$1")" in
+        */commands/"$2".md) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+# Codex has no slash-command concept; reusable workflows are skills. Wrap the
+# named command file in a managed skill directory that symlinks to it, so the
+# command's content is never duplicated.
+codex_command_as_skill() {
+    local name="$1" target_dir="$2"
+    local cmd_file="$COMMANDS_DIR/$name.md"
+    local skill_dir="$target_dir/$name"
+    local marker="$skill_dir/.bk-command-source"
+
+    [ -f "$cmd_file" ] || {
+        printf '    %bskip%b no command source: %s\n' "$YELLOW" "$NC" "$cmd_file"; return 0; }
+    if ! grep -qx "name: $name" "$cmd_file" || ! grep -q '^description: .' "$cmd_file"; then
+        printf '    %bskip%b %s lacks name/description frontmatter\n' "$YELLOW" "$NC" "$cmd_file"; return 0
     fi
-else
-    echo -e "${YELLOW}⚠${NC}  $COMMANDS_DIR not found, skipping command symlinks"
-fi
+    if is_active_skill "$name"; then
+        printf '    %bskip%b %s is already a real skill\n' "$YELLOW" "$NC" "$name"; return 0
+    fi
 
-# ── Global gitignore ──────────────────────────────────────────
-echo ""
-echo -e "${BLUE}Configuring global gitignore...${NC}"
-GITIGNORE_SRC="$BK_HOME/config/gitignore_global"
-GITIGNORE_DST="$HOME/.gitignore_global"
+    if [ -L "$skill_dir" ]; then
+        run rm -- "$skill_dir"
+    elif [ -e "$skill_dir" ] && [ ! -d "$skill_dir" ]; then
+        printf '    %bconflict%b %s is not a directory; left unchanged\n' "$RED" "$NC" "$skill_dir" >&2
+        TOTAL_CONFLICTS=$((TOTAL_CONFLICTS + 1)); return 0
+    elif [ -d "$skill_dir" ] && ! marker_is_ours "$marker" "$name"; then
+        printf '    %bconflict%b %s is not managed by this installer; left unchanged\n' "$RED" "$NC" "$skill_dir" >&2
+        TOTAL_CONFLICTS=$((TOTAL_CONFLICTS + 1)); return 0
+    fi
 
+    run mkdir -p "$skill_dir/agents"
+    if $DRY_RUN; then
+        printf '    %b[dry-run]%b write %s and agents/openai.yaml\n' "$YELLOW" "$NC" "$marker"
+    else
+        printf '%s\n' "$cmd_file" > "$marker"
+        [ -e "$skill_dir/SKILL.md" ] && rm -- "$skill_dir/SKILL.md"
+        ln -s "$cmd_file" "$skill_dir/SKILL.md"
+        cat > "$skill_dir/agents/openai.yaml" <<'YAML'
+interface:
+  display_name: "Intelligent Textbook Runbook"
+  short_description: "Find the next textbook build skill"
+  default_prompt: "Use $ibook to assess this textbook project and recommend the next skill."
+policy:
+  allow_implicit_invocation: true
+YAML
+    fi
+    printf '    %bwrapped%b command %s as a Codex skill\n' "$GREEN" "$NC" "$name"
+    TOTAL_EXTRAS=$((TOTAL_EXTRAS + 1))
+}
+
+extras_codex() { codex_command_as_skill ibook "$(agent_target codex)"; }
+
+# ── Install ───────────────────────────────────────────────────
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+printf '%bInstalling skills%b\n' "$GREEN" "$NC"
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+printf 'Source: %b%s%b (%d active skills)\n' "$YELLOW" "$SKILLS_DIR" "$NC" "${#SKILL_DIRS[@]}"
+printf 'Agents: %b%s%b\n' "$YELLOW" "$SELECTED" "$NC"
+$DRY_RUN && printf '%bDRY RUN — no changes will be made%b\n' "$YELLOW" "$NC"
+printf '\n'
+
+for agent in $SELECTED; do
+    target=$(agent_target "$agent")
+    if [ ! -d "$(agent_home "$agent")" ] && ! $FORCE_ALL; then
+        printf '%b○ %s%b — not installed here, skipping (use --all to force)\n\n' \
+            "$YELLOW" "$(agent_label "$agent")" "$NC"
+        SKIPPED_AGENTS="$SKIPPED_AGENTS $agent"; continue
+    fi
+    printf '%b▸ %s%b -> %s\n' "$BLUE" "$(agent_label "$agent")" "$NC" "$target"
+    link_skills_into "$target"
+    case "$agent" in
+        claude)      extras_claude ;;
+        codex)       extras_codex ;;
+        antigravity) : ;;   # no command/plugin surface of its own
+    esac
+    SERVED_AGENTS="$SERVED_AGENTS $agent"
+    printf '\n'
+done
+
+# ── Global gitignore (machine-level, once per run) ────────────
+GITIGNORE_SRC="$REPO_ROOT/config/gitignore_global"
 if [ -f "$GITIGNORE_SRC" ]; then
-    cp "$GITIGNORE_SRC" "$GITIGNORE_DST"
-    git config --global core.excludesfile "$GITIGNORE_DST"
-    echo -e "${GREEN}✓${NC} Installed $GITIGNORE_DST"
-else
-    echo -e "${YELLOW}⚠${NC}  $GITIGNORE_SRC not found, skipping global gitignore"
+    run cp "$GITIGNORE_SRC" "$HOME/.gitignore_global"
+    run git config --global core.excludesfile "$HOME/.gitignore_global"
+    printf '%b✓%b global gitignore -> %s\n\n' "$GREEN" "$NC" "$HOME/.gitignore_global"
 fi
 
-echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
-echo -e "${GREEN}Done!${NC} You can now use these skills with Claude Code"
-echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
+# ── Verify ────────────────────────────────────────────────────
+BROKEN=""
+if ! $DRY_RUN; then
+    for agent in $SERVED_AGENTS; do
+        target=$(agent_target "$agent")
+        [ -d "$target" ] || continue
+        while IFS= read -r link; do
+            [ -n "$link" ] && [ ! -e "$link" ] && BROKEN="$BROKEN $link"
+        done < <(find "$target" -type l 2>/dev/null)
+    done
+fi
+
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+printf '%bSummary:%b %d linked, %d already current, %d pruned, %d extra(s)\n' \
+    "$BLUE" "$NC" "$TOTAL_LINKED" "$TOTAL_CURRENT" "$TOTAL_REMOVED" "$TOTAL_EXTRAS"
+printf 'Served:%b%s%b\n' "$GREEN" "${SERVED_AGENTS:- none}" "$NC"
+[ -n "$SKIPPED_AGENTS" ] && printf 'Skipped:%b%s%b (not installed here)\n' "$YELLOW" "$SKIPPED_AGENTS" "$NC"
+
+status=0
+if [ "$TOTAL_CONFLICTS" -gt 0 ]; then
+    printf '%bIncomplete: %d conflict(s) left unchanged.%b\n' "$RED" "$TOTAL_CONFLICTS" "$NC" >&2
+    status=1
+fi
+if [ -n "$BROKEN" ]; then
+    printf '%bIncomplete: broken symlinks remain:%b\n' "$RED" "$NC" >&2
+    for b in $BROKEN; do printf '  %s\n' "$b" >&2; done
+    status=1
+fi
+[ "$status" -eq 0 ] && printf '%b✓ All selected agents are current.%b\n' "$GREEN" "$NC"
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+exit $status

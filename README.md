@@ -14,7 +14,7 @@ Visit the interactive documentation at: [https://dmccreary.github.io/ibook-skill
 
 ## Overview
 
-**Agent Skills for Intelligent Textbooks** is a portable, token-efficient library of AI agent skills for building interactive educational textbooks. The skills are written as plain-language markdown workflows (`SKILL.md` files), so they aren't locked to one vendor's assistant — the same skill set has been installed and run in **Claude Code, OpenAI Codex, Google Antigravity/Gemini, Cursor, Perplexity, and Hermes**. The repository's `CLAUDE.md` instructions file doubles as an `AGENTS.md` for tools that use that convention, and dedicated install scripts (`bk-install-skills`, `bk-install-skills-codex`, `bk-install-skills-antigravity`) symlink the same skills into each tool's own skills directory.
+**Agent Skills for Intelligent Textbooks** is a portable, token-efficient library of AI agent skills for building interactive educational textbooks. The skills are written as plain-language markdown workflows (`SKILL.md` files), so they aren't locked to one vendor's assistant — the same skill set has been installed and run in **Claude Code, OpenAI Codex, Google Antigravity/Gemini, Cursor, Perplexity, and Hermes**. The repository's `CLAUDE.md` instructions file doubles as an `AGENTS.md` for tools that use that convention, and a single install script (`bk-install-skills`) symlinks the same skills into the skills directory of every agent present on the machine.
 
 This project enables the creation of **Level 2+ intelligent textbooks** using MkDocs with the Material theme, incorporating learning graphs, concept dependency mapping, interactive p5.js simulations (MicroSims), and AI-assisted content generation. Every skill follows educational best practices including Bloom's Taxonomy (2001 revision) for learning outcomes, ISO 11179 standards for terminology definitions, and concept dependency graphs (DAGs) to ensure prerequisites are taught before they're used.
 
@@ -96,17 +96,18 @@ Set `BK_HOME` to the repository root, then run the installer for your platform:
 ```bash
 export BK_HOME="$HOME/path/to/ibook-skills"
 
-# Claude Code
+# Every agent present on this machine
 $BK_HOME/scripts/bk-install-skills
 
-# OpenAI Codex
-$BK_HOME/scripts/bk-install-skills-codex
-
-# Google Antigravity / Gemini
-$BK_HOME/scripts/bk-install-skills-antigravity
+# Or narrow it
+$BK_HOME/scripts/bk-install-skills --only codex
+$BK_HOME/scripts/bk-install-skills --list      # show agents and status
+$BK_HOME/scripts/bk-install-skills --dry-run   # preview, change nothing
 ```
 
-Each script symlinks every active skill in `skills/` (skipping `skills/archived/`) into that tool's own skills directory, so edits to a skill here are picked up immediately by every connected agent.
+The script symlinks every active skill in `skills/` (any directory with a `SKILL.md`, which excludes `skills/archived/`) into the skills directory of each supported agent — Claude Code, OpenAI Codex, and Google Antigravity. Edits to a skill here are picked up immediately by every connected agent.
+
+It installs to **all** agents by default rather than detecting the caller: the three are often used together, so a per-agent install silently leaves the others on a stale skill set. Agents that aren't installed on the machine are skipped; `--all` forces their directories to be created.
 
 **List available skills:**
 
@@ -172,9 +173,9 @@ ibook-skills/
 │   ├── book-publisher/            # README, LinkedIn, press release (meta-skill)
 │   └── archived/                  # Original single-purpose skills, consolidated into the meta-skills above
 ├── scripts/                       # Utility scripts (install, metrics, screenshots, ...)
-│   ├── bk-install-skills          # Install skills for Claude Code
-│   ├── bk-install-skills-codex    # Install skills for OpenAI Codex
-│   ├── bk-install-skills-antigravity # Install skills for Google Antigravity/Gemini
+│   ├── bk-install-skills          # Install skills for every agent present
+│   ├── bk-install-skills-codex    # Deprecated shim -> --only codex
+│   ├── bk-install-skills-antigravity # Deprecated shim -> --only antigravity
 │   └── bk-list-skills             # List all active skills
 ├── commands/                      # Slash commands
 ├── mkdocs.yml                     # MkDocs configuration

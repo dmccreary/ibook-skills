@@ -63,7 +63,7 @@ set -gx PATH $HOME/.local/bin $PATH
    $BK_HOME/scripts/bk-install-scripts
    ```
 
-3. **Install skills** to `~/.claude/skills`:
+3. **Install skills** into every agent present on this machine:
    ```bash
    bk-install-skills
    ```
@@ -79,7 +79,7 @@ All `bk*` scripts require `$BK_HOME` to be set and provide consistent colored ou
 
 **Skill Management:**
 - `bk-analyze-skill-usage` - Generate skill usage analysis report
-- `bk-install-skills` - Install skills to ~/.claude/skills
+- `bk-install-skills` - Install skills into every agent present (Claude Code, Codex, Antigravity)
 
 **Script Management:**
 - `bk-install-scripts` - Install bk* scripts to ~/.local/bin
@@ -137,14 +137,31 @@ bk-install-scripts
 
 ### bk-install-skills
 
-Creates symbolic links in `~/.claude/skills/` for all skills in `$BK_HOME/skills/`.
+Creates symbolic links for every active skill in `$BK_HOME/skills/` inside the
+skills directory of each supported agent:
 
-**Requirements:** `$BK_HOME` must be set
+| Agent | Target |
+|-------|--------|
+| Claude Code | `~/.claude/skills/` |
+| OpenAI Codex | `~/.codex/skills/` |
+| Google Antigravity | `~/.gemini/antigravity/skills/` |
+
+All agents present on the machine are installed on every run, because the three
+are often used together and a per-agent install leaves the others stale.
+
+**Requirements:** `$BK_HOME` must be set (falls back to the script's parent directory)
 
 **Usage:**
 ```bash
-bk-install-skills
+bk-install-skills                      # every agent present
+bk-install-skills --only claude,codex  # just these
+bk-install-skills --all                # include agents not yet present
+bk-install-skills --list               # show agents and status
+bk-install-skills --dry-run            # preview, change nothing
 ```
+
+`bk-install-skills-codex` and `bk-install-skills-antigravity` remain as
+deprecated shims that delegate to `--only`.
 
 **Features:**
 - Validates `$BK_HOME/skills` exists

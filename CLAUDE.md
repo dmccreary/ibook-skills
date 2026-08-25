@@ -44,7 +44,7 @@ ibook-skills/
 │
 ├── docs/                          # MkDocs documentation site
 ├── scripts/                       # Utility scripts
-│   └── bk-install-skills         # Creates symlinks to ~/.claude/skills/ (skips archived/)
+│   └── bk-install-skills         # Symlinks skills into every agent present
 ├── commands/                      # Slash commands
 │   ├── ibook.md                  # /ibook runbook command
 │   └── skills.md                 # /skills command definition
@@ -275,10 +275,10 @@ Building an intelligent textbook follows this 12-step process using multiple ski
 export BK_HOME=$HOME/Documents/ws/ibook-skills   # if not already set
 scripts/bk-install-skills
 ```
-This creates symlinks from `./skills/*` to `~/.claude/skills/` (skipping `skills/archived/`) and removes stale symlinks whose targets no longer exist.
+This symlinks every active skill (any `skills/*/` containing `SKILL.md`, which excludes `skills/archived/`) into each agent present on the machine — `~/.claude/skills/`, `~/.codex/skills/`, and `~/.gemini/antigravity/skills/` — and prunes links whose skill no longer exists. Narrow it with `--only claude`, preview with `--dry-run`, inspect with `--list`.
 
 **Install skills for a single project:**
-Edit `bk-install-skills` and change `TARGET_DIR` from `$HOME/.claude/skills` to `/path/to/project/.claude/skills`.
+Skills install globally for every agent. For a project-scoped install, symlink the `skills/*` directories into that project's own `.claude/skills/` directory instead.
 
 ### Working with Documentation
 
