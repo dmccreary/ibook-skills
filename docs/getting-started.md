@@ -66,10 +66,11 @@ Type ```bk``` and you should see a list of the book building commmands
 To install skills globally, you just need to type the following command
 
 ```
-bk-install-ibook-skills
+bk-install-skills
 ```
 
-This will install all the book builder scripts in your ~/.claude/skills directory
+This installs every skill into each agent present on your machine — `~/.claude/skills/`,
+`~/.codex/skills/`, and `~/.gemini/antigravity/skills/`.
 
 ### Step 5 Verify installation
 
@@ -252,27 +253,41 @@ The only reason that you might want to use the second option for specific projec
 
 ## Skill Installation for ALL Projects
 
-We will do this by creating symbolic links from your home Claude directory (`~/.claude/skills/`) to the skills in the cloned repository.
+We will do this by creating symbolic links from each agent's skills directory to the
+skills in the cloned repository.
 
 Run the installation script:
 
 ```sh
-cd $BK_HOME/scripts
-./install-ibook-skills.sh
+bk-install-skills
 ```
 
-You will see a log of all the skills that were correctly installed:
+It installs into every agent present on the machine, so the three stay in sync:
 
 ```
-Created symlink: ~/.claude/skills/faq-generator -> $HOME/Documents/ws/ibook-skills/skills/faq-generator
-Created symlink: ~/.claude/skills/glossary-generator -> $HOME/Documents/ws/ibook-skills/skills/glossary-generator
-Created symlink: ~/.claude/skills/intelligent-textbook -> $HOME/Documents/ws/ibook-skills/skills/intelligent-textbook
-Created symlink: ~/.claude/skills/intelligent-textbook-creator -> $HOME/Documents/ws/ibook-skills/skills/intelligent-textbook-creator
-Created symlink: ~/.claude/skills/learning-graph-generator -> $HOME/Documents/ws/ibook-skills/skills/learning-graph-generator
-Created symlink: ~/.claude/skills/microsim-p5 -> $HOME/Documents/ws/ibook-skills/skills/microsim-p5
-Created symlink: ~/.claude/skills/moving-rainbow -> $HOME/Documents/ws/ibook-skills/skills/moving-rainbow
-Created symlink: ~/.claude/skills/quiz-generator -> $HOME/Documents/ws/ibook-skills/skills/quiz-generator
+▸ Claude Code -> ~/.claude/skills
+    linked book-chapter-generator
+    linked book-installer
+    linked chapter-content-generator
+    ...
+    14 linked, 0 already current, 0 pruned
+    1 slash command(s) -> ~/.claude/commands
+
+▸ OpenAI Codex -> ~/.codex/skills
+    14 linked, 0 already current, 0 pruned
+    wrapped command ibook as a Codex skill
+
+▸ Google Antigravity -> ~/.gemini/antigravity/skills
+    14 linked, 0 already current, 0 pruned
+
+Summary: 42 linked, 0 already current, 0 pruned, 2 extra(s)
+Served: claude codex antigravity
+✓ All selected agents are current.
 ```
+
+Agents that aren't installed on the machine are skipped. Narrow the run with
+`--only claude`, preview it with `--dry-run`, or inspect current state with
+`--list`.
 
 ## Getting Updates
 
@@ -287,8 +302,8 @@ After pulling updates, you may need to re-run the installation scripts if new sc
 
 ```sh
 cd $BK_HOME/scripts
-./bk-install-scripts      # For book-building utilities
-./install-ibook-skills.sh # For Claude skills
+./bk-install-scripts   # For book-building utilities
+./bk-install-skills    # For agent skills
 ```
 
 ## Details of the Installation script

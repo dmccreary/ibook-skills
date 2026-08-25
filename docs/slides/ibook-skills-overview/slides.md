@@ -87,7 +87,7 @@ and don't port cleanly to IDEs without equivalent vision tooling.
 
 # Getting Started
 
-1. Symlink skills into `~/.claude/skills/` via `scripts/install-ibook-skills.sh`
+1. Symlink skills into every agent via `scripts/bk-install-skills`
 2. Run **`init-textbook`** to scaffold a new project
 3. Run **`course-description-analyzer`**, then **`learning-graph-generator`**
 4. Follow the 12-step pipeline chapter by chapter

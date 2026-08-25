@@ -30,9 +30,9 @@ See the [course description prerequisites section](course-description.md#prerequ
 Installing Claude Skills involves two steps:
 
 1. **Clone the repository**: Use `git clone https://github.com/dmccreary/ibook-skills.git` to download the skills
-2. **Run the installation script**: Navigate to the `scripts/` directory and run `./install-ibook-skills.sh`
+2. **Run the installation script**: `scripts/bk-install-skills`
 
-This creates symbolic links from your `~/.claude/skills/` directory to the cloned skills, making them available across all your projects. For project-specific installation, modify the script to point to your project's `.claude/skills/` directory instead.
+This creates symbolic links from each agent's skills directory to the cloned skills, making them available across all your projects. It installs into every agent present on your machine — `~/.claude/skills/` for Claude Code, `~/.codex/skills/` for OpenAI Codex, and `~/.gemini/antigravity/skills/` for Google Antigravity — so a skill edited here is picked up by all of them. Use `--only claude` to narrow it, or `--dry-run` to preview. For project-specific installation, symlink the `skills/*` directories into your project's own `.claude/skills/` directory instead.
 
 **Example**: After installation, you can invoke skills using slash commands like `/skill learning-graph-generator`.
 
