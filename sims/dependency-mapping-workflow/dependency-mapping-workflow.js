@@ -50,7 +50,7 @@ flowchart TD
         panel.style.top=`${top}px`;
       }
       document.querySelectorAll('.node').forEach((n)=>{
-        const id=n.id.replace('flowchart-','').split('-')[0];
+        const id=(n.id.match(/flowchart-(.+)-\d+$/) || [])[1];
         n.style.cursor='pointer';
         n.addEventListener('mouseenter',(evt)=>{panel.textContent=info[id]||''; positionPanel(evt);});
         n.addEventListener('mousemove',(evt)=>positionPanel(evt));

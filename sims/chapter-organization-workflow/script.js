@@ -18,7 +18,7 @@ function clearNodeInfo() {
 function setupNodeInteractions() {
     const nodes = document.querySelectorAll('.node');
     nodes.forEach(node => {
-        const nodeId = node.id.replace('flowchart-', '').split('-')[0];
+        const nodeId = (node.id.match(/flowchart-(.+)-\d+$/) || [])[1];
         if (typeof nodeInfo !== 'undefined' && nodeInfo[nodeId]) {
             node.addEventListener('mouseenter', () => showNodeInfo(nodeId));
             node.addEventListener('mouseleave', clearNodeInfo);

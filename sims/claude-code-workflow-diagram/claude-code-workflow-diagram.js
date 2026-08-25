@@ -69,7 +69,7 @@ flowchart TD
     mermaid.run({ nodes: [document.getElementById("workflowMermaid")] }).then(() => {
       const info = document.getElementById("info");
       document.querySelectorAll('.node').forEach((node) => {
-        const id = node.id.replace('flowchart-', '').split('-')[0];
+        const id = (node.id.match(/flowchart-(.+)-\d+$/) || [])[1];
         node.style.cursor = 'pointer';
         node.addEventListener('mouseenter', () => {
           info.textContent = nodeInfo[id] || "Workflow step detail unavailable.";
