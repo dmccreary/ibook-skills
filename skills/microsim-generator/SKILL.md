@@ -1,9 +1,9 @@
 ---
 name: microsim-generator
 description: Creates interactive educational MicroSims, routing to the best-matched generator - p5.js, Chart.js, Plotly, Mermaid, vis-network, timelines, maps, Venn, causal-loop/feedback-loop diagrams (CLD), concept-classifier sorting quizzes, infographic overlays with callout labels, Docker Python labs (runnable code blocks), and fact-verified statistics posters (every numeric claim checked against a cited source before rendering). Generates complete MicroSim packages with HTML, JavaScript, CSS, documentation, and metadata.
-model: opus
 metadata:
   ibook.version: "1.0"
+  ibook.preferred-model: "opus"
 ---
 
 # MicroSim Generator

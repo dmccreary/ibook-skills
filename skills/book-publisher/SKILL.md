@@ -1,10 +1,10 @@
 ---
 name: book-publisher
 description: Publishes and promotes a finished intelligent textbook - GitHub README with badges and site statistics, LinkedIn announcement posts, LinkedIn carousel document posts (PPTX/PDF slideshows), and AP-style press releases. Use when announcing a book milestone or updating repository documentation. Routes to the appropriate guide.
-model: sonnet
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
   ibook.version: "1.0"
+  ibook.preferred-model: "sonnet"
 ---
 
 # Book Publisher

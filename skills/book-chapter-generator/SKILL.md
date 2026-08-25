@@ -1,10 +1,10 @@
 ---
 name: book-chapter-generator
 description: Designs the chapter structure for an intelligent textbook by analyzing the learning graph and concept dependencies. Use after the learning graph is complete and before generating chapter content.
-model: sonnet
 license: 
 metadata:
   ibook.version: "1.1.0"
+  ibook.preferred-model: "sonnet"
 ---
 
 # Book Chapter Generator

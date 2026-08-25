@@ -1,10 +1,10 @@
 ---
 name: course-description-analyzer
 description: Validates or creates a course description for an intelligent textbook, scoring completeness against required elements (title, audience, prerequisites, topics, Bloom's Taxonomy outcomes). Use before running the learning-graph-generator.
-model: sonnet
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
   ibook.version: "0.04"
+  ibook.preferred-model: "sonnet"
 ---
 
 # Course Description Analyzer

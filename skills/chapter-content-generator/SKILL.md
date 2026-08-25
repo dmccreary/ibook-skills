@@ -1,10 +1,10 @@
 ---
 name: chapter-content-generator
 description: Generates detailed chapter content for an intelligent textbook — text, diagrams, MicroSims, and exercises at the appropriate Bloom's level. Use when a chapter's index.md exists with title, summary, and concept list.
-model: sonnet
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
   ibook.version: "1.10"
+  ibook.preferred-model: "sonnet"
 ---
 
 # Chapter Content Generator
