@@ -54,7 +54,7 @@ flowchart TD
     mermaid.run({ nodes: [document.getElementById('mmd')] }).then(() => {
       const panel = document.getElementById('panel');
       document.querySelectorAll('.node').forEach((n) => {
-        const id = n.id.replace('flowchart-', '').split('-')[0];
+        const id = (n.id.match(/flowchart-(.+)-\d+$/) || [])[1];
         n.style.cursor = 'pointer';
         n.addEventListener('mouseenter', () => panel.textContent = info[id] || '');
         n.addEventListener('mouseleave', () => panel.textContent = 'Hover a node for details.');
