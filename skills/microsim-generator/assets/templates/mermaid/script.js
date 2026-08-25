@@ -43,9 +43,11 @@ function clearNodeInfo() {
 function setupNodeInteractions() {
     const nodes = document.querySelectorAll('.node');
     nodes.forEach(node => {
-        // Extract node ID from the element ID
-        // Mermaid generates IDs like "flowchart-NodeId-123"
-        const nodeId = node.id.replace('flowchart-', '').split('-')[0];
+        // Extract node ID from the element ID. Mermaid v11 emits
+        // "mermaid-<timestamp>-flowchart-<NodeId>-<index>", so anchor on the
+        // flowchart- segment and drop the trailing index rather than splitting
+        // on the first dash.
+        const nodeId = (node.id.match(/flowchart-(.+)-\d+$/) || [])[1];
 
         if (typeof nodeInfo !== 'undefined' && nodeInfo[nodeId]) {
             node.addEventListener('mouseenter', () => showNodeInfo(nodeId));
