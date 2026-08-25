@@ -61,7 +61,7 @@ If any classifierName equals its ID, fix taxonomy-names.json and regenerate lear
 ## Step 2: Copy Template Files
 
 ```bash
-SKILL_DIR="$HOME/.claude/skills/book-installer/references/assets"
+SKILL_DIR="$BK_HOME/skills/book-installer/references/assets"
 mkdir -p docs/sims/graph-viewer
 cp "$SKILL_DIR/local.css"  docs/sims/graph-viewer/local.css
 cp "$SKILL_DIR/script.js"  docs/sims/graph-viewer/script.js

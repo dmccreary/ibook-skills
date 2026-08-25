@@ -38,10 +38,10 @@ Execute the feature checklist generator Python script:
 
 ```bash
 # From the project directory
-python ~/.claude/skills/book-installer/scripts/generate-feature-checklist.py .
+python $BK_HOME/skills/book-installer/scripts/generate-feature-checklist.py .
 
 # Or specify paths explicitly
-python ~/.claude/skills/book-installer/scripts/generate-feature-checklist.py /path/to/project --output docs/feature-checklist.md
+python $BK_HOME/skills/book-installer/scripts/generate-feature-checklist.py /path/to/project --output docs/feature-checklist.md
 ```
 
 **Options:**
@@ -51,7 +51,7 @@ python ~/.claude/skills/book-installer/scripts/generate-feature-checklist.py /pa
 
 **Example with all options:**
 ```bash
-python ~/.claude/skills/book-installer/scripts/generate-feature-checklist.py . \
+python $BK_HOME/skills/book-installer/scripts/generate-feature-checklist.py . \
     --output docs/feature-checklist.md \
     --save-json logs/feature-detection.json
 ```

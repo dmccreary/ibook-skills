@@ -45,10 +45,10 @@ playwright install chromium
 
 ## Running the Tests
 
-The script lives at `~/.claude/skills/microsim-utils/scripts/test-iframe-heights.py`.
+The script lives at `$BK_HOME/skills/microsim-utils/scripts/test-iframe-heights.py`.
 
 ```bash
-SCRIPTS="$HOME/.claude/skills/microsim-utils/scripts"
+SCRIPTS="$BK_HOME/skills/microsim-utils/scripts"
 
 # Test all MicroSims
 python3 $SCRIPTS/test-iframe-heights.py --sims-dir docs/sims

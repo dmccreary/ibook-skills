@@ -168,7 +168,7 @@ Add a link at the end of each chapter's `index.md`:
 Nest an `Annotated References:` entry under each chapter in `mkdocs.yml`,
 following the canonical nav-editing rules (read-before-write, serialize
 edits, `Content:` label for the chapter page) in
-`$HOME/.claude/skills/book-installer/references/mkdocs-nav-editing.md`:
+`$BK_HOME/skills/book-installer/references/mkdocs-nav-editing.md`:
 
 ```yaml
   - 1. Chapter Name:

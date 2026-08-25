@@ -610,7 +610,7 @@ python3 $UTILS/sync-iframe-heights.py \
 **MANDATORY after fixing iframe heights.** This catches controls that extend beyond the iframe boundary — something static height calculation can miss, especially for sims with responsive layouts or narrow viewports.
 
 ```bash
-TESTER="$HOME/.claude/skills/microsim-utils/scripts"
+TESTER="$BK_HOME/skills/microsim-utils/scripts"
 
 # Single sim (after generating one MicroSim)
 python3 $TESTER/test-iframe-heights.py --sims-dir $PROJECT/docs/sims --sim <sim-id>
@@ -731,7 +731,7 @@ For each sim that was generated in this batch:
 ```
 
 The utility documents its full workflow at
-`~/.claude/skills/microsim-utils/references/layout-reviewer.md`. From this
+`$BK_HOME/skills/microsim-utils/references/layout-reviewer.md`. From this
 generator's standpoint, the contract is: "after Step 8, every sim
 must have passed layout review or had its remaining defects
 explicitly reported."

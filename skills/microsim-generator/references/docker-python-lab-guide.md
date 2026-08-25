@@ -29,14 +29,14 @@ per session; skip if already in place.
 If the file is missing, copy from this skill's assets:
 
 ```bash
-cp ~/.claude/skills/microsim-generator/assets/docker-python-lab/docker-lab.css \
+cp $BK_HOME/skills/microsim-generator/assets/docker-python-lab/docker-lab.css \
    docs/css/docker-lab.css
 ```
 
 ### 2. Check / create `docs/js/docker-lab.js`
 
 ```bash
-cp ~/.claude/skills/microsim-generator/assets/docker-python-lab/docker-lab.js \
+cp $BK_HOME/skills/microsim-generator/assets/docker-python-lab/docker-lab.js \
    docs/js/docker-lab.js
 ```
 

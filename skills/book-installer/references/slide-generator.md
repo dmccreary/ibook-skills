@@ -75,7 +75,7 @@ Missing mascot images are harmless: the viewer still works, the mascot img just 
 ## Step 2: Install the Slide Viewer
 
 ```bash
-SKILL_DIR="$HOME/.claude/skills/book-installer/references/assets/slide-viewer"
+SKILL_DIR="$BK_HOME/skills/book-installer/references/assets/slide-viewer"
 mkdir -p docs/sims/slide-viewer
 cp "$SKILL_DIR/main.html"  docs/sims/slide-viewer/main.html
 cp "$SKILL_DIR/script.js"  docs/sims/slide-viewer/script.js

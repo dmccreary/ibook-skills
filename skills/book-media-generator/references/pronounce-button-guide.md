@@ -88,7 +88,7 @@ the full phoneme set.
 Where `SCRIPT` is:
 
 ```
-python3 ~/.claude/skills/book-media-generator/scripts/audio/generate-pronunciation.py
+python3 $BK_HOME/skills/book-media-generator/scripts/audio/generate-pronunciation.py
 ```
 
 Where `SLUG` is the term lowercased with spaces replaced by hyphens

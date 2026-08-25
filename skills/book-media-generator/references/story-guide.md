@@ -295,7 +295,7 @@ Once the markdown is written, generate the N + 1 panel images automatically with
 **First run — verify the cover image before burning credits on 12 more panels:**
 
 ```bash
-python3 ~/.claude/skills/book-media-generator/scripts/story/generate-images.py \
+python3 $BK_HOME/skills/book-media-generator/scripts/story/generate-images.py \
     docs/stories/{story-dir-name} --first-only
 ```
 
@@ -304,7 +304,7 @@ This generates only the cover, verifies it is 16:9 via `sips`, and aborts automa
 **Full run:**
 
 ```bash
-python3 ~/.claude/skills/book-media-generator/scripts/story/generate-images.py \
+python3 $BK_HOME/skills/book-media-generator/scripts/story/generate-images.py \
     docs/stories/{story-dir-name}
 ```
 
@@ -334,7 +334,7 @@ The script catches safety-filter failures and API exceptions, logs the reason (i
 After generation, run the verify script to confirm every image is present and at the right aspect ratio:
 
 ```bash
-python3 ~/.claude/skills/book-media-generator/scripts/story/verify-images.py \
+python3 $BK_HOME/skills/book-media-generator/scripts/story/verify-images.py \
     docs/stories/{story-dir-name}
 ```
 
@@ -448,7 +448,7 @@ Follow the standard 5-reference pattern for every story:
 Some stories generated before the 2026-04 skill update still contain `(PLACEHOLDER)` reference URLs. To clean these up in bulk, copy `scripts/story/fix-references.py` to your project's `src/` directory, edit the `REFS` dict at the top to list the stories and their curated URLs, and run it:
 
 ```bash
-cp ~/.claude/skills/book-media-generator/scripts/story/fix-references.py src/stories/
+cp $BK_HOME/skills/book-media-generator/scripts/story/fix-references.py src/stories/
 # Edit src/stories/fix-references.py to fill in the REFS dict
 python3 src/stories/fix-references.py
 ```
@@ -626,7 +626,7 @@ Generates all panel images via the Gemini API. See "Step 3.5: Generate Images" a
 Read-only audit tool — checks that all expected panels exist, are the right aspect ratio, and meet a minimum file size. Usage:
 
 ```bash
-python3 ~/.claude/skills/book-media-generator/scripts/story/verify-images.py \
+python3 $BK_HOME/skills/book-media-generator/scripts/story/verify-images.py \
     docs/stories/{story-dir-name}
 ```
 
@@ -641,7 +641,7 @@ For workflows that defer image generation: the markdown ships with image referen
 **Usage:**
 
 ```bash
-~/.claude/skills/book-media-generator/scripts/story/uncomment-images.sh \
+$BK_HOME/skills/book-media-generator/scripts/story/uncomment-images.sh \
     docs/stories/{story-dir-name}/index.md
 ```
 

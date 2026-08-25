@@ -412,7 +412,7 @@ TODO: Generate Chapter Content
 After creating all chapter files, add the chapters to the `Chapters:` section of
 `mkdocs.yml`. Follow the canonical nav-editing rules (read-before-write,
 serialize edits, only touch your section, number-only chapter labels) in
-`$HOME/.claude/skills/book-installer/references/mkdocs-nav-editing.md`.
+`$BK_HOME/skills/book-installer/references/mkdocs-nav-editing.md`.
 
 ```yaml
   - Chapters:

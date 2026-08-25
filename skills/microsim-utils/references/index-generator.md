@@ -46,7 +46,7 @@ The whole workflow below is automated by `scripts/generate-microsim-index.py`.
 Run it from the project root:
 
 ```bash
-python3 ~/.claude/skills/microsim-utils/scripts/generate-microsim-index.py --dry-run
+python3 $BK_HOME/skills/microsim-utils/scripts/generate-microsim-index.py --dry-run
 ```
 
 Drop `--dry-run` to write the files. The course name is read from `site_name` in

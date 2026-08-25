@@ -308,7 +308,7 @@ Generated: 2025-01-31
 
 ### Bloom's Taxonomy Guide
 
-The skill uses the canonical Bloom's Taxonomy reference at `$HOME/.claude/skills/chapter-content-generator/references/blooms-taxonomy.md`. This reference covers:
+The skill uses the canonical Bloom's Taxonomy reference at `$BK_HOME/skills/chapter-content-generator/references/blooms-taxonomy.md`. This reference covers:
 
 - Detailed descriptions of all 6 cognitive levels
 - Question starters and cognitive actions for each level

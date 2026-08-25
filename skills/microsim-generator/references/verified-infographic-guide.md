@@ -204,7 +204,7 @@ Poster galleries (e.g. `docs/posters/index.md`) typically render every poster as
 **After adding one or more posters to a gallery** (or whenever a user reports the gallery page loading slowly), run:
 
 ```bash
-python3 ~/.claude/skills/microsim-generator/scripts/posters/generate-poster-thumbnails.py --posters-dir docs/posters
+python3 $BK_HOME/skills/microsim-generator/scripts/posters/generate-poster-thumbnails.py --posters-dir docs/posters
 ```
 
 This generates a `<slug>-thumb.jpg` (900px wide JPEG, quality 82) next to each poster's full-size PNG and rewrites the gallery `index.md` so grid cards reference the thumbnail. It does **not** touch the poster's own detail page — the interactive callout/grid overlay (`main.html`) keeps loading the full-size PNG, since hover/zoom accuracy there benefits from full resolution. Only the gallery-grid reference is swapped.

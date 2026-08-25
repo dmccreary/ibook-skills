@@ -25,7 +25,7 @@ reduction), no visible quality loss at gallery-card size.
 Usage
 -----
     # Run from the project root, or pass --posters-dir explicitly
-    python3 ~/.claude/skills/microsim-generator/scripts/posters/generate-poster-thumbnails.py
+    python3 $BK_HOME/skills/microsim-generator/scripts/posters/generate-poster-thumbnails.py
 
     python3 .../generate-poster-thumbnails.py --posters-dir docs/posters --width 900 --quality 82
 

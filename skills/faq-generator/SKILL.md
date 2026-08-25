@@ -148,7 +148,7 @@ Read and analyze all content sources to identify common question patterns:
 Create 6 standard categories aligned with learning progression. For detailed
 guidance on writing questions at each Bloom's level (question starters, answer
 characteristics, common mistakes), read the canonical reference
-`$HOME/.claude/skills/chapter-content-generator/references/blooms-taxonomy.md`.
+`$BK_HOME/skills/chapter-content-generator/references/blooms-taxonomy.md`.
 
 **1. Getting Started Questions (10-15 questions)**
 
@@ -603,7 +603,7 @@ If `- FAQ: faq.md` is not yet in the `nav:`, add it near the end (adjacent to
 Glossary), and add any quality reports under `Learning Graph:`
 (`faq-quality-report.md`, `faq-coverage-gaps.md`). Follow the canonical
 nav-editing rules in
-`$HOME/.claude/skills/book-installer/references/mkdocs-nav-editing.md`.
+`$BK_HOME/skills/book-installer/references/mkdocs-nav-editing.md`.
 
 ## Quality Scoring Reference
 

@@ -55,10 +55,10 @@ To install all four files from this skill's bundled assets:
 
 ```bash
 mkdir -p docs/sims/shared-libs
-cp ~/.claude/skills/microsim-generator/assets/infographic-overlay/shared-libs/diagram.js docs/sims/shared-libs/
-cp ~/.claude/skills/microsim-generator/assets/infographic-overlay/shared-libs/style.css docs/sims/shared-libs/
-cp ~/.claude/skills/microsim-generator/assets/infographic-overlay/shared-libs/grid-diagram.js docs/sims/shared-libs/
-cp ~/.claude/skills/microsim-generator/assets/infographic-overlay/shared-libs/grid-overlay.css docs/sims/shared-libs/
+cp $BK_HOME/skills/microsim-generator/assets/infographic-overlay/shared-libs/diagram.js docs/sims/shared-libs/
+cp $BK_HOME/skills/microsim-generator/assets/infographic-overlay/shared-libs/style.css docs/sims/shared-libs/
+cp $BK_HOME/skills/microsim-generator/assets/infographic-overlay/shared-libs/grid-diagram.js docs/sims/shared-libs/
+cp $BK_HOME/skills/microsim-generator/assets/infographic-overlay/shared-libs/grid-overlay.css docs/sims/shared-libs/
 ```
 
 Always check that the project's copy is up to date with the skill's bundled version before creating new diagram MicroSims.

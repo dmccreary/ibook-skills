@@ -31,7 +31,7 @@ If the project does not already have the diagram report generator script, instal
 Example installation:
 ```bash
 mkdir -p src/diagram-reports
-cp ~/.claude/skills/microsim-utils/scripts/diagram-report.py src/diagram-reports/diagram-report.py
+cp $BK_HOME/skills/microsim-utils/scripts/diagram-report.py src/diagram-reports/diagram-report.py
 ```
 
 ### Step 2: Verify Project Structure

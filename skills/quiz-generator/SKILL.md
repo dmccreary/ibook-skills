@@ -280,7 +280,7 @@ Aim for 80%+ coverage of Priority 1 concepts.
 
 #### Step 4: Generate Questions by Bloom's Level
 
-For each concept selected for testing, generate question at appropriate Bloom's level following target distribution. For per-level action verbs and question-writing guidance, read the canonical reference `$HOME/.claude/skills/chapter-content-generator/references/blooms-taxonomy.md`.
+For each concept selected for testing, generate question at appropriate Bloom's level following target distribution. For per-level action verbs and question-writing guidance, read the canonical reference `$BK_HOME/skills/chapter-content-generator/references/blooms-taxonomy.md`.
 
 **IMPORTANT FORMATTING REQUIREMENT:**
 
@@ -695,7 +695,7 @@ Perform comprehensive validation across all generated quizzes:
 Nest a `Quiz:` entry under each chapter in `mkdocs.yml`, and add the
 `Quiz Generation Report:` under `Learning Graph:`. Follow the canonical
 nav-editing rules in
-`$HOME/.claude/skills/book-installer/references/mkdocs-nav-editing.md` —
+`$BK_HOME/skills/book-installer/references/mkdocs-nav-editing.md` —
 in particular: read-before-write, **serialize nav edits when quizzes are
 generated for many chapters in parallel** (apply all nav changes in one edit
 at the end), label the chapter page `Content:`, and never put the string

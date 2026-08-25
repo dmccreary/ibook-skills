@@ -1,5 +1,13 @@
 <!-- Canonical copy. Do not fork into other skills; reference by path:
-     $HOME/.claude/skills/chapter-content-generator/references/blooms-taxonomy.md -->
+     $BK_HOME/skills/chapter-content-generator/references/blooms-taxonomy.md
+
+     `$BK_HOME` points at the ibook-skills checkout and is agent-neutral.
+     Do NOT use a path under `~/.claude/skills/`, `~/.codex/skills/`, or
+     `~/.gemini/antigravity/skills/` — each is specific to one agent
+     framework, and these skills run on all of them. If `$BK_HOME` is
+     unset, the file is at
+     `chapter-content-generator/references/blooms-taxonomy.md` relative to
+     the skills root that contains the calling skill. -->
 
 # Bloom's Taxonomy (2001 Revision) — Canonical Reference
 

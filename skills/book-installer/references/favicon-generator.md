@@ -31,10 +31,12 @@ Use this guide when:
 
 3. **Script** available at:
    ```
-   ~/.claude/skills/book-installer/scripts/generate-favicon.py
+   $BK_HOME/skills/book-installer/scripts/generate-favicon.py
    ```
-   (The `~/.claude/skills/` directory is the symlink to the ibook-skills repo;
-   no extra `ibook-skills/skills/` prefix is needed.)
+   (`$BK_HOME` points at the ibook-skills checkout and is agent-neutral. Do
+   not substitute a path under `~/.claude/skills/`, `~/.codex/skills/`, or
+   `~/.gemini/antigravity/skills/` — each is specific to one agent framework,
+   and this skill runs on all of them.)
 
 ## Step 1: Verify the Source Image Exists
 
@@ -50,7 +52,7 @@ If the file is missing, ask the user to generate the mascot first using the
 From the **project root** (the directory containing `mkdocs.yml`):
 
 ```bash
-python3 ~/.claude/skills/book-installer/scripts/generate-favicon.py
+python3 $BK_HOME/skills/book-installer/scripts/generate-favicon.py
 ```
 
 This uses all defaults:

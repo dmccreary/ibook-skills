@@ -329,7 +329,7 @@ Perform final validation:
 
 If `- Glossary: glossary.md` is not yet in the `nav:` of `mkdocs.yml`, add it
 near the end (before License/Contact), following the canonical nav-editing
-rules in `$HOME/.claude/skills/book-installer/references/mkdocs-nav-editing.md`.
+rules in `$BK_HOME/skills/book-installer/references/mkdocs-nav-editing.md`.
 
 ### Step 10: Generate Cross-Reference Index (Optional)
 
