@@ -44,7 +44,7 @@ Codex-skills/
 │
 ├── docs/                          # MkDocs documentation site
 ├── scripts/                       # Utility scripts
-│   └── bk-install-skills         # Creates symlinks to ~/.Codex/skills/ (skips archived/)
+│   └── bk-install-skills         # Creates symlinks to ~/.claude/skills/ (skips archived/)
 ├── commands/                      # Slash commands
 │   ├── ibook.md                  # /ibook runbook command
 │   └── skills.md                 # /skills command definition
@@ -275,10 +275,10 @@ Building an intelligent textbook follows this 12-step process using multiple ski
 export BK_HOME=$HOME/Documents/ws/Codex-skills   # if not already set
 scripts/bk-install-skills
 ```
-This creates symlinks from `./skills/*` to `~/.Codex/skills/` (skipping `skills/archived/`) and removes stale symlinks whose targets no longer exist.
+This creates symlinks from `./skills/*` to `~/.claude/skills/` (skipping `skills/archived/`) and removes stale symlinks whose targets no longer exist. That path is the script's hardcoded default; retarget `TARGET_DIR` for other agents.
 
 **Install skills for a single project:**
-Edit `bk-install-skills` and change `TARGET_DIR` from `$HOME/.Codex/skills` to `/path/to/project/.Codex/skills`.
+Edit `bk-install-skills` and change `TARGET_DIR` from `$HOME/.claude/skills` to `/path/to/project/.claude/skills` — or to `$HOME/.codex/skills` to install for OpenAI Codex.
 
 ### Working with Documentation
 
