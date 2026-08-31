@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+"""Render every size embedded in a multi-resolution .ico as a contact sheet.
+
+Most tools (sips, Preview, browsers) only ever show the largest embedded
+image, so a 16x16 rendition that has degraded into mush looks fine until it
+reaches a real browser tab. This lays each embedded size out twice: once at
+true pixel size, and once magnified with nearest-neighbour so individual
+pixels are inspectable.
+
+Usage:
+    python3 show-favicon.py [path/to/favicon.ico] [--open] [--out sheet.png]
+"""
+import argparse
+import subprocess
+import sys
+
+from PIL import Image, ImageDraw
+
+CHECKER = ((235, 235, 235), (255, 255, 255))
+
+
+def checkerboard(size, cell=8):
+    """Transparency backdrop, so alpha is visible rather than assumed white."""
+    img = Image.new("RGB", size, CHECKER[1])
+    d = ImageDraw.Draw(img)
+    for y in range(0, size[1], cell):
+        for x in range(0, size[0], cell):
+            if (x // cell + y // cell) % 2:
+                d.rectangle([x, y, x + cell - 1, y + cell - 1], fill=CHECKER[0])
+    return img
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("ico", nargs="?", default="docs/img/favicon.ico")
+    ap.add_argument("--out", default="favicon-sheet.png")
+    ap.add_argument("--open", action="store_true", help="open the sheet when done")
+    args = ap.parse_args()
+
+    try:
+        src = Image.open(args.ico)
+    except FileNotFoundError:
+        sys.exit(f"not found: {args.ico}")
+
+    sizes = sorted(src.info.get("sizes", []))
+    if not sizes:
+        sys.exit(f"{args.ico}: no embedded sizes reported (is it really an .ico?)")
+
+    print(f"{args.ico}")
+    print(f"  embedded sizes: {', '.join(f'{w}x{h}' for w, h in sizes)}")
+
+    # Columns are sized to the largest embedded rendition so the actual-size
+    # row never overflows into its neighbour.
+    COL = max(max(w for w, _ in sizes), 128)
+    PAD, TOP, GAP, LABEL_H = 16, 34, 24, 26
+    cols = len(sizes)
+    W = PAD * 2 + cols * COL + (cols - 1) * GAP
+    H = TOP + COL + LABEL_H + COL + PAD
+
+    sheet = Image.new("RGB", (W, H), (255, 255, 255))
+    d = ImageDraw.Draw(sheet)
+    d.text((PAD, 10), "actual size (top row)   /   magnified to compare detail (bottom row)",
+           fill=(60, 60, 60))
+
+    x = PAD
+    for (w, h) in sizes:
+        frame = Image.open(args.ico)
+        frame.size = (w, h)
+        frame = frame.convert("RGBA")
+
+        # Row 1: true pixel size, centred in its column
+        bg = checkerboard((w, h))
+        bg.paste(frame, (0, 0), frame)
+        sheet.paste(bg, (x + (COL - w) // 2, TOP + (COL - h) // 2))
+
+        # Row 2: magnified, nearest-neighbour so pixels stay crisp
+        big = frame.resize((COL, COL), Image.NEAREST)
+        bg2 = checkerboard((COL, COL))
+        bg2.paste(big, (0, 0), big)
+        sheet.paste(bg2, (x, TOP + COL + LABEL_H))
+
+        d.text((x, TOP + COL + 6), f"{w}x{h}", fill=(20, 20, 20))
+        x += COL + GAP
+
+    sheet.save(args.out)
+    print(f"  wrote: {args.out}")
+    if args.open:
+        subprocess.run(["open", args.out], check=False)
+
+
+if __name__ == "__main__":
+    main()
