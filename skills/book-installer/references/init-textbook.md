@@ -174,12 +174,26 @@ For `docs/img/license.png` and `docs/img/cover.png`, copy the binaries as-is
 (no substitution). Exclude image files from the substitution pass — running a
 text rewriter over a PNG corrupts it.
 
-**Agent instruction files.** `AGENTS.md` is the single source of truth for
-agent rules and takes the normal `{{VAR}}` substitution. `CLAUDE.md` is copied
-verbatim: it must end up containing exactly one line, `@AGENTS.md`, so Claude
-Code imports the shared rules instead of carrying a second copy that drifts.
-Never expand `CLAUDE.md` with project rules — put them in `AGENTS.md` where
-every agent can read them.
+**Agent instruction files — renamed on copy.** These two ship with a
+`.template` suffix and must be renamed as they are copied, the same way
+`project.code-workspace` becomes `{{REPO_NAME}}.code-workspace`:
+
+| Asset | Copied to | Substitution |
+|---|---|---|
+| `AGENTS.md.template` | `AGENTS.md` | normal `{{VAR}}` pass |
+| `CLAUDE.md.template` | `CLAUDE.md` | none — copy verbatim |
+
+`AGENTS.md` is the single source of truth for agent rules. `CLAUDE.md` must end
+up containing exactly one line, `@AGENTS.md`, so Claude Code imports the shared
+rules instead of carrying a second copy that drifts. Never expand `CLAUDE.md`
+with project rules — put them in `AGENTS.md` where every agent can read them.
+
+The `.template` suffix exists because an unsuffixed `CLAUDE.md` sitting in
+`assets/init-textbook/` is a live instruction file, not inert data: any agent
+session whose working directory is at or below that assets directory loads it
+and tries to import a template `AGENTS.md` still full of `{{PLACEHOLDER}}`
+tokens. Suffixing both files keeps them inert until the scaffold renames them
+into a real book. Do not drop the suffix to "simplify" the copy step.
 
 **Ordering footgun.** If you implement the substitution as a shell loop reading
 values from environment variables, export the variables *before* the loop runs.
@@ -191,6 +205,12 @@ always assert that no tokens remain and no values are blank:
 ```bash
 grep -rn '{{[A-Z_]*}}' . --exclude-dir=.git || echo "no placeholders left"
 grep -nE "^(site_name|site_description|site_url):" mkdocs.yml
+
+# No asset should survive the copy still wearing its .template suffix.
+find . -name '*.template' -not -path './.git/*' | grep . && echo "ERROR: unrenamed template" || echo "no stray templates"
+
+# CLAUDE.md must be the one-line pointer, nothing more.
+[ "$(tr -d '[:space:]' < CLAUDE.md)" = "@AGENTS.md" ] && echo "CLAUDE.md OK" || echo "ERROR: CLAUDE.md is not the one-line pointer"
 ```
 
 ### Step 5 — Verify the result builds
@@ -448,8 +468,8 @@ book-installer/
         ├── .gitignore                         # Python, MkDocs, OS, editor ignores
         ├── project.code-workspace             # VS Code workspace (renamed to {{REPO_NAME}}.code-workspace)
         ├── mkdocs.yml                         # the main config template
-        ├── AGENTS.md                          # agent instructions, {{SITE_NAME}}/{{REPO_NAME}} substituted
-        ├── CLAUDE.md                          # verbatim one-liner `@AGENTS.md` — no substitution
+        ├── AGENTS.md.template                 # → AGENTS.md; {{SITE_NAME}}/{{REPO_NAME}} substituted
+        ├── CLAUDE.md.template                 # → CLAUDE.md; verbatim one-liner `@AGENTS.md`
         ├── CONTENT-GENERATION-GUIDE.md        # copied to project root, {{SITE_NAME}} substituted
         └── docs/
             ├── index.md
