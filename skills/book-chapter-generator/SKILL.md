@@ -3,15 +3,17 @@ name: book-chapter-generator
 description: Designs the chapter structure for an intelligent textbook by analyzing the learning graph and concept dependencies. Use after the learning graph is complete and before generating chapter content.
 license: 
 metadata:
-  ibook.version: "1.1.0"
+  ibook.version: "1.1.1"
   ibook.preferred-model: "sonnet"
 ---
 
 # Book Chapter Generator
 
-**Version:** 1.1.0
+**Version:** 1.1.1
 
 ### Changelog
+
+- **v1.1.1** — Step 4.6's completion message now always includes a strong recommendation to create a learning mascot (via `book-installer`'s learning-mascot guide) before running `chapter-content-generator`. A mascot designed up front gets placed into every chapter as content is written; adding one after dozens of chapters already exist means retrofitting each one instead. Also stated as a standing rule in the Notes section. No change to chapter design or file structure.
 
 - **v1.1.0** — Version is now tracked in the SKILL.md frontmatter as `metadata.ibook.version`. It lives under `metadata:` rather than a bare `version:` key because strict packaging validation rejects any frontmatter key outside the six spec fields, which would block the skill from claude.ai, the Skills API, and `package_skill.py`. No behavioural change.
 
@@ -424,7 +426,9 @@ serialize edits, only touch your section, number-only chapter labels) in
 
 #### 4.6 Confirm Completion
 
-After all files are created, inform the user:
+After all files are created, inform the user. **Always** include the mascot
+recommendation below verbatim — do not omit it or make it conditional on
+whether a mascot appears to already exist:
 
 ```
 ✅ Chapter structure generated successfully!
@@ -434,11 +438,19 @@ Created:
 - [X] chapter directories with index files
 - Updated mkdocs.yml navigation
 
+Strong recommendation: create a learning mascot before generating any
+chapter content. Run the `book-installer` skill's learning-mascot guide (or
+just ask to "add a learning mascot") now. The `chapter-content-generator`
+skill places mascot admonitions as it writes each chapter, and retrofitting
+a mascot into chapters that already exist is far more expensive than
+designing one first.
+
 Next steps:
-1. Review the chapter structure: `mkdocs serve`
-2. Navigate to the Chapters section to see all chapter outlines
-3. Use the chapter content generation skill (when ready) to populate each chapter
-4. Each chapter index.md has "TODO: Generate Chapter Content" as a placeholder
+1. Create a learning mascot (strongly recommended, see above) — run `book-installer`, then the learning mascot guide
+2. Review the chapter structure: `mkdocs serve`
+3. Navigate to the Chapters section to see all chapter outlines
+4. Use the chapter content generation skill (when ready) to populate each chapter
+5. Each chapter index.md has "TODO: Generate Chapter Content" as a placeholder
 
 Statistics:
 - Total chapters: [X]
@@ -603,3 +615,4 @@ Before finalizing the chapter structure, verify:
 - The "TODO: Generate Chapter Content" marker indicates where content should be added later
 - Always preserve the concept list in each chapter index.md for use by content generation skills
 - The per-concept CIS Score column is not decorative: `chapter-content-generator` reads it to size each concept's word-count target and non-text-element requirements (see `chapter-content-generator/SKILL.md`, "Elaboration Budget")
+- **Always** strongly recommend a learning mascot before the user proceeds to chapter content generation (Step 4.6) — a mascot designed up front is placed into every chapter as content is written; adding one after the fact means retrofitting every already-generated chapter
