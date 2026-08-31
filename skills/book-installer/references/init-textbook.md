@@ -58,6 +58,8 @@ Relative to the project root the user is in:
 ├── {{REPO_NAME}}.code-workspace   # VS Code workspace file
 ├── mkdocs.yml                     # rendered from assets/init-textbook/mkdocs.yml
 ├── .gitignore                     # Python / MkDocs / OS / editor ignore patterns
+├── AGENTS.md                      # agent instructions — the single source of truth
+├── CLAUDE.md                      # contains only `@AGENTS.md` (one line, no other content)
 ├── CONTENT-GENERATION-GUIDE.md    # read-before-generating rules: CIS-driven word-count
 │                                   # targets, anti-padding, MicroSim, and Markdown rules
 ├── plugins/
@@ -168,7 +170,28 @@ For text files, do a simple in-place substitution of every `{{VAR}}` token
 in Step 2. Use a small inline `sed` or Python step — do not require any
 external dependencies.
 
-For `docs/img/license.png`, copy the binary as-is (no substitution).
+For `docs/img/license.png` and `docs/img/cover.png`, copy the binaries as-is
+(no substitution). Exclude image files from the substitution pass — running a
+text rewriter over a PNG corrupts it.
+
+**Agent instruction files.** `AGENTS.md` is the single source of truth for
+agent rules and takes the normal `{{VAR}}` substitution. `CLAUDE.md` is copied
+verbatim: it must end up containing exactly one line, `@AGENTS.md`, so Claude
+Code imports the shared rules instead of carrying a second copy that drifts.
+Never expand `CLAUDE.md` with project rules — put them in `AGENTS.md` where
+every agent can read them.
+
+**Ordering footgun.** If you implement the substitution as a shell loop reading
+values from environment variables, export the variables *before* the loop runs.
+Exporting them afterward makes every `{{VAR}}` expand to the empty string, and
+the failure is silent — you get a valid-looking `mkdocs.yml` with
+`site_name: ''` and `site_url: 'https://.github.io//'`. After substituting,
+always assert that no tokens remain and no values are blank:
+
+```bash
+grep -rn '{{[A-Z_]*}}' . --exclude-dir=.git || echo "no placeholders left"
+grep -nE "^(site_name|site_description|site_url):" mkdocs.yml
+```
 
 ### Step 5 — Verify the result builds
 
@@ -339,6 +362,19 @@ sensibly:
   `## Learning Mascot` and `## Quality Assurance & Validation` sections into
   this existing file rather than creating a second copy (see
   `learning-mascot.md`, Step 7).
+- **`AGENTS.md` holds the agent rules; `CLAUDE.md` is a one-line pointer.**
+  Earlier books duplicated the same instructions into both files, and the two
+  copies drifted — `quantum-computing` and `information-systems` each carry a
+  byte-identical 374- and 215-line pair that has to be edited twice to stay in
+  sync, and any agent reading only one of them gets a stale rule set. The
+  scaffold now writes the real content **once** to `AGENTS.md` and makes
+  `CLAUDE.md` contain exactly `@AGENTS.md` and nothing else — Claude Code
+  resolves the `@` as an import, and every other agent (Codex, Cursor, Copilot)
+  reads `AGENTS.md` natively. One file to edit, every agent sees the same
+  rules. `p5-textbook` is the reference implementation of this pattern.
+
+  **Do not "helpfully" copy the rules back into `CLAUDE.md`.** A `CLAUDE.md`
+  longer than one line means the split has been broken and the drift is back.
 
 ## MicroSim Status Indicators
 
@@ -412,6 +448,8 @@ book-installer/
         ├── .gitignore                         # Python, MkDocs, OS, editor ignores
         ├── project.code-workspace             # VS Code workspace (renamed to {{REPO_NAME}}.code-workspace)
         ├── mkdocs.yml                         # the main config template
+        ├── AGENTS.md                          # agent instructions, {{SITE_NAME}}/{{REPO_NAME}} substituted
+        ├── CLAUDE.md                          # verbatim one-liner `@AGENTS.md` — no substitution
         ├── CONTENT-GENERATION-GUIDE.md        # copied to project root, {{SITE_NAME}} substituted
         └── docs/
             ├── index.md
