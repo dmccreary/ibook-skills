@@ -105,6 +105,7 @@ All `bk*` scripts require `$BK_HOME` to be set and provide consistent colored ou
 - `bk-resize-images` - Compress images for web
 - `bk-capture-screenshot` - Capture MicroSim screenshots
 - `bk-batch-capture-screenshots` - Capture screenshots for many MicroSims at once
+- `bk-show-favicon` - Render every favicon.ico size as an inspectable contact sheet
 
 **Plugin Installation:**
 - `bk-install-social-override-plugin` - Install MkDocs social override plugin
@@ -416,6 +417,28 @@ bk-capture-screenshot /path/to/microsim         # Specify directory path
 - 5-second timeout for JavaScript rendering
 - Disables web security to allow CDN resources
 - Hides scrollbars for clean captures
+
+### bk-show-favicon
+
+Renders every size embedded in a multi-resolution `favicon.ico` as a contact sheet, so a degraded low-resolution rendition is caught before it ships. Most tools (sips, Preview, browsers) only ever display the largest embedded image, letting a mushy 16x16 icon go unnoticed until it reaches a real browser tab.
+
+**Requirements:** Python 3 and Pillow installed (standalone script -- does not require `$BK_HOME`)
+
+**Usage:**
+```bash
+bk-show-favicon                                  # docs/img/favicon.ico
+bk-show-favicon path/to/favicon.ico              # Explicit path
+bk-show-favicon --out sheet.png --open           # Custom output, opens when done
+```
+
+**Features:**
+- Lists every size embedded in the `.ico`
+- Renders each size twice: true-to-pixel, and magnified with nearest-neighbour so individual pixels are inspectable
+- Composites against a checkerboard backdrop so transparency is visible rather than assumed white
+- Complements `generate-favicon.py` (which creates the `.ico`) with a way to verify the result
+
+**Output:**
+- Writes a `favicon-sheet.png` contact sheet (or the path given via `--out`)
 
 ### bk-install-social-override-plugin
 
