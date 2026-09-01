@@ -135,6 +135,30 @@ basename "$(pwd)"                    # → REPO_NAME fallback
 date +%Y                             # → YEAR
 ```
 
+**Ensure the git branch is `main`.** This project's convention is `main`,
+never `master` (see `edit_uri: 'blob/main/docs'` in
+`assets/init-textbook/mkdocs.yml`, and every generated GitHub Pages URL). A
+bare `git init` still defaults to `master` on many systems unless the user
+has set `init.defaultBranch`, so don't rely on it:
+
+```bash
+if [ ! -d .git ]; then
+  git init -b main                    # new repo — create it on main directly
+else
+  current_branch=$(git branch --show-current)
+  if [ -z "$current_branch" ]; then
+    # repo exists but has no commits yet — safe to repoint before the first commit
+    git symbolic-ref HEAD refs/heads/main
+  elif [ "$current_branch" != "main" ]; then
+    echo "Repo is already on branch '$current_branch', not 'main'."
+  fi
+fi
+```
+
+If the repo already has commits on a branch other than `main`, do not rename
+it silently — that can break anything already pushed to a remote under that
+name. Tell the user and ask before running `git branch -m main`.
+
 Then ask the user once, in a single grouped prompt, for the remaining values
 (`SITE_NAME`, `SITE_DESCRIPTION`, palette preferences) and to confirm the
 inferred values. Do not pepper them with one-question-at-a-time prompts.
@@ -499,11 +523,12 @@ book-installer/
 **Skill response:**
 1. `ls -la` shows directory is empty (or just has `.git/`).
 2. Read `git config user.name`, `git remote get-url origin`, `basename "$(pwd)"`.
-3. Ask the user for `SITE_NAME` and `SITE_DESCRIPTION`; offer to default the rest.
-4. Echo the resolved table; wait for confirmation.
-5. Create directories, copy + substitute templates, copy `license.png`.
-6. Suggest `mkdocs build --strict`.
-7. Print the next-steps menu pointing at `book-installer`.
+3. Ensure the repo exists and is on branch `main` (`git init -b main` if no `.git/` yet).
+4. Ask the user for `SITE_NAME` and `SITE_DESCRIPTION`; offer to default the rest.
+5. Echo the resolved table; wait for confirmation.
+6. Create directories, copy + substitute templates, copy `license.png`.
+7. Suggest `mkdocs build --strict`.
+8. Print the next-steps menu pointing at `book-installer`.
 
 ### Example 2: Directory already has content
 
