@@ -269,7 +269,47 @@ scaffold will pass this check on the home page.)
 Do **not** run `mkdocs serve` yourself — per project CLAUDE.md, the user runs
 their own `mkdocs serve` in their terminal and watches it for rebuilds.
 
-### Step 6 — Print the next-steps menu
+### Step 6 — Guard against `gh-pages` becoming the default branch
+
+**This has happened twice before.** If `mkdocs gh-deploy` ever pushes the
+`gh-pages` branch to GitHub before `main` has been pushed there, GitHub can
+silently pick `gh-pages` as the repository's default branch — since as far
+as GitHub is concerned it's the only branch that exists yet. A repo whose
+default branch is `gh-pages` shows the built site (not the source) as the
+landing page, breaks the `edit_uri` links in `mkdocs.yml`, and confuses PR
+targeting.
+
+Run this check whenever a GitHub remote exists:
+
+```bash
+gh repo view --json defaultBranchRef -q '.defaultBranchRef.name' 2>/dev/null
+```
+
+- No `gh` CLI, not authenticated, or no `origin` remote yet (brand-new local
+  scaffold that hasn't been pushed) → skip silently, but tell the user this
+  check should be re-run the first time they push and deploy.
+- Result is `main` → fine, nothing to do.
+- Result is `gh-pages` (or anything other than `main`) → broken. Report it
+  plainly and **ask before fixing it** — changing a repository setting needs
+  explicit confirmation, the same as any other account-settings change:
+
+  ```
+  ⚠️  This repo's default branch on GitHub is "gh-pages", not "main". This
+  usually happens when `mkdocs gh-deploy` pushed before `main` was ever
+  pushed. Want me to fix it? I'd run:
+    gh repo edit <owner>/<repo> --default-branch main
+  ```
+
+  Only run `gh repo edit --default-branch main` after the user confirms.
+  `main` must already exist as a remote branch for this to succeed — if
+  `git push -u origin main` hasn't happened yet, do that first.
+
+**Prevention beats detection.** To keep this from recurring, always
+`git push -u origin main` *before* the first `mkdocs gh-deploy`, never
+after. If the user asks to deploy right after scaffolding, push `main` as
+part of that same request before running `gh-deploy`.
+
+### Step 7 — Print the next-steps menu
 
 End by pointing the user at `book-installer` for everything else. Show this
 exact list (it mirrors the book-installer feature checklist) so the user
@@ -528,7 +568,8 @@ book-installer/
 5. Echo the resolved table; wait for confirmation.
 6. Create directories, copy + substitute templates, copy `license.png`.
 7. Suggest `mkdocs build --strict`.
-8. Print the next-steps menu pointing at `book-installer`.
+8. If a GitHub remote exists, check that its default branch isn't `gh-pages`.
+9. Print the next-steps menu pointing at `book-installer`.
 
 ### Example 2: Directory already has content
 
