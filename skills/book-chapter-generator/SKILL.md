@@ -3,15 +3,17 @@ name: book-chapter-generator
 description: Designs the chapter structure for an intelligent textbook by analyzing the learning graph and concept dependencies. Use after the learning graph is complete and before generating chapter content.
 license: 
 metadata:
-  ibook.version: "1.1.1"
+  ibook.version: "1.1.2"
   ibook.preferred-model: "sonnet"
 ---
 
 # Book Chapter Generator
 
-**Version:** 1.1.1
+**Version:** 1.1.2
 
 ### Changelog
+
+- **v1.1.2** — The "Concepts Covered" table's second column is now headed `Concept Impact Score` instead of the abbreviated `CIS Score`, which redundantly repeated "Score" (CIS already stands for Concept Impact **S**core). Purely a column-header rename -- the underlying `cis` field, its computation, and every other behavior are unchanged. Applies to newly generated chapters; a book with chapters already generated under an earlier skill version keeps the old header on those files until its own chapter-generation script or table is updated separately.
 
 - **v1.1.1** — Step 4.6's completion message now always includes a strong recommendation to create a learning mascot (via `book-installer`'s learning-mascot guide) before running `chapter-content-generator`. A mascot designed up front gets placed into every chapter as content is written; adding one after dozens of chapters already exist means retrofitting each one instead. Also stated as a standing rule in the Notes section. No change to chapter design or file structure.
 
@@ -374,8 +376,8 @@ For each chapter, create `/docs/chapters/[XX]-[url-path-name]/index.md` with thi
 
 This chapter covers the following [X] concepts from the learning graph:
 
-| Concept | CIS Score |
-|---------|-----------|
+| Concept | Concept Impact Score |
+|---------|-----------------------|
 | [Concept Name 1] | 187 |
 | [Concept Name 2] | 1 |
 | [Concept Name 3] | 42 |
@@ -402,7 +404,7 @@ TODO: Generate Chapter Content
 - Always include a blank line before markdown lists (MkDocs requirement)
 - Use relative paths for internal links
 - Concept names should match exactly as they appear in learning-graph.json
-- "Concepts Covered" is a markdown table with `Concept` and `CIS Score`
+- "Concepts Covered" is a markdown table with `Concept` and `Concept Impact Score`
   columns (not a numbered list) -- one row per concept, in the same
   pedagogical order used elsewhere in this chapter, using the `cis` map
   read in Step 1.4a. Always include the blank line before the table
@@ -587,7 +589,7 @@ Before finalizing the chapter structure, verify:
 - [ ] MkDocs navigation is correctly updated
 - [ ] All markdown files have proper formatting (blank lines before lists, etc.)
 - [ ] Each chapter index.md includes all required sections
-- [ ] "Concepts Covered" is a table with `Concept` and `CIS Score` columns (not a numbered list)
+- [ ] "Concepts Covered" is a table with `Concept` and `Concept Impact Score` columns (not a numbered list)
 - [ ] User has approved the chapter design
 
 ## Example Usage
@@ -614,5 +616,5 @@ Before finalizing the chapter structure, verify:
 - It does NOT generate actual chapter content (that requires a separate skill)
 - The "TODO: Generate Chapter Content" marker indicates where content should be added later
 - Always preserve the concept list in each chapter index.md for use by content generation skills
-- The per-concept CIS Score column is not decorative: `chapter-content-generator` reads it to size each concept's word-count target and non-text-element requirements (see `chapter-content-generator/SKILL.md`, "Elaboration Budget")
+- The per-concept Concept Impact Score column is not decorative: `chapter-content-generator` reads it to size each concept's word-count target and non-text-element requirements (see `chapter-content-generator/SKILL.md`, "Elaboration Budget")
 - **Always** strongly recommend a learning mascot before the user proceeds to chapter content generation (Step 4.6) — a mascot designed up front is placed into every chapter as content is written; adding one after the fact means retrofitting every already-generated chapter
