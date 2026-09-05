@@ -587,8 +587,8 @@ always be paste directly into the p5.js editing tool.  This tool uses a standard
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$SIMULATION_NAME MicroSim using P5.js 2.3.1</title>
-    <script src="https://cdn.jsdelivr.net/npm/p5@2.3.1/lib/p5.js"></script>
+    <title>$SIMULATION_NAME MicroSim using P5.js 2.3.2</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@2.3.2/lib/p5.js"></script>
     <style>
         body {
             margin: 0px;
@@ -628,7 +628,7 @@ version of p5.js.
 
 https://github.com/dmccreary/microsims/blob/main/src/p5-version/p5-version.py
 
-As of this guide, the default version is p5.js 2.x (currently 2.3.1). p5.js 2.x is largely backward compatible with 1.x global-mode sketches, but check the [migration guide](https://p5js.org/migration-guide/) if a sketch behaves unexpectedly after the upgrade.
+As of this guide, the default version is p5.js 2.x (currently 2.3.2). p5.js 2.x is largely backward compatible with 1.x global-mode sketches, but check the [migration guide](https://p5js.org/migration-guide/) if a sketch behaves unexpectedly after the upgrade.
 
 ## Index.md Generation
 

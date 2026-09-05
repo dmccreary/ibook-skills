@@ -93,7 +93,7 @@ Have students find or create their own examples for each category and explain th
 
 ## Technical Details
 
-- **Framework**: p5.js 2.3.1
+- **Framework**: p5.js 2.3.2
 - **Data Format**: Questions stored in `data.json` for easy editing
 - **Canvas Size**: 800×530 pixels (responsive width)
 - **Accessibility**: Includes screen reader description

@@ -46,15 +46,13 @@ let mascotExpression = 'neutral'; // neutral, happy, thinking
 // Option buttons (virtual)
 let optionButtons = [];
 
-function preload() {
-  // Load quiz data from JSON file
-  quizData = loadJSON('data.json');
-}
-
-function setup() {
+async function setup() {
   updateCanvasSize();
   const canvas = createCanvas(canvasWidth, canvasHeight);
   canvas.parent(document.querySelector('main'));
+
+  // Load quiz data from JSON file
+  quizData = await loadJSON('data.json');
 
   // Load configuration if present
   if (quizData && quizData.config) {
