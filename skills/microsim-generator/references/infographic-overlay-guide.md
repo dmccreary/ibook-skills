@@ -17,12 +17,58 @@ Use this guide when:
 - A chapter content spec includes a `#### Diagram:` details block with type "Interactive Infographic" or "Diagram" that requires a scientific illustration with labeled callouts
 - The textbook needs a labeled anatomy diagram, structural diagram, process diagram, or any image with identified regions
 - The specification calls for explore mode (hover to learn), quiz mode (identify structures), or both
+- A static poster was just rendered by [verified-infographic-guide.md](verified-infographic-guide.md).
+  **Every verified poster gets an overlay** — that guide's Phase 9 routes here, and it is mandatory,
+  not optional
 
 Do NOT use this guide when:
 
 - The diagram is better served by Mermaid, Chart.js, or p5.js drawing (no background image needed) — route to that generator guide instead
 - The content is a pure simulation with dynamic elements (use the p5 guide instead)
 - The diagram needs only simple inline markdown images with no interactivity
+- The deliverable is a statistics poster whose **numbers are baked into the image** and need
+  fact-checking — route to [verified-infographic-guide.md](verified-infographic-guide.md) instead
+  (see [Related Guide](#related-guide-verified-infographic-posters) below)
+
+## Related Guide: Verified Infographic Posters
+
+This guide and [verified-infographic-guide.md](verified-infographic-guide.md) both have
+"infographic" in the name but solve different problems. Pick by asking **where the words live**:
+
+| | This guide (overlay) | verified-infographic-guide.md |
+|---|---|---|
+| Produces | A MicroSim in `docs/sims/{sim-id}/` | A static PNG + audit trail in `docs/posters/<slug>/` |
+| Problem solved | Making an image explorable | Keeping baked-in numbers from being fabricated |
+| Text in the image | **None** — not even a title | Text and numbers *are* the content |
+| Where labels live | `data.json`, rendered at runtime by `diagram.js` | Inside the pixels, locked before rendering |
+| Web search / citations | Not used | Mandatory (2+ searches per claim, `source_id` per element) |
+| MicroSim pipeline | Yes | No — that guide skips it entirely |
+
+Rule of thumb: **numeric claims that could be wrong → verified guide; structures that need
+naming → this guide.** An anatomy diagram is an overlay. A "biophilic vs. brutalist offices,
+with percentages" poster is verified.
+
+### Combining the two
+
+They compose in two ways:
+
+1. **Verified facts inside an overlay.** When callout descriptions or zone `facts[]` carry
+   sourced statistics (real measurements, published study results, dated events), run
+   **Phases 1–4** of the verified guide first to produce a cited claim set, then carry each
+   `source_id` into this guide's `data.json`. Phases 5–8 are poster rendering and do not apply.
+2. **An overlay on top of a verified poster — mandatory.** A rendered `poster.png` is never the
+   final deliverable; the verified guide's **Phase 9** requires wrapping it in this guide's
+   **grid** engine. Point `data.json.image` at the full-size poster, keep `showLabels: false`
+   (the poster already has printed column titles), define one zone per poster region, and carry
+   each claim's `source_id` into the zone `facts[]` so citations survive into the interactive
+   form. The reason is measurement: a flat PNG emits no interaction events, so it cannot tell us
+   whether readers understood it — the overlay's hovers, zone opens, and quiz attempts do, in
+   aggregate. The verified guide's Gallery Thumbnails section assumes exactly this pairing —
+   poster detail pages keep the full-size PNG for hover accuracy while gallery cards use the
+   thumbnail.
+
+Related standing policy: **never generate a static image unless the user specifically asks for
+one.** When a request could be served either way, it belongs here, not on the poster route.
 
 ## Overlay Types: Callout vs. Grid
 

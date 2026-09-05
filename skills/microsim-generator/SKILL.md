@@ -278,16 +278,65 @@ Scan the spec for trigger keywords and match to the appropriate generator guide.
 | matrix, framework comparison, clickable cells, detail panel, expandable | `references/html-table.md` | Custom |
 | animation, celebration, particles, confetti, effects | `references/celebration-guide.md` | p5.js |
 | classify, classifier, categorize, sort scenarios, identify types, recognize patterns | `references/concept-classifier-guide.md` | p5.js |
-| diagram overlay, callout labels, anatomy, labeled illustration, infographic overlay, explore/quiz modes | `references/infographic-overlay-guide.md` | Custom (diagram.js) |
+| diagram overlay, callout labels, anatomy, labeled illustration, infographic overlay, explore/quiz modes | `references/infographic-overlay-guide.md` | Custom (diagram.js) — **interactive sim**; labels live in `data.json`, image carries no text |
 | python lab, code runner, runnable code block, interactive python exercise, docker | `references/docker-python-lab-guide.md` | Custom (docker-lab.js) |
-| verified infographic, statistics poster, fact-checked poster, cited data, sourced claims, evidence-based comparison | `references/verified-infographic-guide.md` | Custom (text-verify → image) |
+| verified infographic, statistics poster, fact-checked poster, cited data, sourced claims, evidence-based comparison | `references/verified-infographic-guide.md` | Custom (text-verify → image) — **static PNG**; numbers baked into pixels, **never the final deliverable on its own** |
 | custom, simulation, physics, interactive, bouncing, movement, p5.js | `references/p5-guide.md` | p5.js |
+
+#### Disambiguating the Two `infographic` Routes
+
+Both routes have "infographic" in the name and they are routinely confused. Pick by asking
+**where the words live**:
+
+| | `infographic-overlay-guide.md` | `verified-infographic-guide.md` |
+|---|---|---|
+| Produces | A MicroSim in `docs/sims/{sim-id}/` | A static PNG + audit trail in `docs/posters/<slug>/` |
+| Problem solved | Making an image explorable and measurable | Keeping baked-in numbers from being fabricated |
+| Text in the image | **None** — not even a title | Text and numbers *are* the content |
+| Where labels live | `data.json`, rendered at runtime by `diagram.js` | Inside the pixels, locked before rendering |
+| Web search / citations | Not used | Mandatory (2+ searches per claim, `source_id` per element) |
+| Emits interaction events | Yes (hover, quiz attempts) | No — a flat image emits nothing |
+
+Rule of thumb: **numeric claims that could be wrong → verified guide; structures that need
+naming → overlay guide.** They are not alternatives — see the two policies below, which make
+them a pipeline rather than a fork.
+
+#### Policy: Interactivity Is the Default, Static Images Are Not
+
+**Never generate a static image as a deliverable unless the user specifically requests one.**
+A flat PNG is a Level 1 artifact: it emits no interaction events, so it tells us nothing about
+whether readers understood it. This library targets Level 2+ (see the root `CLAUDE.md`), which
+means the default answer to "make an infographic" is an *interactive* one. When a request could
+be served either way, route to the overlay guide, not the poster route.
+
+#### Policy: Every Verified Poster Gets an Overlay
+
+**When a static poster carrying verifiable facts *is* generated — because the user asked for one
+— it must always be given an interactive overlay afterward.** This is not optional and not a
+follow-up suggestion to offer; it is the second half of the poster route.
+
+The reason is measurement. The poster's value is its verified claims, but a bare PNG cannot tell
+us whether anyone engaged with those claims. Wrapping it in a `grid-diagram.js` overlay turns
+each poster region into an instrumented zone: hovers, zone opens, and quiz attempts become
+interaction events that let us predict, in aggregate, whether readers have mastered the concepts
+the infographic teaches. Per the "2.99" target in the root `CLAUDE.md`, aggregate those events
+across all readers to estimate concept understanding — never retain per-student performance
+history tied to an identifiable reader.
+
+Mechanically: after Phase 8, follow the Grid Overlay Workflow in
+`references/infographic-overlay-guide.md`, pointing `data.json.image` at the rendered
+`poster.png` and keeping `showLabels: false` (the poster already has printed column titles).
+Carry each claim's `source_id` into the zone `facts[]` so the citation stays visible.
 
 #### Decision Tree
 
 ```
-Static poster whose numeric claims must be verified against sources?
-  → YES: verified-infographic-guide.md  (EXIT ROUTE — see below, this is not a sim)
+Numeric claims that must be verified against sources?
+  → YES: run Phases 1–4 of verified-infographic-guide.md to lock a cited claim set, then:
+      · user explicitly asked for a static poster/image/PNG?
+          → render it (Phases 5–8), THEN always add a grid overlay on top (see Exit Route)
+      · otherwise → carry the verified claims into the matched sim guide below.
+        Never ship a static image the user did not ask for.
 
 Has dates/timeline/chronological events?
   → YES: timeline-guide.md
@@ -337,9 +386,15 @@ Custom simulation/animation/physics?
 
 #### Exit Route: Fact-Verified Poster (not a MicroSim)
 
+**Gate this route first.** Only take it when the user has *specifically* asked for a static
+poster, image, or PNG. If they asked for an "infographic" without naming a static format, do not
+render a poster — run Phases 1–4 for the verified claim set and hand it to an interactive guide
+instead (see "Policy: Interactivity Is the Default" above).
+
 `references/verified-infographic-guide.md` is the one route in this skill that does **not** produce a
-sim directory. It produces a static poster PNG in `docs/posters/<slug>/` alongside its verification
-report and source sidecar. When a request matches it:
+sim directory *by itself*. It produces a static poster PNG in `docs/posters/<slug>/` alongside its
+verification report and source sidecar — which is then always wrapped in an overlay (see below).
+When a request matches it:
 
 - **Skip Steps 0–9 of this file entirely.** No scaffold, no `.js`, no `CANVAS_HEIGHT`, no iframe
   insertion, no quality validator, no `docs/sims/` entry.
@@ -348,6 +403,22 @@ report and source sidecar. When a request matches it:
 - The hard rule that makes this route worth having: **no claim reaches the image until it has a
   verified source.** An unverified claim blocks the pipeline, gets downgraded to qualitative
   language, or is dropped — it is never rendered on a guess.
+
+**MANDATORY Phase 9: wrap the poster in an interactive overlay.** A rendered poster is never the
+final deliverable. As soon as Phase 8 passes, build a grid overlay MicroSim over it by following
+the Grid Overlay Workflow in `references/infographic-overlay-guide.md`:
+
+- Point `data.json.image` at the rendered `poster.png`
+- Keep `showLabels: false` — the poster already has printed column titles
+- Define one zone per poster region, carrying each claim's `source_id` into the zone `facts[]`
+- Add quiz questions so the overlay measures comprehension, not just exposure
+
+Why this is mandatory: the poster's numbers are verified, but a flat PNG emits no interaction
+events, so nothing tells us whether readers actually engaged with those claims. The overlay turns
+each region into an instrumented zone whose hovers, opens, and quiz attempts let us predict — in
+aggregate across all readers, per the "2.99" target in the root `CLAUDE.md` — whether the concepts
+in the infographic have been mastered. Never retain per-student histories tied to an identifiable
+reader.
 
 **Reusing the verification phases for a real MicroSim.** Phases 1–4 (claim plan → source discovery →
 per-claim verification → verification report) are output-format agnostic. When a *sim* must carry
@@ -848,9 +919,9 @@ python3 $UTILS/extract-sim-specs.py \
 | html-table | Custom | Matrix comparisons with clickable cells, detail panels |
 | celebration-guide | p5.js | Particle effects, visual feedback |
 | concept-classifier-guide | p5.js | Classification quizzes — sort scenarios into categories |
-| infographic-overlay-guide | Custom (diagram.js) | Interactive callout/zone overlays on illustrations |
+| infographic-overlay-guide | Custom (diagram.js) | Interactive callout/zone overlays on illustrations — image holds no text; also the mandatory wrapper for every verified poster |
 | docker-python-lab-guide | Custom (docker-lab.js) | Runnable Python labs in Docker containers |
-| verified-infographic-guide | Custom (text-verify → image) | Fact-verified statistics posters — claim plan, source verification, locked image prompt (**static poster, not a sim**) |
+| verified-infographic-guide | Custom (text-verify → image) | Fact-verified statistics posters — claim plan, source verification, locked image prompt (**static PNG only on explicit request, and always wrapped in an overlay afterward**) |
 
 ### Shared Standards
 
@@ -945,8 +1016,13 @@ This enables counting and discovery of MicroSims across GitHub using code search
 
 ### Example 10: Fact-Verified Poster
 **User:** "Make a poster comparing the energy use of LED vs. incandescent lighting with real numbers"
-**Routing:** "poster" + numeric claims needing sources → `references/verified-infographic-guide.md`
-**Action:** Exit route — skip Steps 0–9; run the guide's 8 phases; verify every number before the one image call
+**Routing:** explicit "poster" + numeric claims needing sources → `references/verified-infographic-guide.md`
+**Action:** Exit route — skip Steps 0–9; run the guide's 8 phases; verify every number before the one image call. Then **always** run Phase 9: wrap `poster.png` in a grid overlay from `infographic-overlay-guide.md` so the poster emits interaction events.
+
+### Example 11: Infographic Without a Named Format
+**User:** "Make an infographic on how much water each food crop takes to grow"
+**Routing:** numeric claims, but no static format requested → verification Phases 1–4, then an interactive guide
+**Action:** Do **not** render a static poster. Run Phases 1–4 of `verified-infographic-guide.md` to lock the cited claim set, then build the visualization with the matched sim guide (here `chartjs-guide.md`), carrying each `source_id` into the sim's data file.
 
 ### Example 11: Sourced Comparison Sim
 **User:** "Build a comparison table of these five breadboard power supplies using verified specs"

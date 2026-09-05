@@ -14,6 +14,14 @@
 > events — run Phases 1–4 to produce a verified, cited claim set, then hand it to the matched
 > sim guide and carry each `source_id` into that sim's data file. Phases 5–8 are poster
 > rendering and do not apply.
+>
+> **Two standing policies gate this route:**
+>
+> 1. **Never render a static image unless the user specifically asked for one.** "Make an
+>    infographic" is not a request for a PNG. Run Phases 1–4, then hand the claim set to an
+>    interactive guide.
+> 2. **Every poster that does get rendered is then wrapped in an interactive overlay** —
+>    Phase 9 below. A poster is never the final deliverable.
 
 **Version:** 1.0
 
@@ -33,19 +41,62 @@ It exists because one-shot text-to-image generation of fact-based infographics h
 
 ## When to Use
 
-Use this skill when the user asks for:
+Use the **full** 9-phase workflow when the user has **specifically requested a static poster,
+image, or PNG** that contains numeric claims — for example:
 
-- A poster, infographic, or data visualization containing numeric claims
-- A comparison ("X vs. Y") graphic where percentages or study results appear
-- An evidence-based summary poster citing research, studies, or data
-- An Earth Day / science communication / educational poster with statistics
+- "Make a *poster* comparing X and Y with real numbers"
+- An evidence-based summary *poster* citing research, studies, or data
+- An Earth Day / science communication *poster* with statistics, requested as a printable image
+
+Use **Phases 1–4 only** (verification, then hand off to an interactive guide) when the request
+involves numeric claims but no static format was named:
+
+- "Make an infographic about …" / "visualize the data on …" / "compare X and Y"
+- Any request where an interactive sim would serve the reader at least as well
+
+When in doubt, do not render a static image. A flat PNG emits no interaction events, so it
+cannot tell us whether readers understood it; the interactive form is the default deliverable
+for this library (see the Level 2+ target in the root `CLAUDE.md`).
 
 Do **NOT** use this skill for:
 
 - Purely decorative images with no factual claims
 - Diagrams where the user supplies pre-verified data and just needs a layout rendered
 - Artistic posters, logos, or illustrations without numeric content
-- Static diagrams of known objects (use the microsim-generator skill's infographic-overlay route for annotated scientific illustrations)
+- Static diagrams of known objects — use [infographic-overlay-guide.md](infographic-overlay-guide.md)
+  for annotated scientific illustrations (see [Related Guide](#related-guide-interactive-infographic-overlays) below)
+
+## Related Guide: Interactive Infographic Overlays
+
+This guide and [infographic-overlay-guide.md](infographic-overlay-guide.md) both have
+"infographic" in the name but solve different problems. Pick by asking **where the words live**:
+
+| | This guide (verified poster) | infographic-overlay-guide.md |
+|---|---|---|
+| Produces | A static PNG + audit trail in `docs/posters/<slug>/` | A MicroSim in `docs/sims/{sim-id}/` |
+| Problem solved | Keeping baked-in numbers from being fabricated | Making an image explorable |
+| Text in the image | Text and numbers *are* the content | **None** — not even a title |
+| Where labels live | Inside the pixels, locked before rendering | `data.json`, rendered at runtime by `diagram.js` |
+| Web search / citations | Mandatory (2+ searches per claim, `source_id` per element) | Not used |
+| MicroSim pipeline | No — this guide skips it entirely | Yes |
+
+Rule of thumb: **numeric claims that could be wrong → this guide; structures that need naming
+→ the overlay guide.** A "biophilic vs. brutalist offices, with percentages" poster is
+verified. An anatomy diagram is an overlay.
+
+### Combining the two
+
+They compose in two ways:
+
+1. **Verified facts inside an overlay.** As noted at the top of this guide, Phases 1–4 stand
+   alone. When an overlay MicroSim's callout descriptions or zone `facts[]` carry sourced
+   statistics, run Phases 1–4 here to produce a cited claim set, then carry each `source_id`
+   into the overlay guide's `data.json`. Phases 5–8 do not apply.
+2. **An overlay on top of a verified poster.** A rendered `poster.png` can become the
+   background image for the overlay guide's **grid** engine, giving readers hover zones over
+   the poster's columns. Because the poster already has printed column titles, keep
+   `showLabels: false`. The Gallery Thumbnails section below assumes this pairing — poster
+   detail pages keep the full-size PNG for hover accuracy while gallery cards use the thumbnail.
 
 ## Prerequisites
 
@@ -197,6 +248,35 @@ If drift is detected, log the specific mismatch, regenerate the image (Phase 7),
 
 Produce the final **sidecar source file** at `docs/posters/<slug>/sources.md` — a reader-facing document listing every claim, number, and full citation with URL, so the poster is independently fact-checkable.
 
+### Phase 9: Interactive Overlay (MANDATORY)
+
+**A rendered poster is never the final deliverable.** Once Phase 8 passes, wrap `poster.png` in
+a grid overlay by following the Grid Overlay Workflow in
+[infographic-overlay-guide.md](infographic-overlay-guide.md):
+
+1. Create the overlay page alongside the poster (`docs/posters/<slug>/main.html`), or as a sim
+   directory under `docs/sims/` if the book indexes it with the other MicroSims.
+2. Point `data.json.image` at the rendered `poster.png` — full size, not the thumbnail.
+3. Set `showLabels: false`. The poster already has printed column titles, so chip labels would
+   double them.
+4. Define one `zones[]` entry per poster region, with `summary` and `facts[]` drawn from the
+   approved layout spec. **Carry each claim's `source_id` into the zone facts** so the citation
+   stays visible on hover — the audit trail survives into the interactive form.
+5. Add quiz questions covering the poster's key claims, so the overlay measures comprehension
+   rather than mere exposure.
+6. Calibrate zone rectangles with `?edit=true` and copy the JSON back into `data.json`.
+
+**Why this is mandatory.** The whole point of Phases 1–8 is that the poster's numbers are
+trustworthy — but a flat image emits nothing, so we have no signal about whether any reader
+engaged with those numbers. The overlay turns each region into an instrumented zone: hovers,
+zone opens, and quiz attempts become interaction events that let us predict whether the concepts
+in the infographic have been mastered.
+
+**Aggregate only.** Per the "2.99" design target in the root `CLAUDE.md`, aggregate these events
+across all readers to estimate concept understanding. Do not retain per-student performance
+history tied to an identifiable reader — that crosses into Level 3 and the student-data-privacy
+obligations this project does not take on.
+
 ## Gallery Thumbnails
 
 Poster galleries (e.g. `docs/posters/index.md`) typically render every poster as a card in a 3-column CSS grid at ~600px wide. If the grid image points straight at the full-size rendered PNG (1536x1024, 2-3 MB is typical for these image models), a gallery of even 50-90 posters ships hundreds of MB on a single page load — the full resolution is wasted since the grid never displays the image larger than the column width.
@@ -222,10 +302,14 @@ docs/posters/<slug>/
 ├── 01-claim-plan.yaml            # Phase 1
 ├── 02-verification-report.md     # Phase 3
 ├── 03-layout-spec.yaml           # Phase 5
-└── 04-image-prompt.md            # Phase 6
+├── 04-image-prompt.md            # Phase 6
+├── data.json                     # Phase 9 - overlay zones, facts, quiz
+└── main.html                     # Phase 9 - grid overlay (grid-diagram.js)
 ```
 
-The numbered intermediate files are the audit trail. `poster.png` and `sources.md` are the published artifacts.
+The numbered intermediate files are the audit trail. `poster.png` and `sources.md` are the
+published artifacts; `main.html` + `data.json` are the interactive form readers actually use,
+and the source of the interaction events.
 
 ## Success Criteria
 
