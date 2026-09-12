@@ -81,11 +81,16 @@ Getting this wrong produces a page that displays correctly but emits a
 ## Hard Limits
 
 1. **Fewer than 10 mascot admonitions per chapter** (9 is the enforced
-   ceiling). The per-context ranges above can sum higher than 9; the total cap
-   is what binds. A long chapter with many distinct sections may legitimately
-   approach the ceiling — a short chapter should sit nearer 4–5. Reaching the
-   cap must be a consequence of the chapter having that many genuine
-   signal-worthy moments, never a target to fill.
+   ceiling) — except the one chapter carrying the Chapter 1
+   Self-Introduction (see below), whose ceiling is **12**. The
+   self-introduction is extra content layered on top of that chapter's
+   normal pedagogical admonitions, not a substitute for them, so that one
+   chapter is allowed three more. The per-context ranges above can sum
+   higher than either ceiling; the total cap is what binds. A long chapter
+   with many distinct sections may legitimately approach its ceiling — a
+   short chapter should sit nearer 4–5. Reaching the cap must be a
+   consequence of the chapter having that many genuine signal-worthy
+   moments, never a target to fill.
 2. **Never place two mascot admonitions back-to-back.** At least one paragraph
    of ordinary prose must separate any two of them.
 3. **At most one `mascot-welcome` and one `mascot-celebration` per chapter.**
@@ -218,7 +223,8 @@ into chapter-specific content.
 
 **Don't:**
 
-- Use {{CHARACTER_NAME}} 10 or more times in one chapter
+- Exceed this chapter's mascot ceiling (9, or 12 for the chapter carrying
+  the Chapter 1 self-introduction)
 - Put mascot admonitions back-to-back
 - Use the mascot for purely decorative purposes
 - Change {{CHARACTER_NAME}}'s personality or speech patterns
@@ -235,7 +241,8 @@ validator before reporting the work complete:
 
     python "$BK_HOME/skills/book-installer/scripts/validate-chapter-mascots.py" docs/chapters/NN-slug/index.md
 
-It flags: 10 or more mascot admonitions in a chapter, duplicate
+It flags: more mascot admonitions than this chapter's ceiling allows (9, or
+12 for the chapter carrying the Chapter 1 self-introduction), duplicate
 `mascot-welcome` or `mascot-celebration`, back-to-back mascot admonitions,
 any admonition missing its `mascot-admonition-img` image, and body text that
 is clearly too short or too long for the 1-3 sentence rule.

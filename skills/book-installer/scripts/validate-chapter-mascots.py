@@ -3,7 +3,9 @@
 
 Enforces the canonical rules defined in
 book-installer/references/mascot-placement-rules.md:
-- Fewer than 10 mascot admonitions per chapter (MAX_TOTAL is the ceiling)
+- Fewer than 10 mascot admonitions per chapter (MAX_TOTAL is the ceiling),
+  or up to SELF_INTRO_MAX_TOTAL for the chapter carrying the Chapter 1
+  self-introduction
 - Only one mascot-welcome and one mascot-celebration per chapter
 - No two mascot admonitions back-to-back
 - Each mascot admonition includes a mascot-admonition-img image, written either
@@ -43,8 +45,12 @@ DEPRECATED_POSE_TYPES = {"mascot-encouraging": "mascot-encourage"}
 POSE_TYPES = CANONICAL_POSE_TYPES | set(DEPRECATED_POSE_TYPES)
 
 # Fewer than 10 per chapter. Longer chapters may legitimately approach this;
-# short chapters should sit well below it.
+# short chapters should sit well below it. The chapter carrying the Chapter 1
+# self-introduction (detected via SELF_INTRO_RE below) gets a higher ceiling,
+# since that self-introduction is extra content on top of the chapter's
+# normal pedagogical admonitions, not a substitute for them.
 MAX_TOTAL = 9
+SELF_INTRO_MAX_TOTAL = 12
 SINGLETON_TYPES = {"mascot-welcome", "mascot-celebration"}
 ADMONITION_RE = re.compile(r"^!!!\s+(mascot-[a-z]+)\b")
 SENTENCE_RE = re.compile(r"[.!?](?:\s|$)")
@@ -105,11 +111,22 @@ def validate(path: Path) -> int:
 
     flags = []
 
-    # Total count
-    if len(adms) > MAX_TOTAL:
+    # Total count — the chapter carrying the Chapter 1 self-introduction
+    # (a mascot-welcome enumerating every pose-role) gets a higher ceiling.
+    has_self_intro = any(
+        a["type"] == "mascot-welcome" and SELF_INTRO_RE.search("\n".join(a["body"]))
+        for a in adms
+    )
+    max_total = SELF_INTRO_MAX_TOTAL if has_self_intro else MAX_TOTAL
+    if len(adms) > max_total:
+        ceiling_note = (
+            "12 for the chapter carrying the Chapter 1 self-introduction"
+            if has_self_intro
+            else "fewer than 10 per chapter"
+        )
         flags.append(
             f"Total mascot admonitions: {len(adms)} "
-            f"(ceiling is {MAX_TOTAL} — fewer than 10 per chapter)"
+            f"(ceiling is {max_total} — {ceiling_note})"
         )
 
     # Deprecated class names render unstyled because mascot.css does not define them
