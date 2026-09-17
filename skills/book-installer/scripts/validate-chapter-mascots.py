@@ -3,9 +3,6 @@
 
 Enforces the canonical rules defined in
 book-installer/references/mascot-placement-rules.md:
-- Fewer than 10 mascot admonitions per chapter (MAX_TOTAL is the ceiling),
-  or up to SELF_INTRO_MAX_TOTAL for the chapter carrying the Chapter 1
-  self-introduction
 - Only one mascot-welcome and one mascot-celebration per chapter
 - No two mascot admonitions back-to-back
 - Each mascot admonition includes a mascot-admonition-img image, written either
@@ -13,13 +10,20 @@ book-installer/references/mascot-placement-rules.md:
   form) or as a raw HTML <img> tag (tolerated in pre-existing chapters)
 - Body text is 1-3 sentences (warn if clearly too short or too long)
 
+The total admonition count is not a hard limit. It is an informal guideline
+of roughly one mascot admonition per two concepts covered (counted from the
+chapter's own "## Concepts Covered" table or numbered list), adjustable for
+factors like reader age. When the total is well above that guideline, this
+script prints an advisory note but does not fail the check.
+
 If a limit here disagrees with mascot-placement-rules.md, that file wins —
 update this script to match it, never the reverse.
 
 Usage:
     validate-chapter-mascots.py <path-to-chapter.md>
 
-Exits 0 if clean, 1 if any flags found.
+Exits 0 if clean, 1 if any hard-limit flags found (the total-count note never
+affects the exit code).
 """
 from __future__ import annotations
 
@@ -44,16 +48,20 @@ CANONICAL_POSE_TYPES = {
 DEPRECATED_POSE_TYPES = {"mascot-encouraging": "mascot-encourage"}
 POSE_TYPES = CANONICAL_POSE_TYPES | set(DEPRECATED_POSE_TYPES)
 
-# Fewer than 10 per chapter. Longer chapters may legitimately approach this;
-# short chapters should sit well below it. The chapter carrying the Chapter 1
-# self-introduction (detected via SELF_INTRO_RE below) gets a higher ceiling,
-# since that self-introduction is extra content on top of the chapter's
-# normal pedagogical admonitions, not a substitute for them.
-MAX_TOTAL = 9
-SELF_INTRO_MAX_TOTAL = 12
+# Informal total-count guideline: ~1 mascot admonition per 2 concepts covered,
+# e.g. a 20-concept chapter guides to ~9-10, a 30-concept chapter to ~14-15.
+# This is advisory, not a hard cap — see "Total Count Guideline" in
+# mascot-placement-rules.md.
+GUIDELINE_LOW_RATIO = 0.45
+GUIDELINE_HIGH_RATIO = 0.5
 SINGLETON_TYPES = {"mascot-welcome", "mascot-celebration"}
 ADMONITION_RE = re.compile(r"^!!!\s+(mascot-[a-z]+)\b")
 SENTENCE_RE = re.compile(r"[.!?](?:\s|$)")
+CONCEPTS_HEADING_RE = re.compile(r"^##\s+Concepts Covered\s*$", re.IGNORECASE)
+HEADING_RE = re.compile(r"^##\s+")
+TABLE_ROW_RE = re.compile(r"^\s*\|(.+)\|\s*$")
+TABLE_SEPARATOR_RE = re.compile(r"^[\s|:-]+$")
+NUMBERED_ITEM_RE = re.compile(r"^\s*\d+\.\s+\S")
 # The Chapter 1 self-introduction is a documented exception to the 1-3 sentence
 # rule: it enumerates every pose-role as a numbered list. Recognise it by that
 # list so the validator does not contradict mascot-placement-rules.md.
@@ -104,30 +112,69 @@ def sentence_count(body_text: str) -> int:
     return len(SENTENCE_RE.findall(body_text))
 
 
+def count_concepts(lines: list[str]) -> int | None:
+    """Count concepts in the chapter's own "## Concepts Covered" section.
+
+    Handles both the markdown-table form (Concept | Concept Impact Score) and
+    the older numbered-list form. Returns None if no such section is found, so
+    callers can skip the guideline note rather than compare against zero.
+    """
+    start = None
+    for i, line in enumerate(lines):
+        if CONCEPTS_HEADING_RE.match(line):
+            start = i + 1
+            break
+    if start is None:
+        return None
+
+    end = len(lines)
+    for i in range(start, len(lines)):
+        if HEADING_RE.match(lines[i]):
+            end = i
+            break
+
+    table_rows = 0
+    list_items = 0
+    for line in lines[start:end]:
+        if TABLE_ROW_RE.match(line) and not TABLE_SEPARATOR_RE.match(line.strip("|")):
+            table_rows += 1
+        elif NUMBERED_ITEM_RE.match(line):
+            list_items += 1
+
+    if table_rows:
+        return max(table_rows - 1, 0)  # subtract the header row
+    if list_items:
+        return list_items
+    return None
+
+
+def total_count_guideline(concept_count: int) -> tuple[int, int]:
+    """Informal ~1-admonition-per-2-concepts guideline, as a (low, high) range."""
+    low = max(1, round(concept_count * GUIDELINE_LOW_RATIO))
+    high = max(low, round(concept_count * GUIDELINE_HIGH_RATIO))
+    return low, high
+
+
 def validate(path: Path) -> int:
     text = path.read_text(encoding="utf-8")
     lines = text.splitlines()
     adms = parse_admonitions(lines)
 
     flags = []
+    notes = []
 
-    # Total count — the chapter carrying the Chapter 1 self-introduction
-    # (a mascot-welcome enumerating every pose-role) gets a higher ceiling.
-    has_self_intro = any(
-        a["type"] == "mascot-welcome" and SELF_INTRO_RE.search("\n".join(a["body"]))
-        for a in adms
-    )
-    max_total = SELF_INTRO_MAX_TOTAL if has_self_intro else MAX_TOTAL
-    if len(adms) > max_total:
-        ceiling_note = (
-            "12 for the chapter carrying the Chapter 1 self-introduction"
-            if has_self_intro
-            else "fewer than 10 per chapter"
-        )
-        flags.append(
-            f"Total mascot admonitions: {len(adms)} "
-            f"(ceiling is {max_total} — {ceiling_note})"
-        )
+    # Total count vs. the informal, concept-scaled guideline (advisory only)
+    concept_count = count_concepts(lines)
+    if concept_count:
+        low, high = total_count_guideline(concept_count)
+        if len(adms) > high:
+            notes.append(
+                f"Total mascot admonitions: {len(adms)}, above the informal "
+                f"guideline of ~{low}-{high} for {concept_count} concepts "
+                f"covered (~1 per 2 concepts). Not a failure — the right "
+                f"count also depends on chapter length and reader age. "
+                f"Review whether each one earns its place."
+            )
 
     # Deprecated class names render unstyled because mascot.css does not define them
     for a in adms:
@@ -216,6 +263,11 @@ def validate(path: Path) -> int:
         for pose, count in sorted(type_counts.items()):
             print(f"  {pose}: {count}")
     print()
+
+    for n in notes:
+        print(f"Note: {n}")
+    if notes:
+        print()
 
     if not flags:
         print("OK — no placement rule violations.")

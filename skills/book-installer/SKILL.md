@@ -17,8 +17,10 @@ metadata:
   and how often a learning mascot may appear, plus
   `scripts/render-mascot-guide.py` (renders those rules into a book's
   `CONTENT-GENERATION-GUIDE.md` between sentinel comments so the copy is
-  regenerated, never hand-edited). The per-chapter ceiling is raised from 6 to 9
-  admonitions for longer chapters, and `scripts/validate-chapter-mascots.py` now
+  regenerated, never hand-edited). The old fixed per-chapter ceiling is
+  replaced with an informal guideline scaled to the chapter's concept count
+  (~1 admonition per 2 concepts, adjusted for reader age), advisory only and
+  never a hard failure. `scripts/validate-chapter-mascots.py` now also
   reports the deprecated `-encouraging` spelling of the encourage pose class —
   which `mascot.css` never defined, so it rendered unstyled — and exempts the
   Chapter 1 self-introduction
@@ -600,7 +602,7 @@ Each guide contains:
 **Contains:**
 - The admonition format and the Markdown-vs-raw-HTML image path rules
 - The placement table (context → pose → per-chapter count)
-- Hard limits: fewer than 10 admonitions per chapter, no back-to-back placement, one welcome and one celebration, 1-3 sentence bodies
+- Hard limits: no back-to-back placement, one welcome and one celebration, 1-3 sentence bodies; total count is an informal guideline scaled to the chapter's concept count (~1 admonition per 2 concepts) and adjusted for reader age
 - Per-pose instructional-design rules for all seven poses
 - The one-time Chapter 1 self-introduction pattern
 - The post-generation validation rule

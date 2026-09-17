@@ -157,7 +157,10 @@ fi
 
 If the repo already has commits on a branch other than `main`, do not rename
 it silently — that can break anything already pushed to a remote under that
-name. Tell the user and ask before running `git branch -m main`.
+name. Tell the user and ask before running `git branch -m main`. Once they
+confirm, **rename the existing branch** (`git branch -m <old> main`) rather
+than creating a parallel `main` beside it — a second branch splits the
+history in two and leaves the original as the one the remote still tracks.
 
 Then ask the user once, in a single grouped prompt, for the remaining values
 (`SITE_NAME`, `SITE_DESCRIPTION`, palette preferences) and to confirm the
@@ -522,6 +525,14 @@ files in sync — adding only one half is the failure mode.
 - **Do not enable plugins that need extra pip installs by default.**
   Default-enabled `social` plugin would fail-on-first-build for any user
   without Cairo installed. Users hate "fresh project doesn't build."
+- **The default branch is always `main` — never `master` or `gh-pages`.**
+  Two independent paths lead to a wrong default: `git init` still creates
+  `master` on any system without `init.defaultBranch` set (caught in
+  Step 2), and a `mkdocs gh-deploy` that runs before `main` has ever been
+  pushed lets GitHub adopt `gh-pages` as the default (caught in Step 6).
+  Both checks are load-bearing — neither one covers the other case.
+  Renaming a local branch and changing a remote's default branch are both
+  shared-state edits: report the problem and get confirmation first.
 
 ## Files for this feature
 

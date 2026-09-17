@@ -57,21 +57,44 @@ Getting this wrong produces a page that displays correctly but emits a
 | End-of-chapter closure | `mascot-celebration` | 0–1 |
 | General aside or framing | `mascot-neutral` | 0–1 |
 
+### Total Count Guideline (Informal)
+
+There is no fixed per-chapter ceiling. Instead, scale the total roughly to the
+number of concepts the chapter covers — about **one mascot admonition per two
+concepts**:
+
+| Concepts covered | Informal guideline |
+|-------------------|--------------------|
+| ~20 concepts (typical chapter) | ~9–10 total |
+| ~30 concepts (a larger-than-recommended chapter) | ~14–15 total |
+
+This is a starting point to reason from, not a target to fill or a hard cap to
+enforce. Adjust it for:
+
+- **Chapter length and density.** A short chapter with few genuine
+  signal-worthy moments should sit well below its guideline; a long chapter
+  with many distinct sections may legitimately reach or slightly exceed it.
+- **Target reader age.** Younger audiences generally benefit from more
+  frequent mascot interjections for pacing and encouragement; older or more
+  advanced audiences usually prefer a sparer, less frequent presence. Shift
+  toward the top of (or above) the guideline for younger readers and toward
+  the bottom of (or below) the guideline for older ones.
+- **The per-context ranges above**, which already bound how many admonitions
+  of each individual pose are appropriate.
+
+Every admonition still has to earn its place under Hard Limit 4 below — the
+guideline describes a reasonable order of magnitude, it never overrides the
+"never decorative" rule.
+
 ### Hard Limits
 
-1. **Fewer than 10 mascot admonitions per chapter** (9 is the enforced
-   ceiling). The per-context ranges above can sum higher than 9; the total cap
-   is what binds. A long chapter with many distinct sections may legitimately
-   approach the ceiling — a short chapter should sit nearer 4–5. Reaching the
-   cap must be a consequence of the chapter having that many genuine
-   signal-worthy moments, never a target to fill.
-2. **Never place two mascot admonitions back-to-back.** At least one paragraph
+1. **Never place two mascot admonitions back-to-back.** At least one paragraph
    of ordinary prose must separate any two of them.
-3. **At most one `mascot-welcome` and one `mascot-celebration` per chapter.**
-4. **Body text is 1–3 sentences** (a `mascot-welcome` may run to 4). Longer
+2. **At most one `mascot-welcome` and one `mascot-celebration` per chapter.**
+3. **Body text is 1–3 sentences** (a `mascot-welcome` may run to 4). Longer
    than that and the admonition starts to read as the primary content, which
    defeats its purpose as an interjection.
-5. **Never decorative.** Every mascot admonition must carry a message the
+4. **Never decorative.** Every mascot admonition must carry a message the
    reader gains something from. If the surrounding prose already says it, cut
    the admonition.
 
@@ -197,7 +220,9 @@ into chapter-specific content.
 
 **Don't:**
 
-- Use Kit 10 or more times in one chapter
+- Pad a chapter with mascot admonitions well past what its concept count and
+  reader age justify — the total count guideline above is a ceiling to reason
+  from, not a target to fill
 - Put mascot admonitions back-to-back
 - Use the mascot for purely decorative purposes
 - Change Kit's personality or speech patterns
@@ -214,14 +239,20 @@ validator before reporting the work complete:
 
     python "$BK_HOME/skills/book-installer/scripts/validate-chapter-mascots.py" docs/chapters/NN-slug/index.md
 
-It flags: 10 or more mascot admonitions in a chapter, duplicate
-`mascot-welcome` or `mascot-celebration`, back-to-back mascot admonitions,
-any admonition missing its `mascot-admonition-img` image, and body text that
-is clearly too short or too long for the 1-3 sentence rule.
+It fails the chapter on: duplicate `mascot-welcome` or `mascot-celebration`,
+back-to-back mascot admonitions, any admonition missing its
+`mascot-admonition-img` image, and body text that is clearly too short or too
+long for the 1-3 sentence rule. It also counts the concepts listed in the
+chapter's own "Concepts Covered" table and, if the total mascot count is well
+above the informal guideline for that many concepts, prints an advisory note —
+this is informational only and does not fail the check, since the right count
+also depends on factors like reader age.
 
-If the validator reports issues, fix the chapter and re-run it until it exits
-clean. Do not report completion on a chapter that still fails, and do not
-relax a rule to make the check pass.
+If the validator reports failures, fix the chapter and re-run it until it
+exits clean. Do not report completion on a chapter that still fails, and do
+not relax a rule to make the check pass. An advisory note about the total
+count is not a failure — use judgment about whether the chapter's count is
+actually justified rather than mechanically trimming to hit a number.
 
 <!-- END mascot-placement-rules -->
 
