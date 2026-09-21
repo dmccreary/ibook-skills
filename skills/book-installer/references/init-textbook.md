@@ -350,6 +350,9 @@ Scaffold complete. Next steps via book-installer features:
    36.  About page (richer)             (book-installer 36)
    38.  Reading level analysis          (book-installer 38)
 
+  Zensical transition (only if this book will be built with Zensical)
+   41.  MkDocs-serve warning            (book-installer 41)
+
 Then, when the course-description.md is filled in:
    - course-description-analyzer  (validate completeness)
    - learning-graph-generator     (build 200-concept DAG)

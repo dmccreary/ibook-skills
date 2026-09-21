@@ -1,6 +1,6 @@
 ---
 name: book-installer
-description: Installs and configures intelligent-textbook infrastructure - scaffold a brand-new MkDocs Material textbook (init textbook), install any of 40 features (math, mascot, learning graph viewer, Google Analytics GA4, custom 404, kanban board), and generate book metrics. Routes to the appropriate installation guide.
+description: Installs and configures intelligent-textbook infrastructure - scaffold a brand-new MkDocs Material textbook (init textbook), install any of 41 features (math, mascot, learning graph viewer, Google Analytics GA4, custom 404, kanban board), and generate book metrics. Routes to the appropriate installation guide.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
   ibook.version: "1.0"
@@ -94,6 +94,7 @@ Book Installer Features (most → least common):
 38. Reading level analysis - Flesch-Kincaid grade level report for all chapters
 39. Generate all supplementary content - glossary, FAQ, per-chapter quizzes & references, book metrics, diagram reports, about page, landing page, README
 40. Book metrics report - chapters, concepts, glossary/FAQ counts, quiz & reference totals, diagrams, equations, MicroSims, word count & equivalent pages (book-metrics.md + chapter-metrics.md)
+41. MkDocs-serve warning - MkDocs-only hook that warns when a Zensical-built book is previewed with `mkdocs serve` (recommended for every Zensical-designed book during the MkDocs-to-Zensical transition)
 
 Type a number or feature name to install.
 
@@ -164,6 +165,7 @@ Match the user's request to the appropriate installation guide:
 | reading level, readability, flesch kincaid, grade level, reading analysis, 38 | `references/reading-level-analysis.md` | Analyze chapter reading level consistency |
 | generate all supplementary content, supplementary content, complete the book, finish the book, book completion, generate glossary faq quiz, generate all content, all supplementary, 39 | `references/supplementary-content-generator.md` | Generate glossary, FAQ, per-chapter quizzes & references, book metrics, diagram reports, about page, landing page, and README in one coordinated workflow |
 | book metrics, generate metrics, book-metrics, chapter metrics, content statistics, word count, page count, equivalent pages, book composition, metrics report, 40 | `references/book-metrics.md` | Generate book-metrics.md, chapter-metrics.md, and the metrics block in book-metadata.json via bk-generate-book-metrics |
+| mkdocs serve warning, serve warning, warn on mkdocs serve, wrong builder, wrong renderer, zensical transition, zensical warning, mkdocs vs zensical, transition guard, broken iframe in mkdocs serve, 41 | `references/mkdocs-serve-warning.md` | Install the MkDocs-only hook that warns when a Zensical-built book is previewed with `mkdocs serve` (only for books built and deployed with Zensical) |
 
 ### Decision Tree
 
@@ -235,6 +237,10 @@ Want to generate all supplementary content in one pass (glossary, FAQ, per-chapt
 Want to generate book metrics only (chapters, concepts, word/page counts,
 diagram/MicroSim/quiz totals) into book-metrics.md and chapter-metrics.md?
   → YES: book-metrics.md
+
+Want to warn people who run `mkdocs serve` on a book that is built and deployed
+with Zensical (MkDocs-to-Zensical transition guard)?
+  → YES: mkdocs-serve-warning.md (only if the book deploys with Zensical; ask if unclear)
 
 Want to add a specific feature (equations, quizzes, feedback, etc.)?
   → YES: mkdocs-features.md (then follow specific feature instructions)
@@ -629,6 +635,25 @@ Each guide contains:
 - `docs/css/mascot.css` loaded and the mascot-test page renders correctly
 - Specific chapter file identified by absolute path
 
+### mkdocs-serve-warning.md
+
+**Purpose:** Install a MkDocs-only hook that logs a warning when a book that is built and deployed with Zensical is previewed with `mkdocs serve` — recommended for every Zensical-designed book during the MkDocs-to-Zensical transition, while MkDocs is still installed alongside Zensical
+
+**Creates:**
+- `hooks/mkdocs_serve_warning.py` — copied verbatim from `assets/mkdocs-serve-warning/mkdocs_serve_warning.py`
+- A `hooks:` entry in `mkdocs.yml` (appended to the existing list, never a second `hooks:` key — a duplicate key silently drops the first list)
+- An `AGENTS.md` exception note, only if the project forbids `hooks:`
+
+**Features:**
+- Explains why the preview looks wrong: MkDocs does not rewrite relative `<iframe src>` paths, so MicroSims embedded from top-level pages show as broken frames (`zensical build` and `zensical serve` both rewrite them)
+- Zensical never loads `hooks:` entries, so the same `mkdocs.yml` stays valid for both builders
+- Warns on `serve` only, never `build`, so `mkdocs build --strict` still passes; also catches `mkdocs serve --clean`
+- Verified without starting a server: simulates MkDocs' startup event
+
+**Prerequisites:**
+- The book is built and deployed with Zensical (do NOT install on a MkDocs-deployed book — the message would be false)
+- A `mkdocs.yml` and MkDocs 1.4 or newer
+
 ## Examples
 
 ### Example 1: Ask for Help
@@ -741,6 +766,11 @@ Each guide contains:
 **Routing:** Keywords "book metrics", "generate metrics", "metrics report", "40" → `references/book-metrics.md`
 **Action:** Read book-metrics.md, run `bk-generate-book-metrics` from the project root (or the `python3 "$BK_HOME/src/book-metrics/book-metrics.py" docs` fallback), confirm `book-metrics.md`, `chapter-metrics.md`, and the `metrics` block in `book-metadata.json` were written, and add the two reports to the Learning Graph nav in `mkdocs.yml` if not already present.
 
+### Example 19: Install the MkDocs-Serve Warning
+**User:** "warn people who run mkdocs serve" or "add the zensical transition guard" or "my MicroSim iframes are broken under mkdocs serve" or "41"
+**Routing:** Keywords "mkdocs serve warning", "zensical transition", "transition guard", "41" → `references/mkdocs-serve-warning.md`
+**Action:** Confirm the book is built and deployed with Zensical (ask if unclear; stop if it deploys with MkDocs). Copy `assets/mkdocs-serve-warning/mkdocs_serve_warning.py` to `hooks/`, append `hooks/mkdocs_serve_warning.py` to the existing `hooks:` list in `mkdocs.yml` (create the key only if absent), then verify WITHOUT starting `mkdocs serve`: `mkdocs build --strict` exits 0 with no warning, and a simulated `on_startup(command="serve")` prints the warning. Ask the user to run `mkdocs serve` once in their own terminal to see it.
+
 ## Common Workflows
 
 ### Full Project Setup
@@ -753,6 +783,7 @@ For a complete new project, users typically run these installations in order:
 6. `skill-tracker.md` - Enable usage analytics (optional)
 7. `google-analytics.md` - Register the book with GA4 (feature 25, optional)
 8. `supplementary-content-generator.md` - Generate all supplementary content once chapters exist (glossary, FAQ, quizzes, references, metrics, about, README)
+9. `mkdocs-serve-warning.md` - Only if the book is built and deployed with Zensical: warn anyone who runs `mkdocs serve` by mistake (feature 41; recommended for every Zensical-designed book during the transition period, and best done right after step 4 so it joins the existing `hooks:` list)
 
 ### Verification Commands
 
