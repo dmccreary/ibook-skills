@@ -1,7 +1,7 @@
 #!/bin/bash
 # bk-capture-screenshot
 #
-# Capture a screenshot of a MicroSim using Chrome headless mode.
+# Capture a screenshot of a MicroSim using headless Chromium driven by Playwright.
 # Can be run from within a MicroSim directory or by specifying a path.
 #
 # Usage:
@@ -20,39 +20,43 @@
 #   Creates <microsim-name>.png in the MicroSim directory.
 #
 # Requirements:
-#   - Google Chrome or Chromium
-#   - Python 3 with Pillow (PIL) for image cropping
+#   - Python 3 with Playwright:  pip install playwright && playwright install chromium
+#     (python3 on PATH is used; set BK_PYTHON to point at a different interpreter,
+#     e.g. BK_PYTHON=/path/to/envs/mkdocs/bin/python3)
+#   - Playwright's bundled Chromium, or Google Chrome as a fallback
+#
+# Screenshot approach — exact viewport:
+#   The page is loaded in a viewport of exactly WINDOW_WIDTH x target height,
+#   the same size as the iframe in index.md, and the viewport is captured as-is.
+#   Playwright sets the viewport through the DevTools protocol before the page
+#   loads, so `100vh`, window.innerHeight, and p5's windowHeight all equal the
+#   target height from the first frame.
+#
+#   Earlier versions ran `chrome --headless=new --screenshot --window-size=W,H`.
+#   On macOS that starts the page ~87px shorter than --window-size and only
+#   resizes at capture time, so the script rendered tall (H + 200) and cropped
+#   with PIL. Any layout sized with `height: 100vh` (including the standard
+#   vis-network template) then laid out for the taller window: the graph was
+#   centered too low and the bottom node row and legend fell below the crop.
+#
+# Local HTTP server:
+#   The page is served from a temporary server on 127.0.0.1 rather than opened
+#   as file://, because Playwright's Chromium blocks fetch() of file:// URLs
+#   (so MicroSims that load data.json, like the vis-network template, came up
+#   empty). The server root is the git repository containing the MicroSim
+#   (or two levels above it outside git), so relative links such as
+#   ../../img/logo.png resolve the same way they do under `mkdocs serve`.
+#   The server stops when the capture finishes.
 #
 # WebGL support:
-#   This script uses --use-gl=angle --use-angle=swiftshader to enable
-#   software-based WebGL rendering in Chrome headless mode. This is
-#   required for MicroSims that use p5.js WEBGL mode (3D rendering).
-#   Without these flags (e.g., with the older --disable-gpu flag),
-#   WEBGL canvases render as blank white rectangles.
+#   Chromium is launched with --use-gl=angle --use-angle=swiftshader
+#   --enable-unsafe-swiftshader for software WebGL rendering in headless mode.
+#   This is required for MicroSims that use p5.js WEBGL mode (3D rendering);
+#   without it WEBGL canvases render as blank white rectangles.
 #
 #   WEBGL MicroSims that load external fonts via loadFont() from a CDN
 #   may need a longer delay (e.g., 10 seconds) to allow the font to
 #   download before the screenshot is captured.
-#
-# Screenshot approach — "render tall, crop to fit":
-#   Chrome headless --window-size sets the browser window dimensions, but on
-#   macOS the actual viewport is smaller than specified due to internal
-#   overhead (~30-50px). This causes the bottom of the page to be clipped
-#   when the window height matches the content height exactly.
-#
-#   A fixed-pixel buffer does not work well because:
-#     - Too small: bottom controls still get clipped on taller canvases
-#     - Too large: excess whitespace appears below the canvas
-#
-#   Instead, this script:
-#     1. Renders at (target height + 200px) so the full page content is
-#        guaranteed to be within the viewport, with room to spare.
-#     2. Uses Python PIL to crop the captured image from the top down to
-#        the exact target height, removing any excess whitespace below
-#        the canvas.
-#
-#   This produces pixel-perfect screenshots that match the iframe height
-#   with no clipping and no wasted space.
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -86,13 +90,8 @@ else
     WINDOW_HEIGHT="$3"
 fi
 
-# Chrome headless --window-size has viewport overhead that can clip the bottom.
-# Strategy: render at a generous height, then crop the image to the exact target.
+# The viewport is exactly the target height (see "exact viewport" above).
 TARGET_HEIGHT=$WINDOW_HEIGHT
-CAPTURE_HEIGHT=$((WINDOW_HEIGHT + 200))
-
-# Convert delay to milliseconds for Chrome
-DELAY_MS=$((DELAY_SECONDS * 1000))
 
 # Validate directory exists
 if [ ! -d "$MICROSIM_DIR" ]; then
@@ -116,33 +115,23 @@ fi
 MICROSIM_NAME=$(basename "$MICROSIM_DIR")
 
 # Construct paths
-MAIN_HTML_PATH="$MICROSIM_DIR/main.html"
 OUTPUT_IMAGE="$MICROSIM_DIR/${MICROSIM_NAME}.png"
+ABSOLUTE_DIR=$(cd "$MICROSIM_DIR" && pwd -P)
+ABSOLUTE_PATH="$ABSOLUTE_DIR/main.html"
 
-# Get absolute path for file:// URL
-ABSOLUTE_PATH=$(cd "$MICROSIM_DIR" && pwd)/main.html
+# Serve from the enclosing git repo so ../../ links resolve; outside git,
+# fall back to two levels up (docs/ for the usual docs/sims/<name> layout).
+SERVE_ROOT=$(git -C "$ABSOLUTE_DIR" rev-parse --show-toplevel 2>/dev/null) \
+    || SERVE_ROOT=$(cd "$ABSOLUTE_DIR/../.." && pwd -P)
 
-# Chrome paths to try (in order of preference)
-CHROME_PATHS=(
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-    "/usr/bin/google-chrome"
-    "/usr/bin/chromium"
-    "google-chrome"
-    "chromium"
-)
-
-# Find Chrome
-CHROME_BIN=""
-for path in "${CHROME_PATHS[@]}"; do
-    if [ -f "$path" ] || command -v "$path" &> /dev/null; then
-        CHROME_BIN="$path"
-        break
-    fi
-done
-
-if [ -z "$CHROME_BIN" ]; then
-    echo -e "${RED}Error: Chrome/Chromium not found.${NC}"
-    echo "Please install Google Chrome from: https://www.google.com/chrome/"
+# Find a Python that has Playwright
+PYTHON="${BK_PYTHON:-python3}"
+if ! "$PYTHON" -c "import playwright.sync_api" &> /dev/null; then
+    echo -e "${RED}Error: Playwright for Python not found (interpreter: $PYTHON).${NC}"
+    echo "Install it with:"
+    echo "  pip install playwright && playwright install chromium"
+    echo "or activate the conda env that has it (e.g. conda activate mkdocs),"
+    echo "or set BK_PYTHON to a python3 that can import playwright."
     exit 1
 fi
 
@@ -157,39 +146,63 @@ echo -e "   Size:   ${YELLOW}${WINDOW_WIDTH}x${TARGET_HEIGHT}${NC}"
 echo -e "   Delay:  ${YELLOW}${DELAY_SECONDS} seconds${NC} (waiting for JavaScript to load)"
 echo ""
 
-# Capture screenshot using Chrome headless mode
-# Key flags:
-#   --headless=new: Use new headless mode
-#   --use-gl=angle --use-angle=swiftshader: Software WebGL rendering (needed for WEBGL canvases)
-#   --screenshot: Capture screenshot
-#   --window-size: Set viewport size
+# Capture screenshot with Playwright
+# Chromium flags:
+#   --use-gl=angle --use-angle=swiftshader --enable-unsafe-swiftshader:
+#       Software WebGL rendering (needed for WEBGL canvases)
 #   --hide-scrollbars: Remove scrollbars from capture
 #   --disable-web-security: Allow loading external resources (CDNs)
-#   --allow-file-access-from-files: Allow file:// URLs to load resources
-#   --virtual-time-budget: Give JavaScript time to load and render (in milliseconds)
+"$PYTHON" - "$SERVE_ROOT" "$ABSOLUTE_DIR" "$OUTPUT_IMAGE" "$WINDOW_WIDTH" "$TARGET_HEIGHT" "$DELAY_SECONDS" <<'PY'
+import functools, os, sys, threading
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import quote
+from playwright.sync_api import sync_playwright, Error as PlaywrightError, TimeoutError as PlaywrightTimeout
 
-"$CHROME_BIN" \
-    --headless=new \
-    --use-gl=angle \
-    --use-angle=swiftshader \
-    --screenshot="$OUTPUT_IMAGE" \
-    --window-size=${WINDOW_WIDTH},${CAPTURE_HEIGHT} \
-    --hide-scrollbars \
-    --disable-web-security \
-    --allow-file-access-from-files \
-    --virtual-time-budget=$DELAY_MS \
-    "file://$ABSOLUTE_PATH" \
-    2>&1 | grep -v "CVDisplayLink" | grep -v "SharedImageManager" || true
+serve_root, sim_dir, output, width, height, delay = sys.argv[1:7]
+viewport = {"width": int(width), "height": int(height)}
+args = [
+    "--use-gl=angle",
+    "--use-angle=swiftshader",
+    "--enable-unsafe-swiftshader",
+    "--hide-scrollbars",
+    "--disable-web-security",
+]
 
-# Verify screenshot was created, then crop to exact target height
-if [ -f "$OUTPUT_IMAGE" ]; then
-    # Crop to exact target height, keeping the top portion of the image
-    python3 -c "
-from PIL import Image
-img = Image.open('$OUTPUT_IMAGE')
-if img.height > $TARGET_HEIGHT:
-    img.crop((0, 0, img.width, $TARGET_HEIGHT)).save('$OUTPUT_IMAGE')
-" 2>/dev/null
+class QuietHandler(SimpleHTTPRequestHandler):
+    def log_message(self, *a):
+        pass
+
+server = ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(QuietHandler, directory=serve_root))
+threading.Thread(target=server.serve_forever, daemon=True).start()
+rel = Path(os.path.relpath(sim_dir, serve_root)).as_posix()
+url = f"http://127.0.0.1:{server.server_port}/{quote(rel)}/main.html"
+
+with sync_playwright() as p:
+    try:
+        browser = p.chromium.launch(args=args)
+    except PlaywrightError:
+        # Bundled Chromium not installed; use Google Chrome if present
+        browser = p.chromium.launch(channel="chrome", args=args)
+    page = browser.new_page(viewport=viewport, device_scale_factor=1)
+    errors = []
+    page.on("pageerror", lambda e: errors.append(str(e)))
+    try:
+        page.goto(url, wait_until="load")
+    except PlaywrightTimeout:
+        print("   Warning: page did not finish loading in 30s; capturing anyway")
+    page.wait_for_timeout(float(delay) * 1000)
+    page.screenshot(path=output)
+    browser.close()
+server.shutdown()
+
+for e in errors[:3]:
+    print(f"   JS error: {e.splitlines()[0]}")
+PY
+CAPTURE_STATUS=$?
+
+# Verify screenshot was created
+if [ $CAPTURE_STATUS -eq 0 ] && [ -f "$OUTPUT_IMAGE" ]; then
     SIZE=$(ls -lh "$OUTPUT_IMAGE" | awk '{print $5}')
     echo -e "${GREEN}✅ Screenshot captured successfully!${NC}"
     echo -e "   File: ${YELLOW}$OUTPUT_IMAGE${NC} (${SIZE})"
@@ -197,6 +210,6 @@ if img.height > $TARGET_HEIGHT:
     echo -e "${BLUE}════════════════════════════════════════════════════════════════${NC}"
 else
     echo -e "${RED}❌ Failed to capture screenshot${NC}"
-    echo "Chrome may have encountered an error. Try running with more verbose output."
+    echo "Playwright/Chromium may have encountered an error (see output above)."
     exit 1
 fi

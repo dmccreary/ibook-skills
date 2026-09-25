@@ -240,9 +240,10 @@ When the user says "capture screenshot", "capture screen image", or "capture mic
 ```
 
 The script:
-- Starts a local HTTP server to properly load CDN resources
-- Waits 3 seconds for JavaScript to render
-- Captures a 1200x800 screenshot using Chrome headless
+- Starts a temporary local HTTP server so `fetch('data.json')` and `../../` links work
+- Loads `main.html` in headless Chromium (Playwright) at an exact 800 x height viewport, so `100vh` layouts match the iframe
+- Waits 3 seconds (optional 2nd argument) for JavaScript to render
+- Takes the height from the optional 3rd argument (default 600) — pass the iframe height from `index.md`
 - Saves as `{microsim-name}.png` in the MicroSim directory
 
 **Proactive Behavior:** When a user indicates they are happy with a MicroSim's layout (e.g., "looks good", "that's perfect", "I like it"), proactively ask:

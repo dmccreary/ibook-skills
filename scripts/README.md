@@ -351,7 +351,7 @@ list to maintain. A MicroSim counts as done when `<name>/<name>.png` exists.
 Each sim's target height is read from the iframe in its `index.md`, so batch
 output matches the height the page actually renders at.
 
-**Requirements:** `bk-capture-screenshot` on PATH or beside this script; Google Chrome
+**Requirements:** `bk-capture-screenshot` on PATH or beside this script, plus its requirements (Python 3 with Playwright)
 
 **Usage:**
 ```bash
@@ -388,33 +388,34 @@ bk-resize-images [args]
 
 ### bk-capture-screenshot
 
-Captures high-quality screenshots of MicroSims using Chrome headless mode. Can be run from within a MicroSim directory or by providing a path.
+Captures high-quality screenshots of MicroSims using headless Chromium driven by Playwright. Can be run from within a MicroSim directory or by providing a path.
 
-**Requirements:** Google Chrome or Chromium installed
+**Requirements:** Python 3 with Playwright (`pip install playwright && playwright install chromium`); falls back to Google Chrome if Playwright's Chromium is not installed. Uses `python3` on PATH, or set `BK_PYTHON` to another interpreter.
 
 **Usage:**
 ```bash
 cd /path/to/microsim && bk-capture-screenshot   # Use current directory
 bk-capture-screenshot /path/to/microsim         # Specify directory path
+bk-capture-screenshot /path/to/microsim 5       # 5 second render delay
+bk-capture-screenshot /path/to/microsim 3 700   # 3 second delay, 700px height
 ```
 
 **Features:**
 - Automatically detects MicroSim name from directory
 - Validates main.html exists
-- Uses Chrome headless mode for rendering
-- Handles JavaScript-heavy visualizations with proper timeout
-- Allows loading external CDN resources
+- Handles JavaScript-heavy visualizations with a configurable render delay
+- Allows loading external CDN resources and `fetch('data.json')`
 - Generates PNG file named after the MicroSim
 - Provides clear success/failure feedback with file size
 
 **Output:**
 - Creates `{microsim-name}.png` in the MicroSim directory
-- Screenshot size: 1200x800 pixels
-- Includes all rendered content after JavaScript execution
+- Screenshot size: 800 x height pixels (height defaults to 600; pass the iframe height from `index.md`)
 
 **Technical details:**
-- Uses `--headless=new` for latest Chrome headless mode
-- 5-second timeout for JavaScript rendering
+- The viewport is exactly 800 x height from the first frame, so layouts using `height: 100vh` (such as the vis-network template) render the way they do in the iframe
+- Serves the page from a temporary `127.0.0.1` HTTP server rooted at the enclosing git repo, so `data.json` and `../../` links load
+- Software WebGL via SwiftShader for p5.js `WEBGL` sketches
 - Disables web security to allow CDN resources
 - Hides scrollbars for clean captures
 
