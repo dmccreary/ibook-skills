@@ -19,6 +19,9 @@ MODES
   compact     metadata xapi -> {compact:true,  teaching:true}; silent until the flush, then ONE summary
               (answers still pass through as they happen)
   production  metadata xapi -> {teaching:false}, compact from the book; no teaching UI at all
+  url         production metadata, embedded at the sim's real index.md iframe height, with
+              ?xapi=teaching on the embedding page: the panel must appear and must fit
+              (the runtime grows the iframe; a vh/100%-height layout can defeat that)
   The sim's own `concept`/`objects` keys are kept. Focus-loss timers are set long so only
   the explicit flush ends a session.
 
@@ -112,6 +115,18 @@ def read_config(docs: Path) -> dict[str, str]:
     if out["siteUrl"] and not out["siteUrl"].endswith("/"):
         out["siteUrl"] += "/"
     return out
+
+
+def iframe_height(sim: Path) -> int | None:
+    """The height of the iframe the sim's own index.md embeds it with."""
+    idx = sim / "index.md"
+    if not idx.is_file():
+        return None
+    m = re.search(r"<iframe[^>]*src=['\"](\./)?main\.html['\"][^>]*>", idx.read_text(errors="replace"))
+    if not m:
+        return None
+    h = re.search(r"height=['\"]?(\d+)", m.group(0)) or re.search(r"height:\s*(\d+)px", m.group(0))
+    return int(h.group(1)) if h else None
 
 
 def graph_ids(docs: Path) -> set[str] | None:
@@ -400,7 +415,7 @@ def main() -> int:
     ap.add_argument("sim", type=Path)
     ap.add_argument("--actions", type=Path)
     ap.add_argument("--generic", action="store_true", help="with --actions, also run generic driving")
-    ap.add_argument("--modes", default="full,compact,production")
+    ap.add_argument("--modes", default="full,compact,production,url")
     ap.add_argument("--width", type=int, default=900)
     ap.add_argument("--timeout", type=int, default=20, help="seconds for waits")
     ap.add_argument("--json", type=Path, help="write the full report, statements included")
@@ -450,8 +465,12 @@ def main() -> int:
                 block.update(compact=False, teaching=True)
             elif mode == "compact":
                 block.update(compact=True, teaching=True)
-            else:
+            else:                                   # production, and url (production + ?xapi=teaching)
                 block.update(teaching=False)
+            # The url mode embeds the sim at its REAL index.md iframe height, because what it
+            # checks is that the switched-on panel is not clipped there.
+            frame_h = (iframe_height(sim) or 600) if mode == "url" else 1300
+            query = "?xapi=teaching" if mode == "url" else ""
 
             ctx = browser.new_context(viewport={"width": 1000, "height": 1400})
             page = ctx.new_page()
@@ -474,13 +493,15 @@ def main() -> int:
                 return rewrite
 
             page.route(f"**/{rel}/metadata.json", rewriter(block))
-            page.route("**/__lrs_check_host__.html", lambda route: route.fulfill(
-                content_type="text/html",
-                body=('<!doctype html><body style="margin:0">'
-                      f'<iframe id="sim" src="/{rel}/main.html" '
-                      f'style="width:{a.width}px;height:1300px;border:0"></iframe>'
-                      '<div style="height:4000px"></div></body>')))
-            page.goto(f"{base}/__lrs_check_host__.html")
+            host = ('<!doctype html><body style="margin:0">'
+                    f'<iframe id="sim" src="/{rel}/main.html" '
+                    f'style="width:{a.width}px;height:{frame_h}px;border:0"></iframe>'
+                    '<div style="height:4000px"></div></body>')
+            def serve_host(body: str) -> Any:   # a factory, for the same (route, request) reason
+                return lambda route: route.fulfill(content_type="text/html", body=body)
+
+            page.route("**/__lrs_check_host__.html*", serve_host(host))
+            page.goto(f"{base}/__lrs_check_host__.html{query}")
             frame = page.locator("iframe#sim").element_handle().content_frame()
             r: dict[str, Any] = {"mode": mode, "console": console, "errors": errors}
             results[mode] = r
@@ -512,6 +533,10 @@ def main() -> int:
             # the class for its own UI (sine-wave's MicroSim Summary box), which is not teaching UI.
             r["panel"] = frame.locator(".xapi-panel .xapi-log").count()
             r["radios"] = frame.locator(".xapi-controls input[type=radio]").count()
+            r["frame_h"] = page.evaluate("document.querySelector('iframe#sim').clientHeight")
+            r["panel_bottom"] = frame.evaluate(
+                "(() => { const l = document.querySelector('.xapi-panel .xapi-log'); if (!l) return null;"
+                " const p = l.closest('.xapi-panel'); return Math.ceil(p.getBoundingClientRect().bottom + scrollY); })()")
             frame.evaluate(HIDE_TAB)
             frame.wait_for_timeout(400)
             r["post_flush"] = frame.evaluate("LRSLite.statements")
@@ -588,6 +613,15 @@ def main() -> int:
                 rep.add("WARN", "[compact] statements_represented ≈ Full's exposure statements",
                         f"represented {comp['represented']} vs Full interacted+experienced {n} "
                         "(page dwell counts once in Full only; hover timing can differ)")
+    url = results.get("url")
+    if url and "post_flush" in url:
+        rep.ok(url["panel"] >= 1, "[url] ?xapi=teaching turns the production sim into a teaching aid",
+               "no statement log appeared — is the runtime current (install-runtime.py --check)?")
+        if url["panel"] >= 1 and url["panel_bottom"] is not None:
+            rep.ok(url["frame_h"] >= url["panel_bottom"], "[url] the switched-on panel fits its iframe",
+                   f"panel ends at {url['panel_bottom']} px but the iframe is {url['frame_h']} px — a layout "
+                   "sized in vh/100% grows with its frame; pin it when the panel is present "
+                   "(body:has(> .xapi-panel) … { height: <px> })")
     if prod and "post_flush" in prod:
         rep.ok(prod["panel"] == 0 and prod["radios"] == 0, "[production] no teaching UI",
                f"{prod['panel']} statement log(s) / {prod['radios']} mode radio(s) rendered with teaching:false")
