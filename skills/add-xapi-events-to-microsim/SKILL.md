@@ -57,6 +57,11 @@ need only the standard library, except the two that drive a browser. Run those w
 - **Mode and teaching UI come from config, never from the sim.** The book's
   `docs/js/lrs-config.js` sets the default for every sim. A sim's `metadata.json` `xapi`
   block overrides it for that one sim. Production sims show nothing.
+- **Any instrumented sim can become a teaching aid for one visit.** A reader who adds
+  `?xapi=teaching` to the page that embeds the sim sees its statement log, with no file
+  edited. So a production sim's layout must still work with the panel showing. The
+  runtime grows the iframe to fit the panel, but a layout that fills its frame (100vh, or
+  html/body at 100%) defeats that. Pin such a layout while the panel is present.
 - **Never edit the runtime or a vendored library.** `docs/js/lrs-*.js` is identical in
   every book. A vendored file such as `shared-libs/diagram.js` is shared by many sims.
   Wrap functions and add listeners beside the originals instead. If the runtime truly
@@ -98,13 +103,13 @@ Open the matching adapter and read it before going further:
 | Library / shape | Adapter | Status |
 |---|---|---|
 | p5.js with `createSlider`/`createButton`/`createSelect`/… | `references/adapters/p5-dom-controls.md` | verified |
-| p5.js with canvas `mousePressed`/`mouseDragged` hit-tests | `references/adapters/p5-canvas.md` | click/predict piloted; drags **unverified** |
-| Mermaid flowchart (click-to-pin or hover infobox) | `references/adapters/mermaid-html.md` | verified (hover+pin); click-to-pin template piloted |
+| p5.js with canvas `mousePressed`/`mouseDragged` hit-tests | `references/adapters/p5-canvas.md` | click/predict verified; drags **unverified** |
+| Mermaid flowchart (click-to-pin or hover infobox) | `references/adapters/mermaid-html.md` | verified |
 | Image with hotspot markers/labels (image-overlay, diagram.js) | `references/adapters/image-overlay.md` | verified |
 | Chapter quiz page (`??? question` answers) | `references/adapters/quiz-page.md` | verified |
 | vis-network | `references/adapters/vis-network.md` | **unverified** |
 | vis-timeline | `references/adapters/vis-timeline.md` | **unverified** |
-| Chart.js | `references/adapters/chartjs.md` | piloted |
+| Chart.js | `references/adapters/chartjs.md` | verified |
 | Plotly | `references/adapters/plotly.md` | **unverified** |
 | Leaflet | `references/adapters/leaflet.md` | **unverified** |
 | Plain HTML/SVG controls | `references/adapters/mermaid-html.md` (same DOM-listener pattern) | verified |
@@ -195,6 +200,11 @@ user; don't pass `--force` on your own. Phase 3 will move this job into
    vendored library, put the instrumentation in a separate `xapi.js` (animal-cell).
 4. Clicks and mouse moves inside the xAPI panel must not reach the sim's own handlers,
    such as "click outside to unpin" or a follow-the-mouse infobox. Check for these.
+5. Make the layout tolerate the panel **even for a production sim**, because
+   `?xapi=teaching` can switch it on. Give the panel a place to go (`mount`). If the sim
+   fills its frame, add teaching-only CSS scoped to `body:has(> .xapi-panel)` that pins
+   the container to its production pixel height. See the Mermaid adapter's "Layout"
+   section. That CSS costs nothing in production, where no panel exists.
 
 Read `references/pitfalls.md` before you finish this step; every item on it was
 learned by shipping the bug.
@@ -226,7 +236,22 @@ Test). Each question takes the concept it tests (334, Kafka Unavailable Failure)
   `"compact": false, "teaching": true`, so they start on Full and show the log.
 - Policy keys and their meaning: `compact`, `teaching`, `idleMs`, `offscreenMs`,
   `blurMs`. The precedence, lowest first, is: runtime defaults < book `lrs-config.js`
-  `xapi` < page `policy` option < this block.
+  `xapi` < page `policy` option < this block < the URL switch `?xapi=` (one visit only).
+
+**Then mark the sim in the nav** (always, for every sim this skill instruments):
+
+```bash
+python3 $SKILL_DIR/scripts/sync-status.py --book . --apply
+```
+
+This sets `status: instrumented` in the `index.md` frontmatter of every sim whose
+`main.html` loads the runtime and whose code calls `LRSSim.create`. It marks that the
+capability is present, whether or not teaching is on. The nav shows the **signal icon**
+(the Material Design Icons "access-point" broadcast symbol, in teal). That icon is the
+standard for xAPI instrumentation in every book (Dan, 2026-09-26), so don't substitute
+another. If a book lacks the icon, `--apply` installs it by appending
+`assets/status-instrumented.css` to `docs/css/extra.css` and adding the tooltip under
+`mkdocs.yml` `extra.status`. The script never overwrites an `approved` sign-off.
 
 ### Step 8 — Re-measure the iframe height
 
@@ -269,8 +294,9 @@ uv run --with playwright==1.58.0 python $SKILL_DIR/scripts/check-xapi.py docs/si
 ```
 
 The script serves `docs/` and embeds the sim in an iframe the way the book does. It
-rewrites `metadata.json` in flight to Full, then Compact, then production, drives
-interactions, and asserts the contract:
+rewrites `metadata.json` in flight to Full, then Compact, then production. It then loads
+the production sim once more with `?xapi=teaching`, at its real `index.md` iframe height.
+In each mode it drives interactions and asserts the contract:
 
 - only the three verbs,
 - IRIs from the book's `siteUrl`, with no `main.html` and no localhost,
@@ -280,6 +306,7 @@ interactions, and asserts the contract:
   `statements_represented`,
 - answers passing through unfolded,
 - no teaching UI in production,
+- with `?xapi=teaching`, the panel appears and fits its iframe,
 - a clean console.
 
 Generic driving covers DOM sliders, selects, checkboxes and buttons. For canvas clicks,
@@ -324,5 +351,6 @@ Tell the user, briefly:
 | `scripts/detect-library.py` | Library from script tags, runtime status, vendored files, interaction inventory |
 | `scripts/find-concepts.py` | Candidate learning-graph concepts for a sim or search terms, with namespaced ids |
 | `scripts/install-runtime.py` | Check or install the runtime and `lrs-config.js` in a book |
-| `scripts/check-xapi.py` | Headless contract check of Full, Compact and production modes |
-| `scripts/measure-iframe.py` | Iframe height with a full log at 375/700/900 px |
+| `scripts/check-xapi.py` | Headless contract check of Full, Compact, production and `?xapi=teaching` modes |
+| `scripts/measure-iframe.py` | Iframe height with a full log at 375/700/900 px, every embed, the `CANVAS_HEIGHT` source |
+| `scripts/sync-status.py` | `status: instrumented` for each instrumented sim, plus the signal-icon CSS and tooltip if missing |

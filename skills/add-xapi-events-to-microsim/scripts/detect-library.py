@@ -56,8 +56,8 @@ ADAPTER = {
     "d3": "mermaid-html.md",
     "html": "mermaid-html.md",
 }
-VERIFIED = {"p5-dom-controls.md", "mermaid-html.md", "image-overlay.md", "quiz-page.md"}
-PILOTED = {"chartjs.md", "p5-canvas.md"}   # passed an eval pilot; verified once the pilot is committed
+VERIFIED = {"p5-dom-controls.md", "mermaid-html.md", "image-overlay.md", "quiz-page.md", "chartjs.md"}
+PILOTED = {"p5-canvas.md"}   # partly: click/predict verified, drags not yet
 
 RUNTIME = ["lrs-config.js", "lrs-xapi.js", "lrs-lite-sim.js", "lrs-sim.js", "xapi-json-viewer.js"]
 

@@ -1,10 +1,10 @@
 # Adapter: Chart.js
 
-**Status: PILOTED (2026-09-26).** The pilot, `3d-printing-course/docs/sims/fdm-price-history`
-(Chart.js 4.4.4 line chart, click a point to reveal an event, log/linear toggle), passed
-`check-xapi.py` 51/0/0 in the skill's first eval run. Its corrections are folded in below.
-The status becomes **VERIFIED** when that instrumented pilot lands in the 3d-printing-course
-repo. Until then it exists only in the eval workspace. There are 304 Chart.js sims in 63 repos.
+**Status: VERIFIED (2026-09-26).** Proven by `3d-printing-course/docs/sims/fdm-price-history`
+(commit `6d31ad6`): a Chart.js 4.4.4 line chart where a click on a point reveals an event,
+plus a log/linear toggle. It passes `check-xapi.py` in Full, Compact, production and
+`?xapi=teaching` modes. The pilot's corrections are folded in below; read that sim's JS
+for the full working code. There are 304 Chart.js sims in 63 repos.
 
 **Applies when:** `main.html` loads `chart.js` (usually `chart.umd.min.js`, v4).
 
@@ -101,8 +101,8 @@ window.addEventListener('pagehide', endVisit, true);
 ```
 
 On a touchscreen, a tap fires the tooltip and then the click, so the visit model yields
-exactly one `click`. The full pilot code is in the eval workspace until it lands in
-3d-printing-course.
+exactly one `click`. The full code is at the end of
+`3d-printing-course/docs/sims/fdm-price-history/fdm-price-history.js`.
 
 **Is hover the designed act?** On-screen text often names only the click ("Click a data
 point…"), while the tooltip reveals content too. The pilot counted both, as one engagement

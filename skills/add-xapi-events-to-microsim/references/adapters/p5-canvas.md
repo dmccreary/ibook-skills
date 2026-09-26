@@ -1,10 +1,10 @@
 # Adapter: p5.js canvas interactions (hit-tested clicks and drags)
 
-**Status: PARTLY PILOTED.**
-- **Canvas click-to-pick and predict → check** passed in the skill's first eval
-  (`learning-record-store/docs/sims/chaos-kill-test-simulator`, 2026-09-26: check-xapi
-  49/6/0, with state and pixels identical before and after). That run's corrections are
-  below.
+**Status: PARTLY VERIFIED.**
+- **Canvas click-to-pick and predict → check: VERIFIED.** Proven by
+  `learning-record-store/docs/sims/chaos-kill-test-simulator` (commit `a6c0062`; check-xapi
+  passes, with state and pixels identical before and after instrumenting). That run's
+  corrections are below.
 - **Drags remain UNVERIFIED.** Their pilot is
   `3d-printing-course/docs/sims/ideation-sketch-canvas` (`mouseDragged` hit-testing).
 

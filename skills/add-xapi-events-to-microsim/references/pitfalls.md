@@ -94,6 +94,13 @@ The microsim-generator Mermaid template does `e.stopPropagation()` in its node c
 handler. A delegated `document.addEventListener('click', …)` in the bubble phase never
 sees node clicks. Attach to the node itself, or listen in the capture phase (`true`).
 
+**A production sim can still show the panel.**
+`?xapi=teaching` on the embedding page turns it on for that visit, so every instrumented
+sim needs a `mount` that works and a layout that tolerates the panel. The runtime grows
+the iframe to fit. A layout that fills its frame (100vh, html/body at 100%) grows with
+the iframe instead, so the runtime stops and warns. Pin it with teaching-only CSS:
+`body:has(> .xapi-panel) <container> { height: <px> }`.
+
 **Re-measure iframe height after adding the panel, with a full log, at 700 px.**
 An empty-log screenshot underestimates by the log's max-height. Use
 `scripts/measure-iframe.py`, and don't shrink an iframe because an empty log fits.

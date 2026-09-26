@@ -3,9 +3,9 @@
 **Status: VERIFIED** for the hover-and-pin pattern:
 `learning-record-store/docs/sims/scientific-method/` (Mermaid 10, hover ≥ 600 ms + click
 to pin, page dwell). The **click-to-pin-only template** (below), the common
-microsim-generator shape, was **piloted** in the skill's first eval
-(`xapi-statement-triple`, Mermaid 11 ESM, teaching sim, 2026-09-26: check-xapi 51/0/0 at
-900 and 375 px). The skeleton below worked unchanged. The template's full-height layout
+microsim-generator shape, is **VERIFIED** too, by
+`learning-record-store/docs/sims/xapi-statement-triple` (Mermaid 11 ESM, teaching sim,
+commit `a6c0062`). The skeleton below worked unchanged. The template's full-height layout
 needed the recipe under "Layout".
 
 **Applies when:** `main.html` loads `mermaid` (classic `mermaid.min.js` or the ESM
@@ -118,7 +118,7 @@ container and give it its own full-width row in the sim's `style.css`. Don't tou
 
 If the container is not a flex row, mount on `body` (animal-cell) and skip the CSS.
 
-### The click-to-pin template fills the iframe, so make room (piloted)
+### The click-to-pin template fills the iframe, so make room (verified)
 
 The microsim-generator Mermaid template pins `html`, `body` and `.container` to 100% of
 the iframe with `overflow: hidden`. That leaves no room below the diagram, and a panel
@@ -139,8 +139,13 @@ body > .xapi-panel { margin: 10px; }
 ```
 
 Pick the `max-height` from the measured diagram at 700 px. `:has()` needs Chrome 105+,
-Safari 15.4+ or Firefox 121+. A production sim needs none of this, because it has no
-panel.
+Safari 15.4+ or Firefox 121+.
+
+**Add this CSS to production sims too.** A reader can switch any sim's panel on with
+`?xapi=teaching`, and this template fills its frame, so without the recipe the panel is
+clipped. The runtime detects that it can't grow the frame to fit, and `check-xapi.py`'s
+`url` mode fails. Because every rule is scoped to `body:has(> .xapi-panel)`, the CSS does
+nothing until the panel exists.
 
 ## Traps
 

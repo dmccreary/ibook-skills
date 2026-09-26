@@ -123,6 +123,28 @@ Run `mkdocs serve` and check:
 2. Hovering the dot shows the tooltip text
 3. Pages without `status:` show no dot (this is correct — no status means "not yet categorized" or "complete")
 
+## Standard status: `instrumented` (xAPI), with the signal icon
+
+A MicroSim that emits xAPI events gets `status: instrumented`. Its nav icon is **always** the
+"signal" icon: the Material Design Icons **access-point** broadcast symbol, in teal
+(`#00897b`). That icon is the standard for xAPI instrumentation in every book (Dan,
+2026-09-26), so don't substitute a dot or another glyph.
+
+- **Canonical CSS:** `skills/add-xapi-events-to-microsim/assets/status-instrumented.css`.
+  It is self-contained: the `--md-status--instrumented` mask variable plus the `:after` and
+  hover colors.
+- **Tooltip:** `extra.status.instrumented: "Instrumented — the MicroSim emits xAPI events;
+  add ?xapi=teaching to the URL to see them"`.
+- **Installed and kept in sync by** `add-xapi-events-to-microsim/scripts/sync-status.py
+  --book . --apply`. It sets the frontmatter on every sim whose `main.html` loads the xAPI
+  runtime (`lrs-sim.js`) and calls `LRSSim.create`, and it adds the CSS and tooltip if the
+  book lacks them.
+
+The lifecycle it extends is `specified → scaffolded → implemented → instrumented`. If a book
+also uses `implemented`, register it too. Otherwise Material shows its generic info icon
+with no tooltip, as the pages did in learning-record-store before 2026-09-26. There,
+`implemented` is a blue filled circle (`docs/css/extra.css`).
+
 ## How It Works
 
 MkDocs Material renders a `<span class="md-status md-status--{value}">` element next to nav entries when a page has `status:` in its frontmatter. The theme provides a default info-circle glyph. By registering the status in `extra.status`, the tooltip is set. By styling `.md-status--{key}::after`, you control the color.

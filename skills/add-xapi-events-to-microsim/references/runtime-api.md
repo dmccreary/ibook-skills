@@ -13,6 +13,7 @@ file.
 5. Instance methods and properties
 6. Constants, config, and concept ids
 7. The p5.js-editor guard
+8. The URL switch: `?xapi=teaching`
 
 ## 1. The script block and load order
 
@@ -263,3 +264,33 @@ speedSlider.input(() => { if (lrs) speedEvidence.input(speedSlider.value()); });
 ```
 
 In a non-p5 IIFE (a separate `xapi.js`), use `if (!window.LRSSim) return;` at the top.
+
+## 8. The URL switch: `?xapi=teaching`
+
+A reader's explicit request in the URL overrides every config layer for one visit. It is
+read from the sim's own URL **and**, inside an iframe, from the page that embeds it. So
+`?xapi=teaching` on a lesson or chapter page turns every instrumented sim on that page
+into a teaching aid, with no file edited (`urlPolicy()` in `lrs-lite-sim.js`).
+
+| Token | Effect |
+|---|---|
+| `teaching` | Shows the teaching panel. It starts on Full, like every teaching sim. |
+| `teaching,compact` | The same, starting on Compact. |
+| `full` / `compact` | Chooses the stream without the panel (read `LRSLite.statements`). |
+| `production` | Hides the panel on a teaching sim. |
+
+The full precedence, lowest first: runtime defaults < book `lrs-config.js` `xapi` < page
+`policy` option < sim `metadata.json` `xapi` < the URL switch.
+
+**Consequence for the wiring:** when only the URL turned the panel on
+(`policy.teachingFromUrl`), `lrs-sim.js` `_fitFrame()` grows the embedding iframe to fit
+the panel. It is same-origin and grow-only, and it follows both the log filling and
+content above the panel growing. A layout that fills its frame (100vh, html/body at 100%)
+grows with the iframe and would be chased forever. The runtime detects that, stops, and
+warns in the console. `check-xapi.py`'s `url` mode then fails with "the switched-on panel
+fits its iframe". The fix is teaching-only CSS that pins the container to its production
+height:
+
+```css
+body:has(> .xapi-panel) #network { height: 480px; }   /* was 100vh */
+```
