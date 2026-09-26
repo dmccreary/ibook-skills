@@ -1,0 +1,28 @@
+<!--
+  Paste into the sim's main.html. The <link> goes in <head>. The scripts go BEFORE the
+  sim's own script, in exactly this order. Paths are relative to docs/sims/<name>/main.html.
+  An iframe payload does not inherit mkdocs.yml extra_css / extra_javascript, so a sim must
+  link these itself.
+-->
+
+    <!-- The xAPI panel's look, shared with every sim and site page. -->
+    <link rel="stylesheet" href="../../css/lrs-xapi.css">
+
+    <!-- xAPI runtime (docs/js). The sim still runs without it, e.g. pasted into the p5.js editor.
+         lrs-config.js        this textbook's identity and default xAPI policy; loads first
+         lrs-xapi.js          builds every contract-v1 statement
+         lrs-lite-sim.js      compact (LRS-Lite) sessions and focus-loss detection
+         lrs-sim.js           the API the sim calls: evidence classes, statement log, teaching UI
+         xapi-json-viewer.js  opens a statement, formatted, in a new tab -->
+    <script src="../../js/lrs-config.js"></script>
+    <script src="../../js/lrs-xapi.js"></script>
+    <script src="../../js/lrs-lite-sim.js"></script>
+    <script src="../../js/lrs-sim.js"></script>
+    <script src="../../js/xapi-json-viewer.js"></script>
+
+<!--
+  p5 sims (and any sim whose panel should sit below the canvas): add this after <main></main>
+  and pass mount: '#xapi-slot' to LRSSim.create. It stays empty unless the config says
+  `teaching: true`.
+-->
+    <div id="xapi-slot"></div>

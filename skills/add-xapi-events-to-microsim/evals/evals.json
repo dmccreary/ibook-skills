@@ -1,0 +1,92 @@
+{
+  "skill_name": "add-xapi-events-to-microsim",
+  "notes": "Each eval runs against a trimmed COPY of the book (mkdocs.yml, docs/js, docs/css, docs/learning-graph, the target sim, and for learning-record-store the four verified sims) so runs never touch the real repos. Grade with scripts/check-xapi.py plus the eval's actions file, and the assertions below. Phase 1 plan: learning-record-store/TODO.md, P1.8.",
+  "evals": [
+    {
+      "id": 1,
+      "name": "chaos-kill-p5-prediction",
+      "book": "learning-record-store",
+      "sim": "docs/sims/chaos-kill-test-simulator",
+      "prompt": "Add xAPI events to the chaos kill test simulator (docs/sims/chaos-kill-test-simulator). It's a normal production MicroSim in the book, not one of the xAPI teaching demos.",
+      "expected_output": "p5 sim wired through LRSSim: the prediction is checked at Kill and emitted as an answered statement keyed by the service (q-<service>), success = prediction matches, response = the prediction; the service select and the Kill/Restore/Reset presses are exposure evidence; page dwell (no Run control); concept learning-record-store-353 (Chaos Kill Test) recorded in metadata.json xapi.concept/objects; no teaching policy keys; sim still runs without the runtime; check-xapi passes in Full, Compact and production.",
+      "files": [],
+      "actions": [
+        {"wait": 800},
+        {"click_at": "[12 + ((width - 24) / 3) * 0.5, 217]", "on": "canvas"},
+        {"select": "select", "option": "Kafka"},
+        {"click_at": "[12 + ((width - 24) / 3) * 0.5, 217]", "on": "canvas"},
+        {"click": "button", "text": "Kill"},
+        {"click": "button", "text": "Restore"},
+        {"select": "select", "option": "Neo4j"},
+        {"click_at": "[12 + ((width - 24) / 3) * 0.5, 217]", "on": "canvas"},
+        {"click": "button", "text": "Kill"}
+      ],
+      "assertions": [
+        "check-xapi.py reports 0 FAIL in full, compact and production modes",
+        "An answered statement is emitted when Kill checks a prediction, with boolean success and a response naming the prediction",
+        "The answered object's fragment names the service being predicted (q-<service>), not an ordinal",
+        "Answers pass through in Compact mode (answered statements appear before the flush)",
+        "Every emitted concept_id is namespaced learning-record-store-N and exists in the learning graph",
+        "metadata.json records xapi.concept and an xapi.objects map that matches the emitted concepts",
+        "metadata.json sets no teaching:true / compact:false (production sim)",
+        "The sim still runs with the xAPI runtime blocked (no page errors, canvas renders) — the p5.js editor guard",
+        "The shared runtime files in docs/js and docs/css are unchanged"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "mermaid-statement-triple-teaching",
+      "book": "learning-record-store",
+      "sim": "docs/sims/xapi-statement-triple",
+      "prompt": "The xapi-statement-triple diagram teaches the parts of an xAPI statement, so it should itself be a teaching sim: instrument it so clicking the parts emits xAPI statements and the reader can see the log and flip between Full and Compact.",
+      "expected_output": "Mermaid click-to-pin template instrumented from a separate script (or minimal edits): one interacted/Control per node click (#actor, #verb, #object, #result, #context) with concepts learning-record-store-9/10/11/13/14, page dwell with page concept learning-record-store-15 (Statement); metadata.json xapi {compact:false, teaching:true, concept, objects}; teaching panel mounted with its own full-width row and min-width:0; iframe height in index.md re-measured with a full log; index.md gains a section on what it emits.",
+      "files": [],
+      "actions": [
+        {"wait_for": ".mermaid .node"},
+        {"wait": 800},
+        {"click": ".mermaid .node", "text": "ACTOR"},
+        {"click": ".mermaid .node", "text": "VERB"},
+        {"click": ".mermaid .node", "text": "RESULT"},
+        {"click": ".mermaid .node", "text": "ACTOR"}
+      ],
+      "assertions": [
+        "check-xapi.py reports 0 FAIL in full, compact and production modes",
+        "Each node click emits one interacted statement on a Control whose fragment is the node's name (#actor, #verb, #result)",
+        "Node concepts are learning-record-store-9 (Actor), -10 (Verb), -13 (Result)",
+        "The page-level concept is a namespaced id in the learning graph (Statement, learning-record-store-15, expected)",
+        "metadata.json xapi block has compact:false and teaching:true plus concept/objects map",
+        "With teaching on, the statement log renders and the page has no horizontal overflow at 375 and 900 px",
+        "index.md iframe height is at least the measured content height with a full log at 700 px",
+        "index.md documents what the sim emits in Full and Compact mode",
+        "Clicking a node still shows its details in the info panel (sim behaviour preserved)"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "chartjs-fdm-price-other-book",
+      "book": "3d-printing-course",
+      "sim": "docs/sims/fdm-price-history",
+      "prompt": "can you make the FDM printer price history chart in the 3d printing book record what students do with it, so it can feed the learning record store? the book hasn't been set up for any of that yet",
+      "expected_output": "Runtime installed into the book (docs/js lrs-*.js, xapi-json-viewer.js, docs/css/lrs-xapi.css) plus a generated lrs-config.js with siteUrl https://dmccreary.github.io/3d-printing-course/ and conceptPrefix 3d-printing-course; Chart.js point clicks wrapped without breaking the infobox, keyed by year (not index); the log/linear toggle as a press; page dwell; concepts namespaced 3d-printing-course-N or explicitly left unmapped with a warning; production (no teaching UI); report flags the textbookId open decision.",
+      "files": [],
+      "actions": [
+        {"wait_for_js": "Chart.getChart('priceChart')"},
+        {"wait": 800},
+        {"click_at": "(() => { const p = Chart.getChart('priceChart').getDatasetMeta(0).data[8]; return [p.x, p.y]; })()", "on": "#priceChart"},
+        {"click": "button", "text": "Switch to Linear Scale"},
+        {"wait": 500},
+        {"click_at": "(() => { const p = Chart.getChart('priceChart').getDatasetMeta(0).data[3]; return [p.x, p.y]; })()", "on": "#priceChart"}
+      ],
+      "assertions": [
+        "The runtime files and a docs/js/lrs-config.js are present in the book, with siteUrl https://dmccreary.github.io/3d-printing-course/ and conceptPrefix 3d-printing-course",
+        "check-xapi.py reports 0 FAIL in full, compact and production modes",
+        "A data-point click emits one interacted statement whose fragment is keyed by the year/label, not the array index",
+        "The log/linear toggle emits an interacted press with an action",
+        "Every emitted concept_id is namespaced 3d-printing-course-N and exists in that book's learning graph (or the report explains an unmapped object)",
+        "Clicking a data point still reveals the event infobox (sim behaviour preserved)",
+        "No teaching UI in production (metadata.json does not set teaching:true)",
+        "The report mentions the open textbookId decision"
+      ]
+    }
+  ]
+}
