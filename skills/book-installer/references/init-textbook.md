@@ -468,15 +468,17 @@ sensibly:
 
 ## MicroSim Status Indicators
 
-Every scaffolded book ships with a colored status indicator wired into the
-left nav for `docs/sims/<sim>/index.md` pages. The vocabulary is fixed at
-three values and the indicator is glanceable at a distance:
+Every scaffolded book ships with a status indicator wired into the left nav for
+`docs/sims/<sim>/index.md` pages. The vocabulary is fixed at five values, and the
+indicator can be read at a glance:
 
-| Status     | Color  | Meaning                                            |
-|------------|--------|----------------------------------------------------|
-| `scaffold` | red    | Spec exists; no implementation yet.                |
-| `built`    | orange | Implementation exists; not yet reviewed by author. |
-| `approved` | green  | Author tested it and approved it for learners.     |
+| Status         | Icon                  | Meaning                                                        |
+|----------------|-----------------------|----------------------------------------------------------------|
+| `scaffold`     | red dot               | Spec exists; no implementation yet.                            |
+| `built`        | orange dot            | Implementation exists; not yet reviewed by author.             |
+| `implemented`  | blue dot              | The MicroSim works (the microsim-utils pipeline's name for it). |
+| `instrumented` | teal **signal** icon  | The MicroSim emits xAPI events (Full and Compact streams).      |
+| `approved`     | green check           | Author tested it and approved it for learners.                  |
 
 How to use the vocabulary:
 
@@ -487,18 +489,38 @@ How to use the vocabulary:
 - **`built`** — once a generator writes a real implementation (substantive
   HTML/JS in the sim directory, not just a placeholder), it should bump the
   status to `built`. The book author still needs to sign off.
+- **`implemented`** — the working-sim status that the microsim-utils pipeline
+  (`extract-sim-specs.py`, `generate-todo.py`) and most existing books use. Books
+  whose sims already say `implemented` need it registered. Otherwise Material shows
+  its generic "i in a circle" with no tooltip, which is what every such sim in
+  learning-record-store and 3d-printing-course showed until 2026-09-26.
+- **`instrumented`** — set by the `add-xapi-events-to-microsim` skill
+  (`scripts/sync-status.py --apply`) on every sim whose `main.html` loads the xAPI
+  runtime (`lrs-sim.js`) and whose code calls `LRSSim.create`. It marks that the
+  capability is present, whether or not the teaching panel is on; readers can show
+  it with `?xapi=teaching`.
+  - The icon is **always** the teal "signal" (Material Design Icons
+    `access-point`), the standard for xAPI instrumentation in every book.
+  - Don't swap it for a dot.
+  - Generators should never set `instrumented` by hand; the script derives it from
+    the code.
 - **`approved`** — the human author flips this manually after they've
   loaded the sim, exercised the controls, and confirmed the learning value.
-  Generators should never auto-advance to `approved`.
+  Generators should never auto-advance to `approved`, and `sync-status.py` never
+  overwrites it.
 
 The plumbing is already in place after `init-textbook` runs:
 
-- `mkdocs.yml` has `extra.status` declaring the three names with tooltip
-  text (Material won't render the indicator unless the name is registered
-  here).
-- `docs/css/extra.css` defines `--md-status--scaffold`, `--md-status--built`,
-  and `--md-status--approved` as CSS custom properties holding inline SVG
-  data URIs, plus the `:after` rules that paint them red/orange/green.
+- `mkdocs.yml` has `extra.status` declaring all five names with tooltip text.
+  Material won't render the indicator unless the name is registered here.
+- `docs/css/extra.css` defines a `--md-status--<name>` CSS custom property for each
+  name, holding an inline SVG data URI. Its `:after` rules paint them red, orange,
+  blue, teal and green, and its `:hover:after` rules use darker shades of the same
+  hues.
+
+For a book created **before** these five existed, run `add-xapi-events-to-microsim`'s
+`sync-status.py --apply` when its first sim is instrumented. It appends the
+`instrumented` CSS and tooltip if they're missing.
 
 **Do not add `theme.icon.status` to `mkdocs.yml`.** The Material docs make
 this look like the right knob for setting status icons; on the community
@@ -509,7 +531,7 @@ load-bearing piece. (This footgun cost an afternoon to track down on the
 xapi-course book — see `xapi-course/logs/microsim-status-icons.md` for the
 full incident report.)
 
-If a future book wants a fourth status (e.g. `in-review`) or different
+If a future book wants a sixth status (e.g. `in-review`) or different
 colors, the pattern is: add an `extra.status.<name>` entry to `mkdocs.yml`,
 and add a matching `--md-status--<name>` CSS variable + `.md-status--<name>:after`
 rule + `.md-status--<name>:hover:after` rule to `extra.css`. Keep the two

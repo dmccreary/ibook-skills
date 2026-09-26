@@ -147,7 +147,10 @@ extra:
 
   # MicroSim build-status indicators shown next to nav entries.
   # The status value is set per-page in the index.md frontmatter:
-  #   status: scaffold | built | approved
+  #   status: scaffold | built | implemented | instrumented | approved
+  # `instrumented` = the sim carries xAPI event handling (main.html loads lrs-sim.js and
+  # the code calls LRSSim.create); the add-xapi-events-to-microsim skill's
+  # scripts/sync-status.py sets it. Its icon is always the teal "signal" (MDI access-point).
   # Colors are defined as CSS custom properties in docs/css/extra.css.
   # Note: `theme.icon.status` is a Material Insiders feature and is silently
   # ignored on community Material. Do not add it — the CSS-variable approach
@@ -155,6 +158,8 @@ extra:
   status:
     scaffold: Scaffold — placeholder, not yet implemented
     built: Built — implementation complete, awaiting review
+    implemented: Implemented — the MicroSim works
+    instrumented: Instrumented — the MicroSim emits xAPI events; add ?xapi=teaching to the URL to see them
     approved: Approved — tested and approved
 
   # Intelligent-textbook URI scheme (see

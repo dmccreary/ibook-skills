@@ -73,6 +73,11 @@
   --md-status--built: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"/></svg>');
   /* Check-circle (Material Design Icons "check-circle") */
   --md-status--approved: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M11,16.5L18,9.5L16.59,8.09L11,13.67L7.91,10.59L6.5,12L11,16.5Z"/></svg>');
+  /* Filled circle, like scaffold/built: the sim works */
+  --md-status--implemented: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2Z"/></svg>');
+  /* Signal (Material Design Icons "access-point"): the sim emits xAPI events. The standard
+     xAPI-instrumentation icon in every book; do not substitute another glyph. */
+  --md-status--instrumented: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.93,4.93C3.12,6.74 2,9.24 2,12C2,14.76 3.12,17.26 4.93,19.07L6.34,17.66C4.89,16.22 4,14.22 4,12C4,9.79 4.89,7.78 6.34,6.34L4.93,4.93M19.07,4.93L17.66,6.34C19.11,7.78 20,9.79 20,12C20,14.22 19.11,16.22 17.66,17.66L19.07,19.07C20.88,17.26 22,14.76 22,12C22,9.24 20.88,6.74 19.07,4.93M7.76,7.76C6.67,8.85 6,10.35 6,12C6,13.65 6.67,15.15 7.76,16.24L9.17,14.83C8.45,14.11 8,13.11 8,12C8,10.89 8.45,9.89 9.17,9.17L7.76,7.76M16.24,7.76L14.83,9.17C15.55,9.89 16,10.89 16,12C16,13.11 15.55,14.11 14.83,14.83L16.24,16.24C17.33,15.15 18,13.65 18,12C18,10.35 17.33,8.85 16.24,7.76M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z"/></svg>');
 }
 
 .md-status--scaffold:after {
@@ -90,6 +95,16 @@
   -webkit-mask-image: var(--md-status--approved);
           mask-image: var(--md-status--approved);
 }
+.md-status--implemented:after {
+  background-color: #1976d2; /* blue — implemented, the sim works */
+  -webkit-mask-image: var(--md-status--implemented);
+          mask-image: var(--md-status--implemented);
+}
+.md-status--instrumented:after {
+  background-color: #00897b; /* teal — instrumented, emits xAPI events */
+  -webkit-mask-image: var(--md-status--instrumented);
+          mask-image: var(--md-status--instrumented);
+}
 
 /* Material's default :hover rule swaps the background to currentcolor (the
    nav text color) which would erase our reds/oranges/greens. Pin the hover
@@ -99,3 +114,5 @@
 .md-status--scaffold:hover:after { background-color: #b71c1c; }
 .md-status--built:hover:after    { background-color: #ef6c00; }
 .md-status--approved:hover:after { background-color: #1b5e20; }
+.md-status--implemented:hover:after  { background-color: #1565c0; }
+.md-status--instrumented:hover:after { background-color: #00695c; }
