@@ -235,7 +235,14 @@ uv run --with playwright==1.58.0 python $SKILL_DIR/scripts/measure-iframe.py doc
 ```
 
 A teaching sim gains a panel, so its iframe must grow. The script measures a **full**
-log at 375, 700 and 900 px and recommends a height. It measures the state after load. If
+log at 375, 700 and 900 px and recommends a height from the **700 px** measurement.
+
+**Size for the laptop column, not the phone.** On the published site the content column
+is 690–760 px on laptops and tablets. About 90% of the target students use laptops, and
+phones are often banned in US junior-high and high schools. The ~20% mobile traffic in
+the logs is mostly browsing the text, not using the sims (Dan, 2026-09-26). A sim that is
+taller at 375 px may scroll or clip on a phone; that's accepted. Mention it in the report,
+but don't grow the iframe for it unless the user asks. It measures the state after load. If
 the sim is taller in another state (quiz mode, an open detail panel), put it there first
 with `--eval "sim.setMode('quiz')"`. An empty-log screenshot is not a measurement.
 
