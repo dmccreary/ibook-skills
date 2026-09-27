@@ -63,4 +63,16 @@ def on_post_page(html, page, config, **kwargs):
             new_tag = f'<meta {attr}="twitter:image" content="{full_image_url}">'
             html = html.replace(tag, new_tag)
 
+    # The social plugin's cards are PNGs, so it always says image/png.
+    # Make og:image:type match the custom image instead (a .jpg photo
+    # would otherwise be announced as a PNG).
+    image_types = {'.png': 'image/png', '.jpg': 'image/jpeg',
+                   '.jpeg': 'image/jpeg', '.gif': 'image/gif',
+                   '.webp': 'image/webp'}
+    extension = '.' + image_path.rsplit('.', 1)[-1].lower()
+    if extension in image_types:
+        html = re.sub(r'<meta\s+property="og:image:type"[^>]*?>',
+                      f'<meta property="og:image:type" '
+                      f'content="{image_types[extension]}">', html)
+
     return html
