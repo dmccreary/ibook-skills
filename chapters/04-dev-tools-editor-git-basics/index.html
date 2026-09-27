@@ -18,8 +18,11 @@
         <link rel="next" href="../05-mkdocs-deployment-analytics/">
       
       
+        
+      
+      
       <link rel="icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -27,10 +30,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -43,7 +46,7 @@
       
         
         
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
@@ -69,34 +72,20 @@
 
     
     
-      
-        <meta property="og:type" content="website">
-      
-        <meta property="og:title" content="Development Tools: Editor, Terminal, and Git Basics - Agent Skills for Intelligent Textbooks">
-      
-        <meta property="og:description" content="Sets up Visual Studio Code, the integrated terminal, Git version control fundamentals, and the first MkDocs site configuration.">
-      
-        <meta property="og:image" content="https://dmccreary.github.io/ibook-skills/assets/images/social/chapters/04-dev-tools-editor-git-basics/index.png">
-      
-        <meta property="og:image:type" content="image/png">
-      
-        <meta property="og:image:width" content="1200">
-      
-        <meta property="og:image:height" content="630">
-      
-        <meta property="og:url" content="https://dmccreary.github.io/ibook-skills/chapters/04-dev-tools-editor-git-basics/">
-      
-        <meta name="twitter:card" content="summary_large_image">
-      
-        <meta name="twitter:title" content="Development Tools: Editor, Terminal, and Git Basics - Agent Skills for Intelligent Textbooks">
-      
-        <meta name="twitter:description" content="Sets up Visual Studio Code, the integrated terminal, Git version control fundamentals, and the first MkDocs site configuration.">
-      
-        <meta name="twitter:image" content="https://dmccreary.github.io/ibook-skills/assets/images/social/chapters/04-dev-tools-editor-git-basics/index.png">
-      
-    
-    
-  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  
+<meta property="og:type" content="website">
+<meta property="og:title" content="Development Tools: Editor, Terminal, and Git Basics - Agent Skills for Intelligent Textbooks">
+<meta property="og:description" content="Sets up Visual Studio Code, the integrated terminal, Git version control fundamentals, and the first MkDocs site configuration.">
+<meta property="og:image" content="https://dmccreary.github.io/ibook-skills/assets/images/social/chapters/04-dev-tools-editor-git-basics/index.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://dmccreary.github.io/ibook-skills/chapters/04-dev-tools-editor-git-basics/">
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:title" content="Development Tools: Editor, Terminal, and Git Basics - Agent Skills for Intelligent Textbooks">
+<meta property="twitter:description" content="Sets up Visual Studio Code, the integrated terminal, Git version control fundamentals, and the first MkDocs site configuration.">
+<meta property="twitter:image" content="https://dmccreary.github.io/ibook-skills/assets/images/social/chapters/04-dev-tools-editor-git-basics/index.png">
+<link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -170,15 +159,17 @@
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
       <label class="md-search__icon md-icon" for="__search">
         
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
@@ -195,7 +186,7 @@
       
     </form>
     <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
         <div class="md-search-result" data-md-component="search-result">
           <div class="md-search-result__meta">
             Initializing search
@@ -206,13 +197,14 @@
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
         <a href="https://github.com/dmccreary/ibook-skills" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
   </div>
   <div class="md-source__repository">
     GitHub Repo
@@ -257,7 +249,7 @@
       <a href="https://github.com/dmccreary/ibook-skills" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
   </div>
   <div class="md-source__repository">
     GitHub Repo
@@ -265,7 +257,7 @@
 </a>
     </div>
   
-  <ul class="md-nav__list" data-md-scrollfix>
+  <ul class="md-nav__list" data-md-scrollfix="">
     
       
       
@@ -277,9 +269,16 @@
       <a href="../.." class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Home
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -297,9 +296,16 @@
       <a href="../../about/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     About
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -317,9 +323,16 @@
       <a href="../../course-description/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Course Description
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -337,9 +350,16 @@
       <a href="../../getting-started/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Getting Started
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -363,145 +383,76 @@
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
-        
       
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
+    
     
     
     
@@ -511,17 +462,23 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked="">
         
-          
           
           <div class="md-nav__link md-nav__container">
             <a href="../" class="md-nav__link ">
               
   
+  
   <span class="md-ellipsis">
+    
+  
     Chapters
+  
+
+    
   </span>
+  
   
 
             </a>
@@ -536,9 +493,13 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
-            Chapters
+            
+  
+    Chapters
+  
+
           </label>
-          <ul class="md-nav__list" data-md-scrollfix>
+          <ul class="md-nav__list" data-md-scrollfix="">
             
               
             
@@ -552,9 +513,16 @@
       <a href="../01-foundations-ai-language-models/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     1. Foundations of AI, Language Models, and Prompting
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -573,9 +541,16 @@
       <a href="../02-ai-agents-textbook-intelligence/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     2. AI Coding Agents and the Five Levels of Textbook Intelligence
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -594,9 +569,16 @@
       <a href="../03-python-fundamentals-automation/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     3. Python Fundamentals for Skill Automation
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -624,9 +606,16 @@
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
+  
   <span class="md-ellipsis">
+    
+  
     4. Development Tools: Editor, Terminal, and Git Basics
+  
+
+    
   </span>
+  
   
 
           <span class="md-nav__icon md-icon"></span>
@@ -635,9 +624,16 @@
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     4. Development Tools: Editor, Terminal, and Git Basics
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -655,12 +651,14 @@
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
   <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary
+      
+        Summary
+      
     </span>
   </a>
   
@@ -669,7 +667,9 @@
         <li class="md-nav__item">
   <a href="#concepts-covered" class="md-nav__link">
     <span class="md-ellipsis">
-      Concepts Covered
+      
+        Concepts Covered
+      
     </span>
   </a>
   
@@ -678,7 +678,9 @@
         <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      
+        Prerequisites
+      
     </span>
   </a>
   
@@ -687,7 +689,9 @@
         <li class="md-nav__item">
   <a href="#your-editor-visual-studio-code" class="md-nav__link">
     <span class="md-ellipsis">
-      Your Editor: Visual Studio Code
+      
+        Your Editor: Visual Studio Code
+      
     </span>
   </a>
   
@@ -697,7 +701,9 @@
           <li class="md-nav__item">
   <a href="#diagram-vs-code-interface-layout-for-textbook-development" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: VS Code Interface Layout for Textbook Development
+      
+        Diagram: VS Code Interface Layout for Textbook Development
+      
     </span>
   </a>
   
@@ -706,7 +712,9 @@
           <li class="md-nav__item">
   <a href="#diagram-command-line-interface-basics" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Command-Line Interface Basics
+      
+        Diagram: Command-Line Interface Basics
+      
     </span>
   </a>
   
@@ -720,7 +728,9 @@
         <li class="md-nav__item">
   <a href="#version-control-with-git" class="md-nav__link">
     <span class="md-ellipsis">
-      Version Control with Git
+      
+        Version Control with Git
+      
     </span>
   </a>
   
@@ -730,7 +740,9 @@
           <li class="md-nav__item">
   <a href="#diagram-git-branching-and-merging" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Git Branching and Merging
+      
+        Diagram: Git Branching and Merging
+      
     </span>
   </a>
   
@@ -744,7 +756,9 @@
         <li class="md-nav__item">
   <a href="#connecting-to-github" class="md-nav__link">
     <span class="md-ellipsis">
-      Connecting to GitHub
+      
+        Connecting to GitHub
+      
     </span>
   </a>
   
@@ -753,7 +767,9 @@
         <li class="md-nav__item">
   <a href="#building-your-site-with-mkdocs" class="md-nav__link">
     <span class="md-ellipsis">
-      Building Your Site with MkDocs
+      
+        Building Your Site with MkDocs
+      
     </span>
   </a>
   
@@ -763,7 +779,9 @@
           <li class="md-nav__item">
   <a href="#diagram-mkdocs-build-process-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: MkDocs Build Process Workflow
+      
+        Diagram: MkDocs Build Process Workflow
+      
     </span>
   </a>
   
@@ -777,7 +795,9 @@
         <li class="md-nav__item">
   <a href="#navigation-and-search" class="md-nav__link">
     <span class="md-ellipsis">
-      Navigation and Search
+      
+        Navigation and Search
+      
     </span>
   </a>
   
@@ -786,7 +806,9 @@
         <li class="md-nav__item">
   <a href="#one-more-formatting-rule-blank-lines-before-lists" class="md-nav__link">
     <span class="md-ellipsis">
-      One More Formatting Rule: Blank Lines Before Lists
+      
+        One More Formatting Rule: Blank Lines Before Lists
+      
     </span>
   </a>
   
@@ -795,7 +817,9 @@
         <li class="md-nav__item">
   <a href="#key-takeaways" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Takeaways
+      
+        Key Takeaways
+      
     </span>
   </a>
   
@@ -820,9 +844,16 @@
       <a href="../05-mkdocs-deployment-analytics/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     5. MkDocs Site Features, Deployment, and Analytics
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -841,9 +872,16 @@
       <a href="../06-agent-skill-fundamentals/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     6. Agent Skill Fundamentals
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -862,9 +900,16 @@
       <a href="../07-progressive-disclosure-meta-skills/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     7. Progressive Disclosure and Meta-Skill Routing
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -883,9 +928,16 @@
       <a href="../08-token-budgets-usage-limits/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     8. Token Budgets and Usage Limits
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -904,9 +956,16 @@
       <a href="../09-measuring-optimizing-tokens/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     9. Measuring and Optimizing Token Usage
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -925,9 +984,16 @@
       <a href="../10-building-testing-portable-skills/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     10. Building and Testing Portable Skills
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -946,9 +1012,16 @@
       <a href="../11-distributing-skills-commands/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     11. Distributing Skills and Building Commands
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -967,9 +1040,16 @@
       <a href="../12-writing-course-description/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     12. Writing a Course Description
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -988,9 +1068,16 @@
       <a href="../13-blooms-taxonomy-instructional-design/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     13. Bloom's Taxonomy and Instructional Design
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1009,9 +1096,16 @@
       <a href="../14-learning-graphs-concept-enumeration/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     14. Learning Graphs and Concept Enumeration
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1030,9 +1124,16 @@
       <a href="../15-learning-graph-formats-taxonomy/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     15. Learning Graph Data Formats and Taxonomy
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1051,9 +1152,16 @@
       <a href="../16-learning-graph-quality-validation/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     16. Learning Graph Quality Validation
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1072,9 +1180,16 @@
       <a href="../17-chapter-structure-content-elements/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     17. Chapter Structure and Content Elements
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1093,9 +1208,16 @@
       <a href="../18-chapter-content-quality-review/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     18. Chapter Content Quality and Review
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1114,9 +1236,16 @@
       <a href="../19-faqs-curated-references/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     19. FAQs and Curated References
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1135,9 +1264,16 @@
       <a href="../20-glossaries-and-quizzes/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     20. Glossaries and Quizzes
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1156,9 +1292,16 @@
       <a href="../21-microsim-anatomy-p5js-basics/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     21. MicroSim Anatomy and p5.js Basics
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1177,9 +1320,16 @@
       <a href="../22-p5js-controls-microsim-quality/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     22. p5.js Controls and MicroSim Quality
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1198,9 +1348,16 @@
       <a href="../23-microsim-generator-metadata-schema/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     23. The MicroSim Generator and Metadata Schema
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1219,9 +1376,16 @@
       <a href="../24-visualization-libraries-systems-diagrams/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     24. Visualization Libraries and Systems Diagrams
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1240,9 +1404,16 @@
       <a href="../25-verified-infographic-pipeline/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     25. Text-to-Image Models and the Verified Infographic Pipeline
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1261,9 +1432,16 @@
       <a href="../26-interactive-infographic-overlays/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     26. Interactive Infographic Overlays
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1282,9 +1460,16 @@
       <a href="../27-slide-decks-stories-audio-media/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     27. Slide Decks, Stories, and Audio Media
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1303,9 +1488,16 @@
       <a href="../28-domain-specific-skill-extension/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     28. Domain-Specific Skill Extension: Electronics Case Study
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1324,9 +1516,16 @@
       <a href="../29-book-installer-features/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     29. Book Installer Features
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1345,9 +1544,16 @@
       <a href="../30-session-logs-book-metrics/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     30. Session Logs and Book Metrics
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1366,9 +1572,16 @@
       <a href="../31-publishing-announcing-book/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     31. Publishing and Announcing a Finished Book
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1387,9 +1600,16 @@
       <a href="../appendix-a-claude-on-pi/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Appendix A - Claude on Raspberry Pi
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1408,9 +1628,16 @@
       <a href="../appendix-b-claude-on-wsl/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Appendix B - Claude on WSL
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1429,9 +1656,16 @@
       <a href="../appendix-c-user-global-claude/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Appendix C - User Global Claude
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1450,9 +1684,16 @@
       <a href="../appendix-d-parallel-execution/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Appendix D - Parallel Execution
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1490,6 +1731,7 @@
     
     
     
+    
       
         
         
@@ -1498,14 +1740,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../skill-descriptions/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Skill Descriptions
+  
+
+    
   </span>
+  
   
 
       
@@ -1533,381 +1783,194 @@
         
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
         
       
+    
     
     
     
@@ -1919,14 +1982,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../sims/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     MicroSims
+  
+
+    
   </span>
+  
   
 
       
@@ -1954,9 +2025,8 @@
         
       
         
-          
-        
       
+    
     
     
     
@@ -1968,14 +2038,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../slides/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Slides
+  
+
+    
   </span>
+  
   
 
       
@@ -2041,6 +2119,7 @@
     
     
     
+    
       
         
         
@@ -2049,14 +2128,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../learning-graph/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Learning Graph
+  
+
+    
   </span>
+  
   
 
       
@@ -2160,6 +2247,7 @@
     
     
     
+    
       
         
         
@@ -2168,14 +2256,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../prompts/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Prompts
+  
+
+    
   </span>
+  
   
 
       
@@ -2215,6 +2311,7 @@
     
     
     
+    
       
         
         
@@ -2225,12 +2322,20 @@
         
   
   
+  
     <a href="../../workshops/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Workshops
+  
+
+    
   </span>
+  
   
 
       
@@ -2254,9 +2359,16 @@
       <a href="../../consolidation-plan/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Consolidation Plan
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -2280,13 +2392,12 @@
         
       
         
-          
-        
       
         
       
         
       
+    
     
     
     
@@ -2300,12 +2411,20 @@
         
   
   
+  
     <a href="../../appendices/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Appendices
+  
+
+    
   </span>
+  
   
 
       
@@ -2329,9 +2448,16 @@
       <a href="../../glossary/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Glossary
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -2349,9 +2475,16 @@
       <a href="../../faq/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     FAQ
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -2369,9 +2502,16 @@
       <a href="../../references/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     References
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -2389,9 +2529,16 @@
       <a href="../../license/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     License
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -2409,9 +2556,16 @@
       <a href="../../contact/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Contact
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -2443,12 +2597,14 @@
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
   <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary
+      
+        Summary
+      
     </span>
   </a>
   
@@ -2457,7 +2613,9 @@
         <li class="md-nav__item">
   <a href="#concepts-covered" class="md-nav__link">
     <span class="md-ellipsis">
-      Concepts Covered
+      
+        Concepts Covered
+      
     </span>
   </a>
   
@@ -2466,7 +2624,9 @@
         <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      
+        Prerequisites
+      
     </span>
   </a>
   
@@ -2475,7 +2635,9 @@
         <li class="md-nav__item">
   <a href="#your-editor-visual-studio-code" class="md-nav__link">
     <span class="md-ellipsis">
-      Your Editor: Visual Studio Code
+      
+        Your Editor: Visual Studio Code
+      
     </span>
   </a>
   
@@ -2485,7 +2647,9 @@
           <li class="md-nav__item">
   <a href="#diagram-vs-code-interface-layout-for-textbook-development" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: VS Code Interface Layout for Textbook Development
+      
+        Diagram: VS Code Interface Layout for Textbook Development
+      
     </span>
   </a>
   
@@ -2494,7 +2658,9 @@
           <li class="md-nav__item">
   <a href="#diagram-command-line-interface-basics" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Command-Line Interface Basics
+      
+        Diagram: Command-Line Interface Basics
+      
     </span>
   </a>
   
@@ -2508,7 +2674,9 @@
         <li class="md-nav__item">
   <a href="#version-control-with-git" class="md-nav__link">
     <span class="md-ellipsis">
-      Version Control with Git
+      
+        Version Control with Git
+      
     </span>
   </a>
   
@@ -2518,7 +2686,9 @@
           <li class="md-nav__item">
   <a href="#diagram-git-branching-and-merging" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Git Branching and Merging
+      
+        Diagram: Git Branching and Merging
+      
     </span>
   </a>
   
@@ -2532,7 +2702,9 @@
         <li class="md-nav__item">
   <a href="#connecting-to-github" class="md-nav__link">
     <span class="md-ellipsis">
-      Connecting to GitHub
+      
+        Connecting to GitHub
+      
     </span>
   </a>
   
@@ -2541,7 +2713,9 @@
         <li class="md-nav__item">
   <a href="#building-your-site-with-mkdocs" class="md-nav__link">
     <span class="md-ellipsis">
-      Building Your Site with MkDocs
+      
+        Building Your Site with MkDocs
+      
     </span>
   </a>
   
@@ -2551,7 +2725,9 @@
           <li class="md-nav__item">
   <a href="#diagram-mkdocs-build-process-workflow" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: MkDocs Build Process Workflow
+      
+        Diagram: MkDocs Build Process Workflow
+      
     </span>
   </a>
   
@@ -2565,7 +2741,9 @@
         <li class="md-nav__item">
   <a href="#navigation-and-search" class="md-nav__link">
     <span class="md-ellipsis">
-      Navigation and Search
+      
+        Navigation and Search
+      
     </span>
   </a>
   
@@ -2574,7 +2752,9 @@
         <li class="md-nav__item">
   <a href="#one-more-formatting-rule-blank-lines-before-lists" class="md-nav__link">
     <span class="md-ellipsis">
-      One More Formatting Rule: Blank Lines Before Lists
+      
+        One More Formatting Rule: Blank Lines Before Lists
+      
     </span>
   </a>
   
@@ -2583,7 +2763,9 @@
         <li class="md-nav__item">
   <a href="#key-takeaways" class="md-nav__link">
     <span class="md-ellipsis">
-      Key Takeaways
+      
+        Key Takeaways
+      
     </span>
   </a>
   
@@ -2599,12 +2781,62 @@
           
           
             <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
               <article class="md-content__inner md-typeset">
                 
                   
 
+
   
-    <a href="https://github.com/dmccreary/ibook-skills/blob/main/docs/chapters/04-dev-tools-editor-git-basics/index.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/dmccreary/ibook-skills/blob/main/docs/chapters/04-dev-tools-editor-git-basics/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"></path></svg>
     </a>
@@ -2801,7 +3033,7 @@ Editor, terminal, version control, and a site generator — that's the full tool
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
-          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
   Back to top
@@ -2872,10 +3104,13 @@ Editor, terminal, version control, and a site generator — that's the full tool
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
         <script src="../../js/extra.js"></script>
       
