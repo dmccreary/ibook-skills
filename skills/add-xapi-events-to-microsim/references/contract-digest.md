@@ -53,6 +53,13 @@ are short in code (`value`, `engagement-mode`) and qualified to
   hides. It ignores scroll-away and idle, which Compact mode does watch. A chart halfway
   down a 40-minute chapter can therefore be credited with 40 minutes. This is a runtime fix,
   not a per-sim one: still set `pageDwell: true`, and don't work around it in adapter code.
+- **A Compact visit made only of answers emits no summary** (found 2026-09-26 in
+  `eight-hour-entrepreneur/docs/sims/symptom-root-cause-drilldown`). `lrs-lite-sim.js` opens a
+  session only on a folded interaction (`touch`/`run`), and `question().answer()` folds
+  nothing. So a student who answers every question and touches nothing else leaves their
+  `answered` statements but no `experienced` summary, and therefore no time on the sim. This
+  is a runtime fix (for example, let an answer open the session without counting it in
+  `statements_represented`). Don't add a dummy touch in adapter code to force a summary.
 - **`textbookId` form is undecided across books.** `lrs-config.js` says `lrs` in the
   LRS book, while the seeder uses `tb-{repo-slug}`. `install-runtime.py` defaults a new
   book's `textbookId` to the repo slug and says so. Flag it; don't resolve it inside a

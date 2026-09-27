@@ -64,12 +64,30 @@ handle that can. Emit every attempt, wrong ones included.
 **Paused by default is load-bearing.**
 A sim that auto-runs emits dwell the student never chose to spend. If a sim starts
 running on load, flag it to the user rather than wiring a runner that starts at load.
+Confirm the detector's flag by reading the code. Until 2026-09-26 it flagged any
+`running = true`, including one inside the Start button's handler (a false positive on
+two-minute-pitch-structure-timer). It now flags only load-time assignments.
+
+**Clicking, stepping and arrow keys onto the same object are one act.**
+When Next/Previous or an arrow key selects the same objects a click does, report one
+inspection of the newly shown object (`'click'`/`'step'`/`'keyboard'`), never an
+inspection *plus* a Next press. Report only when the selection changes. The sim's
+load-time selection, and the program moving on by itself (a timer entering the next
+section), are not evidence (p5-canvas.md, "Stepping").
+
+**A worked example's check is not an answer.**
+If the sim shows the right reading *before* the student chooses (a "Load Priya's
+Evidence" worked example with its verdict on screen), a Check on it is a peek, as in
+`quiz-xapi.js`. Emit a press plus an `lrs.note`, not an `answered`. The sim itself usually
+leaves it out of its own score, which confirms it (persevere-vs-pivot-signal-checker).
 
 ## Runtime and environment
 
 **p5 sims must still run pasted into the p5.js editor.**
 Guard every call on the runtime existing (`if (lrs)`, `if (window.LRSSim)`). An unguarded
 `lrs.slider(...)` throws `ReferenceError` there and the sketch never draws.
+`scripts/check-no-runtime.py` loads each sim with the runtime blocked and fails on exactly
+this, so run it rather than trusting a read-through.
 
 **Teaching controls are HTML in the shared panel, never on a p5 canvas.**
 They are not MicroSim controls, so the p5 builtin-controls rule doesn't apply. On the
@@ -88,6 +106,18 @@ Check every `document`/`window`/`body` listener the sim registers. Exclude
 `.xapi-panel`, for example
 `if (e.target.closest && e.target.closest('.xapi-panel')) return;`, in a wrapper, not
 by editing a vendored file.
+
+**Keys typed inside the xAPI panel reach global key handlers too.**
+p5's global `keyPressed()` and any `document` `keydown` listener fire for keys pressed in
+the panel. Its Full/Compact radios take arrow keys, so every sim that steps on arrow keys
+stepped when the student switched the xAPI mode. Five sims needed the guard in one
+20-sim batch. p5 1.11 passes the KeyboardEvent to `keyPressed(e)`: return early when
+`e.target.closest('.xapi-panel')` matches.
+
+**vis-timeline blanks if the frame resizes during its first draw.**
+A resize within about 100 ms of `new vis.Timeline(...)` leaves 7.7.3 invisible for the
+whole visit. The runtime's iframe growth for the teaching panel causes exactly that
+resize. Create `LRSSim` in the timeline's `onInitialDrawComplete` (vis-timeline.md).
 
 **Template handlers that call `stopPropagation()` hide clicks from bubbling listeners.**
 The microsim-generator Mermaid template does `e.stopPropagation()` in its node click

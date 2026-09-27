@@ -57,9 +57,69 @@ ADAPTER = {
     "html": "mermaid-html.md",
 }
 VERIFIED = {"p5-dom-controls.md", "mermaid-html.md", "image-overlay.md", "quiz-page.md", "chartjs.md"}
-PILOTED = {"p5-canvas.md"}   # partly: click/predict verified, drags not yet
+PILOTED = {"p5-canvas.md",     # partly: click/predict and click/step explorers verified, drags not yet
+           "vis-timeline.md"}  # partly: item click/hover/step verified (2026-09-26), zoom/pan not yet
 
 RUNTIME = ["lrs-config.js", "lrs-xapi.js", "lrs-lite-sim.js", "lrs-sim.js", "xapi-json-viewer.js"]
+
+# Only an assignment that runs at LOAD time is an auto-run: at the top level, in setup()/preload(),
+# or in a DOMContentLoaded/load callback. The same assignment in a Start button's handler is the
+# paused-by-default standard working (two-minute-pitch-structure-timer, 2026-09-26: a false positive).
+AUTO_RUN = "auto-run on load (isRunning = true at load time)"
+LOAD_SCOPES = {"<top>", "<onload>", "setup", "preload"}
+NOT_FUNCTIONS = {"if", "for", "while", "switch", "catch", "with", "return", "else", "do", "try", "finally"}
+
+
+def scoped_segments(lines: list[str]) -> list[tuple[int, str, str]]:
+    """Split code at braces into (line_no, text, scope), where scope is the innermost enclosing
+    function: its name, '<top>' outside any function, '<onload>' for a DOMContentLoaded/load
+    callback, or '<anon>' for any other anonymous one. String literals are blanked first (so a
+    brace in a string is not a scope), except the two load-event names the classifier needs.
+    A heuristic brace tracker, not a parser: good enough to tell setup() from a click handler."""
+    keep = {"DOMContentLoaded", "load"}
+    code_lines = [re.sub(r"'[^'\n]*'|\"[^\"\n]*\"|`[^`\n]*`",
+                         lambda m: m.group(0) if m.group(0)[1:-1] in keep else "''", ln) for ln in lines]
+    stack: list[str | None] = []      # one entry per open brace: a function scope, or None (a block)
+    pending = ""                      # statement text since the last ; { or }, for the next brace
+    out: list[tuple[int, str, str]] = []
+
+    def current() -> str:
+        return next((s for s in reversed(stack) if s is not None), "<top>")
+
+    def classify(head: str) -> str | None:
+        head = head.strip()
+        m = re.search(r"\bfunction\s+(\w+)\s*\([^()]*\)\s*$", head)
+        if m:
+            return m.group(1)
+        m = re.search(r"\b(?:const|let|var)\s+(\w+)\s*=\s*(?:async\s+)?(?:function\b[^{]*|\([^()]*\)\s*=>|\w+\s*=>)\s*$", head)
+        if m:
+            return m.group(1)
+        if re.search(r"(?:\bfunction\s*\([^()]*\)|=>)\s*$", head):
+            return "<onload>" if re.search(r"DOMContentLoaded|['\"]load['\"]|\bonload\b", head) else "<anon>"
+        m = re.search(r"(?:^|[\s,{])(\w+)\s*\([^()]*\)\s*$", head)     # method shorthand: setup() {
+        if m and m.group(1) not in NOT_FUNCTIONS:
+            return m.group(1)
+        return None
+
+    for n, line in enumerate(code_lines, 1):
+        line = re.sub(r"//.*", "", line)
+        seg = ""
+        for ch in line:
+            if ch == "{":
+                out.append((n, seg, current()))
+                stack.append(classify(pending + seg))
+                seg, pending = "", ""
+            elif ch == "}":
+                out.append((n, seg, current()))
+                if stack:
+                    stack.pop()
+                seg, pending = "", ""
+            else:
+                seg += ch
+        out.append((n, seg, current()))
+        pending = "" if seg.rstrip().endswith(";") else pending + seg + " "
+    return out
+
 
 # Interaction hooks worth knowing about, per family. Each is (label, regex).
 HOOKS = [
@@ -76,7 +136,7 @@ HOOKS = [
     ("p5 canvas doubleClicked", r"^\s*function\s+doubleClicked\s*\("),
     ("p5 keyPressed", r"^\s*function\s+keyPressed\s*\("),
     ("p5 touchStarted", r"^\s*function\s+touchStarted\s*\("),
-    ("auto-run on load (isRunning = true / loop without pause)", r"\b(isRunning|running|playing)\s*=\s*true\s*;"),
+    (AUTO_RUN, r"\b(isRunning|running|playing)\s*=\s*true\s*;"),
     ("DOM listener", r"addEventListener\(\s*['\"](click|mouseenter|mouseleave|mouseover|mouseout|pointerenter|pointerleave|input|change|keydown|wheel|dblclick)['\"]"),
     ("DOM on* property", r"\.on(click|mouseenter|mouseleave|mouseover|mouseout|input|change)\s*="),
     ("stopPropagation (bubbling listeners will miss these)", r"stopPropagation\s*\("),
@@ -221,10 +281,14 @@ def inspect(sim: Path) -> dict[str, object]:
         # Answer logic is code, not prose: match it with string literals blanked out, so the
         # word "score" in a node's description is not reported as quiz logic.
         code_only = [re.sub(r"'[^'\n]*'|\"[^\"\n]*\"|`[^`\n]*`", "''", ln) for ln in lines]
+        segments = scoped_segments(lines)
         for label, pattern in HOOKS:
             rx = re.compile(pattern, re.MULTILINE)
-            src_lines = code_only if label.startswith("quiz") else lines
-            hits = [i + 1 for i, line in enumerate(src_lines) if rx.search(line)]
+            if label == AUTO_RUN:
+                hits = sorted({n for n, seg, scope in segments if scope in LOAD_SCOPES and rx.search(seg)})
+            else:
+                src_lines = code_only if label.startswith("quiz") else lines
+                hits = [i + 1 for i, line in enumerate(src_lines) if rx.search(line)]
             if hits:
                 hooks.append({"file": f.name, "hook": label, "lines": hits[:12], "count": len(hits)})
                 if label.startswith("p5 canvas"):

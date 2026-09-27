@@ -76,6 +76,14 @@ The most common modelling error is emitting twice for one engagement.
   tablet users and discard laptop users for the identical act.
 - **Marker and label for one thing are one object.** Track the hover interval per
   *thing*, not per element, so moving from a marker to its label doesn't emit twice.
+- **Click, Next/Previous and arrow keys onto the same object are one act.** When stepping
+  controls select the same objects a click does, report one inspection of the newly shown
+  object with mode `'click'`, `'step'` or `'keyboard'`, and no Next/Previous press on top.
+  Report only when the selection changes. The sim's load-time selection, and the program
+  moving on by itself (a timer entering the next section), are not evidence. The
+  eight-hour-entrepreneur batch (2026-09-26) used this in ten explorers across p5, Chart.js
+  and vis-timeline. A press-only model would give a student who only ever pressed Next no
+  per-object evidence at all.
 
 ## Explore vs. quiz on the same objects
 

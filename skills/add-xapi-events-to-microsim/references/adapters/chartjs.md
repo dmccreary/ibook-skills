@@ -6,6 +6,21 @@ plus a log/linear toggle. It passes `check-xapi.py` in Full, Compact, production
 `?xapi=teaching` modes. The pilot's corrections are folded in below; read that sim's JS
 for the full working code. There are 304 Chart.js sims in 63 repos.
 
+Also confirmed on Chart.js 4.4.0 by `eight-hour-entrepreneur/docs/sims/distribution-channel-map`
+(commit `e2c3b94`): a scatter of channels where a click, a ≥ 600 ms tooltip hover, Previous/Next
+or an arrow key selects a channel, plus a "Compare with" select. Two notes from it:
+
+- **Registering the hover plugin.** Push the `afterEvent` plugin onto `chart.config.plugins`
+  *before* the sim's own first `chart.update()` (for example, before its load-time
+  `selectChannel(0)`), and that update activates it. No extra `update('none')` is needed, and
+  skipping it keeps the sim's first selection animation intact.
+- **Selection by several paths is one act.** Report a click, Previous/Next and arrow keys as one
+  inspection of the newly selected point, with mode `'click'`/`'step'`/`'keyboard'` (see
+  p5-canvas.md, "Stepping"). Report only when the selection changes, and never report the
+  sim's load-time selection. A `document` `keydown` listener needs the `.xapi-panel` guard.
+  detect-library's "quiz / answer logic" hit there was a false positive: `score`/`bestScore`
+  in label-placement code.
+
 **Applies when:** `main.html` loads `chart.js` (usually `chart.umd.min.js`, v4).
 
 ## Getting the chart instance

@@ -2,13 +2,14 @@
 name: add-xapi-events-to-microsim
 description: Use when the user wants an existing MicroSim or chapter quiz to record what students do with it. Typical requests are "add xAPI events", "add tracking or analytics", "make this sim feed the LRS or LRS-Lite", "instrument chapter 5's sims", or "what should this sim record?". Use it even if they never say "xAPI". Not for building a new MicroSim (use microsim-generator) or for LRS backend work.
 metadata:
-  ibook.version: "0.1"
+  ibook.version: "0.2"
   ibook.preferred-model: "opus"
 ---
 
 # Add xAPI Events to a MicroSim
 
-**Version:** 0.1 (Phase 1 draft, 2026-09-26)
+**Version:** 0.2 (2026-09-26). This version folds in the lessons of the first whole-book
+batch, the 20 sims of eight-hour-entrepreneur.
 
 ## What this skill does
 
@@ -68,6 +69,7 @@ need only the standard library, except the two that drive a browser. Run those w
   lacks something, use `lrs.emit(spec)`, or stop and tell the user.
 - **The sim must still run without the runtime.** Teachers paste p5 sketches into the
   p5.js editor. Guard every call site with `if (window.LRSSim)` or a null `lrs`.
+  `scripts/check-no-runtime.py` proves it (step 9).
 
 ## Workflow
 
@@ -84,6 +86,24 @@ is the rendered quiz page; go straight to `references/adapters/quiz-page.md`.
 
 For a batch request ("instrument chapter 5's sims"), handle one sim at a time and keep
 a running table of results. Finish and verify each sim before starting the next.
+
+**A whole book at once** (proven on the 20 sims of `eight-hour-entrepreneur`, 2026-09-26)
+can use parallel subagents, one per group of sims that share a library or template. Split the
+work this way:
+
+- **The coordinator does the per-book steps, once:**
+  - `install-runtime.py` (step 5), before any worker starts.
+  - One sim wired and verified by hand, as the in-book reference the workers copy.
+  - At the end: `sync-status.py --apply` (step 7), `check-no-runtime.py` over the whole
+    book, `mkdocs build --strict`, and a fresh `check-xapi.py` run of every sim with its
+    actions file.
+- **Workers do steps 1–4, 6, the metadata half of step 7, and step 9 for their own sims
+  only.** They must not touch `mkdocs.yml`, `extra.css`, `docs/js/`, chapter files, `status:`
+  or git. `check-xapi.py` and `measure-iframe.py` each serve on a random port, so they run
+  safely side by side.
+- **Relay findings between workers.** One worker's discovery often applies to another's sims.
+  For example, the `keyPressed` panel guard in p5-canvas.md was found by one worker and
+  needed by two others.
 
 ### Step 1 — Detect the library (from script tags, not the catalog)
 
@@ -103,12 +123,12 @@ Open the matching adapter and read it before going further:
 | Library / shape | Adapter | Status |
 |---|---|---|
 | p5.js with `createSlider`/`createButton`/`createSelect`/… | `references/adapters/p5-dom-controls.md` | verified |
-| p5.js with canvas `mousePressed`/`mouseDragged` hit-tests | `references/adapters/p5-canvas.md` | click/predict verified; drags **unverified** |
+| p5.js with canvas `mousePressed`/`mouseDragged` hit-tests | `references/adapters/p5-canvas.md` | click/predict and click/step/keyboard explorers verified; canvas hover piloted; drags **unverified** |
 | Mermaid flowchart (click-to-pin or hover infobox) | `references/adapters/mermaid-html.md` | verified |
 | Image with hotspot markers/labels (image-overlay, diagram.js) | `references/adapters/image-overlay.md` | verified |
 | Chapter quiz page (`??? question` answers) | `references/adapters/quiz-page.md` | verified |
 | vis-network | `references/adapters/vis-network.md` | **unverified** |
-| vis-timeline | `references/adapters/vis-timeline.md` | **unverified** |
+| vis-timeline | `references/adapters/vis-timeline.md` | item click/hover/step verified; zoom/pan **unverified** |
 | Chart.js | `references/adapters/chartjs.md` | verified |
 | Plotly | `references/adapters/plotly.md` | **unverified** |
 | Leaflet | `references/adapters/leaflet.md` | **unverified** |
@@ -253,6 +273,11 @@ another. If a book lacks the icon, `--apply` installs it by appending
 `assets/status-instrumented.css` to `docs/css/extra.css` and adding the tooltip under
 `mkdocs.yml` `extra.status`. The script never overwrites an `approved` sign-off.
 
+If the book's `AGENTS.md` (or `CLAUDE.md`) lists the allowed `status:` values, usually
+`scaffold | built | approved`, add `instrumented` to that list, along with the comment
+above `extra.status` in `mkdocs.yml`. Otherwise the next agent that follows those rules may
+"fix" the new status back to `built`.
+
 ### Step 8 — Re-measure the iframe height
 
 ```bash
@@ -315,6 +340,26 @@ hovers, chart points or graph nodes, write a small actions file. The format is i
 not in the book, unless the user wants it. Iterate until every check passes. Report any
 warning you decide to accept, and why.
 
+Some actions cover cases that are easy to miss:
+- `type` sends real keystrokes into a text box, then commits them.
+- `"leave": false` on a hover keeps the pointer in place, so a following `click_at` is the
+  same visit.
+- Action selectors skip the teaching panel's own controls; add `"panel": true` to target
+  them deliberately.
+
+Drive every evidence class you wired. Full mode must show each one at least once, which
+is the positive control that makes the other checks mean something.
+
+Then prove the sim still runs with no runtime at all (the p5.js-editor case). The script
+blocks the five runtime scripts, loads the sim, clicks its buttons, and fails on any
+uncaught error:
+
+```bash
+uv run --with playwright==1.58.0 python $SKILL_DIR/scripts/check-no-runtime.py --book . <sim-name> ...
+```
+
+With no sim names it checks every instrumented sim in the book.
+
 ### Step 10 — Lesson text (teaching sims only)
 
 For a sim that teaches xAPI, add a section to `index.md` that lists what it emits in
@@ -354,3 +399,4 @@ Tell the user, briefly:
 | `scripts/check-xapi.py` | Headless contract check of Full, Compact, production and `?xapi=teaching` modes |
 | `scripts/measure-iframe.py` | Iframe height with a full log at 375/700/900 px, every embed, the `CANVAS_HEIGHT` source |
 | `scripts/sync-status.py` | `status: instrumented` for each instrumented sim, plus the signal-icon CSS and tooltip if missing |
+| `scripts/check-no-runtime.py` | Each sim still renders and runs, error-free, with the xAPI runtime blocked (the p5.js-editor case) |

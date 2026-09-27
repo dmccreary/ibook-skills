@@ -5,6 +5,13 @@
   `learning-record-store/docs/sims/chaos-kill-test-simulator` (commit `a6c0062`; check-xapi
   passes, with state and pixels identical before and after instrumenting). That run's
   corrections are below.
+- **Click-to-inspect with Next/Previous/arrow-key stepping, and a canvas-drawn trail or
+  answer buttons: VERIFIED.** Proven by seven sims in `eight-hour-entrepreneur` (commit
+  `e2c3b94`): competitive-landscape-map, costarters-canvas-explorer, customer-definition-funnel,
+  four-phase-founder-pipeline, idea-trap-cycle, two-minute-pitch-structure-timer and
+  symptom-root-cause-drilldown. That batch's corrections are the "Stepping", "Keyboard" and
+  "Hover on drawn targets" sections below.
+- **Hover on canvas-drawn targets: PILOTED** in the same batch (idea-trap-cycle's arrows).
 - **Drags remain UNVERIFIED.** Their pilot is
   `3d-printing-course/docs/sims/ideation-sketch-canvas` (`mouseDragged` hit-testing).
 
@@ -87,6 +94,65 @@ if (key !== lastChecked) {                  // a double-click / Restore→Kill r
   key contradicted chapter 19, so correct students would score `success: false`. Both eval
   runs caught it. Report such a key; don't silently fix or silently ship it.
 
+## Stepping: one selection, one statement (verified)
+
+Many explorers let the student reach the same objects three ways: click a drawn block, press
+Next/Previous, or press an arrow key. All three are the same act (bringing an object into the
+detail panel), so report **one class-2 inspection of the newly shown object**, and let
+`engagement-mode` record the path: `'click'`, `'step'` (a Next/Previous button) or
+`'keyboard'`. Don't *also* press a `#next-button`; that counts one selection twice. The
+eight-hour-entrepreneur batch used this model in six sims. A press-only model would give a
+student who only ever pressed Next no per-object evidence at all.
+
+- Report only when the selection **changes**. Re-clicking the selected block, or pressing Next
+  at the last step, is not new evidence.
+- The selection the sim makes **on load** (a first item pre-selected) is not a student act. Nor
+  is the program moving on by itself: a timer crossing into the next section, or Start jumping
+  to the section the clock is in.
+- Route it through one function: give the sim's select function an optional `how` argument and
+  report inside it (`selectBlock(i, how)`, emitting only when `how` is set). The load-time call
+  passes nothing, so it emits nothing.
+- **A function registered with `btn.mousePressed(fn)` receives the MouseEvent as its first
+  argument.** If you add an optional `mode` parameter to `nextBlock(mode)`, a button press
+  passes the event, not `undefined`. Normalize it: `const how = typeof mode === 'string' ? mode : 'step';`.
+
+## Keyboard: guard `keyPressed` against the panel (verified)
+
+The global `keyPressed()` fires for keys pressed **anywhere** in the page, including inside
+the teaching panel. The panel's Full/Compact radios take arrow keys, so a sim that steps on
+arrow keys also steps when the student changes the xAPI mode. In p5 1.11 the global
+`keyPressed` receives the KeyboardEvent, so guard it at the top:
+
+```js
+function keyPressed(e) {
+  if (e && e.target && e.target.closest && e.target.closest('.xapi-panel')) return;   // the panel's own keys
+  ...the sim's existing body...
+}
+```
+
+The same applies to `keyReleased`/`keyTyped` and to a DOM `document.addEventListener('keydown', …)`.
+In production the panel doesn't exist, so the guard never fires there.
+
+## Hover on canvas-drawn targets (piloted)
+
+When the design reveals something on hover (idea-trap-cycle: "hover over (or tap) an arrow"),
+track the hover per **visit**, gated by `LRSSim.HOVER_MS`, as for DOM hovers. A canvas has one
+extra trap. **p5 keeps `mouseX`/`mouseY` after the pointer leaves the canvas**, so a
+hover key computed in `draw()` never "leaves": the target stays hovered, the dwell grows
+forever, and the sim's own tooltip even stays drawn. End the visit on the canvas's own
+`mouseleave` as well:
+
+```js
+canvas.elt.addEventListener('mouseleave', endHoverVisit);   // NOT canvas.mouseOut(fn): p5 hooks replace
+```
+
+- Compute the hovered target in `draw()` (or `mouseMoved()`) with the sim's own hit-test; when
+  it changes, end the old visit (emit `study('hover', ms)` if ms ≥ `HOVER_MS`) and start a new
+  one.
+- A click or tap on the same target **during** the visit reports `study('click', msSoFar)` at
+  once and suppresses that visit's hover. A second click in the same visit emits nothing.
+- A quick sweep across several targets must emit **0** statements. Test it.
+
 ## Continuous drags
 
 `mouseDragged()` fires once per frame (about 60/s). Feed the value to a `slider` handle,
@@ -122,3 +188,17 @@ them the way the sketch does. It's often easiest to evaluate the sketch's own ge
 `click_at` also accepts a JS expression string that returns `[x, y]`, evaluated in the
 frame, e.g.
 `"[12 + ((width - 24) / 3) * 1.5, 217]"` for the middle of the second of three buttons.
+
+`click_at` moves and clicks in one step, so on its own it tests only the tap path. To test
+"hover, then click in the same visit", hover without leaving and click the same point:
+
+```json
+[
+  {"hover_at": "[loopGeom.cx, loopGeom.cy - loopGeom.r]", "on": "canvas", "ms": 700, "leave": false},
+  {"click_at": "[loopGeom.cx, loopGeom.cy - loopGeom.r]", "on": "canvas"}
+]
+```
+
+That should give one `click` statement with the dwell so far, and no `hover` (verified on
+idea-trap-cycle: one `click`, `PT0.72S`). A `key` action goes to whatever has focus, so it
+reaches the sim's `keyPressed` only after a `click`/`click_at` inside the sim's frame.

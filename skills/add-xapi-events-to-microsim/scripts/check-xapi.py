@@ -40,13 +40,21 @@ DRIVING
     {"slider": "input[type=range]", "nth": 0, "values": [5, 7, 9]}   input events, then change
     {"select": "select", "nth": 0, "option": "Kafka"}  by label (or "value": "...")
     {"check": "input[type=checkbox]", "nth": 0}     click a checkbox
+    {"type": "input[type=text]", "nth": 0, "value": "abc", "then": "blur"}   real keystrokes, then
+                                                    "blur" (default), "Enter", or null to stay in the box
     {"click_at": [x, y], "on": "canvas"}            click at an offset from the element's top-left;
     {"click_at": "<js expr returning [x, y]>", "on": "#chart"}   the offset may be computed in the frame
     {"hover_at": [x, y], "on": "canvas", "ms": 800}
+    {"hover_at": [x, y], "on": "canvas", "ms": 800, "leave": false}   stay put, so a following
+                                                    click_at at the same point is the SAME visit
     {"drag": [[x1, y1], [x2, y2]], "on": "canvas", "steps": 12}
     {"wheel": ".vis-timeline", "delta": -400}        mouse wheel over an element
     {"key": "ArrowRight"}
     {"eval": "sim.markers.get(sim.data.callouts[0].id).click()"}   any expression in the sim frame
+
+  Selectors never match inside the teaching panel (in teaching modes it sits in #xapi-slot,
+  which comes BEFORE p5-created controls in the DOM, so "button" nth 0 would otherwise be the
+  panel's own control). Add "panel": true to an action to target the panel deliberately.
 
 Exit status: 0 all checks pass (warnings allowed), 1 any FAIL, 2 setup error.
 """
@@ -90,6 +98,9 @@ SET_SLIDER = """([el, values]) => {
 }"""
 
 IN_PANEL = "el => !!(el.closest && el.closest('.xapi-panel'))"
+# Every element outside the teaching panel; action selectors are intersected with it (Locator.and_).
+NOT_IN_PANEL = ("xpath=//*[not(ancestor-or-self::*[contains(concat(' ', normalize-space(@class), ' '),"
+                " ' xapi-panel ')])]")
 
 
 # ------------------------------------------------------------------------------ setup ----
@@ -153,8 +164,10 @@ class Driver:
         self.page, self.frame, self.timeout = page, frame, timeout_ms
         self.log: list[str] = []
 
-    def _loc(self, sel: str, text: str | None = None, nth: int = 0) -> Any:
+    def _loc(self, sel: str, text: str | None = None, nth: int = 0, panel: bool = False) -> Any:
         loc = self.frame.locator(sel)
+        if not panel:
+            loc = loc.and_(self.frame.locator(NOT_IN_PANEL))
         if text:
             loc = loc.filter(has_text=text)
         return loc.nth(nth)
@@ -173,6 +186,7 @@ class Driver:
     def action(self, a: dict[str, Any]) -> None:
         f, pg, t = self.frame, self.page, self.timeout
         nth = int(a.get("nth", 0))
+        panel = bool(a.get("panel", False))
         if "wait" in a:
             f.wait_for_timeout(int(a["wait"]))
         elif "wait_for" in a:
@@ -182,22 +196,34 @@ class Driver:
         elif "eval" in a:
             f.evaluate(a["eval"])
         elif "click" in a:
-            self._loc(a["click"], a.get("text"), nth).click(timeout=t)
+            self._loc(a["click"], a.get("text"), nth, panel).click(timeout=t)
         elif "check" in a:
-            self._loc(a["check"], a.get("text"), nth).click(timeout=t)
+            self._loc(a["check"], a.get("text"), nth, panel).click(timeout=t)
         elif "hover" in a:
-            self._loc(a["hover"], a.get("text"), nth).hover(timeout=t)
+            self._loc(a["hover"], a.get("text"), nth, panel).hover(timeout=t)
             f.wait_for_timeout(int(a.get("ms", 800)))
-            self._off()
+            if a.get("leave", True):
+                self._off()
         elif "slider" in a:
-            el = self._loc(a["slider"], None, nth).element_handle(timeout=t)
+            el = self._loc(a["slider"], None, nth, panel).element_handle(timeout=t)
             f.evaluate(SET_SLIDER, [el, a["values"]])
         elif "select" in a:
-            loc = self._loc(a["select"], None, nth)
+            loc = self._loc(a["select"], None, nth, panel)
             if "option" in a:
                 loc.select_option(label=a["option"], timeout=t)
             else:
                 loc.select_option(value=a["value"], timeout=t)
+        elif "type" in a:
+            # Real keystrokes, so the sim's own input handlers fire per character. Then commit
+            # the way a student does: leaving the box (blur) or Enter; both fire `change`.
+            loc = self._loc(a["type"], None, nth, panel)
+            loc.click(timeout=t)
+            loc.press_sequentially(str(a.get("value", "")), delay=20, timeout=t)
+            then = a.get("then", "blur")
+            if then == "blur":
+                loc.blur(timeout=t)
+            elif then:
+                loc.press(str(then), timeout=t)
         elif "click_at" in a:
             x, y = self._offset(a["click_at"], a.get("on", "canvas"))
             pg.mouse.click(x, y)
@@ -205,7 +231,8 @@ class Driver:
             x, y = self._offset(a["hover_at"], a.get("on", "canvas"))
             pg.mouse.move(x, y)
             f.wait_for_timeout(int(a.get("ms", 800)))
-            self._off()
+            if a.get("leave", True):
+                self._off()
         elif "drag" in a:
             (x1, y1), (x2, y2) = a["drag"]
             sx, sy = self._offset([x1, y1], a.get("on", "canvas"))

@@ -2,7 +2,10 @@
 
 **Status: VERIFIED.** Proven by `learning-record-store/docs/sims/bouncing-ball/` (slider +
 Start/Pause) and `docs/sims/sine-wave/` (three sliders). Both are covered by
-`tests/test_microsim_compact_xapi.py`.
+`tests/test_microsim_compact_xapi.py`. A 20-sim batch in `eight-hour-entrepreneur`
+(commit `e2c3b94`) confirmed it and added the free-text input, preset-button and checkbox
+rows below: card-sorting quizzes, a decision tree, four-slider and one-slider calculators, a
+select-and-type builder, and a checkbox signal checker.
 
 **Applies when:** `main.html` loads `p5.js`, and the sketch creates controls with
 `createSlider`, `createButton`, `createSelect`, `createCheckbox`, `createRadio` or
@@ -23,6 +26,35 @@ to the sim's existing callback, or wrap that callback:
 | `createCheckbox` | `.changed(fn)` | 3a (a toggle action) | `press(cb.checked() ? 'on' : 'off')` |
 | `createRadio` | `.changed(fn)` | 2 or 3a | as select |
 | `createInput` (numeric) | `.input(fn)` / `.changed(fn)` | 1 | slider handle with `min`/`max` |
+| `createInput` (free text: the student writes their own words) | `.changed(fn)` (Enter or leaving the box) | 3a | `press(box.value().trim() ? 'write' : 'erase')`. **Never record the typed text**; it can be personal. |
+| A button that checks the student's choice (Check, a Yes/No at a decision node) | `.mousePressed(fn)` | 5 | `question(key).answer({success, response, …})`, every attempt |
+| A preset/Load/Reset button that **moves a slider in code** | `.mousePressed(fn)` | 3a | `press('load'|'reset')`, then re-create that slider's handle (below) |
+
+**A free-text box.** The press says only that the student committed wording, and whether the
+box is now empty. Report it only while the box is actually in use (for example, while its
+dropdown still says "Write your own"). A Load or Clear that hides a focused box fires
+`change` too, and that isn't the student writing. The sim's own `.input(fn)` keeps running
+untouched. `.changed` is usually free: check that the sim hasn't registered one.
+
+**A slider moved in code** (`slider.value(40)` from Load Jordan's Numbers, or Reset to 0)
+fires no `input` event, so the handle's last value, and with it the next move's
+`previous-value`, is stale. Re-create the handle with `initial` = the slider's value now:
+
+```js
+function makeSliderEvidence() {       // call once in setup, and again after every preset
+  priceEv = lrs.slider('price-per-sale-slider', { name: 'Price per Sale Slider', concept: c,
+    min: Number(priceSlider.elt.min), max: Number(priceSlider.elt.max),
+    initial: Number(priceSlider.elt.value), round: 0 });
+}
+```
+
+This is safe: a handle is a plain object holding the last value, with nothing registered, and
+Compact folds by **key**, so the new handle keeps counting into the same control. Any
+unreported pending reversal on the old handle is dropped, which is acceptable.
+
+**Checkboxes.** A p5 checkbox's `.changed(fn)` handler receives the DOM event, so one shared
+handler can tell which box fired from `e.target`. Checking a box in code (`cb.checked(true)`,
+when loading a scenario) fires no `change`, so it correctly emits nothing.
 
 **p5 element hooks replace; they don't chain.** `.mousePressed()`, `.input()`,
 `.changed()`, `.mouseOver()` and the rest all go through `p5.Element._adjustListener`.
@@ -91,6 +123,16 @@ function.
   and only for teaching sims.
 - Values: `slider.value()` is already in display units for most sims. Where the sketch
   rescales (pixels, radians shown as degrees), report the displayed value (`round:`).
+- **`btn.mousePressed(fn)` calls `fn` with the MouseEvent as its first argument.** If you
+  give an existing handler an optional parameter (`nextStep(how)`), a button press passes the
+  event, not `undefined`. Normalize it: `typeof how === 'string' ? how : 'step'`.
+- When one function serves two purposes (the sim's `resetPath()` is called by the Reset button
+  *and* by `changeScenario()`), press inside a wrapper on the button only:
+  `resetButton.mousePressed(() => { resetPath(); if (lrs) resetEv.press('reset'); });`. That
+  is still one listener. Pressing inside `resetPath()` would report every scenario change as a
+  Reset.
+- Card-sorting quizzes that reshuffle on Try Again: key each card by a short `id:` added to
+  its data item (`q-pay-for-convenience`), never by its position or its full text.
 
 ## check-xapi actions
 
@@ -106,3 +148,17 @@ Start/Pause sim, make sure a run lasts longer than 250 ms:
   {"click": "button", "text": "Pause"}
 ]
 ```
+
+For a free-text box, `type` sends real keystrokes and then leaves the box, which fires
+`change`:
+
+```json
+[
+  {"select": "select", "nth": 2, "option": "Write your own"},
+  {"type": "input[type=text]", "nth": 2, "value": "my own words"}
+]
+```
+
+Action selectors skip the teaching panel's own controls. In teaching modes `#xapi-slot`
+comes before the p5-created buttons in the DOM, so a bare `"button"` with `nth: 0` would
+otherwise hit the panel. Add `"panel": true` only to target the panel on purpose.
