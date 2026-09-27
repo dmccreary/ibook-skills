@@ -610,16 +610,27 @@ def main() -> int:
         new = post[len(pre):]
         summaries = [s for s in new if is_summary(s)]
         others = [verb(s) for s in new if not is_summary(s)]
-        if full and "post_flush" in full and any(verb(s) != "answered" for s in full["post_flush"]):
+        # Any student evidence, answers included, opens the compact session, so the flush must
+        # emit exactly one summary. Before the 2026-09-26 runtime fix an answer never opened it,
+        # and an answers-only visit ended with no summary and lost its time on the sim.
+        if full and "post_flush" in full and any(verb(s) in ("interacted", "answered")
+                                                 for s in full["post_flush"]):
             rep.ok(len(summaries) == 1, "[compact] exactly one summary on focus loss",
-                   f"{len(summaries)} summaries after the flush")
+                   f"{len(summaries)} summaries after the flush — if the drive gave only answers, the "
+                   "book's lrs-lite-sim.js/lrs-sim.js may predate the answers-open-the-session fix "
+                   "(install-runtime.py --check)")
         rep.ok(not others, "[compact] the flush emits only the summary", f"also emitted: {others}")
+        answered_in_compact = any(verb(s) == "answered" for s in post)
         for s in summaries:
             ctx_ext = s.get("context", {}).get("extensions", {})
             rep_n = ctx_ext.get(EXT + "statements_represented")
             ext = s.get("result", {}).get("extensions", {})
-            rep.ok(isinstance(rep_n, int) and rep_n >= 1, "[compact] summary carries statements_represented",
-                   f"statements_represented = {rep_n!r}")
+            # 0 is honest only for a session whose sole evidence was answers: they opened the
+            # session but are never folded into it. A 0 with no answers is a summary of nothing.
+            rep.ok(isinstance(rep_n, int) and (rep_n >= 1 or (rep_n == 0 and answered_in_compact)),
+                   "[compact] summary carries statements_represented",
+                   f"statements_represented = {rep_n!r}"
+                   + (" with no answers in the session" if rep_n == 0 else ""))
             rep.ok(s["object"]["id"] == page_iri and otype(s) == "MicroSim",
                    "[compact] summary object is the page, typed MicroSim", s["object"]["id"])
             rep.ok(bool(ext.get(EXT + "end_reason")), "[compact] summary carries end_reason", "missing")

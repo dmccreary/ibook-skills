@@ -53,13 +53,20 @@ are short in code (`value`, `engagement-mode`) and qualified to
   hides. It ignores scroll-away and idle, which Compact mode does watch. A chart halfway
   down a 40-minute chapter can therefore be credited with 40 minutes. This is a runtime fix,
   not a per-sim one: still set `pageDwell: true`, and don't work around it in adapter code.
-- **A Compact visit made only of answers emits no summary** (found 2026-09-26 in
-  `eight-hour-entrepreneur/docs/sims/symptom-root-cause-drilldown`). `lrs-lite-sim.js` opens a
-  session only on a folded interaction (`touch`/`run`), and `question().answer()` folds
-  nothing. So a student who answers every question and touches nothing else leaves their
-  `answered` statements but no `experienced` summary, and therefore no time on the sim. This
-  is a runtime fix (for example, let an answer open the session without counting it in
-  `statements_represented`). Don't add a dummy touch in adapter code to force a summary.
+- **FIXED 2026-09-26: an answers-only Compact visit now ends in a summary.** It was found in
+  `eight-hour-entrepreneur/docs/sims/symptom-root-cause-drilldown`. Until then an answer
+  never opened the Compact session, so a student who only answered questions left no
+  `experienced` summary and no time on the sim. Now `question().answer()` opens the session
+  (`LRSLite` `Session.answered()`) without folding into it. Such a summary has
+  `statements_represented: 0`, `interaction_count: 0` and empty `controls`, and carries
+  only the time. `check-xapi.py` accepts a 0 only when the session contained answers.
+  - Chapter quiz pages (`metadata: false`) still never emit a summary, because they are not
+    MicroSims.
+  - A book installed before the fix shows **DRIFT** on `lrs-lite-sim.js` and `lrs-sim.js` in
+    `install-runtime.py --check`. If the book's copy matches an earlier committed version of
+    the canonical file (`git show <commit>:docs/js/<file>` in learning-record-store), the drift
+    is only this update. Tell the user, and update on their word.
+  - Never add a dummy touch in adapter code to force a summary.
 - **`textbookId` form is undecided across books.** `lrs-config.js` says `lrs` in the
   LRS book, while the seeder uses `tb-{repo-slug}`. `install-runtime.py` defaults a new
   book's `textbookId` to the repo slug and says so. Flag it; don't resolve it inside a
