@@ -201,11 +201,51 @@ publishing:
 Always generate the first-comment text along with the post:
 
 ```
-Explore the full textbook here: [SITE_URL]
+Explore the full textbook here: [SITE_URL]?utm_source=linkedin&utm_medium=organic_social&utm_campaign=[CAMPAIGN_NAME]
 ```
 
 This rule applies to ALL external links (site URL, GitHub repo, blog posts) —
 none of them belong in the post body.
+
+**UTM tagging (required for every link in the first comment):** every URL
+you put in the first comment must carry UTM parameters so Google Analytics
+(GA4) can attribute the visit. Without them, clicks from the LinkedIn app
+usually have no referrer and land in GA4's **Direct** bucket, where they are
+indistinguishable from bookmarks, typed URLs and bot traffic. (Measured on a
+2026-09 boosted post: 165 of 259 sessions landed in Direct with a 13%
+engagement rate and could not be traced to the post.)
+
+| Parameter | Value to use | Notes |
+|---|---|---|
+| `utm_source` | `linkedin` | Always lowercase |
+| `utm_medium` | `organic_social` for a normal post; `paid_social` if the post will be boosted | GA4 maps these to the Organic Social / Paid Social channel groups |
+| `utm_campaign` | short snake_case name for this post, e.g. `smartclock_launch` | One per post so posts can be compared |
+| `utm_content` | optional variant label, e.g. `full_version`, `carousel` | Use when A/B testing versions or pairing with a carousel |
+
+Rules:
+
+- Use **lowercase, snake_case** values consistently — `LinkedIn` and `linkedin`
+  are different sources in GA4.
+- Build the URL as `SITE_URL?utm_source=linkedin&utm_medium=organic_social&utm_campaign=<name>`
+  (use `&` instead of `?` if the URL already has a query string). Add the tags
+  to the GitHub repo link too, but the site link is the one that matters.
+- Only tag links that are shared **externally**. Never put UTM tags on links
+  between pages inside the textbook site — they overwrite the true traffic
+  source.
+- Ask the user for the campaign name if it isn't obvious; otherwise derive one
+  from the post topic and date (e.g. `chapter12_milestone`).
+- The link in a single first comment is the same URL for every viewer, so it
+  cannot separate **boosted** viewers from **organic** ones. If the user
+  says they plan to boost the post, set `utm_medium=paid_social`, and tell
+  them GA4 will then lump organic clicks on that comment in with paid — to
+  compare the two cleanly, compare the days before and after the boost starts,
+  or run the boost as a Campaign Manager ad with its own destination URL
+  tagged `paid_social`.
+- Keep the tagged URL out of the post body, same as any link. If the long URL
+  looks ugly in the comment, use a URL shortener (Bitly) on the *tagged* URL.
+- GA4 needs a **key event** (conversion) defined, e.g. a click on a lab or
+  book link, to judge quality beyond session counts. Remind the user if none
+  exists.
 
 **6. Hashtags (8-15 tags)**
 
@@ -363,7 +403,10 @@ Present the LinkedIn announcement(s) in a clear, copy-paste ready format:
 
 ## First Comment (paste immediately after publishing)
 
-[Text containing the site URL — external links go here, never in the post body]
+[Text containing the UTM-tagged site URL — external links go here, never in the post body]
+
+**UTM used:** source=linkedin, medium=[organic_social|paid_social], campaign=[name]
+(look for this campaign under Reports → Acquisition → Traffic acquisition in GA4)
 
 ---
 
@@ -385,6 +428,8 @@ Before finalizing, check that the announcement:
 
 - [ ] Post body contains NO external links (LinkedIn cuts reach for posts with links)
 - [ ] A separate first-comment text with the live site URL is provided
+- [ ] Every URL in the first comment carries `utm_source`, `utm_medium` and `utm_campaign` (lowercase, snake_case)
+- [ ] `utm_medium` is `paid_social` if the post will be boosted, otherwise `organic_social`
 - [ ] Contains accurate metrics from book-metrics.json
 - [ ] Has 10-15 relevant hashtags
 - [ ] Mentions AI transparency
@@ -418,7 +463,7 @@ Three variations provided (full, medium, concise) - choose the one that fits you
 4. Review and post!
 5. Immediately paste the provided first-comment text (with the link) as the first comment
 
-Remember: keep the link OUT of the post body — LinkedIn reduces reach for posts with external links. The link goes in the first comment.
+Remember: keep the link OUT of the post body — LinkedIn reduces reach for posts with external links. The link goes in the first comment, and the provided URL already includes UTM tags so GA4 can attribute the traffic — paste it exactly as given.
 
 Pro tip: LinkedIn posts with images get 2x more engagement. Consider adding a screenshot of your learning graph or textbook homepage.
 ```
@@ -489,7 +534,7 @@ AI-generated using Claude and MkDocs Material. Free and open source.
 Paste immediately after publishing (external links live here, not in the post):
 
 ```
-Explore the full textbook here: https://dmccreary.github.io/ibook-skills/
+Explore the full textbook here: https://dmccreary.github.io/ibook-skills/?utm_source=linkedin&utm_medium=organic_social&utm_campaign=book_launch
 
 GitHub repo: https://github.com/dmccreary/ibook-skills
 ```

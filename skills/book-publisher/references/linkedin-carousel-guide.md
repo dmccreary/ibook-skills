@@ -198,7 +198,9 @@ should not contain the external site link (LinkedIn suppresses reach on posts wi
 body) — but a URL printed as **text on slide 13 of the document itself** is fine, since it's
 not a clickable hyperlink in the post body. If they're also posting caption text, hand off to
 the `linkedin-post-guide.md` route and tell them to paste the site URL as the first comment,
-same as always.
+same as always — with UTM tags (see "UTM tagging" in that guide; use
+`utm_content=carousel` to distinguish it from a text-only post). The URL printed on slide 13
+is not clickable, so it needs no tags.
 
 ## Output
 
