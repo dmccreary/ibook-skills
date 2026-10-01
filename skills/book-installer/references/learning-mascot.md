@@ -565,7 +565,9 @@ Create or append to `docs/css/mascot.css`:
 }
 
 /* ---- Mascot image floated LEFT of admonition body text ---- */
-.mascot-admonition-img {
+/* The .md-typeset prefix outranks Material's `.md-typeset img { height: auto }`,
+   which otherwise stretches tall poses well past --mascot-size. */
+.md-typeset img.mascot-admonition-img {
   float: left;
   width: var(--mascot-size);
   height: var(--mascot-size);
