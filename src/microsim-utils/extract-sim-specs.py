@@ -52,7 +52,9 @@ SUMMARY_RE       = re.compile(r"<summary>(.*?)</summary>", re.IGNORECASE | re.DO
 FIELD_RES = {
     "type":        re.compile(r"^Type:\s*(.+)$",        re.MULTILINE | re.IGNORECASE),
     "status":      re.compile(r"\*\*Status:\*\*\s*(.+?)(?:<br|$|\n)", re.IGNORECASE),
-    "bloom_level": re.compile(r"Bloom.*?Taxonomy.*?Level:\*?\*?\s*(.+?)(?:\s*[-–—]|$|\n)", re.IGNORECASE),
+    # "**Bloom Level:** Analyze<br/>" (chapter-content-generator v1.11+), "Bloom Taxonomy Level: ...",
+    # and the inline "(Bloom level: Analyze; verb: ...)" form; the value stops before <br/>, ";" or ")".
+    "bloom_level": re.compile(r"Bloom(?:'s)?(?:\s+Taxonomy)?\s+Level:\*?\*?\s*(.+?)(?:\s*<br|\s*[-–—;)(]|$|\n)", re.IGNORECASE),
     "library":     re.compile(r"\*\*Library:\*\*\s*(.+?)(?:<br|$|\n)", re.IGNORECASE),
     "sim_id":      re.compile(r"\*\*sim-id:\*\*\s*(.+?)(?:<br|$|\n)", re.IGNORECASE),
 }

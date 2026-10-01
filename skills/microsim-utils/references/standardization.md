@@ -203,7 +203,7 @@ After completing all changes:
 |Metadata 1|index.md has title and description metadata in yml|3|
 |Metadata 2|index.md has image references for social preview|5|
 |metadata.json present|A metadata.json file is present|10|
-|metadata.json is valid|The microsim JSON schema had passed validation with no errors|20|
+|metadata.json Dublin Core fields|metadata.json has the Dublin Core fields listed in step 7 (at most 2 missing). This is a presence check; full JSON Schema validation will replace it once existing metadata is migrated to the schema.|20|
 |iframe|A iframe that uses src="main.html" is present|10|
 |Fullscreen Link Button|check if a button to view the MicroSim in fullscreen is present|5|
 |iframe example|A iframe example in a HTML source block is present|5|

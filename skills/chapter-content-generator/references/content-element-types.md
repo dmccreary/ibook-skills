@@ -4,6 +4,13 @@ This reference describes the various non-pure-text content elements that can be 
 The content of the details blocks should be to describe what the learning objective is and
 how a non-pure-text element can be used to promote learning.
 
+**Every specification block uses the template and rules in `microsim-specification-rules.md`.** That file
+defines the required fields (Bloom Level, Bloom Verb, Learning Objective, Evidence of Mastery, complete
+Content, Provenance, Rules, Learner Activity, Feedback, Chapter Anchors) and a self-check. This file says
+which element type fits which content. The examples below show the element-specific Content only; a real
+block also carries the full header and the other fields. Specifications describe *what* the learner learns
+and sees, never *how* to build it: no pixel sizes, layout, colors, fonts or library calls.
+
 ## Driven By An Learning Objective
 
 Behind the strategy for every diagram is to help the student learn. A unit of learning
@@ -107,7 +114,7 @@ The goal is to have not have more than four paragraphs of pure text without inco
 - That interaction produces visible feedback (an infobox, tooltip, highlight, panel update, parameter change, or state transition)
 - The feedback teaches something — typically a definition, a property, a relationship, or a consequence
 
-**Mermaid diagrams are permitted ONLY when every node and every edge is clickable** and the click reveals an infobox containing the term's definition (ideally pulled from the chapter glossary), the relationship's meaning, or supporting context. A plain Mermaid diagram with no click handlers is a static image and is NOT acceptable.
+**Mermaid diagrams are permitted ONLY when every node is clickable** and the click reveals an infobox containing the term's definition (ideally pulled from the chapter glossary) or supporting context. Mermaid cannot make edges clickable, so explain what each connection means in an edge label or in the infobox of the node it leaves. A plain Mermaid diagram with no click handlers is a static image and is NOT acceptable.
 
 **Forbidden patterns:**
 
@@ -272,68 +279,59 @@ In this section, you will create a detailed specification for a diagram, drawing
 
 **Implementation:** 
 
-Add a level 4 header that indicates we are placing a diagram in the content and leave
-a template for an iframe that displays the diagram or microsim
+Add a level 4 header that indicates we are placing a diagram in the content, followed by the
+`<details markdown="1">` specification. Do not add an iframe: the microsim-generator inserts it,
+with the correct height, after the sim is built.
 
 ```markdown
 #### Diagram: {{DIAGRAM_NAME}}
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
 ```
 
-Note that the `{sim-id}` in the src path must be a kebab-case string (lowercase letters and dashes) matching the **sim-id** field inside the `<details>` block.
+The `{sim-id}` in the specification must be a kebab-case string (lowercase letters and dashes).
 
-Use `<details markdown="1">` block with a detailed specification
-
-**Required information in description:**
+**Required information** (in the fields of the template in `microsim-specification-rules.md`):
 
 - Diagram Name - A title-case name of the diagram that is unique in the chapter
-- Bloom Taxonomy - one of six levels of the 2001 Bloom Taxonomy: Remember, Understand, Analyze, Create
-- Bloom Taxonomy Verb - one of the verbs from blooms-taxonomy.md (Part 1) in the references
-- Learning Objective - what concepts are we trying to teach
-- What components/elements should be shown
-- How elements are connected or related
-- Suggested visual style (flowchart, network diagram, block diagram, etc.)
-- Key labels and annotations
-- Color scheme if relevant
+- **Bloom Level** - one of the six levels of the 2001 Bloom Taxonomy: Remember, Understand, Apply, Analyze, Evaluate, Create
+- **Bloom Verb** - one of the verbs for that level in blooms-taxonomy.md (Part 1)
+- **Learning Objective** - what the learner will be able to do, starting "The learner will <verb>"
+- **Content** - every component shown, with the text of its label and of the definition it reveals
+- **Content** - every connection, and what the relationship means
+- **Learner Activity** - what the learner clicks or hovers and what it reveals
 
 **Example specification:**
 ```xml
 #### Diagram: CMDB Architecture Diagram
-<iframe src="../../sims/cmdb-architecture-diagram/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
 <details markdown="1">
 <summary>CMDB Architecture Diagram</summary>
 Type: diagram
 **sim-id:** cmdb-architecture-diagram<br/>
 **Library:** p5.js<br/>
-**Status:** Specified
+**Status:** Specified<br/>
+**Bloom Level:** Understand<br/>
+**Bloom Verb:** explain<br/>
+**Learning Objective:** The learner will explain how a traditional CMDB stores configuration items and their relationships in relational tables.
 
-Purpose: Show the traditional CMDB architecture with RDBMS foundation
+Content:
+- Three layers, top to bottom: CMDB Application Layer, Business Logic Layer, RDBMS Storage Layer
+- Inside the storage layer: two "CI Tables" and one "Relationships" junction table
+- Connections: data flows from the application layer down to storage; each relationship row points to two CI rows through "Foreign Keys"
+- Definitions revealed on click:
+- CMDB Application Layer: the screens and APIs people use to search and update configuration items.
+- Business Logic Layer: applies the rules for creating, validating and linking configuration items.
+- RDBMS Storage Layer: the relational database that stores every configuration item and relationship as table rows.
+- CI Tables: one row per configuration item (a server, an application, a database), with its attributes as columns.
+- Relationships table: one row per link between two configuration items, such as "runs on" or "depends on".
+- Foreign Keys: the columns in the Relationships table that hold the IDs of the two CI rows it links.
 
-Components to show:
-- CMDB Application Layer (top)
-- Business Logic Layer (middle)
-- RDBMS Storage Layer (bottom)
-- Multiple "CI Tables" within RDBMS layer
-- Relationship tables connecting CI tables
-
-Connections:
-- Vertical arrows showing data flow from app to storage
-- Horizontal arrows between relationship tables and CI tables
-
-Style: Block diagram with layered architecture
-
-Labels:
-- "Configuration Items (CIs)" on tables
-- "Relationships" on junction tables
-- "Foreign Keys" on connection arrows
-
-Color scheme: Blue for application layers, orange for database layer
+Learner Activity: the learner clicks each layer and table to reveal its definition, then answers "Which table must a query read to find what a server depends on?" (answer: the Relationships table, joined to the CI Tables).
 </details>
 ```
 
 !!! Note
- Do not over specify the positioning of items using absolute (x,y) coordinates.
- MicroSims are all width responsive and must adapt to windows that are resized.
+ Do not specify positions, sizes or colors. MicroSims are width responsive, and the
+ microsim-generator decides the layout. Describe what the learner must see and learn.
 
 ## 5. Interactive Infographics
 
@@ -347,43 +345,36 @@ Color scheme: Blue for application layers, orange for database layer
 
 **Implementation:** Use `<details markdown="1">` block with specification
 
-**Required information in description:**
-- Purpose and main message
-- Visual layout and organization
-- Interactive elements (hovers, clicks, reveals)
-- Data to be displayed
-- Color coding or visual hierarchy
-- Responsive behavior
+**Required information** (in the fields of the template in `microsim-specification-rules.md`):
+- the Learning Objective and main message
+- **Content:** every labeled item and the full text each hover or click reveals
+- **Learner Activity:** which reveals the learner uses, and what they are then asked to identify
+- **Provenance:** where the image and the facts come from
 
-**Example MicroSim Specification:**
+Dated events are specified as a timeline (section 8), not an infographic.
+
+**Example specification (Content section only):**
 ```xml
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
-
 <details markdown="1">
-
-<summary>ITIL Framework Evolution Interactive Timeline</summary>
+<summary>Animal Cell Callout Explorer</summary>
 Type: infographic
+**sim-id:** animal-cell-callout-explorer<br/>
+**Library:** html<br/>
+**Status:** Specified<br/>
+**Bloom Level:** Remember<br/>
+**Bloom Verb:** identify<br/>
+**Learning Objective:** The learner will identify five structures of an animal cell from their functions.
 
-Purpose: Show the evolution of ITIL from version 1 (1990) through current version, with clickable details
+Content (callouts, with the text each click reveals):
+- Nucleus: holds the cell's DNA and controls gene expression.
+- Cell membrane: a lipid bilayer that controls what enters and leaves the cell.
+- Mitochondrion: releases energy from food molecules as ATP.
+- Ribosome: builds proteins from amino acids.
+- Golgi apparatus: modifies, sorts and packages proteins for transport.
 
-Layout: Horizontal timeline with major milestones
+Learner Activity: in explore mode the learner clicks each callout to read its function. In quiz mode the function is shown and the learner clicks the matching structure; five questions, one attempt each.
 
-Milestones:
-- 1990: ITIL v1 (31 books)
-- 2001: ITIL v2 (7 books)
-- 2007: ITIL v3 (5 books, lifecycle approach)
-- 2011: ITIL 2011 (update to v3)
-- 2019: ITIL 4 (value-driven service management)
-
-Interactive elements:
-- Hover over each milestone to see key changes
-- Click to expand full details panel
-- Hover over connecting lines to see transition challenges
-
-Visual style: Modern timeline with circular nodes for milestones
-Color scheme: Red gradient getting darker for newer versions
-
-Implementation: HTML/CSS/JavaScript with SVG timeline
+Provenance: the functions are the definitions in the chapter's glossary. The image is a text-free drawing of an animal cell; all labels are rendered by the sim, not the image.
 </details>
 ```
 
@@ -399,14 +390,11 @@ Implementation: HTML/CSS/JavaScript with SVG timeline
 
 **Implementation:** Use `<details markdown="1">` block with specification
 
-**Required information in description:**
-- Learning objective (what concept is being taught)
-- Visual elements in the simulation
-- Interactive controls (sliders, buttons, inputs)
-- Default parameter values
-- What happens when parameters change
-- Canvas layout (drawing area + controls area)
-- Animation or static visualization
+**Required information:** every field of the template in `microsim-specification-rules.md`. In
+particular: the quantities the learner can change, each with min, max, step, default and unit (**Rules**);
+what the learner does and what changes (**Learner Activity**); and what the learner is told after a
+right or wrong answer (**Feedback**). Do not specify canvas size, layout, control placement or colors; the
+microsim-generator decides those.
 
 ### CRITICAL: Instructional Pattern Selection
 
@@ -466,54 +454,54 @@ Instructional Rationale: Step-through with worked examples is appropriate
 because the Understand/explain objective requires learners to trace the
 process with concrete data. Continuous animation would prevent prediction
 and obscure the actual data transformations.
+```
 
 **Example specification:**
 ```xml
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
+#### Diagram: BFS and DFS Next-Node Predictor
 
 <details markdown="1">
-<summary>Graph Traversal Visualization MicroSim</summary>
+<summary>BFS and DFS Next-Node Predictor</summary>
 Type: microsim
+**sim-id:** bfs-dfs-next-node-predictor<br/>
+**Library:** p5.js<br/>
+**Status:** Specified<br/>
+**Bloom Level:** Analyze<br/>
+**Bloom Verb:** differentiate<br/>
+**Learning Objective:** The learner will differentiate breadth-first from depth-first search by predicting the next node each algorithm visits from the current queue or stack.
 
-Learning objective: Demonstrate the difference between depth-first search (DFS) and breadth-first search (BFS) in graph traversal
+**Prerequisites:** graph, node, edge, queue, stack, breadth-first search, depth-first search (defined in the sections above).
 
-Canvas layout:
-- Left side (450): Drawing area showing a graph network
-- Right side (150): Control panel and infobox
+**Evidence of Mastery:** At each step the learner clicks the node they predict the algorithm visits next. A prediction is correct when it matches the visit order in Content. Mastery is completing both traversals with at most one wrong prediction in each. Hovering a node is exploration, not evidence.
 
-Visual elements:
+**Misconceptions:** (1) BFS follows one branch to the bottom first. (2) DFS visits all of a node's neighbors before going deeper. (3) Both orders are simply alphabetical.
 
-- 15 nodes arranged in a tree-like structure
-- Edges connecting nodes
-- Start node (green)
-- Current node (yellow)
-- Visited nodes (blue)
-- Unvisited nodes (gray)
+**Instructional Rationale:** Analyze-level differentiation needs the learner to use the rule, not watch it. Predicting each next node while the queue or stack is visible forces the learner to apply "front of the queue" versus "top of the stack", so the step-through has no animation.
 
-Interactive controls:
-- Dropdown: Select algorithm (DFS or BFS)
-- Button: "Start Traversal"
-- Button: "Reset"
-- Slider: Animation speed (50-1000ms per step)
-- Display: Node visit order as a list
+**Content:**
 
-Default parameters:
-- Algorithm: DFS
-- Animation speed: 500ms
-- Start node: Node 1
+- Nodes: A, B, C, D, E, F, G. Start node: A.
+- Edges: A–B, A–C, B–D, B–E, C–F, C–G.
+- BFS visit order: A, B, C, D, E, F, G.
+- DFS visit order: A, B, D, E, C, F, G.
+- Shown at every step: the visited list and the current queue (BFS) or stack (DFS).
 
-Behavior:
-- When "Start Traversal" clicked, animate the selected algorithm
-- Highlight current node in yellow
-- Mark visited nodes in blue
-- Display visit order in right panel
-- Show queue/stack state for educational purposes
+**Provenance:** A small example graph written for this sim. The orders follow from the Rules.
 
-Implementation notes:
-- Use p5.js for rendering
-- Store graph as adjacency list
-- Implement both DFS (recursive/stack) and BFS (queue)
-- Use frameCount for animation timing
+**Rules:** Neighbors are considered in alphabetical order. BFS takes the node at the front of the queue and adds its unvisited neighbors to the back. DFS takes the node on top of the stack and pushes its unvisited neighbors in reverse alphabetical order, so the alphabetically first neighbor is on top. A node is marked visited when it is taken, and is never added twice.
+
+**Learner Activity:**
+
+1. BFS runs first. A is visited; the queue shows B, C. The learner clicks the node BFS visits next.
+2. After each prediction the sim takes the next node, updates the visited list and the queue, and asks for the next prediction, until all seven nodes are visited.
+3. The learner presses Next algorithm, and DFS runs on the same graph the same way, showing the stack.
+4. At the end both visit orders are shown side by side.
+
+**Feedback:** Two traversals of six predictions each, in fixed order; one attempt per prediction. Correct: "Correct: <node>." Wrong in BFS: "BFS takes the front of the queue: <queue>. It finishes a whole level before going deeper." Wrong in DFS: "DFS takes the top of the stack: <stack>. It goes as deep as it can before backing up." After a wrong prediction the correct node is taken and the traversal continues. The count of correct predictions is shown for each algorithm.
+
+**Starting State:** The graph with A marked as the start, BFS selected, and the question "BFS has visited A. Which node does it visit next?"
+
+**Chapter Anchors:** The chapter's worked example gives the BFS order A, B, C, D, E, F, G.
 </details>
 ```
 
@@ -533,15 +521,14 @@ Implementation notes:
 
 **Required information in description:**
 - Chart type (bar, line, pie, scatter, etc.)
-- Data to be plotted (specific values or representative data)
+- **Content:** every value to be plotted, with its label and unit; never "representative data"
+- **Provenance:** the source of the values, or "illustrative" (the sim must then label them so)
 - Axis labels and units
-- Title and legend
-- Color scheme
-- Key insights to highlight
+- What each series stands for (its meaning, not its color)
+- The insight the learner should find, and the question that makes them find it
 
 **Example specification:**
 ```xml
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
 <details markdown="1">
 <summary>Query Performance Comparison: RDBMS vs Graph Database</summary>
 Type: chart
@@ -554,14 +541,14 @@ X-axis: Number of hops (1, 2, 3, 4, 5)
 Y-axis: Query response time (milliseconds, logarithmic scale)
 
 Data series:
-1. RDBMS (orange bars):
+1. RDBMS:
  - 1 hop: 10ms
  - 2 hops: 150ms
  - 3 hops: 2,500ms
  - 4 hops: 45,000ms
  - 5 hops: 780,000ms (timed out)
 
-2. Graph Database (gold bars):
+2. Graph Database:
  - 1 hop: 5ms
  - 2 hops: 8ms
  - 3 hops: 12ms
@@ -569,13 +556,12 @@ Data series:
  - 5 hops: 18ms
 
 Title: "Multi-Hop Query Performance: RDBMS vs Graph Database"
-Legend: Position top-right
+
+Provenance: illustrative values that show the growth pattern; the chart labels them "illustrative".
 
 Annotations:
 - Arrow pointing to RDBMS 5-hop bar: "Query timed out after 13 minutes"
 - Arrow pointing to graph DB series: "Constant-time traversal"
-
-Implementation: Chart.js or similar JavaScript library
 </details>
 ```
 
@@ -599,23 +585,18 @@ the historical events that triggered an important based of knowledge.
 
 **Required information in description:**
 - Time period covered
-- Major events/milestones with dates
-- Visual style (horizontal/vertical, linear/branching)
-- Detail level for each event
-- Color coding or visual grouping
-- Interactive features if applicable
+- **Content:** every event with its date and the full text its click reveals
+- **Provenance:** the source for each date
+- Eras or groups the events belong to, if the grouping is part of what is taught
+- **Learner Activity:** what the learner reveals, and the question about sequence or cause they answer
 
 **Example specification:**
 ```xml
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
-
 <details markdown="1">
 <summary>Evolution of Configuration Management Timeline</summary>
 Type: timeline
 
 Time period: 1980-2025
-
-Orientation: Horizontal
 
 Events:
 - 1980: Military configuration management practices established
@@ -630,17 +611,15 @@ Events:
 - 2023: AI-assisted IT management graphs
 - 2025: Real-time graph-based IT management becomes standard
 
-Visual style: Horizontal timeline with alternating above/below placement
+Eras (each event belongs to one):
+- ITIL/traditional CMDB era (1990-2010)
+- Transition period (2010-2015)
+- Graph database adoption (2015-2020)
+- Modern AI-enhanced approaches (2020+)
 
-Color coding:
-- Red: ITIL/traditional CMDB era (1990-2010)
-- Orange: Transition period (2010-2015)
-- Gold: Graph database adoption (2015-2020)
-- Green: Modern AI-enhanced approaches (2020+)
+Provenance: the dates and descriptions come from the chapter section "A Short History of Configuration Management".
 
-Interactive features:
-- Hover to see detailed description
-- Click to expand with images/screenshots from that era
+Learner Activity: the learner clicks each event to read its description and significance, then answers "Which event came first: the CMDB crisis or graph-based CMDB alternatives?"
 </details>
 ```
 
@@ -660,17 +639,14 @@ Interactive features:
 
 **Required information in description:**
 - Geographic scope (world, region, country)
-- Locations to mark
-- Directional flows or connections
+- **Content:** every location to mark, with coordinates for points (with their source) or the name for regions
+- Directional flows or connections, and what each one means
 - Data being represented
-- Legend and labels
-- Color scheme
-- Interactive features
+- Legend and labels (meanings, not colors)
+- **Learner Activity:** what the learner clicks and what each click reveals
 
 **Example specification:**
 ```xml
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
-
 <details markdown="1">
 <summary>GDPR Data Flow Compliance Map</summary>
 Type: map
@@ -680,16 +656,16 @@ Geographic scope: World map focusing on EU and major trading partners
 Purpose: Illustrate data flow restrictions under GDPR
 
 Locations:
-- European Union (highlighted in blue)
-- United States (highlighted in orange)
-- United Kingdom (highlighted in purple)
-- Asia-Pacific data centers (marked with icons)
+- European Union
+- United States
+- United Kingdom
+- Asia-Pacific data centers
 
-Data flows (arrows):
-- Green arrows: Permitted flows (within EU)
-- Yellow arrows: Conditional flows (EU to UK, adequacy decision)
-- Red arrows: Restricted flows (EU to US, requires safeguards)
-- Dotted arrows: Data center backup routes
+Data flows (arrows), in three categories the learner must tell apart:
+- Permitted flows (within EU)
+- Conditional flows (EU to UK, adequacy decision)
+- Restricted flows (EU to US, requires safeguards)
+- Data center backup routes
 
 Labels:
 - "GDPR Protected Territory"
@@ -697,7 +673,7 @@ Labels:
 - "Standard Contractual Clauses (SCCs) Required"
 
 Legend:
-- Arrow colors and meanings
+- The meaning of each flow category
 - Icon explanations (data center, user, cloud)
 
 Interactive features:
@@ -716,7 +692,7 @@ Interactive features:
 - Explaining system interactions
 - Demonstrating procedural steps
 
-**Interactivity requirement (REQUIRED):** Every workflow step, decision diamond, and connector MUST reveal its hover text or expanded explanation on click or hover. Mermaid flowcharts MUST include `click` directives for every node mapped to an infobox callback. A workflow diagram that is just lines and boxes with no learner feedback is NOT permitted.
+**Interactivity requirement (REQUIRED):** Every workflow step and decision MUST reveal its hover text or expanded explanation on click or hover. Mermaid flowcharts MUST include `click` directives for every node mapped to an infobox callback. Mermaid cannot make connectors clickable, so put what each connector means in its edge label or in the infobox of the step it leaves. A workflow diagram that is just lines and boxes with no learner feedback is NOT permitted.
 
 **Implementation:** Use `<details markdown="1">` block with specification
 
@@ -725,21 +701,16 @@ Interactive features:
 - Steps in the workflow (with descriptions)
 - Decision points and branches
 - Start and end states
-- Hover text content for each element
-- Visual style (swimlanes, flowchart, BPMN)
-- Roles or systems involved
+- Hover text content for each element, written out in full
+- Roles or systems involved (as swimlanes, if the roles are part of what is taught)
 
 **Example specification:**
 ```xml
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
-
 <details markdown="1">
 <summary>Change Management Workflow with Impact Analysis</summary>
 Type: workflow
 
 Purpose: Show the change management process using graph-based impact analysis
-
-Visual style: Flowchart with decision diamonds and process rectangles
 
 Steps:
 1. Start: "Change Request Submitted"
@@ -769,12 +740,6 @@ Hover text: "Changes affecting >50 services require Change Advisory Board review
 7. End: "Change Approved"
  Hover text: "Change ticket updated and implementation scheduled"
 
-Color coding:
-- Blue: Data/query steps
-- Yellow: Decision points
-- Green: Approval outcomes
-- Orange: Communication steps
-
 Swimlanes:
 - Requester
 - IT Management Graph System
@@ -793,23 +758,20 @@ Swimlanes:
 - Illustrating dependency networks
 - Visualizing knowledge graphs
 
-**Interactivity requirement (REQUIRED):** Every node and every edge MUST be selectable. At minimum, hovering a node shows its properties; clicking a node highlights its neighborhood and reveals its definition in a side panel. The learner must also be able to drag, zoom, or pan the graph. A static rendering of a graph with no interaction is NOT permitted.
+**Interactivity requirement (REQUIRED):** Every node and every edge MUST be selectable. At minimum, hovering a node shows its properties; clicking a node highlights its neighborhood and reveals its definition in a side panel. The learner must also be able to drag or pan the graph; zooming uses buttons, never the mouse wheel, which would hijack page scrolling in an embedded sim. A static rendering of a graph with no interaction is NOT permitted.
 
 **Implementation:** Use `<details markdown="1">` block with specification
 
 **Required information in description:**
 - Node types and their properties
 - Edge types and their properties
-- Sample data to display
-- Layout algorithm (force-directed, hierarchical, circular)
-- Visual styling (colors, shapes, sizes)
-- Interactive features (zoom, drag, click, hover)
-- Legend explaining node/edge types
+- **Content:** every node and edge to display, not a sample
+- What a click or hover on a node or edge reveals, written out in full
+- The question the learner answers by tracing the graph (for example, which services a failed server affects)
+- Legend explaining node/edge types (meanings, not colors or shapes)
 
 **Example specification:**
 ```xml
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
-
 <details markdown="1">
 <summary>IT Management Graph Data Model</summary>
 Type: graph-model
@@ -817,36 +779,36 @@ Type: graph-model
 Purpose: Illustrate the node and relationship types in a typical IT management graph
 
 Node types:
-1. Business Service (pink circles)
+1. Business Service
  - Properties: name, owner, SLA_target
  - Example: "Customer Portal"
 
-2. Application (light blue squares)
+2. Application
  - Properties: name, version, technology_stack
  - Example: "Web Server v2.1"
 
-3. Infrastructure (gray diamonds)
+3. Infrastructure
  - Properties: name, type, location
  - Example: "Server-001 (VM)"
 
-4. Data Store (orange cylinders)
+4. Data Store
  - Properties: name, type, size_gb
  - Example: "Customer DB"
 
 Edge types:
-1. DEPENDS_ON (solid black arrows)
+1. DEPENDS_ON
  - Properties: criticality (high/medium/low)
  - Example: Business Service → Application
 
-2. HOSTS (dashed blue arrows)
+2. HOSTS
  - Properties: deployment_type
  - Example: Infrastructure → Application
 
-3. CONNECTS_TO (dotted green arrows)
+3. CONNECTS_TO
  - Properties: protocol, port
  - Example: Application → Data Store
 
-Sample data:
+Data (all nodes and edges):
 - Customer Portal (Business Service)
 ├─ DEPENDS_ON → Web Application (Application)
 │├─ HOSTS ← VM-Server-001 (Infrastructure)
@@ -854,27 +816,15 @@ Sample data:
 └─ DEPENDS_ON → API Gateway (Application)
  └─ CONNECTS_TO → Auth Service DB (Data Store)
 
-Layout: Hierarchical with business services at top
-
-Interactive features:
-- Hover node: Show properties
-- Click node: Highlight all connected nodes
-- Double-click: Expand/collapse dependencies
-- Zoom: Mouse wheel
-- Pan: Click and drag background
-
-Visual styling:
-- Node size based on number of connections (degree)
-- Edge thickness based on criticality
-- Highlight critical path in red when node selected
+Learner Activity:
+- Hover a node: show its properties
+- Click a node: highlight every node connected to it
+- Double-click: expand or collapse its dependencies
+- Question: "If VM-Server-001 fails, which business service is affected?" (answer: Customer Portal, through Web Application)
 
 Legend:
-- Node shapes and their meanings
-- Edge styles and their meanings
-- Color coding explanation
-
-Implementation: vis-network JavaScript library
-Canvas size: 800x600px
+- What each node type means
+- What each edge type means
 </details>
 ```
 
@@ -884,39 +834,60 @@ Canvas size: 800x600px
 2. **Concept Coverage:** Ensure elements connect back to concepts listed in "Concepts Covered"
 3. **Learning Objectives:** Every element should serve a clear pedagogical purpose
 4. **Accessibility:** Provide text alternatives for visual elements
-5. **Consistency:** Use similar visual styles and color schemes throughout a chapter
+5. **Consistency:** Use the same term for the same idea in the prose and in every specification; every number a specification shares with the prose must match
 6. **Interactivity:** Favor interactive elements (infographics, MicroSims) that enable student engagement tracking
 7. **Balance:** Mix different types of elements rather than using the same type repeatedly
 
 ## Details Block Template
 
-For any element requiring specification (types 3-10), use this template:
+For any element requiring specification (types 3-11), use the template in
+`microsim-specification-rules.md`:
 
 ```xml
-<iframe src="../../sims/{sim-id}/main.html" width="100%" height="500px" scrolling="no"></iframe>
+#### Diagram: [Title Case Name]
 
 <details markdown="1">
-<summary>Brief descriptive title</summary>
-Type: [element-type]
+<summary>[Title Case Name]</summary>
+Type: [microsim | chart | diagram | infographic | timeline | map | workflow | graph-model | causal-loop]
 **sim-id:** [kebab-case-directory-name]<br/>
-**Library:** [p5.js | vis-network | Chart.js | Mermaid | Plotly | Leaflet | vis-timeline]<br/>
-**Status:** Specified
+**Library:** [p5.js | Chart.js | Plotly | Mermaid | vis-network | vis-timeline | Leaflet | venn.js | html]<br/>
+**Status:** Specified<br/>
+**Bloom Level:** [Remember | Understand | Apply | Analyze | Evaluate | Create]<br/>
+**Bloom Verb:** [one verb from that level's list]<br/>
+**Learning Objective:** The learner will [verb] [specific content] [condition or criterion].
 
-Purpose: [What educational goal does this serve?]
+**Prerequisites:** ...
 
-[Element-specific details as outlined above]
+**Evidence of Mastery:** ...
 
-Implementation: [Technology/approach to be used]
+**Misconceptions:** ...
+
+**Instructional Rationale:** ...
+
+**Content:** ...
+
+**Provenance:** ...
+
+**Rules:** ...
+
+**Learner Activity:** ...
+
+**Feedback:** ...
+
+**Starting State:** ...
+
+**Chapter Anchors:** ...
 </details>
 ```
 
-Note that the `{sim-id}` in the iframe src path must be a kebab-case string
-(lowercase letters and dashes) matching the **sim-id** field inside the
-`<details>` block.
+Do not add an iframe for a new specification; the microsim-generator inserts it after the sim is built.
 
-The three structured fields enable machine-readable extraction:
+The six header lines are parsed by the batch tools:
 - **sim-id** — kebab-case directory name used for the `docs/sims/{sim-id}/` path
-- **Library** — JavaScript library, used by scaffold generators to select the correct CDN
+- **Library** — one value from the list; it selects the generator route and CDN
 - **Status** — lifecycle state; always `Specified` for new specs in chapter content
+- **Bloom Level**, **Bloom Verb** — separate lines with bare values
+- **Learning Objective** — one sentence followed by a blank line
 
-The specification should be detailed enough that another skill or developer can implement the element without additional context.
+The specification must be complete about what the learner learns and sees, so that the generator never has to
+invent content, rules or feedback. It must say nothing about how to build the sim.

@@ -11,7 +11,8 @@ Scoring Rubric (100 points total):
 - YAML metadata (title & description): 3 pts
 - Social preview images in YAML: 5 pts
 - metadata.json present: 10 pts
-- metadata.json valid (schema): 20 pts
+- metadata.json Dublin Core fields present: 20 pts
+  (a field-presence check, not JSON Schema validation; see check_metadata_json)
 - iframe with src="main.html": 10 pts
 - Fullscreen link button: 5 pts
 - Copy-paste iframe example: 5 pts
@@ -32,7 +33,7 @@ from pathlib import Path
 import sys
 
 
-# Required Dublin Core fields for metadata.json validation
+# Dublin Core fields checked for the metadata.json presence score
 REQUIRED_DUBLIN_CORE = [
     "title", "description", "creator", "date", "subject",
     "type", "format", "language", "rights"
@@ -74,7 +75,14 @@ def check_yaml_metadata(content: str) -> tuple[bool, bool]:
 
 
 def check_metadata_json(sim_dir: Path) -> tuple[bool, bool]:
-    """Check if metadata.json exists and is valid."""
+    """Check if metadata.json exists and has most Dublin Core fields.
+
+    Returns (exists, has_dublin_core). This is a field-presence check, not
+    validation against microsim-schema.json: most existing metadata.json files
+    use a flat layout that the schema rejects. Switch to the real validator
+    (src/microsim-schema/validate.py in the microsims repo) once metadata has
+    been migrated to the schema.
+    """
     metadata_path = sim_dir / "metadata.json"
 
     if not metadata_path.exists():
@@ -238,13 +246,13 @@ def calculate_quality_score(sim_dir: Path, verbose: bool = False) -> tuple[int, 
     details['yaml_images'] = has_yaml_images
 
     # 5. metadata.json present (10 pts)
-    has_metadata, metadata_valid = check_metadata_json(sim_dir)
+    has_metadata, has_dublin_core = check_metadata_json(sim_dir)
     scores['metadata_present'] = 10 if has_metadata else 0
     details['metadata_present'] = has_metadata
 
-    # 6. metadata.json valid (20 pts)
-    scores['metadata_valid'] = 20 if metadata_valid else 0
-    details['metadata_valid'] = metadata_valid
+    # 6. metadata.json Dublin Core fields present (20 pts)
+    scores['metadata_dublin_core'] = 20 if has_dublin_core else 0
+    details['metadata_dublin_core'] = has_dublin_core
 
     # 7. iframe embed (10 pts)
     has_iframe = check_iframe(content)

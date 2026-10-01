@@ -3,13 +3,18 @@ name: chapter-content-generator
 description: Generates detailed chapter content for an intelligent textbook — text, diagrams, MicroSims, and exercises at the appropriate Bloom's level. Use when a chapter's index.md exists with title, summary, and concept list.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
-  ibook.version: "1.10"
+  ibook.version: "1.11"
   ibook.preferred-model: "sonnet"
 ---
 
 # Chapter Content Generator
 
-**Version:** 1.10
+**Version:** 1.11
+
+**Version 1.11 Features:**
+- **Precise, objective-first MicroSim specifications** - Every specification block now states what the learner must learn and prove, and the complete content the sim needs, instead of how to build the sim. New structured fields (`Bloom Level`, `Bloom Verb`, `Learning Objective`, `Evidence of Mastery`, `Misconceptions`, `Instructional Rationale`, `Content`, `Provenance`, `Rules`, `Learner Activity`, `Feedback`, `Starting State`, `Chapter Anchors`) and a self-check are defined in the new `references/microsim-specification-rules.md`. Layout, pixel sizes, colors, control placement and library calls are left to the microsim-generator. The rules come from a 112-MicroSim batch run in which agents reported 450 missing specification details and 49% of the sims had to depart from their spec.
+- **Bloom fields the batch tools can parse** - `**Bloom Level:**` and `**Bloom Verb:**` are separate header lines. The previous inline form, `Learning objective (Bloom level: X; verb: Y):`, could not be parsed, and the tools labeled 109 of 112 sims "Create".
+- **Fixed impossible or conflicting instructions in `content-element-types.md`** - the Bloom list named only four of the six levels, Mermaid edges were required to be clickable (Mermaid cannot do this), a graph example asked for mouse-wheel zoom inside an embedded page, examples hard-coded 500 px iframe placeholders, and an unclosed code block swallowed the MicroSim example.
 
 **Version 1.10 Features:**
 - **Mascot placement rules single-sourced** - Step 2.4 principle 4 no longer carries its own copy of the Chapter 1 self-introduction pattern or the mascot frequency numbers. Both now live in the canonical `$BK_HOME/skills/book-installer/references/mascot-placement-rules.md`, which every skill in the library references instead of restating. This ends the drift that had left conflicting per-chapter counts in two different placement tables.
@@ -78,7 +83,7 @@ Log the start time for the session report.
 
 #### Step 1.2: Indicate Skill Running
 
-Notify the user: "Chapter Content Generator Skill v1.10 running in [parallel/sequential] mode."
+Notify the user: "Chapter Content Generator Skill v1.11 running in [parallel/sequential] mode."
 
 #### Step 1.3: Read Shared Context
 
@@ -321,6 +326,16 @@ NON-TEXT ELEMENTS:
 - Markdown lists and tables: embed directly (blank line before)
 - Diagrams, MicroSims, infographics: use <details markdown="1"> blocks with #### Diagram: header
 
+SPECIFICATIONS (read references/microsim-specification-rules.md first):
+- Use the block template exactly: sim-id, Library, Status, Bloom Level, Bloom Verb and
+  Learning Objective as separate bold header lines
+- State WHAT the learner must learn and prove: Evidence of Mastery, Misconceptions,
+  Instructional Rationale, complete Content (every item written out), Provenance, Rules, Learner Activity,
+  Feedback, Starting State, Chapter Anchors
+- Do NOT specify HOW to build it: no pixel sizes, layout, control placement, colors,
+  breakpoints, library calls or "Implementation:" lines
+- Run the self-check in that file on every specification before writing the chapter
+
 CHAPTERS TO PROCESS:
 [List specific chapter directories with full paths]
 
@@ -344,7 +359,7 @@ title: [Chapter Title]
 description: [Short description]
 generated_by: claude skill chapter-content-generator
 date: [YYYY-MM-DD HH:MM:SS]
-version: 1.09
+version: 1.11
 ---
 
 REPORT when done:
@@ -432,7 +447,7 @@ title: Chapter Title
 description: Short description of title
 generated_by: claude skill chapter-content-generator
 date: YYYY-MM-DD HH-MM-SS
-version: 1.09
+version: 1.11
 ---
 ```
 
@@ -643,9 +658,12 @@ Type: [element-type]
 **Library:** [framework from the search result]<br/>
 **Status:** Reused<br/>
 **Source:** [live_url from the search result]<br/>
-**Source Repo:** [github_url from the search result]
+**Source Repo:** [github_url from the search result]<br/>
+**Bloom Level:** [Remember | Understand | Apply | Analyze | Evaluate | Create]<br/>
+**Bloom Verb:** [one verb from that level's list]<br/>
+**Learning Objective:** The learner will [verb] [the objective as used in this chapter].
 
-Reused from the MicroSim catalog (WHAT match score [what_score]). Learning objective: [the objective as used in this chapter].
+Reused from the MicroSim catalog (WHAT match score [what_score]).
 </details>
 ```
 
@@ -655,40 +673,71 @@ and `extract-sim-specs.py` records them as complete. `Reused` is a terminal life
 state — reused sims never advance through `specified → scaffolded → implemented →
 validated → deployed`; they are already deployed in their source repository.
 
-For each `<details markdown="1">` block element, use this structure:
+For each new `<details markdown="1">` specification, **read
+`references/microsim-specification-rules.md` first** and use its block exactly:
 
 ```markdown
-#### Diagram: [Brief descriptive title]
+#### Diagram: [Title Case Name]
 
 <details markdown="1">
-<summary>[Brief descriptive title]</summary>
-Type: [element-type]
+<summary>[Title Case Name]</summary>
+Type: [microsim | chart | diagram | infographic | timeline | map | workflow | graph-model | causal-loop]
 **sim-id:** [kebab-case-directory-name]<br/>
-**Library:** [p5.js | vis-network | Chart.js | Mermaid | Plotly | Leaflet | vis-timeline]<br/>
-**Status:** Specified
+**Library:** [p5.js | Chart.js | Plotly | Mermaid | vis-network | vis-timeline | Leaflet | venn.js | html]<br/>
+**Status:** Specified<br/>
+**Bloom Level:** [Remember | Understand | Apply | Analyze | Evaluate | Create]<br/>
+**Bloom Verb:** [one verb from that level's list in references/blooms-taxonomy.md]<br/>
+**Learning Objective:** The learner will [verb] [specific content] [condition or criterion].
 
-[Detailed specification following guidelines in references/content-element-types.md]
+**Prerequisites:** [terms the learner needs; each is defined in the prose above this block]
 
-Implementation: [Technology/approach]
+**Evidence of Mastery:** [the learner action that demonstrates the verb, and the rule that decides correct/incorrect]
+
+**Misconceptions:** [wrong ideas the sim should expose and correct, or "none"]
+
+**Instructional Rationale:** [why this kind of activity produces the evidence at this Bloom level]
+
+**Content:** [every item, value, definition and label the learner sees, written out in full]
+
+**Provenance:** [chapter section, file path or URL, synthetic with seed, or illustrative]
+
+**Rules:** [formulas, thresholds with >= or >, ranges as min/max/step/default/unit, tie-breaks, edge cases]
+
+**Learner Activity:** [numbered steps: what the learner does, what changes, what they should notice]
+
+**Feedback:** [items, order, attempts, correctness rule, correct and incorrect messages, when answers are revealed]
+
+**Starting State:** [what the learner sees first, and the question it poses]
+
+**Chapter Anchors:** [every number, name and claim the chapter prose states about this sim, or "none"]
 </details>
 ```
 
-The three structured fields enable machine-readable extraction by batch utilities:
-- **sim-id** — kebab-case directory name (e.g., `angle-type-explorer`), used by `extract-sim-specs.py`
-- **Library** — JavaScript library for CDN selection by `generate-sim-scaffold.py`
-- **Status** — initial lifecycle state (`Specified` for new specs; `Reused` when the reuse check matched an existing MicroSim — a terminal state that downstream batch tools skip)
+Do not add an iframe for a new specification. The microsim-generator inserts it with the correct height after the
+sim is built.
+
+The six header lines are parsed by the batch utilities (`extract-sim-specs.py`,
+`create-microsim-todo-json-files.py`, `generate-sim-scaffold.py`):
+
+- **sim-id** — kebab-case directory name (e.g., `angle-type-explorer`), used for `docs/sims/<sim-id>/`
+- **Library** — one value from the list; selects the generator route and CDN. Free text such as "HTML and CSS" is not recognized and falls back to p5.js
+- **Status** — `Specified` for new specs; `Reused` when the reuse check matched an existing MicroSim (a terminal state the batch tools skip)
+- **Bloom Level** and **Bloom Verb** — separate lines, bare values (`Analyze`, not `Analyze (L4)`)
+- **Learning Objective** — one sentence, followed by a blank line
 
 Do not indent any text within a `<details markdown="1">` block. Do not put any leading spaces or tabs on newlines within a `<details markdown="1">` block.
 
 Make SURE to put the level 4 header with the prefix `#### Diagram:` before the details. This is REQUIRED!
 
-**Specification requirements:**
-- Detailed enough that another skill or developer can implement without additional context
-- Include all visual elements, data, labels, colors, interactions
-- Specify canvas sizes, layout, default parameters
-- Specify that the visual elements must have a responsive design that must respond to window resize events
-- For MicroSims: describe learning objective, controls, visual elements, behavior
-- See `references/content-element-types.md` for complete specification guidelines for each element type
+**Specification requirements** (full rules, examples and self-check in `references/microsim-specification-rules.md`):
+
+- **Objective first.** One measurable objective with one Bloom verb. Evidence of Mastery names an action the Learner Activity actually supports, and a rule that decides whether it is correct.
+- **Complete content.** Write out every item the learner sees. Never "for example", "such as", "etc." or "a bank of 12 cards" followed by four. For anything the learner classifies or answers, give the correct answer and a one-sentence reason, which becomes the feedback.
+- **Sourced content.** Every factual value names its source: chapter section, file path or URL, synthetic with a seed, or illustrative. The sim must label synthetic and illustrative data. Never leave real-world facts (coordinates, dates, statistics) for the generator to invent.
+- **Rules, not descriptions.** Thresholds use `>=` or `>`, every adjustable quantity has min/max/step/default/unit, and defaults sit on the step grid.
+- **Agreement with the chapter.** Every number the prose states about the sim appears identically under Chapter Anchors.
+- **No build instructions.** Leave pixel sizes, canvas height, layout, control placement, breakpoints, colors, fonts, library calls and `Implementation:` lines to the microsim-generator. The exception is a visual property that is itself the content being taught.
+- See `references/content-element-types.md` for what each element type is good for.
 
 **Content structure:**
 
@@ -709,8 +758,8 @@ Make SURE to put the level 4 header with the prefix `#### Diagram:` before the d
   - Student interaction tracking
   - Progress gauging
   - Personalized content recommendations
-- Each interactive element should have clear **Learning objectives:**
-- Reference a section of the 2001 Bloom Taxonomy when you describe a learning objective:
+- Each interactive element has exactly one **Learning Objective**, with its **Bloom Level** and **Bloom Verb** on separate header lines (see the template above)
+- Choose the level from the 2001 Bloom Taxonomy:
    - **Remembering:** Recalling facts, terms, basic concepts, and answers without necessarily understanding their meaning.
    - **Understanding:** Explaining ideas or concepts, demonstrating comprehension by summarizing or rephrasing information.
    - **Applying:** Using acquired knowledge to solve problems in new or unfamiliar situations.
@@ -732,6 +781,12 @@ After generating chapter content, verify all concepts have been covered.
    - Integrate them naturally into existing structure
 5. Update the chapter index.md file with the complete generated content
 6. Make **Absolutely Sure** that the content has been written to the chapter index.md file. Do a word count to make sure that **ALL** the content is present and that the TODO has been removed.
+7. Run the **Self-Check** in `references/microsim-specification-rules.md` on every specification block in the chapter and fix each failure. At minimum, confirm for each block:
+   - the Bloom Level, Bloom Verb and Learning Objective lines are present and consistent
+   - the Evidence of Mastery is possible with the described Learner Activity
+   - every count in the spec matches the items listed in Content
+   - every number matches the chapter prose
+   - the block contains no pixel sizes, layout, colors or `Implementation:` line
 
 **Actions:**
 - Replace the "TODO: Generate Chapter Content" placeholder with generated content
@@ -800,7 +855,7 @@ Export the session information to `logs/chapter-content-generator-YYYY-MM-DD.md`
 ```markdown
 # Chapter Content Generator Session Log
 
-**Skill Version:** 1.09
+**Skill Version:** 1.11
 **Date:** YYYY-MM-DD
 **Execution Mode:** Parallel (6 agents)
 
@@ -838,7 +893,7 @@ Export the session information to `logs/chapter-content-generator-YYYY-MM-DD.md`
 
 Notify the user:
 
-"Chapter Content Generator v1.10 complete!
+"Chapter Content Generator v1.11 complete!
 
 - **Mode:** Parallel (6 agents)
 - **Elapsed time:** X minutes Y seconds
@@ -869,6 +924,18 @@ Comprehensive specifications for all non-text element types (3-11 above). Includ
 
 Load this reference when generating content to ensure proper specification of diagrams, MicroSims, infographics, charts, timelines, maps, workflows, and graph models.
 
+### references/microsim-specification-rules.md
+
+The rules for writing a precise specification block. Includes:
+- The block template with its six machine-readable header lines
+- Rules R1–R14, one per field, each with the failure it prevents and bad/good examples
+- What to leave to the microsim-generator (layout, sizes, colors, library calls)
+- The Type/Library table
+- A self-check to run on every block before finishing a chapter
+- A complete worked example
+
+Load this reference before writing any `<details markdown="1">` specification.
+
 ### references/reading-levels.md
 
 Detailed guidelines for adapting content to different reading levels. Includes:
@@ -883,7 +950,7 @@ Load this reference when determining how to write content at the appropriate rea
 
 ## Best Practices
 
-1. **Always read references:** Load `references/content-element-types.md` and `references/reading-levels.md` before generating content
+1. **Always read references:** Load `references/content-element-types.md`, `references/microsim-specification-rules.md` and `references/reading-levels.md` before generating content
 
 2. **Maintain blank lines:** Always place blank line before markdown lists and tables (MkDocs requirement)
 
@@ -893,7 +960,7 @@ Load this reference when determining how to write content at the appropriate rea
 
 5. **Interactive emphasis:** Prioritize MicroSims and infographics that enable student engagement tracking
 
-6. **Detailed specifications:** Make `<details markdown="1">` blocks comprehensive enough for implementation without additional context
+6. **Precise specifications:** Make each `<details markdown="1">` block complete about *what* the learner must learn and the content needed to teach it, so the generator never has to invent content, rules or feedback. Leave *how* to build it to the generator. See `references/microsim-specification-rules.md`
 
 7. **Concept integration:** Weave concepts together naturally rather than treating them as isolated topics
 
@@ -957,6 +1024,22 @@ Load this reference when determining how to write content at the appropriate rea
 - ❌ Missing concepts from the "Concepts Covered" list
 - ❌ Content too advanced or too simple for reading level
 
+**MicroSim Specifications (HIGH PRIORITY — new in v1.11):**
+- ❌ Writing the Bloom level inside the objective sentence (`Learning objective (Bloom level: X; verb: Y): ...`) -- the batch tools cannot parse it and label the sim "Create"
+- ❌ An objective whose verb is "understand", "learn", "know" or "explore", or that combines two objectives
+- ❌ Naming the kind of content without supplying it ("twelve cards, for example...", "three datasets", "six objectives")
+- ❌ An objective the activity cannot demonstrate (five configuration layers but three choices; "four node shapes" but three defined)
+- ❌ A quiz or check with no item count, attempt rule, correctness rule or feedback text
+- ❌ Thresholds written as "above 0.95" instead of `>= 0.95`; ranges without step or unit; defaults off the step grid
+- ❌ A spec number that differs from the chapter prose (12 types in the spec, 13 in the chapter)
+- ❌ Prescribing layout, pixel sizes, canvas height, colors, control placement, breakpoints or library calls -- these caused most of the self-contradicting specs
+- ❌ Asking for Mermaid edge clicks, a Mermaid `<--` arrow, or mouse-wheel zoom in an embedded sim
+- ❌ Free-text Library values ("HTML and CSS", "Mermaid with a click directive on every node")
+- ✅ Separate `**Bloom Level:**`, `**Bloom Verb:**` and `**Learning Objective:**` lines
+- ✅ Content written out in full, with the correct answer and a one-sentence reason for every item
+- ✅ Every factual value has a Provenance; synthetic and illustrative data are labeled
+- ✅ Evidence of Mastery, Feedback and Chapter Anchors filled in, and the self-check run on every block
+
 **Formatting:**
 - ❌ Missing blank line before lists or tables
 - ❌ Indenting content inside `<details>` blocks
@@ -989,7 +1072,7 @@ Load this reference when determining how to write content at the appropriate rea
 **The agent (using this skill):**
 
 1. Captures start time
-2. Notifies: "Chapter Content Generator Skill v1.10 running in parallel mode."
+2. Notifies: "Chapter Content Generator Skill v1.11 running in parallel mode."
 3. Reads shared context (course description, learning graph, glossary, CONTENT-GENERATION-GUIDE.md)
 4. Determines reading level (e.g., Senior High)
 5. Scans chapter directories, finds 23 chapters needing content
@@ -999,7 +1082,7 @@ Load this reference when determining how to write content at the appropriate rea
 9. Aggregates results from all agents
 10. Captures end time
 11. Writes session log
-12. Reports: "Chapter Content Generator v1.10 complete! Mode: Parallel. Time: 18m 32s. Chapters: 23. Words: ~100,000."
+12. Reports: "Chapter Content Generator v1.11 complete! Mode: Parallel. Time: 18m 32s. Chapters: 23. Words: ~100,000."
 
 ### Sequential Mode
 

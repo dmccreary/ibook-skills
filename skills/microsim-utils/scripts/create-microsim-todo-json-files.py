@@ -55,6 +55,73 @@ def extract_field(text, field_name):
     return None
 
 
+BLOOM_LEVELS = {
+    1: "Remember",
+    2: "Understand",
+    3: "Apply",
+    4: "Analyze",
+    5: "Evaluate",
+    6: "Create",
+}
+
+
+def extract_inline_bloom(text):
+    """Derive (bloom_level, bloom_verb) from Bloom markers written inline
+    rather than as separate "Bloom Level:" fields.
+
+    Supports:
+      1. "Analyze (Bloom L4) — ..."            -> ("Analyze", "Analyze")
+      2. "Trace (Bloom L3-L4) — ..."           -> ("Apply", "Trace")  first level of a range
+      3. "Students will *identify* (Bloom L1: Remember) ..."
+      4. "Learning objective (Bloom's Taxonomy — Applying): ..." -> ("Apply", None)
+    Returns (None, None) when no marker is found.
+    """
+    match = re.search(r"(?:\*?([A-Za-z]+)\*?\s+)?\(Bloom\s+L([1-6])", text)
+    if match:
+        verb = match.group(1).capitalize() if match.group(1) else None
+        return BLOOM_LEVELS[int(match.group(2))], verb
+    match = re.search(r"Bloom's Taxonomy\s*[—–-]\s*([A-Za-z]+)", text)
+    if match:
+        # "Applying" -> "Apply", "Analyzing" -> "Analyze" (first 5 letters are unique per level)
+        prefix = match.group(1).lower()[:5]
+        for level in BLOOM_LEVELS.values():
+            if level.lower()[:5] == prefix:
+                return level, None
+    return None, None
+
+
+def canonical_bloom_level(word):
+    """Map "Understand", "understanding", "Applying" etc. to a BLOOM_LEVELS name."""
+    prefix = word.strip().lower()[:5]
+    for level in BLOOM_LEVELS.values():
+        if level.lower()[:5] == prefix:
+            return level
+    return None
+
+
+def extract_qualifier_bloom(qualifier):
+    """Derive (bloom_level, bloom_verb) from the parenthesized qualifier in
+    "Learning objective (...): ...".
+
+    Supports:
+      1. "Bloom level: Understand; verb: summarize" -> ("Understand", "Summarize")
+      2. "Analyze, distinguish"                     -> ("Analyze", "Distinguish")
+    Returns (None, None) when the qualifier names no Bloom level.
+    """
+    level_match = re.search(r"Bloom level:\s*([A-Za-z]+)", qualifier, re.IGNORECASE)
+    if level_match:
+        level = canonical_bloom_level(level_match.group(1))
+        verb_match = re.search(r"verb:\s*([^;]+)", qualifier, re.IGNORECASE)
+        verb = verb_match.group(1) if verb_match else None
+    else:
+        parts = [p.strip() for p in re.split(r"[,;]", qualifier)]
+        level = canonical_bloom_level(parts[0])
+        verb = parts[1] if len(parts) > 1 else None
+    if not level:
+        return None, None
+    return level, verb.strip().capitalize() if verb else None
+
+
 def extract_diagrams_from_chapter(filepath, docs_dir=None):
     """Parse a chapter index.md and return a list of diagram spec dicts.
 
@@ -144,10 +211,32 @@ def extract_diagrams_from_chapter(filepath, docs_dir=None):
                 details_text,
                 re.DOTALL | re.MULTILINE | re.IGNORECASE,
             )
+        # Parenthesized Bloom qualifier between "Learning objective" and the colon:
+        #   "Learning objective (Bloom level: Understand; verb: summarize): ..."
+        #   "Learning objective (Analyze, distinguish): ..."
+        qualifier_match = None
+        if not lo_match:
+            qualifier_match = re.search(
+                r"^Learning Objective\s*\(([^)]*)\):\s*(.+?)(?:\n\n|\n[A-Z])",
+                details_text,
+                re.DOTALL | re.MULTILINE | re.IGNORECASE,
+            )
         if lo_match:
             learning_objective = lo_match.group(1).strip()
+        elif qualifier_match:
+            learning_objective = qualifier_match.group(2).strip()
+            if not bloom_level:
+                bloom_level, qualifier_verb = extract_qualifier_bloom(qualifier_match.group(1))
+                bloom_verb = bloom_verb or qualifier_verb
         else:
             learning_objective = extract_field(details_text, "Learning Objective")
+
+        # Newer specs put the Bloom level inline in the learning objective
+        # instead of a separate "Bloom Level:" field.
+        if not bloom_level:
+            inline_level, inline_verb = extract_inline_bloom(details_text)
+            bloom_level = inline_level
+            bloom_verb = bloom_verb or inline_verb
 
         # Extract the iframe src to see if it references a real path
         iframe_match = re.search(r'<iframe\s+src="([^"]+)"', body)
