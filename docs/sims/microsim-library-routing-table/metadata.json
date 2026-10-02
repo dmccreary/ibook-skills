@@ -36,7 +36,7 @@
     "Leaflet",
     "Mermaid"
   ],
-  "canvasHeight": 500,
+  "canvasHeight": 535,
   "educational": {
     "gradeLevel": [
       "Undergraduate",
@@ -63,7 +63,7 @@
     "version": "10",
     "canvasDimensions": {
       "width": "responsive",
-      "height": 500
+      "height": 535
     },
     "responsive": true,
     "dependencies": [

@@ -11,7 +11,7 @@ quality_score: 100
 
 # MicroSim Library Routing Table
 
-<iframe src="main.html" height="502px" width="100%" scrolling="no"></iframe>
+<iframe src="main.html" height="537px" width="100%" scrolling="no"></iframe>
 
 [Run the MicroSim Library Routing Table MicroSim Fullscreen](./main.html){ .md-button .md-button--primary }
 
@@ -65,7 +65,7 @@ You can add this MicroSim to any web page by adding this to your HTML:
 
 ```html
 <iframe src="https://dmccreary.github.io/ibook-skills/sims/microsim-library-routing-table/main.html"
-        height="502px"
+        height="537px"
         width="100%"
         scrolling="no"></iframe>
 ```

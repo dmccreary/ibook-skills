@@ -1,5 +1,5 @@
 // MicroSim Library Routing Table - Mermaid flowchart with a routing exercise
-// CANVAS_HEIGHT: 500
+// CANVAS_HEIGHT: 535
 // Shows how the microsim-generator meta-skill routes a request to one of
 // several visualization libraries by the trigger keywords in the request.
 // The reader is given a request and applies the routing table: click the
