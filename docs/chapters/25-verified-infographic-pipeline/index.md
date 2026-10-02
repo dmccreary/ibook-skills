@@ -64,7 +64,7 @@ Asking a model to invent facts and render them as a finished poster in the same 
 
 #### Diagram: The Eight-Phase Verified Infographic Pipeline
 
-<iframe src="../../sims/verified-infographic-pipeline-phases/main.html" width="100%" height="440px" scrolling="no"></iframe>
+<iframe src="../../sims/verified-infographic-pipeline-phases/main.html" width="100%" height="537px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>The Eight-Phase Verified Infographic Pipeline</summary>

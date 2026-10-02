@@ -1,0 +1,304 @@
+/* Book Launch Checklist - layout and styling
+   Fixed-height box: title row with progress and buttons, then the
+   top-to-bottom Mermaid checklist on the left and the shared infobox panel on
+   the right. The height of <main> must equal the CANVAS_HEIGHT comment in
+   book-launch-checklist.js. */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    box-sizing: border-box;
+    height: 490px;
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    border: 1px solid silver;
+    overflow: hidden;
+}
+
+.sim-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 12px;
+    padding: 8px 14px 6px 14px;
+}
+
+.sim-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: normal;
+    color: #111;
+}
+
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stepper button {
+    font-size: 15px;
+    padding: 3px 12px;
+    cursor: pointer;
+}
+
+.stepper button:disabled {
+    cursor: default;
+}
+
+.step-label {
+    font-size: 15px;
+    color: #1f2937;
+    min-width: 104px;
+    text-align: right;
+}
+
+/* Checklist on the left, infobox on the right */
+.body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    border-top: 1px solid silver;
+}
+
+.diagram-column {
+    flex: 0 0 45%;
+    box-sizing: border-box;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 8px 6px 6px 6px;
+}
+
+.diagram {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.diagram svg {
+    max-height: 440px;
+    max-width: 100%;
+}
+
+.diagram .node {
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.diagram .node:hover rect {
+    filter: brightness(1.12);
+}
+
+.diagram .node:focus {
+    outline: none;
+}
+
+/* The selected node gets a dark halo. (Mermaid writes each node's own stroke
+   as an inline !important style, so the highlight is a filter, not a stroke.) */
+.diagram .node.selected,
+.diagram .node:focus-visible {
+    filter: drop-shadow(0 0 1px #111) drop-shadow(0 0 3px #111);
+}
+
+/* Publish, before the six confirmations are checked */
+.diagram .node.locked {
+    opacity: 0.45;
+}
+
+/* Legend under the checklist */
+.legend {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px 14px;
+    padding-top: 4px;
+    font-size: 14px;
+    color: #334155;
+}
+
+.swatch {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+    width: 16px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.swatch.todo {
+    background-color: #00796b;
+}
+
+.swatch.done {
+    background-color: #2e7d32;
+    outline: 2px solid #1b5e20;
+    outline-offset: -2px;
+}
+
+.swatch.publish {
+    background-color: #e65100;
+}
+
+/* Shared infobox panel beside the checklist */
+.infobox {
+    flex: 1 1 55%;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 12px 14px;
+    background-color: white;
+    border-left: 1px solid silver;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #1f2937;
+    overflow: hidden;
+}
+
+.infobox h2 {
+    margin: 6px 0 6px 0;
+    font-size: 19px;
+    color: #111827;
+}
+
+.infobox p {
+    margin: 0 0 8px 0;
+}
+
+.infobox .label {
+    font-weight: bold;
+}
+
+.infobox .note {
+    color: #475569;
+}
+
+.infobox .question {
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.infobox .source {
+    font-style: italic;
+    color: #475569;
+}
+
+/* The two candidate reasons */
+.answer {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 8px 0;
+    padding: 7px 10px;
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.35;
+    text-align: left;
+    color: #111827;
+    background-color: #f1f5f9;
+    border: 1px solid #64748b;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.answer:hover:not(:disabled) {
+    background-color: #e0f2f1;
+    border-color: #00796b;
+}
+
+.answer:disabled {
+    color: #64748b;
+    background-color: #f8fafc;
+    border-style: dashed;
+    text-decoration: line-through;
+    cursor: default;
+}
+
+.feedback.wrong {
+    color: #9a3412;
+}
+
+/* State of the selected step */
+.badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #e2e8f0;
+    color: #1f2937;
+}
+
+.badge.done {
+    background-color: #2e7d32;
+    color: white;
+}
+
+.badge.warn {
+    background-color: #ffc107;
+    color: #2b1d00;
+}
+
+/* Narrow iframes: smaller type, narrower checklist column */
+@media (max-width: 620px) {
+    .sim-header h1 {
+        font-size: 18px;
+    }
+    .stepper button,
+    .step-label {
+        font-size: 13px;
+    }
+    .stepper button {
+        padding: 3px 8px;
+    }
+    .step-label {
+        min-width: 0;
+    }
+    .diagram-column {
+        flex-basis: 40%;
+        padding: 6px 2px 4px 2px;
+    }
+    .diagram {
+        align-items: flex-start;
+    }
+    .legend {
+        font-size: 11px;
+        gap: 1px 8px;
+    }
+    .swatch {
+        width: 11px;
+        height: 9px;
+        margin-right: 3px;
+    }
+    .infobox {
+        font-size: 12.5px;
+        line-height: 1.3;
+        padding: 8px 8px;
+    }
+    .infobox h2 {
+        font-size: 15px;
+        margin: 4px 0;
+    }
+    .infobox p {
+        margin-bottom: 5px;
+    }
+    .answer {
+        font-size: 12.5px;
+        line-height: 1.25;
+        padding: 5px 7px;
+        margin-bottom: 6px;
+    }
+    .badge {
+        font-size: 11px;
+        padding: 1px 7px;
+    }
+}

@@ -83,7 +83,7 @@ A **meta-skill** is a skill whose primary job is to route a request to one of se
 
 #### Diagram: Meta-Skill Routing Table
 
-<iframe src="../../sims/meta-skill-routing-table/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<iframe src="../../sims/meta-skill-routing-table/main.html" width="100%" height="552px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Meta-Skill Routing Table</summary>

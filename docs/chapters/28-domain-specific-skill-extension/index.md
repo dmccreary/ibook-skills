@@ -87,7 +87,7 @@ The second extension simulates hands-on assembly. A **solderless breadboard** is
 
 #### Diagram: Breadboard Tie Points and Animated Current Flow
 
-<iframe src="../../sims/breadboard-tie-points-current-flow/main.html" width="100%" height="520px" scrolling="no"></iframe>
+<iframe src="../../sims/breadboard-tie-points-current-flow/main.html" width="100%" height="522px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Breadboard Tie Points and Animated Current Flow</summary>

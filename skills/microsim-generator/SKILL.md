@@ -604,7 +604,7 @@ Scores each MicroSim on a 100-point rubric:
 | Category | Points | Checks |
 |----------|--------|--------|
 | main.html | 10 | Exists (5), schema meta tag (3), `<main>` tag (2) |
-| metadata.json | 30 | Present (10), required fields (10), educational (5), pedagogical (5) |
+| metadata.json | 30 | Present (10), required fields (10), educational (5), pedagogical (5) — in the schema layout these are `microsim.educational` and `microsim.usage` |
 | index.md | 35 | Title (2), YAML (3), images (5), iframe (10), fullscreen (5), example (5), description (5) |
 | Screenshot | 5 | PNG file exists |
 | Lesson Plan | 10 | Section present in index.md |

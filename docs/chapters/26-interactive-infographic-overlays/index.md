@@ -67,7 +67,7 @@ When a label needs to sit outside the illustration itself, **leader line renderi
 
 #### Diagram: Callout Marker Anatomy
 
-<iframe src="../../sims/callout-marker-anatomy/main.html" width="100%" height="460px" scrolling="no"></iframe>
+<iframe src="../../sims/callout-marker-anatomy/main.html" width="100%" height="452px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Callout Marker Anatomy</summary>

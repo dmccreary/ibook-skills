@@ -70,7 +70,7 @@ Before an LLM can predict anything, it has to break your text into pieces it can
 
 #### Diagram: Tokenization Visualizer
 
-<iframe src="../../sims/tokenization-visualizer/main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="../../sims/tokenization-visualizer/main.html" width="100%" height="522px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Tokenization Visualizer</summary>
@@ -122,7 +122,7 @@ Every model also has a hard limit on how much text it can consider at once, call
 
 #### Diagram: Context Window Budget
 
-<iframe src="../../sims/context-window-budget/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<iframe src="../../sims/context-window-budget/main.html" width="100%" height="517px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Context Window Budget</summary>
@@ -183,7 +183,7 @@ Send the exact same prompt to a model twice and you can get two different answer
 
 #### Diagram: Prompt and Response Flow
 
-<iframe src="../../sims/prompt-response-flow/main.html" width="100%" height="420px" scrolling="no"></iframe>
+<iframe src="../../sims/prompt-response-flow/main.html" width="100%" height="442px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Prompt and Response Flow</summary>

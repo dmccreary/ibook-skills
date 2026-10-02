@@ -109,7 +109,10 @@ nav:
     - Bloom's Taxonomy Application Distribution in Quality Courses: sims/bloom-s-taxonomy-application-distribution-in-quality-courses/index.md
     - Bloom's Taxonomy Distribution Analyzer Chart: sims/bloom-s-taxonomy-distribution-analyzer-chart/index.md
     - Book Build Workflow: sims/book-build-workflow/index.md
+    - Book Launch Checklist: sims/book-launch-checklist/index.md
     - Book Levels MicroSim: sims/book-levels/index.md
+    - Breadboard Tie Points and Animated Current Flow: sims/breadboard-tie-points-current-flow/index.md
+    - Callout Marker Anatomy: sims/callout-marker-anatomy/index.md
     - Certificate of Completion Generator: sims/certificate-generator/index.md
     - Chapter Content Generation Workflow Timeline: sims/chapter-content-generation-timeline/index.md
     - Chapter Index File Structure: sims/chapter-index-structure/index.md
@@ -127,6 +130,7 @@ nav:
     - Concept Label Length Optimization: sims/concept-label-length-optimization/index.md
     - Concept Label Quality Checklist: sims/concept-label-quality-checklist/index.md
     - ConceptID vs ConceptLabel Comparison: sims/conceptid-vs-conceptlabel-comparison/index.md
+    - Context Window Budget: sims/context-window-budget/index.md
     - Course Description Quality Impact on Workflow: sims/course-description-quality-workflow/index.md
     - Course Description Quality Rubric Visualization: sims/course-description-quality-rubric-visualization/index.md
     - Cover Image Generation Workflow: sims/cover-image-workflow/index.md
@@ -141,8 +145,10 @@ nav:
     - "Evolution of AI: From Neural Networks to Claude Code": sims/claude-code-timeline/index.md
     - FAQ Question Pattern Analysis Workflow: sims/faq-pattern-analysis/index.md
     - Five Levels of Textbook Intelligence Visual Model: sims/five-levels-of-textbook-intelligence-visual-model/index.md
+    - From Hook to Dashboard: sims/hook-to-dashboard-pipeline/index.md
     - Git Branching and Merging Visualization MicroSim: sims/git-branching-and-merging-visualization-microsim/index.md
     - Git Workflow for Skill Development: sims/git-workflow-skill-development/index.md
+    - Idempotent Script Simulator: sims/idempotent-script-simulator/index.md
     - Install Book Environment Dependencies: sims/install-book-env/index.md
     - Interactive Directory Navigation Practice MicroSim: sims/interactive-directory-navigation-practice-microsim/index.md
     - Interactive Exercise Generator MicroSim: sims/interactive-exercise-generator-microsim/index.md
@@ -160,17 +166,22 @@ nav:
     - Lower-Order vs Higher-Order Thinking Skills: sims/lower-order-vs-higher-order-thinking-skills/index.md
     - Major World Cities: sims/test-world-cities/index.md
     - Material Theme Features Interactive Comparison: sims/material-theme-features-interactive-comparison/index.md
+    - Meta-Skill Routing Table: sims/meta-skill-routing-table/index.md
     - MicroSim Design Quality Checklist: sims/microsim-design-quality-checklist/index.md
     - MicroSim File Relationship Diagram: sims/microsim-file-relationship-diagram/index.md
+    - MicroSim Library Routing Table: sims/microsim-library-routing-table/index.md
     - MkDocs Build Process Workflow: sims/mkdocs-build-process/index.md
     - MkDocs GitHub Pages Deployment Workflow: sims/mkdocs-github-pages-deployment/index.md
     - Terminal Nodes Identification Chart: sims/orphaned-nodes-identification/index.md
     - p5.js Architecture and Execution Model: sims/p5js-architecture/index.md
     - Permission Bits Visual Infographic: sims/permission-bits-visual-infographic/index.md
+    - Prompt and Response Flow: sims/prompt-response-flow/index.md
     - Prompt Engineering Iterative Refinement Workflow: sims/prompt-engineering-iterative-refinement-workflow/index.md
+    - Pronounce Button and Streaming Playback: sims/pronounce-button-demo/index.md
     - Python Learning Graph Processing Pipeline: sims/python-learning-graph-processing-pipeline/index.md
     - Responsive Iframe Embedding MicroSim: sims/responsive-iframe-embedding-microsim/index.md
     - Security Zones Diagram: sims/security-zones-diagram/index.md
+    - Serial Versus Parallel Cost Calculator: sims/serial-versus-parallel-cost-calculator/index.md
     - Sine Function Visualization: sims/sine-function-plot/index.md
     - Skill Context Window: sims/skill-context-window/index.md
     - Skill Development Priority Matrix Visualization: sims/skill-impact-chart/index.md
@@ -185,13 +196,18 @@ nav:
     - Skills vs Commands Decision Tree: sims/skills-vs-commands-decision-tree/index.md
     - Taxonomy Distribution Pie Chart: sims/taxonomy-distribution-pie/index.md
     - Terminal Workflow for Textbook Development: sims/terminal-workflow-textbook/index.md
+    - Textbook Generation Pipeline: sims/textbook-generation-pipeline/index.md
+    - The Eight-Phase Verified Infographic Pipeline: sims/verified-infographic-pipeline-phases/index.md
     - Three-Color DFS Cycle Detection: sims/three-color-dfs/index.md
     - Token Consumption Timeline for Complete Textbook Project: sims/token-consumption-timeline-for-complete-textbook-project/index.md
+    - Token Waste Reinforcing Loop: sims/token-waste-reinforcing-loop/index.md
+    - Tokenization Visualizer: sims/tokenization-visualizer/index.md
     - Topic-to-Concept Expansion Example: sims/topic-to-concept-expansion-example/index.md
     - Topic-to-Concept Expansion Process: sims/topic-to-concept-expansion-process/index.md
     - Transformer Architecture Diagram: sims/transformer-architecture-diagram/index.md
     - VS Code Interface Layout for Textbook Development: sims/vs-code-interface-layout-for-textbook-development/index.md
     - "Worked Example: Determining Reading Level from Course Description": sims/worked-example-determining-reading-level-from-course-description/index.md
+    - xAPI Statement Builder: sims/xapi-statement-builder/index.md
 
   - Slides:
     - List of Slide Decks: slides/index.md

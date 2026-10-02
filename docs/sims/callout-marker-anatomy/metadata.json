@@ -1,0 +1,126 @@
+{
+  "title": "Callout Marker Anatomy",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Interactive Infographic Overlays",
+    "Callout Markers",
+    "Leader Lines",
+    "Annotation-Free Illustration",
+    "Data-Driven Diagrams"
+  ],
+  "description": "A textless placeholder illustration of a sun, a mountain, and a lake carries three numbered markers, each joined by a leader line to a label outside the illustration. A table shows the x and y coordinate stored for each marker as a percentage of the image width and height. Dragging a marker updates its stored coordinate live, showing that marker position is data rather than pixels. A checkbox turns the leader lines on and off.",
+  "date": "2026-10-02",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "p5.js",
+  "bloomLevel": "Understand",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "diagram",
+    "simulation",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "callout marker coordinates",
+    "editable marker positions",
+    "leader line rendering",
+    "annotation-free illustration",
+    "interactive infographic overlay",
+    "callout overlay engine",
+    "data.json"
+  ],
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Stored marker coordinates, leader lines, and labels in an infographic overlay",
+    "learningObjectives": [
+      "Explain how a stored marker coordinate, a leader line, and a label work together on an annotation-free illustration.",
+      "Explain why a marker position is stored as a percentage of the image size.",
+      "Describe how to correct a misplaced marker without regenerating the illustration."
+    ],
+    "bloomsTaxonomy": "Understand",
+    "bloomVerb": "Explain",
+    "duration": "10 minutes",
+    "prerequisites": [
+      "Knows what an interactive infographic overlay and an annotation-free illustration are",
+      "Can read a small table of numbers"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 450
+    },
+    "responsive": true,
+    "dependencies": [
+      "p5.js 1.11.10 (CDN)"
+    ],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": false
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "drag",
+        "label": "Numbered marker",
+        "description": "Drag any of the three markers to a new position on the illustration; its stored x and y update in the table while it moves"
+      },
+      {
+        "type": "click",
+        "label": "Label",
+        "description": "Selects that label's marker and highlights its row in the table"
+      },
+      {
+        "type": "checkbox",
+        "label": "Show leader lines",
+        "description": "Turns the leader lines between markers and labels on and off (on by default)"
+      },
+      {
+        "type": "button",
+        "label": "Reset Positions",
+        "description": "Restores the three default coordinates"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Direct manipulation of stored coordinates",
+    "equations": [
+      "x = (pointer x - image left edge) / image width x 100",
+      "y = (pointer y - image top edge) / image height x 100"
+    ],
+    "assumptions": [
+      "Coordinates are percentages from 0 to 100, measured from the top-left corner of the image, as in the overlay data.json format",
+      "The illustration is a placeholder drawn with shapes, not a generated image"
+    ],
+    "limitations": [
+      "Does not show the overlay engine's explore, quiz, or edit modes",
+      "Labels stay in a fixed order beside the illustration"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Concrete data visibility with direct manipulation",
+    "teachingStrategy": "The learner drags a marker and watches its stored value change, which makes the idea that position is data tangible",
+    "keyQuestions": [
+      "What changes when a marker is dragged: the picture or the data?",
+      "What does a leader line add when a label sits outside the illustration?"
+    ],
+    "commonMisconceptions": [
+      "The labels and markers are part of the generated picture",
+      "A misplaced label can only be fixed by regenerating the image"
+    ],
+    "assessmentOpportunities": [
+      "Predict the coordinate that places a marker on a named feature, then check by dragging"
+    ]
+  },
+  "chapter": "26-interactive-infographic-overlays"
+}

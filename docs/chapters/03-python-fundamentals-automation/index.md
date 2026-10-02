@@ -121,7 +121,7 @@ Two properties make a script trustworthy enough to fold into an automated pipeli
 
 #### Diagram: Idempotent Script Simulator
 
-<iframe src="../../sims/idempotent-script-simulator/main.html" width="100%" height="420px" scrolling="no"></iframe>
+<iframe src="../../sims/idempotent-script-simulator/main.html" width="100%" height="482px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Idempotent Script Simulator</summary>

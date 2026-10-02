@@ -1,0 +1,138 @@
+{
+  "title": "Pronounce Button and Streaming Playback",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Text-to-Speech",
+    "Audio Streaming Playback",
+    "Pronounce Button",
+    "Intelligent Textbook Media"
+  ],
+  "description": "Three glossary terms each have a pronounce button. Selecting one starts a timing simulation with two progress bars for the same audio clip: streaming playback, where the playback position starts moving as soon as the first part of the file arrives, and download-first, where nothing plays until the whole file has arrived. Each bar shows a Downloaded marker, a Playback Position marker, and its time to first sound. A checkbox simulates a slow connection. No sound is played; all timings are example values.",
+  "date": "2026-10-02",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "p5.js",
+  "bloomLevel": "Apply",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "simulation",
+    "animation",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "pronounce button",
+    "audio streaming playback",
+    "text-to-speech narration",
+    "buffering",
+    "time to first sound",
+    "glossary"
+  ],
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Streaming playback of generated audio",
+    "learningObjectives": [
+      "Demonstrate how clicking a pronounce button begins audio streaming playback before the full narration has loaded.",
+      "Compare the time to first sound for streaming playback and for waiting for a full download.",
+      "Explain why the playback position can never pass the downloaded marker."
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "Demonstrate",
+    "duration": "10 minutes",
+    "prerequisites": [
+      "Has read the definitions of text-to-speech narration, audio streaming playback, and pronounce button",
+      "Knows that a file takes time to download"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 500
+    },
+    "responsive": true,
+    "dependencies": [
+      "p5.js 1.11.10 (CDN)"
+    ],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "button",
+        "label": "GraphRAG",
+        "description": "Pronounce button: starts the simulated clip for the term GraphRAG"
+      },
+      {
+        "type": "button",
+        "label": "idempotent",
+        "description": "Pronounce button: starts the simulated clip for the term idempotent"
+      },
+      {
+        "type": "button",
+        "label": "Schemdraw",
+        "description": "Pronounce button: starts the simulated clip for the term Schemdraw"
+      },
+      {
+        "type": "click",
+        "label": "Speaker icon",
+        "description": "The speaker icon drawn beside each glossary term starts that term's clip, the same as its button"
+      },
+      {
+        "type": "checkbox",
+        "label": "Simulate slow connection",
+        "description": "Switches to a connection that delivers audio more slowly than it plays, and restarts the clip (off by default)"
+      },
+      {
+        "type": "hover",
+        "label": "Progress bar",
+        "description": "Shows an infobox explaining streaming playback or waiting for a full download"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Timing model of download and playback",
+    "equations": [
+      "downloaded(t) = min(clip length, first chunk + (t - start delay) x download rate)",
+      "streaming playback advances at 1 second per second and never passes downloaded(t)",
+      "download-first playback starts when downloaded(t) equals the clip length"
+    ],
+    "assumptions": [
+      "The clip is 4 seconds long and the first chunk holds 0.25 seconds of audio",
+      "Normal connection: 0.2 second start delay, 4.0 seconds of audio received per second",
+      "Slow connection: 0.6 second start delay, 0.8 seconds of audio received per second",
+      "A stalled streaming player resumes once 0.4 seconds of audio is buffered"
+    ],
+    "limitations": [
+      "No sound is played and nothing is downloaded",
+      "All timings are example values, not measurements of any text-to-speech service",
+      "Does not model variable network speed"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Triggered demonstration with side-by-side comparison",
+    "teachingStrategy": "The learner triggers playback and compares two delivery methods on the same clip, then changes the connection speed and compares again",
+    "keyQuestions": [
+      "When does the listener hear the first sound on each timeline?",
+      "Why can the playback position never pass the downloaded marker?"
+    ],
+    "commonMisconceptions": [
+      "Streaming makes the audio file download faster",
+      "A player can play parts of a file that have not arrived yet"
+    ],
+    "assessmentOpportunities": [
+      "Predict which time to first sound changes more on a slow connection, then test the prediction"
+    ]
+  },
+  "chapter": "27-slide-decks-stories-audio-media"
+}

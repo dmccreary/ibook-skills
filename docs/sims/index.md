@@ -79,11 +79,29 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
 
     Interactive MicroSim for intelligent textbook learning workflows.
 
+-   **[Book Launch Checklist](./book-launch-checklist/index.md)**
+
+    ![Book Launch Checklist](./book-launch-checklist/book-launch-checklist.png)
+
+    Work down the launch checklist in order and choose the reason each step must pass before the next.
+
 -   **[Book Levels MicroSim](./book-levels/index.md)**
 
     ![Book Levels MicroSim](./book-levels/book-levels.png)
 
     Interactive p5.js visualization showing the five levels of intelligent textbooks
+
+-   **[Breadboard Tie Points and Animated Current Flow](./breadboard-tie-points-current-flow/index.md)**
+
+    ![Breadboard Tie Points and Animated Current Flow](./breadboard-tie-points-current-flow/breadboard-tie-points-current-flow.png)
+
+    Click a breadboard hole to see which holes share its strip, then complete an LED circuit and watch the current flow.
+
+-   **[Callout Marker Anatomy](./callout-marker-anatomy/index.md)**
+
+    ![Callout Marker Anatomy](./callout-marker-anatomy/callout-marker-anatomy.png)
+
+    Drag a numbered marker on a textless illustration and watch its stored x and y coordinate change.
 
 -   **[Certificate of Completion Generator](./certificate-generator/index.md)**
 
@@ -187,6 +205,12 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
 
     Interactive p5.js MicroSim for conceptid vs conceptlabel comparison.
 
+-   **[Context Window Budget](./context-window-budget/index.md)**
+
+    ![Context Window Budget](./context-window-budget/context-window-budget.png)
+
+    Check items on and off to spend an example 50,000-token context window and see what happens to content past the limit.
+
 -   **[Course Description Quality Impact on Workflow](./course-description-quality-workflow/index.md)**
 
     ![Course Description Quality Impact on Workflow](./course-description-quality-workflow/course-description-quality-workflow.png)
@@ -271,6 +295,12 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
 
     Interactive p5.js MicroSim for five levels of textbook intelligence visual model.
 
+-   **[From Hook to Dashboard](./hook-to-dashboard-pipeline/index.md)**
+
+    ![From Hook to Dashboard](./hook-to-dashboard-pipeline/hook-to-dashboard-pipeline.png)
+
+    Follow one skill-run event from a hook, into a JSONL log, and out as a row of a token usage dashboard.
+
 -   **[Git Branching and Merging Visualization MicroSim](./git-branching-and-merging-visualization-microsim/index.md)**
 
     ![Git Branching and Merging Visualization MicroSim](./git-branching-and-merging-visualization-microsim/git-branching-and-merging-visualization-microsim.png)
@@ -282,6 +312,12 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
     ![Git Workflow for Skill Development](./git-workflow-skill-development/git-workflow-skill-development.png)
 
     Interactive Mermaid visualization showing git workflow for skill development
+
+-   **[Idempotent Script Simulator](./idempotent-script-simulator/index.md)**
+
+    ![Idempotent Script Simulator](./idempotent-script-simulator/idempotent-script-simulator.png)
+
+    Run an idempotent script and a non-idempotent script several times and compare the end state of their files.
 
 -   **[Install Book Environment Dependencies](./install-book-env/index.md)**
 
@@ -379,6 +415,12 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
 
     Interactive p5.js MicroSim for material theme features interactive comparison.
 
+-   **[Meta-Skill Routing Table](./meta-skill-routing-table/index.md)**
+
+    ![Meta-Skill Routing Table](./meta-skill-routing-table/meta-skill-routing-table.png)
+
+    Type a request and watch a meta-skill match its trigger keywords to exactly one on-demand guide.
+
 -   **[MicroSim Design Quality Checklist](./microsim-design-quality-checklist/index.md)**
 
     ![MicroSim Design Quality Checklist](./microsim-design-quality-checklist/microsim-design-quality-checklist.png)
@@ -391,6 +433,12 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
 
     Interactive p5.js visualization showing microsim file relationship diagram
 
+-   **[MicroSim Library Routing Table](./microsim-library-routing-table/index.md)**
+
+    ![MicroSim Library Routing Table](./microsim-library-routing-table/microsim-library-routing-table.png)
+
+    Read a request, find its trigger keywords, and click the visualization library the MicroSim Generator should route it to.
+
 -   **[MkDocs Build Process Workflow](./mkdocs-build-process/index.md)**
 
     ![MkDocs Build Process Workflow](./mkdocs-build-process/mkdocs-build-process.png)
@@ -402,6 +450,18 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
     ![MkDocs GitHub Pages Deployment Workflow](./mkdocs-github-pages-deployment/mkdocs-github-pages-deployment.png)
 
     Interactive Mermaid visualization showing mkdocs github pages deployment workflow
+
+-   **[Prompt and Response Flow](./prompt-response-flow/index.md)**
+
+    ![Prompt and Response Flow](./prompt-response-flow/prompt-response-flow.png)
+
+    Clickable flowchart of how a system prompt and a user prompt combine in one request, and why the response can vary.
+
+-   **[Serial Versus Parallel Cost Calculator](./serial-versus-parallel-cost-calculator/index.md)**
+
+    ![Serial Versus Parallel Cost Calculator](./serial-versus-parallel-cost-calculator/serial-versus-parallel-cost-calculator.png)
+
+    Calculate the token cost of a task run by one agent versus one agent per sub-task.
 
 -   **[Terminal Nodes Identification Chart](./orphaned-nodes-identification/index.md)**
 
@@ -426,6 +486,12 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
     ![Prompt Engineering Iterative Refinement Workflow](./prompt-engineering-iterative-refinement-workflow/prompt-engineering-iterative-refinement-workflow.png)
 
     Interactive Mermaid MicroSim for prompt engineering iterative refinement workflow.
+
+-   **[Pronounce Button and Streaming Playback](./pronounce-button-demo/index.md)**
+
+    ![Pronounce Button and Streaming Playback](./pronounce-button-demo/pronounce-button-demo.png)
+
+    Select a pronounce button and compare streaming playback with waiting for the whole audio file to download.
 
 -   **[Python Learning Graph Processing Pipeline](./python-learning-graph-processing-pipeline/index.md)**
 
@@ -529,6 +595,18 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
 
     Interactive Mermaid visualization showing terminal workflow for textbook development
 
+-   **[Textbook Generation Pipeline](./textbook-generation-pipeline/index.md)**
+
+    ![Textbook Generation Pipeline](./textbook-generation-pipeline/textbook-generation-pipeline.png)
+
+    Step through the stages that turn a course description into a published textbook, including the two quality gates.
+
+-   **[The Eight-Phase Verified Infographic Pipeline](./verified-infographic-pipeline-phases/index.md)**
+
+    ![The Eight-Phase Verified Infographic Pipeline](./verified-infographic-pipeline-phases/verified-infographic-pipeline-phases.png)
+
+    Step through the eight phases that verify every claim in text before a single image is generated.
+
 -   **[Three-Color DFS Cycle Detection](./three-color-dfs/index.md)**
 
     ![Three-Color DFS Cycle Detection](./three-color-dfs/three-color-dfs.png)
@@ -540,6 +618,18 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
     ![Token Consumption Timeline for Complete Textbook Project](./token-consumption-timeline-for-complete-textbook-project/token-consumption-timeline-for-complete-textbook-project.png)
 
     Interactive vis-timeline MicroSim for token consumption timeline for complete textbook project.
+
+-   **[Token Waste Reinforcing Loop](./token-waste-reinforcing-loop/index.md)**
+
+    ![Token Waste Reinforcing Loop](./token-waste-reinforcing-loop/token-waste-reinforcing-loop.png)
+
+    Trace one change around a reinforcing loop and a balancing loop built from the book's token-waste example.
+
+-   **[Tokenization Visualizer](./tokenization-visualizer/index.md)**
+
+    ![Tokenization Visualizer](./tokenization-visualizer/tokenization-visualizer.png)
+
+    Type a sentence and compare its word boxes with its token chips, using an illustrative rule-based tokenizer.
 
 -   **[Topic-to-Concept Expansion Example](./topic-to-concept-expansion-example/index.md)**
 
@@ -570,5 +660,11 @@ Interactive Micro Simulations to help students learn intelligent textbook develo
     ![Worked Example: Determining Reading Level from Course Description](./worked-example-determining-reading-level-from-course-description/worked-example-determining-reading-level-from-course-description.png)
 
     Interactive p5.js MicroSim for worked example: determining reading level from course description.
+
+-   **[xAPI Statement Builder](./xapi-statement-builder/index.md)**
+
+    ![xAPI Statement Builder](./xapi-statement-builder/xapi-statement-builder.png)
+
+    Build an actor-verb-object xAPI statement and see which field turns it into per-student data.
 
 </div>

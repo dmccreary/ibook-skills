@@ -1,0 +1,127 @@
+{
+  "title": "Book Launch Checklist",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Intelligent Textbook Publishing",
+    "Book Launch Checklist",
+    "Deployment Verification",
+    "Book Metrics",
+    "Announcements"
+  ],
+  "description": "Top-to-bottom checklist flowchart of the seven steps before a book is announced: strict build passes, deployment verified live, book-metrics.json regenerated, README regenerated from metrics, announcement drafted, announcement preview image checked, and publish. For each step the reader chooses between a sound and an unsound reason for doing it before the next step. A sound reason checks the step off; clicking a step out of order explains what the skipped step protects. Publish unlocks after all six confirmations.",
+  "date": "2026-10-02",
+  "type": "Interactive Workflow Diagram",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "Mermaid",
+  "bloomLevel": "Evaluate",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "diagram",
+    "workflow",
+    "checklist",
+    "quiz"
+  ],
+  "keywords": [
+    "book launch checklist",
+    "book completion workflow",
+    "strict build mode",
+    "deployment verification",
+    "book-metrics.json",
+    "canonical metrics principle",
+    "README generation",
+    "announcement preview image",
+    "LinkedIn announcement post"
+  ],
+  "canvasHeight": 490,
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Ordering and justifying the confirmations before a book announcement",
+    "learningObjectives": [
+      "Justify why each launch-checklist item must pass before an announcement goes out, in the correct order.",
+      "Distinguish a sound reason for a step's position from a plausible but unsound one.",
+      "Explain what goes wrong when a checklist step is taken out of order."
+    ],
+    "bloomsTaxonomy": "Evaluate",
+    "bloomVerb": "Justify",
+    "duration": "15 minutes",
+    "prerequisites": [
+      "Has read about strict build mode and deployment verification",
+      "Has read about the book-metrics.json hub and the canonical metrics principle",
+      "Knows what a README and a social media preview card are"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 490
+    },
+    "responsive": true,
+    "dependencies": [
+      "Mermaid 10 (CDN)"
+    ],
+    "diagramType": "flowchart",
+    "direction": "TD",
+    "nodeCount": 7,
+    "edgeCount": 6,
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "click",
+        "label": "Checklist node",
+        "description": "Each of the seven nodes has a Mermaid click directive. The next unchecked step opens a question with two candidate reasons; a checked step shows its justification; a later step explains why it cannot be done yet"
+      },
+      {
+        "type": "button",
+        "label": "Candidate reason",
+        "description": "Two answer buttons per step: the sound reason checks the step off, the unsound one gives corrective feedback"
+      },
+      {
+        "type": "button",
+        "label": "Next Step",
+        "description": "Opens the next unchecked step, the same as clicking its node; becomes Publish when all six confirmations are checked"
+      },
+      {
+        "type": "button",
+        "label": "Reset",
+        "description": "Clears every check mark and returns to the overview"
+      },
+      {
+        "type": "keyboard",
+        "label": "Tab and Enter",
+        "description": "Nodes and buttons can be focused with Tab and selected with Enter or Space"
+      }
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Ordered checklist with judged justifications and feedback",
+    "teachingStrategy": "The learner evaluates two candidate reasons for each step's position, receives feedback, and sees the consequence of taking steps out of order",
+    "keyQuestions": [
+      "What does the next step depend on that this step provides?",
+      "What would a first reader experience if this step were skipped?"
+    ],
+    "commonMisconceptions": [
+      "The announcement copies its numbers from the README",
+      "A clean local build proves the live site works",
+      "The order of the last few steps does not matter"
+    ],
+    "assessmentOpportunities": [
+      "Write the seven steps in order from memory with a one-sentence justification for each",
+      "Explain what is wrong with each rejected reason"
+    ]
+  },
+  "chapter": "31-publishing-announcing-book"
+}

@@ -1,0 +1,128 @@
+{
+  "title": "xAPI Statement Builder",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Experience API",
+    "xAPI",
+    "Learning Analytics",
+    "Student Data Privacy",
+    "Intelligent Textbooks"
+  ],
+  "description": "Build an Experience API (xAPI) statement from an actor, a verb, and an object. The statement is shown as a sentence and as valid xAPI JSON. A toggle swaps the anonymous session ID for a typed student name to show that the actor field is what turns an anonymous, aggregable statement into per-student data. Nothing is stored or transmitted.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "p5.js",
+  "bloomLevel": "Apply",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "interactive-demo",
+    "simulation"
+  ],
+  "keywords": [
+    "xAPI",
+    "Experience API",
+    "actor verb object",
+    "learning record store",
+    "statement",
+    "JSON",
+    "privacy",
+    "Level 2.99",
+    "anonymous analytics"
+  ],
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Experience API statements and student data privacy",
+    "learningObjectives": [
+      "Construct a valid actor-verb-object xAPI statement.",
+      "Identify which field, if populated with a real name, would cross into regulated per-student data."
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "Construct",
+    "duration": "10-15 minutes",
+    "prerequisites": [
+      "Has read the definitions of Experience API and learning record store",
+      "Understands the Level 2.99 design target"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 550
+    },
+    "responsive": true,
+    "dependencies": [
+      "p5.js 1.11.10 (CDN)"
+    ],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "select",
+        "label": "Actor",
+        "description": "anonymous-session-4471, anonymous-session-8820, or Type a name..."
+      },
+      {
+        "type": "select",
+        "label": "Verb",
+        "description": "completed, hovered, clicked, or answered"
+      },
+      {
+        "type": "select",
+        "label": "Object",
+        "description": "quiz-token-basics, diagram-node-llm, or microsim-context-window"
+      },
+      {
+        "type": "checkbox",
+        "label": "Use real student name instead of session ID",
+        "description": "Switches the actor between an anonymous session ID and a typed name"
+      },
+      {
+        "type": "text input",
+        "label": "Student name",
+        "description": "Enabled when the real-name toggle is on; up to 30 characters"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Conceptual builder",
+    "assumptions": [
+      "The actor is identified by an xAPI account object (homePage plus name)",
+      "completed and answered use ADL vocabulary verb IRIs; hovered and clicked use IRIs defined under the example.org placeholder domain",
+      "Activity IRIs use the example.org placeholder domain"
+    ],
+    "limitations": [
+      "No statement is stored or sent to a learning record store",
+      "Optional xAPI properties such as result, context, and timestamp are not shown"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Builder with immediate feedback",
+    "teachingStrategy": "The learner constructs statements and manipulates the one field that changes a statement's privacy status",
+    "keyQuestions": [
+      "Which of the three parts decides whether a statement identifies a person?",
+      "What can anonymous statements still tell an author when they are aggregated?"
+    ],
+    "commonMisconceptions": [
+      "Collecting interaction data always means tracking individual students",
+      "The verb or the object is what makes a statement sensitive"
+    ],
+    "assessmentOpportunities": [
+      "Build statements for three described events and name the field that changes when a real name is used"
+    ]
+  },
+  "chapter": "02-ai-agents-textbook-intelligence"
+}

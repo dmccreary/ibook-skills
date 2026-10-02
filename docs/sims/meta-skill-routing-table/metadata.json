@@ -1,0 +1,126 @@
+{
+  "title": "Meta-Skill Routing Table",
+  "creator": "Dan McCreary",
+  "subject": [
+    "AI Agent Skills",
+    "Meta-Skills",
+    "Progressive Disclosure",
+    "Skill Routing"
+  ],
+  "description": "Clickable left-to-right flowchart showing how the microsim-generator meta-skill uses a trigger keyword table to route a request to exactly one on-demand guide. The learner types or picks a request; the matching route, guide, and table row are highlighted, and ambiguous or unmatched requests are explained.",
+  "date": "2026-10-01",
+  "type": "Interactive Workflow Diagram",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "Mermaid",
+  "bloomLevel": "Apply",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "diagram",
+    "workflow",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "meta-skill",
+    "routing table",
+    "trigger keywords",
+    "on-demand guide loading",
+    "progressive disclosure",
+    "microsim-generator",
+    "agent skills"
+  ],
+  "canvasHeight": 550,
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Meta-skills and trigger keyword routing",
+    "learningObjectives": [
+      "Demonstrate how a meta-skill's routing table matches a request's trigger keywords to exactly one on-demand guide.",
+      "Predict which guide a request will load from the keywords it contains.",
+      "Rewrite an ambiguous request so that it routes to a single guide."
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "Demonstrate",
+    "duration": "10 minutes",
+    "prerequisites": [
+      "Knows what a skill is and how an agent chooses one from its description",
+      "Has read the definitions of meta-skill, skill routing table, and on-demand guide loading"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 550
+    },
+    "responsive": true,
+    "dependencies": [
+      "Mermaid 10 (CDN)"
+    ],
+    "diagramType": "flowchart",
+    "direction": "LR",
+    "nodeCount": 8,
+    "edgeCount": 7,
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "text input",
+        "label": "Request",
+        "description": "A MicroSim request of up to 90 characters; Enter routes it"
+      },
+      {
+        "type": "button",
+        "label": "Route",
+        "description": "Matches the request against the trigger keyword table and highlights the result"
+      },
+      {
+        "type": "select",
+        "label": "Examples",
+        "description": "Six example requests, including one ambiguous request"
+      },
+      {
+        "type": "click",
+        "label": "Flowchart node",
+        "description": "Each of the eight nodes has a Mermaid click directive that shows its definition; guide nodes also highlight their edge and table row"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Keyword matching demonstration",
+    "assumptions": [
+      "The guide with the most trigger keywords found in the request wins",
+      "The keywords are the real trigger keywords for these five guides in the microsim-generator skill"
+    ],
+    "limitations": [
+      "Shows five of the skill's guides, not all of them",
+      "The real meta-skill is interpreted by a language model that weighs the whole request rather than counting keywords"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Guided practice with immediate feedback",
+    "teachingStrategy": "The learner supplies requests and observes which single guide each one loads",
+    "keyQuestions": [
+      "Which keywords in the request caused this guide to load?",
+      "What happens to the guides that were not matched?"
+    ],
+    "commonMisconceptions": [
+      "A meta-skill loads all of its guides whenever it is triggered",
+      "A meta-skill performs the task itself"
+    ],
+    "assessmentOpportunities": [
+      "Rewrite an ambiguous request two ways so that each version routes to a different single guide"
+    ]
+  },
+  "chapter": "07-progressive-disclosure-meta-skills"
+}

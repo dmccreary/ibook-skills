@@ -91,7 +91,7 @@ Optimization only works if you can measure what's actually happening. A **skill 
 
 #### Diagram: From Hook to Dashboard
 
-<iframe src="../../sims/hook-to-dashboard-pipeline/main.html" width="100%" height="420px" scrolling="no"></iframe>
+<iframe src="../../sims/hook-to-dashboard-pipeline/main.html" width="100%" height="392px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>From Hook to Dashboard</summary>

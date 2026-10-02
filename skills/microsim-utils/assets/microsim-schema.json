@@ -133,6 +133,11 @@
                 "enum": ["education", "research", "training", "demonstration", "assessment", "exploration", "modeling", "analysis"]
               },
               "description": "Primary application domains"
+            },
+            "showcase": {
+              "type": "boolean",
+              "default": false,
+              "description": "True if this MicroSim is a showcase example to feature in galleries and search results"
             }
           },
           "required": ["tags", "visualizationType"]

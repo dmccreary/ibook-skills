@@ -66,7 +66,13 @@ def _check_main_html(sim_dir):
 
 
 def _check_metadata_json(sim_dir):
-    """Check metadata.json: present (10), valid fields (20)."""
+    """Check metadata.json: present (10), valid fields (20).
+
+    Valid fields: required Dublin Core fields (10), educational section (5),
+    pedagogical section (5). Accepts both the schema layout, where sections
+    live under "microsim" and microsim.usage is the pedagogical section, and
+    the legacy flat layout with top-level "educational" and "pedagogical".
+    """
     path = os.path.join(sim_dir, "metadata.json")
     if not os.path.isfile(path):
         return 0, ["metadata.json missing"]
@@ -82,9 +88,13 @@ def _check_metadata_json(sim_dir):
         return score, issues
 
     # Check for required fields (at top level or nested)
-    if "microsim" in data:
-        dc = data.get("microsim", {}).get("dublinCore", {})
+    # Schema layout nests every section under "microsim"; legacy files are flat.
+    nested = "microsim" in data
+    if nested:
+        sim = data["microsim"] if isinstance(data["microsim"], dict) else {}
+        dc = sim.get("dublinCore") or {}
     else:
+        sim = {}
         dc = data
 
     missing = [f for f in REQUIRED_METADATA_FIELDS if not dc.get(f)]
@@ -94,16 +104,21 @@ def _check_metadata_json(sim_dir):
         score += 5
 
     # Check for educational section
-    edu = data.get("educational") or dc.get("educational")
+    edu = data.get("educational") or dc.get("educational") or sim.get("educational")
     if edu:
         score += 5
     else:
         issues.append("metadata.json: missing educational section")
 
-    # Check for pedagogical section
-    ped = data.get("pedagogical") or dc.get("pedagogical")
+    # Check for pedagogical section. The schema has no "pedagogical" object;
+    # its equivalent is microsim.usage (recommendedUsage, instructionalStrategies,
+    # assessmentQuestions). Legacy flat files use a top-level "pedagogical".
+    ped = (data.get("pedagogical") or dc.get("pedagogical")
+           or sim.get("usage") or sim.get("pedagogical"))
     if ped:
         score += 5
+    elif nested:
+        issues.append("metadata.json: missing pedagogical section (microsim.usage)")
     else:
         issues.append("metadata.json: missing pedagogical section")
 

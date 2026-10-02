@@ -57,7 +57,7 @@ This chapter builds on concepts from:
 
 #### Diagram: MicroSim Library Routing Table
 
-<iframe src="../../sims/microsim-library-routing-table/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<iframe src="../../sims/microsim-library-routing-table/main.html" width="100%" height="502px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>MicroSim Library Routing Table</summary>

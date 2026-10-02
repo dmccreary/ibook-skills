@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Meta-Skill Routing Table using Mermaid</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="meta-skill-routing-table.js"></script>
+</head>
+<body>
+    <main>
+        <header class="sim-header">
+            <h1>Meta-Skill Routing Table</h1>
+            <p class="hint">Route a request, or click any box.</p>
+        </header>
+        <div class="controls">
+            <label for="requestInput">Request:</label>
+            <input id="requestInput" type="text" maxlength="90" autocomplete="off">
+            <button id="routeButton" type="button">Route</button>
+            <select id="exampleSelect" aria-label="Example requests"></select>
+        </div>
+        <div id="diagram" class="diagram"></div>
+        <section id="infobox" class="infobox" aria-live="polite">
+            <div id="infoText" class="info-text"></div>
+            <table id="keywordTable" class="keyword-table"></table>
+        </section>
+    </main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

@@ -1,0 +1,141 @@
+{
+  "title": "Context Window Budget",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Artificial Intelligence",
+    "Large Language Models",
+    "Context Window",
+    "Token Budgets"
+  ],
+  "description": "Check items on and off to spend an example 50,000-token context window. Each item stacks into a vertical bar as a colored segment; when the total passes the window limit, the part above the limit turns red and a message says the model cannot see it. All token sizes are example values, not measurements.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "p5.js",
+  "bloomLevel": "Apply",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "simulation",
+    "chart",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "context window",
+    "token budget",
+    "tokens",
+    "system prompt",
+    "conversation history",
+    "overflow",
+    "large language model"
+  ],
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Context window limits in large language models",
+    "learningObjectives": [
+      "Demonstrate why content beyond a model's context-window limit becomes unavailable to it.",
+      "Calculate the total tokens used by a combination of files and compare it with a window limit.",
+      "Identify which loaded item causes a context window to overflow."
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "Demonstrate",
+    "duration": "10-15 minutes",
+    "prerequisites": [
+      "Knows what a token is",
+      "Has read the definition of a context window"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 515
+    },
+    "responsive": true,
+    "dependencies": [
+      "p5.js 1.11.10 (CDN)"
+    ],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "checkbox",
+        "label": "System prompt",
+        "description": "Adds or removes the 2,000-token system prompt (checked by default)"
+      },
+      {
+        "type": "checkbox",
+        "label": "Course description",
+        "description": "Adds or removes the 3,500-token course description"
+      },
+      {
+        "type": "checkbox",
+        "label": "Learning graph JSON",
+        "description": "Adds or removes the 18,000-token learning graph"
+      },
+      {
+        "type": "checkbox",
+        "label": "One chapter draft",
+        "description": "Adds or removes the 4,500-token chapter draft"
+      },
+      {
+        "type": "checkbox",
+        "label": "Conversation history",
+        "description": "Adds or removes the conversation history"
+      },
+      {
+        "type": "slider",
+        "label": "Conversation history",
+        "description": "Sets the conversation history size from 0 to 30,000 tokens in steps of 500 (default 10,000)"
+      },
+      {
+        "type": "hover",
+        "label": "Bar segment",
+        "description": "Shows the item's exact token count and what it contains"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Arithmetic budget model",
+    "equations": [
+      "total = sum of tokens for every checked item",
+      "overflow = max(0, total - window maximum)"
+    ],
+    "assumptions": [
+      "The 50,000-token window is an example size; real windows vary by model",
+      "Item token sizes are example values, not measurements of real files",
+      "Items stack in a fixed order, so the last item in the stack is the one cut off"
+    ],
+    "limitations": [
+      "Does not model how a specific tool truncates or summarizes an oversized session",
+      "Does not model the tokens used by the model's own reply"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Parameter exploration",
+    "teachingStrategy": "The learner combines values and observes the consequence (overflow) rather than watching a fixed demonstration",
+    "keyQuestions": [
+      "What happens to content that lands past the window limit?",
+      "Which item grows during a session even when no new files are loaded?"
+    ],
+    "commonMisconceptions": [
+      "A model can still partly remember content that no longer fits in its context window",
+      "Only files count against the window; the conversation itself is free"
+    ],
+    "assessmentOpportunities": [
+      "Choose one change that brings an overflowing window back under the limit and justify it"
+    ]
+  },
+  "chapter": "01-foundations-ai-language-models"
+}

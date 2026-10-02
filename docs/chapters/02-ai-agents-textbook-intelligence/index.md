@@ -92,7 +92,7 @@ Put agentic workflows, human review, and quality gates together across an entire
 
 #### Diagram: Textbook Generation Pipeline
 
-<iframe src="../../sims/textbook-generation-pipeline/main.html" width="100%" height="420px" scrolling="no"></iframe>
+<iframe src="../../sims/textbook-generation-pipeline/main.html" width="100%" height="377px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Textbook Generation Pipeline</summary>
@@ -143,7 +143,7 @@ The "2.99" approach still needs a way to capture interaction events, just not on
 
 #### Diagram: xAPI Statement Builder
 
-<iframe src="../../sims/xapi-statement-builder/main.html" width="100%" height="440px" scrolling="no"></iframe>
+<iframe src="../../sims/xapi-statement-builder/main.html" width="100%" height="552px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>xAPI Statement Builder</summary>

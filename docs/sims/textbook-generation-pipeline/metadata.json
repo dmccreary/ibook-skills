@@ -1,0 +1,110 @@
+{
+  "title": "Textbook Generation Pipeline",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Intelligent Textbooks",
+    "AI Agent Skills",
+    "Textbook Generation Pipeline",
+    "Quality Gates"
+  ],
+  "description": "Clickable left-to-right flowchart of the ordered stages that turn a course description into a published textbook: course description, learning graph, chapter structure, chapter content, media and MicroSims, and deployment, with two quality gates that send work back when a check fails. Previous and Next buttons step through the pipeline, and each node shows its definition and the skill that performs it.",
+  "date": "2026-10-01",
+  "type": "Interactive Workflow Diagram",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "Mermaid",
+  "bloomLevel": "Understand",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "diagram",
+    "workflow",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "textbook generation pipeline",
+    "quality gate",
+    "human in the loop",
+    "learning graph",
+    "course description",
+    "chapter structure",
+    "agent skills",
+    "workflow"
+  ],
+  "canvasHeight": 375,
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "The textbook generation pipeline and its quality gates",
+    "learningObjectives": [
+      "Summarize the ordered stages of the textbook generation pipeline.",
+      "Identify where human review and quality gates sit within the pipeline.",
+      "Explain why a failed quality gate sends work back to the stage before it."
+    ],
+    "bloomsTaxonomy": "Understand",
+    "bloomVerb": "Summarize",
+    "duration": "10 minutes",
+    "prerequisites": [
+      "Has read the definitions of agentic workflow, human in the loop, and quality gate"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 375
+    },
+    "responsive": true,
+    "dependencies": [
+      "Mermaid 10 (CDN)"
+    ],
+    "diagramType": "flowchart",
+    "direction": "LR",
+    "nodeCount": 8,
+    "edgeCount": 9,
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "button",
+        "label": "Previous",
+        "description": "Moves the selection back one step in pipeline order"
+      },
+      {
+        "type": "button",
+        "label": "Next",
+        "description": "Moves the selection forward one step in pipeline order"
+      },
+      {
+        "type": "click",
+        "label": "Flowchart node",
+        "description": "Each of the eight nodes has a Mermaid click directive that shows its definition and the skill that performs it in the shared infobox"
+      }
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Step-through worked example",
+    "teachingStrategy": "The learner steps through the stages in order and reads one concrete definition at a time instead of watching an animation",
+    "keyQuestions": [
+      "Which stage does each quality gate send work back to?",
+      "Why is the graph checked before any chapter is designed?"
+    ],
+    "commonMisconceptions": [
+      "Validation is a single check run once at the end of the project",
+      "A result that looks fine has passed its quality gate"
+    ],
+    "assessmentOpportunities": [
+      "Write the six stages in order from memory and mark where the two quality gates go"
+    ]
+  },
+  "chapter": "02-ai-agents-textbook-intelligence"
+}

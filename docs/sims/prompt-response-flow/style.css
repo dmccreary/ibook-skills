@@ -1,0 +1,172 @@
+/* Prompt and Response Flow - layout and styling
+   Fixed-height column: title row, Mermaid diagram, shared infobox panel.
+   The height of <main> must equal the CANVAS_HEIGHT comment in
+   prompt-response-flow.js. */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    box-sizing: border-box;
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    border: 1px solid silver;
+    overflow: hidden;
+}
+
+.sim-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 12px;
+    padding: 8px 14px 0 14px;
+}
+
+.sim-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: normal;
+    color: #111;
+}
+
+.hint {
+    margin: 0;
+    font-size: 15px;
+    color: #475569;
+}
+
+/* Mermaid diagram: scales down with the container, never taller than 215px */
+.diagram {
+    flex: 0 0 auto;
+    padding: 6px 10px 8px 10px;
+    text-align: center;
+}
+
+.diagram svg {
+    max-height: 215px;
+}
+
+/* Clickable nodes */
+.diagram .node {
+    cursor: pointer;
+}
+
+.diagram .node:hover rect,
+.diagram .node:hover polygon {
+    filter: brightness(1.08);
+}
+
+.diagram .node:focus {
+    outline: none;
+}
+
+/* The selected node gets a dark halo. (Mermaid writes each node's own stroke
+   as an inline !important style, so the highlight is a filter, not a stroke.) */
+.diagram .node.selected,
+.diagram .node:focus-visible {
+    filter: drop-shadow(0 0 1px #111) drop-shadow(0 0 3px #111);
+}
+
+/* Shared infobox panel below the diagram */
+.infobox {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 10px 14px;
+    background-color: white;
+    border-top: 1px solid silver;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #1f2937;
+    overflow: hidden;
+}
+
+.info-text {
+    flex: 1 1 55%;
+    min-width: 0;
+}
+
+.info-text h2 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    color: #00695c;
+}
+
+.info-text p {
+    margin: 0 0 6px 0;
+}
+
+.info-text .label {
+    font-weight: bold;
+}
+
+/* System prompt versus user prompt comparison */
+.compare {
+    flex: 1 1 45%;
+    min-width: 0;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.compare caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: bold;
+    padding-bottom: 4px;
+}
+
+.compare th,
+.compare td {
+    border: 1px solid #cbd5e1;
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.compare thead th {
+    background-color: #e2e8f0;
+}
+
+.compare .col-system.active {
+    background-color: #1565c0;
+    color: white;
+}
+
+.compare .col-user.active {
+    background-color: #bbdefb;
+}
+
+/* Narrow iframes: stack the text above the comparison */
+@media (max-width: 620px) {
+    .sim-header h1 {
+        font-size: 19px;
+    }
+    .hint {
+        font-size: 13px;
+    }
+    .infobox {
+        flex-direction: column;
+        gap: 6px;
+        font-size: 13px;
+        line-height: 1.3;
+        padding: 8px 10px;
+    }
+    .info-text h2 {
+        font-size: 16px;
+    }
+    .info-text,
+    .compare {
+        flex: 0 0 auto;
+    }
+    .compare {
+        font-size: 12px;
+    }
+}

@@ -73,7 +73,7 @@ When the same loop shape shows up across many unrelated domains, it's worth nami
 
 #### Diagram: Token Waste Reinforcing Loop
 
-<iframe src="../../sims/token-waste-reinforcing-loop/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<iframe src="../../sims/token-waste-reinforcing-loop/main.html" width="100%" height="562px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Token Waste Reinforcing Loop</summary>

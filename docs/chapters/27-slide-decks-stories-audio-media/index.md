@@ -93,7 +93,7 @@ For a reader who'd rather listen than read, **text-to-speech narration** generat
 
 #### Diagram: Pronounce Button and Streaming Playback
 
-<iframe src="../../sims/pronounce-button-demo/main.html" width="100%" height="380px" scrolling="no"></iframe>
+<iframe src="../../sims/pronounce-button-demo/main.html" width="100%" height="502px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Pronounce Button and Streaming Playback</summary>

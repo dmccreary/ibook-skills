@@ -112,7 +112,7 @@ Every additional agent you launch costs something before it does any useful work
 
 #### Diagram: Serial Versus Parallel Cost Calculator
 
-<iframe src="../../sims/serial-versus-parallel-cost-calculator/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<iframe src="../../sims/serial-versus-parallel-cost-calculator/main.html" width="100%" height="552px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Serial Versus Parallel Cost Calculator</summary>

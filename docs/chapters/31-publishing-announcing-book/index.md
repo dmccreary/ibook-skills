@@ -90,7 +90,7 @@ None of this should happen before the book is actually ready. The **book complet
 
 #### Diagram: Book Launch Checklist
 
-<iframe src="../../sims/book-launch-checklist/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<iframe src="../../sims/book-launch-checklist/main.html" width="100%" height="492px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Book Launch Checklist</summary>

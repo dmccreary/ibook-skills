@@ -1,0 +1,141 @@
+{
+  "title": "Token Waste Reinforcing Loop",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Systems Thinking",
+    "Causal Loop Diagrams",
+    "Reinforcing Loop",
+    "Balancing Loop",
+    "Token Budgets"
+  ],
+  "description": "Interactive causal loop diagram with two linked loops built from this book's token-waste example. Reinforcing loop R: unnecessary parallel agents pay startup overhead, which reduces the tokens remaining in the window, which raises the pressure to rush, which launches more unnecessary agents. Balancing loop B: the same overhead draws chapter token budgeting, which raises cost awareness, which reduces unnecessary agents. Selecting a loop highlights its path, traces one change around it, and counts its negative links.",
+  "date": "2026-10-02",
+  "type": "Interactive Causal Loop Diagram",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "vis-network",
+  "bloomLevel": "Analyze",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "network",
+    "causal-loop-diagram",
+    "diagram",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "causal loop diagram",
+    "reinforcing loop",
+    "balancing loop",
+    "link polarity",
+    "systems archetype",
+    "token waste antipatterns",
+    "chapter token budgeting",
+    "sub-agent startup overhead"
+  ],
+  "canvasHeight": 560,
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Reinforcing and balancing feedback loops in token use",
+    "learningObjectives": [
+      "Differentiate a reinforcing loop from a balancing loop using this book's own token-waste example.",
+      "Trace a change around a causal loop using link polarities.",
+      "Classify a loop as reinforcing or balancing by counting its negative links."
+    ],
+    "bloomsTaxonomy": "Analyze",
+    "bloomVerb": "Differentiate",
+    "duration": "15 minutes",
+    "prerequisites": [
+      "Knows that each additional agent pays a fixed startup overhead",
+      "Has read about token waste antipatterns and chapter token budgeting"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "vis-network",
+    "version": "9.1.9",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 560
+    },
+    "responsive": true,
+    "dependencies": [
+      "vis-network 9.1.9 (CDN)"
+    ],
+    "nodeCount": 6,
+    "edgeCount": 7,
+    "loopCount": 2,
+    "physics": false,
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "button",
+        "label": "R loop",
+        "description": "Highlights the reinforcing loop, traces one change around it, and counts its negative links"
+      },
+      {
+        "type": "button",
+        "label": "B loop",
+        "description": "Highlights the balancing loop, traces one change around it, and counts its negative links"
+      },
+      {
+        "type": "button",
+        "label": "Show Both",
+        "description": "Returns to the full diagram with both loops in their own colors"
+      },
+      {
+        "type": "button",
+        "label": "Zoom out, Zoom in, Fit",
+        "description": "Zoom controls; pinch also zooms, and dragging the background pans"
+      },
+      {
+        "type": "click",
+        "label": "R or B circle",
+        "description": "Clicking a loop marker selects that loop, the same as its button"
+      },
+      {
+        "type": "hover",
+        "label": "Variable or arrow",
+        "description": "Shows the variable's one-sentence definition or the arrow's causal claim and polarity in the panel"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Qualitative causal loop model",
+    "equations": [
+      "Loop type = reinforcing when the number of negative links on the loop is even, balancing when it is odd"
+    ],
+    "assumptions": [
+      "Each link is a qualitative claim about direction of change, not a measured relationship",
+      "Roughly 12,000 tokens of startup overhead per agent is the figure measured on this project"
+    ],
+    "limitations": [
+      "Does not model magnitudes, delays, or how strongly one loop dominates the other"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Comparison of two structures with traced worked example",
+    "teachingStrategy": "The learner selects each loop in turn, follows one change around it, and compares where the change ends up",
+    "keyQuestions": [
+      "Does a change come back amplified or reversed after one trip around the loop?",
+      "How many negative links does each loop have, and what does that tell you?"
+    ],
+    "commonMisconceptions": [
+      "A reinforcing loop always describes something good, and a balancing loop something bad",
+      "A minus sign on a link means the effect is harmful"
+    ],
+    "assessmentOpportunities": [
+      "Classify each loop and justify the classification with the count of negative links"
+    ]
+  },
+  "chapter": "24-visualization-libraries-systems-diagrams"
+}

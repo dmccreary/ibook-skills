@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Token Waste Reinforcing Loop using vis-network</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+    <script src="token-waste-reinforcing-loop.js"></script>
+</head>
+<body>
+    <main>
+        <header class="sim-header">
+            <h1>Token Waste Reinforcing Loop</h1>
+            <div class="controls">
+                <span class="group" role="group" aria-label="Loop to trace">
+                    <button id="buttonR" type="button" class="loop-button r">R loop</button>
+                    <button id="buttonB" type="button" class="loop-button b">B loop</button>
+                    <button id="buttonBoth" type="button">Show Both</button>
+                </span>
+                <span class="group" role="group" aria-label="Zoom">
+                    <button id="zoomOut" type="button" aria-label="Zoom out">&minus;</button>
+                    <button id="zoomIn" type="button" aria-label="Zoom in">+</button>
+                    <button id="zoomFit" type="button">Fit</button>
+                </span>
+            </div>
+        </header>
+        <div class="legend" aria-hidden="true">
+            <span><span class="swatch r"></span>R: reinforcing loop link</span>
+            <span><span class="swatch b"></span>B: balancing loop link</span>
+            <span><span class="swatch shared"></span>Link in both loops</span>
+            <span class="sign-key"><b>+</b> same direction</span>
+            <span class="sign-key"><b>&minus;</b> opposite direction</span>
+        </div>
+        <div id="network" class="network" role="img" aria-label="Causal loop diagram with two loops that share one link. Reinforcing loop R: Unnecessary Parallel Agents increases Startup Overhead Paid, which decreases Tokens Remaining in Window, which increases Pressure to Rush, which increases Unnecessary Parallel Agents. Balancing loop B: Unnecessary Parallel Agents increases Startup Overhead Paid, which increases Chapter Token Budgeting, which increases Cost Awareness, which decreases Unnecessary Parallel Agents."></div>
+        <section id="infobox" class="infobox" aria-live="polite"></section>
+    </main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>
