@@ -356,19 +356,26 @@ extra_css:
 **Create `docs/js/katex.js`:**
 
 ```javascript
-// KaTeX auto-render configuration
-// Single $ is NOT used for math to allow currency notation like $20
-// Use \(...\) for inline math and $$...$$ or \[...\] for display math
-document.addEventListener("DOMContentLoaded", function() {
-    renderMathInElement(document.body, {
-        delimiters: [
-            {left: "$$", right: "$$", display: true},
-            {left: "\\[", right: "\\]", display: true},
-            {left: "\\(", right: "\\)", display: false}
-        ],
-        throwOnError: false
-    });
-});
+// KaTeX auto-render configuration (currency-safe).
+// Single $ is NOT a math delimiter, so prices like $20 or $1.99 stay text.
+// Inline math: \( ... \)    Display math: $$ ... $$ or \[ ... \]
+function renderBookMath() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "\\[", right: "\\]", display: true},
+      {left: "\\(", right: "\\)", display: false}
+    ],
+    throwOnError: false
+  });
+}
+
+// document$ fires on every page load, including instant-navigation swaps.
+if (typeof document$ !== "undefined") {
+  document$.subscribe(renderBookMath);
+} else {
+  document.addEventListener("DOMContentLoaded", renderBookMath);
+}
 ```
 
 **Usage in markdown:**
@@ -383,6 +390,38 @@ $$
 \int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
 $$
 ```
+
+**Dollar signs in prose.** A bare `$25.99` is safe. Writing `\$25.99` is also
+safe: Markdown consumes the backslash, so the reader sees `$25.99`. Inside an
+inline equation, write `\( \$500 \)` and KaTeX renders a literal dollar sign.
+Never use single-`$...$` for math in these books.
+
+**Verify the install (currency-safe check):**
+
+1. `mkdocs build --strict` exits clean.
+2. In the built HTML, no `\$` or `$$` should survive outside math spans. Run
+   this from the project root after the build:
+
+```bash
+python3 - <<'PY'
+import re, glob
+SPAN = r'<span class="arithmatex">.*?</span>|<div class="arithmatex">.*?</div>'
+bad = 0
+for f in glob.glob('site/**/*.html', recursive=True):
+    h = open(f).read().split('<article', 1)[-1]
+    out = re.sub(SPAN, '', h, flags=re.S)
+    out = re.sub(r'<(pre|code|script).*?</\1>|<!--.*?-->', '', out, flags=re.S)
+    if '\\$' in out or '$$' in out:
+        bad += 1
+        print('STRAY DELIMITER:', f)
+print('OK' if not bad else f'{bad} page(s) need fixing')
+PY
+```
+
+3. Open a page that has both prices and equations. In the browser console,
+   `document.querySelectorAll('.katex').length` should be above zero,
+   `document.querySelectorAll('.katex-error').length` should be 0, and the
+   page text should show prices as `$10`, with no raw `\(` left over.
 
 ---
 

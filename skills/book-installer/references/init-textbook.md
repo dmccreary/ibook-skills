@@ -374,10 +374,11 @@ sensibly:
 - **No `navigation.tabs`.** The project CLAUDE.md is explicit: these books
   use side navigation optimized for wide landscape screens. Top tabs waste
   vertical space.
-- **`pymdownx.arithmatex` is enabled but no MathJax/KaTeX JS yet.** Every
-  recent book ends up needing equations. The extension itself is cheap to
-  enable; the renderer is a one-line book-installer add. Generating math
-  output without a renderer simply renders LaTeX as code, which is harmless.
+- **`pymdownx.arithmatex` is enabled in its currency-safe form
+  (`inline_syntax: ['round']`) but no KaTeX JS yet.** Every recent book ends
+  up needing equations. Inline math is `\( ... \)` only, so prices like `$20`
+  never trigger math. The renderer is a book-installer add (feature 5, KaTeX);
+  until then LaTeX renders as plain text, which is harmless.
 - **`exclude_docs:` is populated up front.** Without it, every book ends up
   with `image-prompt*.md` and `TODO.md` files leaking into the search index
   and sitemap. The exclude block is small and cheap.

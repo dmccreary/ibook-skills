@@ -117,8 +117,12 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
+  # Currency-safe math: inline is \(...\) only, never single $. Run
+  # book-installer feature 5 (KaTeX) to add the renderer.
   - pymdownx.arithmatex:
       generic: true
+      inline_syntax: ['round']
+      block_syntax: ['dollar', 'square']
 
 # Custom CSS — file is created by init-textbook
 extra_css:
