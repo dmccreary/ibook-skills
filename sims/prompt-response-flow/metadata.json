@@ -1,0 +1,106 @@
+{
+  "title": "Prompt and Response Flow",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Artificial Intelligence",
+    "Large Language Models",
+    "Prompt Engineering",
+    "System Prompt",
+    "Nondeterminism"
+  ],
+  "description": "Clickable left-to-right flowchart showing how a system prompt and a user prompt are tokenized and combined in a single model request, how the language model samples a response, and why the same inputs can produce a different response on the next run. Clicking a node shows its definition in a shared infobox.",
+  "date": "2026-10-01",
+  "type": "Interactive Workflow Diagram",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "Mermaid",
+  "bloomLevel": "Analyze",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "diagram",
+    "workflow",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "prompt",
+    "system prompt",
+    "user prompt",
+    "tokenization",
+    "language model",
+    "response",
+    "nondeterminism",
+    "sampling"
+  ],
+  "canvasHeight": 440,
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "System prompts, user prompts, and nondeterministic model output",
+    "learningObjectives": [
+      "Differentiate the role of a system prompt from a user prompt in a single model request.",
+      "Explain why the same inputs can produce a different response on the next run."
+    ],
+    "bloomsTaxonomy": "Analyze",
+    "bloomVerb": "Differentiate",
+    "duration": "10 minutes",
+    "prerequisites": [
+      "Knows what a token is and what tokenization does",
+      "Has read the definitions of prompt and system prompt"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 440
+    },
+    "responsive": true,
+    "dependencies": [
+      "Mermaid 10 (CDN)"
+    ],
+    "diagramType": "flowchart",
+    "direction": "LR",
+    "nodeCount": 6,
+    "edgeCount": 5,
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "click",
+        "label": "Flowchart node",
+        "description": "Each of the six nodes has a Mermaid click directive that shows its definition and role in the shared infobox below the diagram"
+      },
+      {
+        "type": "keyboard",
+        "label": "Tab and Enter",
+        "description": "Nodes can be focused with Tab and selected with Enter or Space"
+      }
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Clickable flow diagram with comparison table",
+    "teachingStrategy": "Click-to-reveal definitions plus a side-by-side comparison of the two prompt types",
+    "keyQuestions": [
+      "What does the system prompt contribute that the user prompt does not?",
+      "Why can two runs with identical prompts return different responses?"
+    ],
+    "commonMisconceptions": [
+      "A model computes one fixed answer for a given prompt",
+      "The system prompt and the user prompt are the same thing typed in different places"
+    ],
+    "assessmentOpportunities": [
+      "Sort a list of instructions into system prompt or user prompt and justify each choice"
+    ]
+  },
+  "chapter": "01-foundations-ai-language-models"
+}

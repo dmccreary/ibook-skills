@@ -1925,6 +1925,38 @@
       
         
       
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
     
     
     
@@ -2845,7 +2877,7 @@ Remember the ~12,000-token startup overhead per agent from Chapter 8. Spinning u
 <h2 id="watching-what-you-spend-hooks-logs-and-dashboards">Watching What You Spend: Hooks, Logs, and Dashboards</h2>
 <p>Optimization only works if you can measure what's actually happening. A <strong>skill usage hook</strong> is a configured callback that records information each time a skill runs, producing data for later analysis. A <strong>stop hook</strong> is a specific kind of callback that fires when an agent finishes a turn, commonly used to record results or perform cleanup — the same mechanism this project's own auto-commit convention relies on. Each event a hook records lands in a <strong>JSONL usage log</strong>: an append-only file with one structured record per line, used to accumulate usage events without rewriting earlier entries.</p>
 <h4 id="diagram-from-hook-to-dashboard">Diagram: From Hook to Dashboard</h4>
-<iframe src="../../sims/hook-to-dashboard-pipeline/main.html" width="100%" height="420px" scrolling="no"></iframe>
+<iframe src="../../sims/hook-to-dashboard-pipeline/main.html" width="100%" height="392px" scrolling="no"></iframe>
 
 <details>
 <summary>From Hook to Dashboard</summary>

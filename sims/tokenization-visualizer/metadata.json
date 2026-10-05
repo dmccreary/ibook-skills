@@ -1,0 +1,119 @@
+{
+  "title": "Tokenization Visualizer",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Artificial Intelligence",
+    "Large Language Models",
+    "Tokenization",
+    "Tokens"
+  ],
+  "description": "Type a sentence and compare how a person splits it into words with how a language model splits it into tokens. An illustrative rule-based tokenizer (not a real model's tokenizer) breaks long or unusual words into several colored token chips, and a word count and token count are shown side by side.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "p5.js",
+  "bloomLevel": "Understand",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "interactive-demo",
+    "simulation"
+  ],
+  "keywords": [
+    "token",
+    "tokenization",
+    "subword",
+    "large language model",
+    "context window",
+    "token cost",
+    "word count"
+  ],
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Tokenization in large language models",
+    "learningObjectives": [
+      "Explain why a language model's cost and capacity are measured in tokens rather than words.",
+      "Compare the word count of a sentence with its token count.",
+      "Predict that long or unusual words split into more tokens than short common words."
+    ],
+    "bloomsTaxonomy": "Understand",
+    "bloomVerb": "Explain",
+    "duration": "10-15 minutes",
+    "prerequisites": [
+      "Knows that a large language model predicts the next unit of text"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 520
+    },
+    "responsive": true,
+    "dependencies": [
+      "p5.js 1.11.10 (CDN)"
+    ],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "text input",
+        "label": "Your text",
+        "description": "Sentence to tokenize, up to 120 characters; Enter runs Tokenize"
+      },
+      {
+        "type": "button",
+        "label": "Tokenize",
+        "description": "Re-runs the split on the current text with one quick transition from word boxes to token chips"
+      },
+      {
+        "type": "button",
+        "label": "Reset",
+        "description": "Restores the example sentence"
+      },
+      {
+        "type": "click",
+        "label": "Token chip",
+        "description": "Opens an infobox with the token's text, position index, and why it split there"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Rule-based illustration",
+    "assumptions": [
+      "The splitter is a hand-written approximation, not the tokenizer of any real model",
+      "Short or common words stay whole; familiar beginnings and endings split off; long unfamiliar stretches break into fragments of four letters"
+    ],
+    "limitations": [
+      "Token counts will not match any real model's token counts",
+      "Spaces are not shown as part of tokens"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Step-through comparison with click-to-reveal",
+    "teachingStrategy": "Predict, then reveal: the learner types a sentence, predicts the token count, and checks it",
+    "keyQuestions": [
+      "Why is the token count usually larger than the word count?",
+      "Which kinds of words split into the most tokens?"
+    ],
+    "commonMisconceptions": [
+      "One word always equals one token",
+      "A model's limits and prices are measured in words or characters"
+    ],
+    "assessmentOpportunities": [
+      "Explain to a colleague why a 1,000-word document does not cost 1,000 units to send to a model"
+    ]
+  },
+  "chapter": "01-foundations-ai-language-models"
+}

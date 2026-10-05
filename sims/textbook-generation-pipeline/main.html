@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Textbook Generation Pipeline using Mermaid</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="textbook-generation-pipeline.js"></script>
+</head>
+<body>
+    <main>
+        <header class="sim-header">
+            <h1>Textbook Generation Pipeline</h1>
+            <div class="stepper">
+                <button id="prevButton" type="button">Previous</button>
+                <span id="stepLabel" class="step-label">Step 0 of 8</span>
+                <button id="nextButton" type="button">Next</button>
+            </div>
+        </header>
+        <div class="legend" aria-hidden="true">
+            <span><span class="swatch stage"></span>Pipeline stage</span>
+            <span><span class="swatch gate"></span>Quality gate</span>
+            <span><span class="swatch redo"></span>No: go back and fix</span>
+        </div>
+        <div id="diagram" class="diagram"></div>
+        <section id="infobox" class="infobox" aria-live="polite"></section>
+    </main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

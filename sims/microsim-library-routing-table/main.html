@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>MicroSim Library Routing Table using Mermaid</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="microsim-library-routing-table.js"></script>
+</head>
+<body>
+    <main>
+        <header class="sim-header">
+            <h1>MicroSim Library Routing Table</h1>
+            <div class="stepper">
+                <span id="requestLabel" class="step-label">Request 1 of 7</span>
+                <button id="nextButton" type="button">Next Request</button>
+            </div>
+        </header>
+        <div class="request-bar">
+            <span class="label">Request:</span>
+            <span id="requestText" aria-live="polite"></span>
+        </div>
+        <div id="diagram" class="diagram"></div>
+        <section id="infobox" class="infobox" aria-live="polite"></section>
+    </main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

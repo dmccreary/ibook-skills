@@ -1,0 +1,131 @@
+{
+  "title": "Serial Versus Parallel Cost Calculator",
+  "creator": "Dan McCreary",
+  "subject": [
+    "AI Agents",
+    "Token Budgets",
+    "Parallel Execution",
+    "Cost Estimation"
+  ],
+  "description": "Three sliders set the number of sub-tasks, the tokens of real work per sub-task, and the startup overhead per agent. Two stacked bars compare the serial total (overhead paid once) with the parallel total (overhead paid once per agent), and a verdict line reports how many more tokens parallel execution costs.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "p5.js",
+  "bloomLevel": "Apply",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "simulation",
+    "chart",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "serial execution",
+    "parallel execution",
+    "sub-agent startup overhead",
+    "token cost",
+    "token budget",
+    "calculator",
+    "AI agents"
+  ],
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Token cost of serial versus parallel agent execution",
+    "learningObjectives": [
+      "Calculate the total token cost of a task run serially versus in parallel.",
+      "Identify the agent-count threshold where parallel execution stops paying off."
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "Calculate",
+    "duration": "10-15 minutes",
+    "prerequisites": [
+      "Knows what a token is and that plans limit token use",
+      "Has read the definitions of sub-agent startup overhead, serial agent execution, and parallel agent execution"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 550
+    },
+    "responsive": true,
+    "dependencies": [
+      "p5.js 1.11.10 (CDN)"
+    ],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "slider",
+        "label": "Number of sub-tasks",
+        "description": "1 to 20, default 8"
+      },
+      {
+        "type": "slider",
+        "label": "Tokens of real work per sub-task",
+        "description": "1,000 to 50,000 in steps of 1,000, default 10,000"
+      },
+      {
+        "type": "slider",
+        "label": "Startup overhead per agent",
+        "description": "5,000 to 20,000 in steps of 500, default 12,000"
+      },
+      {
+        "type": "checkbox",
+        "label": "Show formula",
+        "description": "Reveals the serial and parallel totals as live-updating equations"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Arithmetic cost model",
+    "variables": [
+      "sub-tasks",
+      "work tokens per sub-task",
+      "startup overhead per agent"
+    ],
+    "equations": [
+      "serial total = (work tokens x sub-tasks) + (1 x startup overhead)",
+      "parallel total = (work tokens x sub-tasks) + (sub-tasks x startup overhead)",
+      "difference = (sub-tasks - 1) x startup overhead"
+    ],
+    "assumptions": [
+      "Every sub-task needs the same number of work tokens",
+      "Parallel execution uses exactly one agent per sub-task",
+      "The verdict reads 'about the same' when parallel costs less than 5% more than serial"
+    ],
+    "limitations": [
+      "Counts tokens only; elapsed time, rate limits, failed agents, and context reuse are not modeled",
+      "The default overhead of 12,000 tokens is a rough figure from this book's own project"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Parameter exploration calculator",
+    "teachingStrategy": "The learner plugs in values and reads the recomputed totals instead of trusting a quoted percentage",
+    "keyQuestions": [
+      "Which slider changes the number of extra tokens, and which changes only the percentage?",
+      "At what number of agents does the extra cost exceed your own tolerance?"
+    ],
+    "commonMisconceptions": [
+      "Parallel execution costs the same tokens and is simply faster",
+      "The extra cost of parallel execution depends on how much real work there is"
+    ],
+    "assessmentOpportunities": [
+      "Given a tolerance for extra cost, find the largest number of sub-tasks that stays within it"
+    ]
+  },
+  "chapter": "08-token-budgets-usage-limits"
+}

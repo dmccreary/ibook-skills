@@ -1,0 +1,129 @@
+{
+  "title": "Idempotent Script Simulator",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Python",
+    "Scripting",
+    "Idempotency",
+    "Automation"
+  ],
+  "description": "Two side-by-side panels compare a non-idempotent script, which appends the row taxonomy-names.json to a file every time it runs, with an idempotent script, which checks for the row first. Buttons run each script, run both, and reset, so the learner can compare the end state of the two files after repeated runs.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "p5.js",
+  "bloomLevel": "Analyze",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "simulation",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "idempotent",
+    "idempotency",
+    "script design",
+    "duplicate rows",
+    "rerun safety",
+    "Python",
+    "automation"
+  ],
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Idempotent script design",
+    "learningObjectives": [
+      "Differentiate the end state produced by an idempotent script from a non-idempotent one after running each multiple times.",
+      "Identify the existence check as the code that makes a script idempotent."
+    ],
+    "bloomsTaxonomy": "Analyze",
+    "bloomVerb": "Differentiate",
+    "duration": "10 minutes",
+    "prerequisites": [
+      "Can read a two-line Python if statement",
+      "Has read the definition of idempotent script design"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 480
+    },
+    "responsive": true,
+    "dependencies": [
+      "p5.js 1.11.10 (CDN)"
+    ],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "button",
+        "label": "Run Non-Idempotent Script",
+        "description": "Appends another row to the left file on every click"
+      },
+      {
+        "type": "button",
+        "label": "Run Idempotent Script",
+        "description": "Checks for the row first; adds it only if it is missing"
+      },
+      {
+        "type": "button",
+        "label": "Run Both",
+        "description": "Runs both scripts once so their run counts stay equal"
+      },
+      {
+        "type": "button",
+        "label": "Reset Both",
+        "description": "Empties both files and sets both run counters to zero"
+      },
+      {
+        "type": "hover",
+        "label": "Panel",
+        "description": "Shows what kind of real script the panel stands for"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "State comparison",
+    "variables": [
+      "nonIdempotentRuns",
+      "idempotentRuns",
+      "nonIdempotentRows",
+      "idempotentRows"
+    ],
+    "assumptions": [
+      "Each file starts empty after Reset Both",
+      "The sim opens with each script already run three times"
+    ],
+    "limitations": [
+      "Models a single row in a single file; real scripts may need to compare more than an exact match"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Side-by-side comparison",
+    "teachingStrategy": "The learner applies the same repeated action to two scripts and observes the divergent end states",
+    "keyQuestions": [
+      "On which run do the two files stop matching?",
+      "Which line of code is responsible for the difference?"
+    ],
+    "commonMisconceptions": [
+      "A script that ran without an error left the data in a correct state",
+      "Idempotent means the script does nothing"
+    ],
+    "assessmentOpportunities": [
+      "Describe the check that would make an append-style script safe to run twice"
+    ]
+  },
+  "chapter": "03-python-fundamentals-automation"
+}

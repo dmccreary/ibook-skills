@@ -1,0 +1,186 @@
+/* Textbook Generation Pipeline - layout and styling
+   Fixed-height column: title row with step buttons, legend, Mermaid diagram,
+   shared infobox panel. The height of <main> must equal the CANVAS_HEIGHT
+   comment in textbook-generation-pipeline.js. */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    box-sizing: border-box;
+    height: 375px;
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    border: 1px solid silver;
+    overflow: hidden;
+}
+
+.sim-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 12px;
+    padding: 8px 14px 0 14px;
+}
+
+.sim-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: normal;
+    color: #111;
+}
+
+/* Previous / Next step-through controls */
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stepper button {
+    font-size: 15px;
+    padding: 3px 12px;
+    cursor: pointer;
+}
+
+.step-label {
+    font-size: 15px;
+    color: #1f2937;
+    min-width: 92px;
+    text-align: center;
+}
+
+/* Legend */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 18px;
+    padding: 6px 14px 0 14px;
+    font-size: 14px;
+    color: #334155;
+}
+
+.swatch {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.swatch.stage {
+    width: 16px;
+    height: 12px;
+    border-radius: 3px;
+    background-color: #00897b;
+    border: 1px solid #00574b;
+}
+
+.swatch.gate {
+    width: 11px;
+    height: 11px;
+    transform: rotate(45deg);
+    background-color: #ffc107;
+    border: 1px solid #8a5a00;
+    margin-left: 3px;
+    margin-right: 9px;
+}
+
+.swatch.redo {
+    width: 22px;
+    height: 0;
+    border-top: 2px dashed #c62828;
+}
+
+/* Mermaid diagram: scales down with the container */
+.diagram {
+    flex: 0 0 auto;
+    padding: 4px 8px 6px 8px;
+    text-align: center;
+}
+
+.diagram svg {
+    max-height: 190px;
+}
+
+.diagram .node {
+    cursor: pointer;
+}
+
+.diagram .node:hover rect,
+.diagram .node:hover polygon {
+    filter: brightness(1.1);
+}
+
+.diagram .node:focus {
+    outline: none;
+}
+
+/* The selected node gets a dark halo. (Mermaid writes each node's own stroke
+   as an inline !important style, so the highlight is a filter, not a stroke.) */
+.diagram .node.selected,
+.diagram .node:focus-visible {
+    filter: drop-shadow(0 0 1px #111) drop-shadow(0 0 3px #111);
+}
+
+/* Shared infobox panel below the diagram */
+.infobox {
+    flex: 1 1 auto;
+    padding: 10px 14px;
+    background-color: white;
+    border-top: 1px solid silver;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #1f2937;
+    overflow: hidden;
+}
+
+.infobox h2 {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    color: #00695c;
+}
+
+.infobox h2.gate {
+    color: #8a5a00;
+}
+
+.infobox p {
+    margin: 0 0 5px 0;
+}
+
+.infobox .label {
+    font-weight: bold;
+}
+
+.infobox code {
+    font-size: 14px;
+    background-color: #eef2f5;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+/* Narrow iframes */
+@media (max-width: 620px) {
+    .sim-header h1 {
+        font-size: 19px;
+    }
+    .legend {
+        font-size: 12px;
+        gap: 2px 12px;
+    }
+    .infobox {
+        font-size: 13px;
+        line-height: 1.3;
+        padding: 8px 10px;
+    }
+    .infobox h2 {
+        font-size: 16px;
+    }
+    .infobox code {
+        font-size: 12px;
+    }
+}

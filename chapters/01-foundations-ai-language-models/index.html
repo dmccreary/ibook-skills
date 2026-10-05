@@ -1992,6 +1992,38 @@
       
         
       
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
     
     
     
@@ -2941,7 +2973,7 @@ Welcome to <em>Using Agent Skills to Create Intelligent Textbooks</em>! I'm <str
 Here's the mental shift: when you type a sentence, you see words. The model never sees words at all — it sees a list of token IDs. "Tokenization" might become four separate tokens: <code>Token</code>, <code>iz</code>, <code>ation</code>, and a trailing space marker. Once you start thinking in tokens instead of words, a lot of this book's advice about token budgets and costs stops feeling arbitrary.</p>
 </div>
 <h4 id="diagram-tokenization-visualizer">Diagram: Tokenization Visualizer</h4>
-<iframe src="../../sims/tokenization-visualizer/main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="../../sims/tokenization-visualizer/main.html" width="100%" height="522px" scrolling="no"></iframe>
 
 <details>
 <summary>Tokenization Visualizer</summary>
@@ -2980,7 +3012,7 @@ Bloom Verb: Explain</p>
 </details>
 <p>Every model also has a hard limit on how much text it can consider at once, called the <strong>context window</strong>: the maximum amount of text, measured in tokens, that a model can hold in its working memory for a single request. Anything beyond that limit simply isn't there — the model cannot refer back to it, no matter how important it was. A course description, a 570-concept learning graph, and the instructions for a skill can together add up to a meaningful fraction of a context window, which is why later chapters spend real effort on keeping files small and loading them only when needed.</p>
 <h4 id="diagram-context-window-budget">Diagram: Context Window Budget</h4>
-<iframe src="../../sims/context-window-budget/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<iframe src="../../sims/context-window-budget/main.html" width="100%" height="517px" scrolling="no"></iframe>
 
 <details>
 <summary>Context Window Budget</summary>
@@ -3027,7 +3059,7 @@ If a generated result disappoints you, the fastest fix is almost never a longer 
 A common trap: you run a skill, don't love the result, run the exact same command again expecting the same output, and get something noticeably different. That's expected behavior, not a broken skill. The fix isn't to keep re-running and hoping — it's to tighten the prompt (more specific constraints, an example of the format you want) so the <em>range</em> of likely outputs narrows, even though it never shrinks to exactly one.</p>
 </div>
 <h4 id="diagram-prompt-and-response-flow">Diagram: Prompt and Response Flow</h4>
-<iframe src="../../sims/prompt-response-flow/main.html" width="100%" height="420px" scrolling="no"></iframe>
+<iframe src="../../sims/prompt-response-flow/main.html" width="100%" height="442px" scrolling="no"></iframe>
 
 <details>
 <summary>Prompt and Response Flow</summary>

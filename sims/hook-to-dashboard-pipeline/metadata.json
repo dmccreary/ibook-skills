@@ -1,0 +1,116 @@
+{
+  "title": "From Hook to Dashboard",
+  "creator": "Dan McCreary",
+  "subject": [
+    "AI Agent Skills",
+    "Token Usage Measurement",
+    "Hooks",
+    "JSONL Logs",
+    "Usage Analytics"
+  ],
+  "description": "Step-through left-to-right flowchart that follows one skill-run event through six stages: the skill runs, a skill usage hook records the start, a stop hook records the result, one line is appended to a JSONL usage log, a Python analytics script groups the log by skill, and a token usage dashboard reports tokens and elapsed time. Clicking a node shows its definition and what the example event looks like at that stage.",
+  "date": "2026-10-02",
+  "type": "Interactive Workflow Diagram",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "Mermaid",
+  "bloomLevel": "Understand",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "diagram",
+    "workflow",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "skill usage hook",
+    "stop hook",
+    "JSONL usage log",
+    "skill usage analytics",
+    "token usage dashboard",
+    "elapsed time measurement",
+    "token optimization"
+  ],
+  "canvasHeight": 390,
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Measuring skill token usage with hooks, logs, and dashboards",
+    "learningObjectives": [
+      "Summarize how a single skill-run event travels from a hook, into a log file, and out as a dashboard metric.",
+      "Explain why the usage log is append-only and why it is storage rather than computation.",
+      "State that a token usage dashboard reports elapsed time separately from token counts."
+    ],
+    "bloomsTaxonomy": "Understand",
+    "bloomVerb": "Summarize",
+    "duration": "10 minutes",
+    "prerequisites": [
+      "Knows what a token is and why token use is limited",
+      "Has read the definitions of skill usage hook, stop hook, and JSONL usage log"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 390
+    },
+    "responsive": true,
+    "dependencies": [
+      "Mermaid 10 (CDN)"
+    ],
+    "diagramType": "flowchart",
+    "direction": "LR",
+    "nodeCount": 6,
+    "edgeCount": 5,
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "button",
+        "label": "Previous",
+        "description": "Moves the example event back one stage"
+      },
+      {
+        "type": "button",
+        "label": "Next",
+        "description": "Moves the example event forward one stage"
+      },
+      {
+        "type": "click",
+        "label": "Flowchart node",
+        "description": "Each of the six nodes has a Mermaid click directive that shows its definition and the example event's data in the shared infobox below the diagram"
+      },
+      {
+        "type": "keyboard",
+        "label": "Tab and Enter",
+        "description": "Nodes can be focused with Tab and selected with Enter or Space"
+      }
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Step-through worked example with concrete data",
+    "teachingStrategy": "One example event is followed through every stage, and its concrete form (record, log line, grouped total, dashboard row) is shown at each step",
+    "keyQuestions": [
+      "At which stage does a skill run first leave a trace?",
+      "Why does the dashboard show elapsed time as well as tokens?"
+    ],
+    "commonMisconceptions": [
+      "A log file by itself reveals which skills are expensive",
+      "The time a skill takes and the tokens it consumes are the same measurement"
+    ],
+    "assessmentOpportunities": [
+      "Write a three-sentence summary of the path from a skill run to a dashboard row and check it against the six stages"
+    ]
+  },
+  "chapter": "09-measuring-optimizing-tokens"
+}

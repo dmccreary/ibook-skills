@@ -1,0 +1,122 @@
+{
+  "title": "MicroSim Library Routing Table",
+  "creator": "Dan McCreary",
+  "subject": [
+    "AI Agent Skills",
+    "MicroSim Generator",
+    "Visualization Library Routing",
+    "Meta-Skills",
+    "Trigger Keywords"
+  ],
+  "description": "Left-to-right flowchart of an incoming request entering the MicroSim Generator meta-skill and fanning out to six visualization libraries (p5.js, Chart.js, vis-network, vis-timeline, Leaflet, Mermaid), each arrow labeled with trigger keywords. The reader is given seven requests and applies the routing table by clicking the library each one should be routed to, with immediate feedback and one deliberately ambiguous request.",
+  "date": "2026-10-02",
+  "type": "Interactive Workflow Diagram",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "Mermaid",
+  "bloomLevel": "Apply",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "diagram",
+    "workflow",
+    "interactive-demo",
+    "quiz"
+  ],
+  "keywords": [
+    "visualization library routing",
+    "microsim-generator",
+    "meta-skill",
+    "trigger keyword table",
+    "ambiguous term clarification",
+    "p5.js",
+    "Chart.js",
+    "vis-network",
+    "vis-timeline",
+    "Leaflet",
+    "Mermaid"
+  ],
+  "canvasHeight": 535,
+  "educational": {
+    "gradeLevel": [
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Computer Science",
+    "topic": "Routing a MicroSim request to a visualization library by trigger keywords",
+    "learningObjectives": [
+      "Demonstrate how a request's keywords route to one of several visualization libraries.",
+      "Identify the trigger keyword in a request that decides its route.",
+      "Explain why a request that matches two routes equally needs a clarifying question."
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "Demonstrate",
+    "duration": "10 minutes",
+    "prerequisites": [
+      "Knows what a meta-skill and a trigger keyword table are",
+      "Has seen at least one MicroSim built with p5.js"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "Mermaid",
+    "version": "10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 535
+    },
+    "responsive": true,
+    "dependencies": [
+      "Mermaid 10 (CDN)"
+    ],
+    "diagramType": "flowchart",
+    "direction": "LR",
+    "nodeCount": 8,
+    "edgeCount": 7,
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": true
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "button",
+        "label": "Next Request",
+        "description": "Loads the next of seven practice requests"
+      },
+      {
+        "type": "click",
+        "label": "Library node",
+        "description": "While a request is unrouted, clicking a library node submits it as the answer and gives feedback; afterwards it shows that library's keywords, best use, and an example MicroSim"
+      },
+      {
+        "type": "click",
+        "label": "Incoming Request and MicroSim Generator nodes",
+        "description": "Show the example request string and the generator's routing job in the shared infobox"
+      },
+      {
+        "type": "keyboard",
+        "label": "Tab and Enter",
+        "description": "Nodes can be focused with Tab and selected with Enter or Space"
+      }
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Practice problems with immediate feedback",
+    "teachingStrategy": "The learner applies the routing table to seven requests, predicts the route, and receives feedback naming the keywords that matched",
+    "keyQuestions": [
+      "Which word in the request describes the shape of the data?",
+      "What should the generator do when two routes match equally?"
+    ],
+    "commonMisconceptions": [
+      "The generator routes on the subject of the lesson rather than on the kind of data",
+      "The word graph always means a chart"
+    ],
+    "assessmentOpportunities": [
+      "Route seven requests and name the deciding keyword for each",
+      "Write a new request for a chosen library and have a partner route it"
+    ]
+  },
+  "chapter": "23-microsim-generator-metadata-schema"
+}

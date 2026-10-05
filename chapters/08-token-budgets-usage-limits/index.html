@@ -1953,6 +1953,38 @@
       
         
       
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
     
     
     
@@ -2896,7 +2928,7 @@ Without compaction, a long working session would eventually hit a hard wall the 
 <h2 id="serial-versus-parallel-agent-execution">Serial Versus Parallel Agent Execution</h2>
 <p>Every additional agent you launch costs something before it does any useful work at all: <strong>sub-agent startup overhead</strong>, the fixed token cost of launching an additional agent, incurred before it performs any useful work, because it must receive its own instructions and tool definitions — roughly 12,000 tokens, measured on this project. That overhead is the entire reason <strong>serial agent execution</strong> (running one agent that completes an entire task, paying startup overhead only once) and <strong>parallel agent execution</strong> (running several agents at once on portions of a task, paying startup overhead once per agent) aren't simply "fast" versus "slow" — they're a real cost tradeoff.</p>
 <h4 id="diagram-serial-versus-parallel-cost-calculator">Diagram: Serial Versus Parallel Cost Calculator</h4>
-<iframe src="../../sims/serial-versus-parallel-cost-calculator/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<iframe src="../../sims/serial-versus-parallel-cost-calculator/main.html" width="100%" height="552px" scrolling="no"></iframe>
 
 <details>
 <summary>Serial Versus Parallel Cost Calculator</summary>

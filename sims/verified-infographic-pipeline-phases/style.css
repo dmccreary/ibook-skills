@@ -1,0 +1,278 @@
+/* The Eight-Phase Verified Infographic Pipeline - layout and styling
+   Fixed-height box: title row with step buttons, then the top-to-bottom
+   Mermaid diagram on the left and the shared infobox panel on the right.
+   The height of <main> must equal the CANVAS_HEIGHT comment in
+   verified-infographic-pipeline-phases.js. */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+    box-sizing: border-box;
+    height: 535px;
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    border: 1px solid silver;
+    overflow: hidden;
+}
+
+.sim-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 12px;
+    padding: 8px 14px 6px 14px;
+}
+
+.sim-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: normal;
+    color: #111;
+}
+
+/* Previous / Next step-through controls */
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stepper button {
+    font-size: 15px;
+    padding: 3px 12px;
+    cursor: pointer;
+}
+
+.stepper button:disabled {
+    cursor: default;
+}
+
+.step-label {
+    font-size: 15px;
+    color: #1f2937;
+    min-width: 96px;
+    text-align: center;
+}
+
+/* Diagram on the left, infobox on the right */
+.body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    border-top: 1px solid silver;
+}
+
+.diagram {
+    flex: 0 0 46%;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 8px 6px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.diagram svg {
+    max-height: 480px;
+    max-width: 100%;
+}
+
+.diagram .node {
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.diagram .node:hover rect {
+    filter: brightness(1.12);
+}
+
+.diagram .node:focus {
+    outline: none;
+}
+
+/* The selected node gets a dark halo. (Mermaid writes each node's own stroke
+   as an inline !important style, so the highlight is a filter, not a stroke.) */
+.diagram .node.selected,
+.diagram .node:focus-visible {
+    filter: drop-shadow(0 0 1px #111) drop-shadow(0 0 3px #111);
+}
+
+/* Phases the walk-through has not reached yet */
+.diagram .dimmed {
+    opacity: 0.45;
+}
+
+/* Shared infobox panel beside the diagram */
+.infobox {
+    flex: 1 1 54%;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 12px 14px;
+    background-color: white;
+    border-left: 1px solid silver;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #1f2937;
+    overflow: hidden;
+}
+
+.infobox h2 {
+    margin: 6px 0 6px 0;
+    font-size: 19px;
+    color: #111827;
+}
+
+.infobox p {
+    margin: 0 0 8px 0;
+}
+
+.infobox .label {
+    font-weight: bold;
+}
+
+.infobox .guide {
+    color: #475569;
+    font-style: italic;
+}
+
+/* What kind of phase this is */
+.badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.badge.overview {
+    background-color: #e2e8f0;
+    color: #1f2937;
+}
+
+.badge.text {
+    background-color: #00796b;
+    color: white;
+}
+
+.badge.lock {
+    background-color: #ffc107;
+    color: #2b1d00;
+}
+
+.badge.image {
+    background-color: #bf360c;
+    color: white;
+}
+
+.badge.audit {
+    background-color: #2e7d32;
+    color: white;
+}
+
+/* Audit-trail files that exist after the selected phase */
+.files {
+    margin-top: 4px;
+    border: 1px solid #94a3b8;
+    border-radius: 4px;
+    background-color: #f8fafc;
+}
+
+.files-label {
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: bold;
+    border-bottom: 1px solid #cbd5e1;
+}
+
+.files ul {
+    margin: 0;
+    padding: 5px 8px 5px 26px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.files li.none {
+    list-style: none;
+    margin-left: -16px;
+    color: #64748b;
+}
+
+.files li.new code {
+    font-weight: bold;
+    background-color: #b2dfdb;
+}
+
+.files li.image.new code {
+    background-color: #ffccbc;
+}
+
+.files code {
+    font-family: Menlo, Consolas, "Courier New", monospace;
+    font-size: 13px;
+    padding: 0 3px;
+    border-radius: 3px;
+}
+
+.files .tag {
+    font-size: 12px;
+    font-weight: bold;
+    color: #00695c;
+}
+
+.files-note {
+    padding: 0 8px 5px 8px;
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Narrow iframes: smaller type, narrower diagram column */
+@media (max-width: 620px) {
+    .sim-header h1 {
+        font-size: 17px;
+    }
+    .stepper button,
+    .step-label {
+        font-size: 13px;
+    }
+    .diagram {
+        flex-basis: 44%;
+        padding: 6px 2px;
+        align-items: flex-start;
+    }
+    .infobox {
+        font-size: 12.5px;
+        line-height: 1.3;
+        padding: 8px 8px;
+    }
+    .infobox h2 {
+        font-size: 15px;
+        margin: 4px 0;
+    }
+    .infobox p {
+        margin-bottom: 5px;
+    }
+    .badge {
+        font-size: 11px;
+        padding: 1px 7px;
+    }
+    .files-label,
+    .files ul {
+        font-size: 12px;
+    }
+    .files ul {
+        padding-left: 20px;
+    }
+    .files code {
+        font-size: 10.5px;
+    }
+    .files-note {
+        font-size: 11px;
+    }
+}

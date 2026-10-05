@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Book Launch Checklist using Mermaid</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="book-launch-checklist.js"></script>
+</head>
+<body>
+    <main>
+        <header class="sim-header">
+            <h1>Book Launch Checklist</h1>
+            <div class="stepper">
+                <span id="progressLabel" class="step-label">0 of 6 checked</span>
+                <button id="nextButton" type="button">Next Step</button>
+                <button id="resetButton" type="button">Reset</button>
+            </div>
+        </header>
+        <div class="body">
+            <div class="diagram-column">
+                <div id="diagram" class="diagram"></div>
+                <div class="legend" aria-hidden="true">
+                    <span><span class="swatch todo"></span>To do</span>
+                    <span><span class="swatch done"></span>Checked</span>
+                    <span><span class="swatch publish"></span>Publish</span>
+                </div>
+            </div>
+            <section id="infobox" class="infobox" aria-live="polite"></section>
+        </div>
+    </main>
+    <br/>
+    <a href=".">Back to Lesson Plan</a>
+</body>
+</html>

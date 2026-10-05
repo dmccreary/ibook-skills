@@ -1,0 +1,130 @@
+{
+  "title": "Breadboard Tie Points and Animated Current Flow",
+  "creator": "Dan McCreary",
+  "subject": [
+    "Electronics",
+    "Solderless Breadboard",
+    "Breadboard Tie Points",
+    "Circuits",
+    "Domain-Specific Skills"
+  ],
+  "description": "A simplified solderless breadboard with a plus rail, a minus rail, and numbered columns split by a center gap. Clicking a hole highlights every hole joined to it by the same internal strip. A battery, a jumper wire, a resistor, and an LED are already placed, with one connection missing. The Complete the Circuit button adds the final jumper, after which moving dots show conventional current flowing around the closed loop and the LED lights.",
+  "date": "2026-10-02",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY-NC-SA 4.0",
+  "library": "p5.js",
+  "bloomLevel": "Apply",
+  "gradeLevel": "Adult",
+  "visualizationType": [
+    "simulation",
+    "animation",
+    "diagram",
+    "interactive-demo"
+  ],
+  "keywords": [
+    "solderless breadboard",
+    "breadboard tie points",
+    "power rail",
+    "center gap",
+    "component placement",
+    "jumper wire routing",
+    "animated current flow",
+    "closed circuit",
+    "LED",
+    "resistor"
+  ],
+  "educational": {
+    "gradeLevel": [
+      "High School",
+      "Undergraduate",
+      "Adult"
+    ],
+    "subjectArea": "Engineering",
+    "topic": "Internal connections of a solderless breadboard and current flow in a closed circuit",
+    "learningObjectives": [
+      "Demonstrate which breadboard holes are electrically connected.",
+      "Demonstrate how current flows once a simple LED circuit is completed.",
+      "Identify the missing connection in an open circuit."
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "Demonstrate",
+    "duration": "15 minutes",
+    "prerequisites": [
+      "Knows that a battery has a positive and a negative terminal",
+      "Has read the definitions of solderless breadboard and breadboard tie points"
+    ],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 520
+    },
+    "responsive": true,
+    "dependencies": [
+      "p5.js 1.11.10 (CDN)"
+    ],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": false
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {
+        "type": "click",
+        "label": "Breadboard hole",
+        "description": "Highlights every hole in the same tie point group: the whole rail, or the five holes of that column on one side of the center gap"
+      },
+      {
+        "type": "button",
+        "label": "Complete the Circuit",
+        "description": "Adds the final jumper wire from hole j7 to the minus rail, closing the loop and starting the current animation"
+      },
+      {
+        "type": "button",
+        "label": "Reset",
+        "description": "Removes the final jumper wire and clears the highlight"
+      }
+    ]
+  },
+  "simulation": {
+    "modelType": "Connectivity model of a breadboard with a single-loop circuit",
+    "equations": [
+      "Two holes are connected when they are in the same rail, or in the same column on the same side of the center gap",
+      "Current flows only when the loop from battery plus to battery minus is closed"
+    ],
+    "assumptions": [
+      "One plus rail at the top and one minus rail at the bottom; each rail is continuous",
+      "Each numbered column has two groups of five holes, rows a to e and rows f to j",
+      "The dots show conventional current, from plus to minus"
+    ],
+    "limitations": [
+      "Real boards usually have a plus and minus rail pair on each long edge, and some split their rails at the middle",
+      "Voltages, resistance, and current are not calculated; the LED is either dark or lit",
+      "Components cannot be moved"
+    ]
+  },
+  "pedagogical": {
+    "pattern": "Direct manipulation followed by an observed consequence",
+    "teachingStrategy": "The learner probes holes to discover the connection rule, finds the open point in the circuit, then completes it and observes the result",
+    "keyQuestions": [
+      "Which holes share a strip with the one you clicked?",
+      "Where does the path from battery plus stop before the circuit is completed?"
+    ],
+    "commonMisconceptions": [
+      "Holes that are next to each other are connected",
+      "The two halves of a column are connected across the center gap",
+      "Current flows as soon as a battery is attached, even if the loop is open"
+    ],
+    "assessmentOpportunities": [
+      "Predict whether two named holes are connected, then check by clicking",
+      "Name the missing connection before completing the circuit"
+    ]
+  },
+  "chapter": "28-domain-specific-skill-extension"
+}
