@@ -84,6 +84,7 @@ This guide supports **two distinct overlay engines** depending on the infographi
 - Callout uses `callouts[]` with `x`, `y` point coordinates and draws numbered circle markers with leader lines
 - Grid uses `zones[]` with `x1`, `y1`, `x2`, `y2` rectangle coordinates and draws transparent hover rectangles over columns/regions
 - Grid supports `showLabels: true/false` to control whether a chip label appears inside each zone (set to `false` when the image already has printed column titles)
+- The zone chip (`.zone-chip` in `grid-overlay.css`) is sized with container query units so it scales with the poster, and it wraps long labels inside the zone. Do not shrink it back to a fixed `px` font. `#image-wrapper` sets `line-height: 0`, which the chip inherits, so the chip must keep its own `line-height` or its background collapses to the padding (see Common Pitfalls)
 
 ## Prerequisites
 
@@ -425,6 +426,7 @@ appear in exactly one place. Guard against the two ways it gets duplicated:
 - **Text in generated images** — Always verify the image has NO text, labels, arrows, or **title/heading**. Regenerate if the LLM adds annotations.
 - **Duplicate title** — The title must appear exactly once. `diagram.js` injects an `<h1>` from `data.json.title`, so the image must have no baked-in title and `index.md` must have no `# Title` body H1 (use the frontmatter `title:` only). See [Title Rendering](#title-rendering).
 - **Marker overlap** — Keep callout positions at least 5-8% apart. Use edit mode to fine-tune.
+- **Tiny or background-less zone chips (`showLabels: true`)** — `#image-wrapper` sets `line-height: 0` to remove the gap under the image, and the chip inherits it, so its pill background collapses to the padding and a fixed 11px font looks tiny on a large poster. Keep `line-height` on `.zone-chip`, size its font with `cqw` (the wrapper needs `container-type: inline-size`), and let it wrap (`width: max-content; max-width: calc(100% - 12px)`) so long labels in narrow zones do not spill over neighbors. After building a grid sim with `showLabels: true`, force every chip visible in the browser (`document.querySelectorAll('.zone-chip').forEach(c => c.style.opacity = 1)`) and check that no chip overflows its zone. Older sims that copied `grid-overlay.css` before this fix need the new file copied over.
 - **Missing shared-libs** — Verify `docs/sims/shared-libs/diagram.js` and `style.css` exist before testing.
 - **Forgetting exclude_docs** — The `image-prompt.md` file will cause mkdocs build warnings if not excluded.
 - **Wrong image path** — The `image` field in data.json must match the exact filename (case-sensitive).

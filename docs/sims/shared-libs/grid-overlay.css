@@ -58,6 +58,8 @@ body {
   border: 1px solid #ddd;
   border-radius: 6px;
   overflow: hidden;
+  /* lets .zone-chip size its text relative to the poster width (cqw units) */
+  container-type: inline-size;
 }
 
 .grid-image {
@@ -82,19 +84,30 @@ body {
   /* --zone-color set inline by JS */
 }
 
-/* Chip label at top-center of zone */
+/* Chip label at top-center of zone.
+   The wrapper sets line-height:0 (to remove the inline-image gap), so the chip
+   must restore its own line-height or its background collapses to the padding.
+   Font size scales with the poster width via container query units. */
 .zone-chip {
   position: absolute;
-  top: 6px;
+  top: 1.2cqw;
   left: 50%;
   transform: translateX(-50%);
   background: var(--zone-color, #1389A6);
   color: white;
-  font-size: 11px;
+  font-size: clamp(12px, 2.1cqw, 26px);
   font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 10px;
-  white-space: nowrap;
+  line-height: 1.25;
+  padding: 0.35em 0.9em;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+  /* wrap long labels inside the zone instead of spilling over neighbours */
+  width: max-content;
+  max-width: calc(100% - 12px);
+  text-align: center;
+  white-space: normal;
   opacity: 0;
   transition: opacity 0.15s;
   pointer-events: none;
