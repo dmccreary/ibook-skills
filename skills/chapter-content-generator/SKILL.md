@@ -353,12 +353,15 @@ FOR EACH CHAPTER:
    one's actual word count and element mix roughly matches its budget tier
 5. Write the content to docs/chapters/[chapter-dir]/index.md
 
-METADATA FORMAT (add to top of each file):
+METADATA FORMAT (add to top of each file). Put double quotes around every value that contains a
+colon, and always around title, description and date. An unquoted value with a colon is invalid YAML:
+mkdocs then prints the frontmatter at the top of the page and drops its metadata, without failing
+`mkdocs build --strict`. Escape any inner double quote as \".
 ---
-title: [Chapter Title]
-description: [Short description]
+title: "[Chapter Title]"
+description: "[Short description]"
 generated_by: claude skill chapter-content-generator
-date: [YYYY-MM-DD HH:MM:SS]
+date: "[YYYY-MM-DD HH:MM:SS]"
 version: 1.11
 ---
 
@@ -443,13 +446,27 @@ Add metadata to the top of the index file:
 
 ```markdown
 ---
-title: Chapter Title
-description: Short description of title
+title: "Chapter Title"
+description: "Short description of title"
 generated_by: claude skill chapter-content-generator
-date: YYYY-MM-DD HH-MM-SS
+date: "YYYY-MM-DD HH:MM:SS"
 version: 1.11
 ---
 ```
+
+**Frontmatter rule:** put double quotes around every frontmatter value that contains a colon, and
+escape any inner double quote as `\"`. Always quote `title`, `description` and `date`: titles and
+descriptions routinely contain colons ("Kinematics: Where Is the Hand?"), and the timestamp always
+does. An unquoted `description: A chapter on X: how Y works` is invalid YAML. mkdocs then prints the
+frontmatter at the top of the page and drops its metadata, and `mkdocs build --strict` does not
+complain, so the page looks wrong with no error to point at. Keys that contain a colon (`og:image`)
+need no quotes; only values do. After writing a chapter, check that the frontmatter parses:
+
+```bash
+python3 -c "import sys,yaml; t=open(sys.argv[1]).read(); d=yaml.safe_load(t.split('---')[1]); print(d['title'], '|', d['date'])" docs/chapters/NN-name/index.md
+```
+
+The `date` value is then a string, not a YAML timestamp, which is what downstream tools expect.
 
 #### Step 2.3b: Compute the Elaboration Budget (CIS-Driven)
 
@@ -1045,6 +1062,8 @@ Load this reference when determining how to write content at the appropriate rea
 - ❌ Indenting content inside `<details>` blocks
 - ❌ Missing `#### Diagram:` header before details blocks
 - ❌ Missing closing `</details>` tag
+- ❌ An unquoted frontmatter value that contains a colon (`description: Kinematics: where is the hand?`, or `date: 2026-10-07 08:49:36`)
+- ✅ Double quotes around every frontmatter value that contains a colon, and around `title`, `description` and `date` always
 
 **Parallel Execution:**
 - ❌ Sending Task calls in separate messages (runs sequentially)
