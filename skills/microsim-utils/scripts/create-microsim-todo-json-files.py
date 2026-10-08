@@ -35,6 +35,22 @@ def find_project_root(start_path):
         current = parent
 
 
+def strip_yaml_quotes(value):
+    """Return a YAML scalar's value without its surrounding quotes.
+
+    Chapter frontmatter often quotes the title (title: "Actuators and Sensors")
+    so that a colon in it stays valid YAML. Keeping the quote characters would
+    carry them into every link and metadata field built from the title.
+    """
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in "'\"":
+        inner = value[1:-1]
+        if value[0] == '"':
+            return inner.replace('\\"', '"').replace("\\\\", "\\").strip()
+        return inner.replace("''", "'").strip()
+    return value
+
+
 def extract_field(text, field_name):
     """Extract a field value from the details block text.
 
@@ -146,7 +162,7 @@ def extract_diagrams_from_chapter(filepath, docs_dir=None):
 
     # Try to get actual title from frontmatter
     title_match = re.search(r"^title:\s*(.+)$", content, re.MULTILINE)
-    chapter_title = title_match.group(1).strip() if title_match else chapter_title_raw
+    chapter_title = strip_yaml_quotes(title_match.group(1)) if title_match else chapter_title_raw
 
     diagrams = []
 

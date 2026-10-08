@@ -225,11 +225,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
 
 INDEX_MD_TEMPLATE = """---
-title: {title}
-description: {description}
+title: {title_yaml}
+description: {description_yaml}
 status: scaffold
-library: {library}
-bloom_level: {bloom_level}
+library: {library_yaml}
+bloom_level: {bloom_level_yaml}
 ---
 
 # {title}
@@ -245,9 +245,9 @@ bloom_level: {bloom_level}
 The full specification below is extracted from
 [Chapter {chapter_number}: {chapter_title}](../../{chapter_rel_dir}/index.md).
 
-```text
+{fence}text
 {specification}
-```
+{fence}
 
 ## Related Resources
 
@@ -288,6 +288,44 @@ def make_metadata(
 
 def indent_block(text, indent="    "):
     return "\n".join(indent + line for line in text.splitlines())
+
+
+def yaml_quote(value):
+    """Return value as a double-quoted YAML scalar.
+
+    Frontmatter values are always quoted because an unquoted value that
+    contains ": " is invalid YAML, and the page then silently loses its title
+    and nav status dot without failing `mkdocs build --strict`. A JSON string
+    is a valid YAML double-quoted scalar, so json.dumps does the escaping.
+    """
+    return json.dumps(str(value), ensure_ascii=False)
+
+
+# A plain (unquoted) YAML scalar is only safe when it has none of these.
+YAML_UNSAFE_RE = re.compile(r""":\s|\s#|^[\s'"&*!|>%@`\[\]{},#?-]|[\s:]$""")
+
+
+def yaml_scalar(value):
+    """Return value unquoted when that is safe YAML, otherwise double-quoted.
+
+    Used for the short machine-readable fields (library, bloom_level) so the
+    common case stays `library: p5.js`.
+    """
+    value = str(value)
+    if not value or YAML_UNSAFE_RE.search(value):
+        return yaml_quote(value)
+    return value
+
+
+def code_fence_for(text):
+    """Return a backtick fence long enough to wrap text.
+
+    A spec that contains its own fenced code block would close a fixed
+    three-backtick fence early, so use one backtick more than the longest
+    run of backticks in the text, with a minimum of three.
+    """
+    longest = max((len(run) for run in re.findall(r"`+", text)), default=0)
+    return "`" * max(3, longest + 1)
 
 
 # Stubs generated before SCAFFOLD_MARKER existed are still recognizable by
@@ -362,9 +400,11 @@ def scaffold_one(
 
     md_out = INDEX_MD_TEMPLATE.format(
         title=title,
-        description=description,
-        library=library,
-        bloom_level=bloom_level,
+        title_yaml=yaml_quote(title),
+        description_yaml=yaml_quote(description),
+        library_yaml=yaml_scalar(library),
+        bloom_level_yaml=yaml_scalar(bloom_level),
+        fence=code_fence_for(specification),
         bloom_verb=bloom_verb,
         learning_objective=learning_objective,
         chapter_number=spec.get("chapter_number") or "?",
