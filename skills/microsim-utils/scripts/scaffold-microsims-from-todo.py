@@ -24,6 +24,7 @@ already exists, since that may contain a real implementation).
 
 import argparse
 import glob
+import html
 import json
 import os
 import re
@@ -290,6 +291,26 @@ def indent_block(text, indent="    "):
     return "\n".join(indent + line for line in text.splitlines())
 
 
+def html_text(value):
+    """Escape value for use as HTML text content.
+
+    The stub only places these values between tags, never in an attribute,
+    so quotes are left alone and "Ohm's Law" stays readable in the source.
+    """
+    return html.escape(str(value), quote=False)
+
+
+def html_comment_safe(text):
+    """Make text safe to embed inside an HTML comment.
+
+    A comment ends at the first "-->" (or "--!>"), so a spec containing one,
+    such as a Mermaid edge `A --> B`, would end the comment early and spill
+    the rest of the spec onto the page. Entities are not decoded inside a
+    comment, so the spec still reads as "--&gt;" in the page source.
+    """
+    return text.replace("-->", "--&gt;").replace("--!>", "--!&gt;")
+
+
 def yaml_quote(value):
     """Return value as a double-quoted YAML scalar.
 
@@ -388,12 +409,12 @@ def scaffold_one(
 
     html_out = HTML_TEMPLATE.format(
         marker=SCAFFOLD_MARKER,
-        title=title,
-        sim_id=sim_id,
-        library=library,
-        bloom_level=bloom_level,
-        learning_objective=learning_objective,
-        spec_block=indent_block(specification, "    "),
+        title=html_text(title),
+        sim_id=html_text(sim_id),
+        library=html_text(library),
+        bloom_level=html_text(bloom_level),
+        learning_objective=html_text(learning_objective),
+        spec_block=indent_block(html_comment_safe(specification), "    "),
     )
 
     chapter_rel_dir = spec.get("chapter_rel_dir") or f"chapters/{spec.get('chapter_dir') or ''}"
