@@ -366,6 +366,12 @@ def main():
     # Walk every markdown file under docs/ once; update sim iframes in place.
     own_changes, embed_changes = 0, 0
     for md in sorted(glob.glob(os.path.join(docs_dir, "**", "*.md"), recursive=True)):
+        # A glob for "*.md" also matches DIRECTORIES whose name ends in .md.
+        # At least one book has docs/archetypes/shifting-the-burden/er-overuse.md
+        # as a directory, which made this script die with IsADirectoryError
+        # after it had already resolved every height.
+        if not os.path.isfile(md):
+            continue
         changes = update_iframes_in_file(md, heights, args.dry_run)
         if not changes:
             continue
