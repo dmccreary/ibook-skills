@@ -1,0 +1,162 @@
+#!/usr/bin/env bash
+# devin-install-skills — install ibook-skills for Devin CLI
+#
+# Symlinks each active skill in $BK_HOME/skills/ into ~/.config/devin/skills/
+# so they are available globally in all Devin CLI projects.
+#
+# USAGE
+#   devin-install-skills                      install skills to Devin
+#   devin-install-skills --dry-run            report actions, change nothing
+#   devin-install-skills --help
+#
+# This is a simplified version of bk-install-skills that only targets Devin.
+
+set -euo pipefail
+
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; RED='\033[0;31m'; NC='\033[0m'
+
+# ── Arguments ─────────────────────────────────────────────────
+DRY_RUN=false
+
+usage() { sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'; exit 0; }
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --dry-run) DRY_RUN=true; shift ;;
+        -h|--help) usage ;;
+        *) printf '%bError: unknown option: %s%b\n' "$RED" "$1" "$NC" >&2
+           printf 'Try --help.\n' >&2; exit 2 ;;
+    esac
+done
+
+# ── Repository root ───────────────────────────────────────────
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="${BK_HOME:-$(cd "$SCRIPT_DIR/.." && pwd -P)}"
+SKILLS_DIR="$REPO_ROOT/skills"
+
+[ -d "$SKILLS_DIR" ] || {
+    printf '%bError: skills directory does not exist: %s%b\n' "$RED" "$SKILLS_DIR" "$NC" >&2
+    printf 'Set BK_HOME to the ibook-skills checkout, e.g.\n' >&2
+    printf '  export BK_HOME="$HOME/Documents/ws/ibook-skills"\n' >&2
+    exit 1; }
+
+# ── Active skills ─────────────────────────────────────────────
+# An active skill is a direct child of skills/ containing SKILL.md. This
+# naturally excludes skills/archived/ (retired skills consolidated into
+# meta-skills) and any stray directory without a skill definition.
+SKILL_DIRS=()
+shopt -s nullglob
+for skill_file in "$SKILLS_DIR"/*/SKILL.md; do
+    SKILL_DIRS+=("$(dirname "$skill_file")")
+done
+shopt -u nullglob
+
+[ ${#SKILL_DIRS[@]} -gt 0 ] || {
+    printf '%bError: no active skills found in %s%b\n' "$RED" "$SKILLS_DIR" "$NC" >&2; exit 1; }
+
+is_active_skill() {
+    local d
+    for d in "${SKILL_DIRS[@]}"; do
+        [ "$(basename "$d")" = "$1" ] && return 0
+    done
+    return 1
+}
+
+# ── Devin target directory ────────────────────────────────────
+DEVIN_SKILLS_DIR="$HOME/.config/devin/skills"
+
+# ── Helpers ───────────────────────────────────────────────────
+run() { if $DRY_RUN; then printf '    %b[dry-run]%b %s\n' "$YELLOW" "$NC" "$*"; else "$@"; fi; }
+
+TOTAL_LINKED=0; TOTAL_CURRENT=0; TOTAL_REMOVED=0; TOTAL_CONFLICTS=0
+
+# Link every active skill into $1, pruning links this repo no longer owns.
+link_skills_into() {
+    local target="$1" linked=0 current=0 removed=0 link name tgt skill_dir skill_name
+
+    run mkdir -p "$target"
+    [ -d "$target" ] || { $DRY_RUN || return 1; }
+
+    # Prune broken links, and live links to skills we no longer ship.
+    if [ -d "$target" ]; then
+        shopt -s nullglob dotglob
+        for link in "$target"/*; do
+            [ -L "$link" ] || continue
+            name=$(basename "$link"); tgt=$(readlink "$link")
+            if [ ! -e "$link" ]; then
+                run rm -- "$link"
+                printf '    %bpruned%b %s (broken)\n' "$YELLOW" "$NC" "$name"
+                removed=$((removed + 1))
+            elif case "$tgt" in "$SKILLS_DIR"/*) true ;; *) false ;; esac && ! is_active_skill "$name"; then
+                run rm -- "$link"
+                printf '    %bpruned%b %s (no longer an active skill)\n' "$YELLOW" "$NC" "$name"
+                removed=$((removed + 1))
+            fi
+        done
+        shopt -u nullglob dotglob
+    fi
+
+    for skill_dir in "${SKILL_DIRS[@]}"; do
+        skill_name=$(basename "$skill_dir")
+        link="$target/$skill_name"
+
+        if [ -L "$link" ] && [ "$(readlink "$link")" = "$skill_dir" ]; then
+            current=$((current + 1)); continue
+        fi
+        if [ -L "$link" ]; then
+            run rm -- "$link"
+        elif [ -e "$link" ]; then
+            printf '    %bconflict%b %s exists and is not a symlink; left unchanged\n' "$RED" "$NC" "$link" >&2
+            TOTAL_CONFLICTS=$((TOTAL_CONFLICTS + 1)); continue
+        fi
+        run ln -s "$skill_dir" "$link"
+        printf '    %blinked%b %s\n' "$GREEN" "$NC" "$skill_name"
+        linked=$((linked + 1))
+    done
+
+    printf '    %d linked, %d already current, %d pruned\n' "$linked" "$current" "$removed"
+    TOTAL_LINKED=$((TOTAL_LINKED + linked))
+    TOTAL_CURRENT=$((TOTAL_CURRENT + current))
+    TOTAL_REMOVED=$((TOTAL_REMOVED + removed))
+}
+
+# ── Install ───────────────────────────────────────────────────
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+printf '%bInstalling skills for Devin CLI%b\n' "$GREEN" "$NC"
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+printf 'Source: %b%s%b (%d active skills)\n' "$YELLOW" "$SKILLS_DIR" "$NC" "${#SKILL_DIRS[@]}"
+printf 'Target: %b%s%b\n' "$YELLOW" "$DEVIN_SKILLS_DIR" "$NC"
+$DRY_RUN && printf '%bDRY RUN — no changes will be made%b\n' "$YELLOW" "$NC"
+printf '\n'
+
+printf '%b▸ Devin CLI%b -> %s\n' "$BLUE" "$NC" "$DEVIN_SKILLS_DIR"
+link_skills_into "$DEVIN_SKILLS_DIR"
+printf '\n'
+
+# ── Verify ────────────────────────────────────────────────────
+BROKEN=""
+if ! $DRY_RUN; then
+    if [ -d "$DEVIN_SKILLS_DIR" ]; then
+        while IFS= read -r link; do
+            [ -n "$link" ] && [ ! -e "$link" ] && BROKEN="$BROKEN $link"
+        done < <(find "$DEVIN_SKILLS_DIR" -type l 2>/dev/null)
+    fi
+fi
+
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+printf '%bSummary:%b %d linked, %d already current, %d pruned\n' \
+    "$BLUE" "$NC" "$TOTAL_LINKED" "$TOTAL_CURRENT" "$TOTAL_REMOVED"
+
+status=0
+if [ "$TOTAL_CONFLICTS" -gt 0 ]; then
+    printf '%bIncomplete: %d conflict(s) left unchanged.%b\n' "$RED" "$TOTAL_CONFLICTS" "$NC" >&2
+    status=1
+fi
+if [ -n "$BROKEN" ]; then
+    printf '%bIncomplete: broken symlinks remain:%b\n' "$RED" "$NC" >&2
+    for b in $BROKEN; do printf '  %s\n' "$b" >&2; done
+    status=1
+fi
+[ "$status" -eq 0 ] && printf '%b✓ Devin CLI skills are current.%b\n' "$GREEN" "$NC"
+printf '%b════════════════════════════════════════════════════════%b\n' "$BLUE" "$NC"
+exit $status
