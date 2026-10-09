@@ -2,9 +2,12 @@
 """
 extract-sim-specs.py — Extract MicroSim specifications from chapter markdown.
 
-Parses ``#### Diagram:`` / ``#### Drawing:`` headers from chapter markdown
-files, extracts ``<details>`` block content, iframe paths, sim IDs, and
-structured fields.  Optionally generates a sim-status.json lifecycle file.
+Parses spec headers from chapter markdown files — ``#### Diagram:``,
+``#### Drawing:``, ``#### MicroSim:``, ``#### Timeline:``, ``#### Chart:``,
+``#### Infographic:``, ``#### Workflow:`` and ``#### Map:`` (the list lives in
+``shared.SPEC_HEADING_TYPES``) — and extracts ``<details>`` block content,
+iframe paths, sim IDs, and structured fields.  Optionally generates a
+sim-status.json lifecycle file.
 
 Usage:
     python3 extract-sim-specs.py [--project-dir PATH] [--chapter DIR]
@@ -22,15 +25,16 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from shared import (
     find_project_root, kebab_case, detect_library, parse_yaml_frontmatter,
+    SPEC_HEADING_RE,
     GREEN, RED, YELLOW, CYAN, BOLD, DIM, RESET, CHECK, CROSS, WARN, ARROW,
 )
 
 
 # ── Regex patterns ────────────────────────────────────────────────────
 
-HEADING_RE = re.compile(
-    r"^####\s+(Diagram|Drawing):\s*(.+)$", re.MULTILINE
-)
+# Spec headings (Diagram, Drawing, MicroSim, Timeline, ...) are shared with
+# add-iframes-to-chapter.py; see SPEC_HEADING_TYPES in shared.py.
+HEADING_RE = SPEC_HEADING_RE
 
 IFRAME_RE = re.compile(
     r'<iframe\s[^>]*src=["\']([^"\']+/sims/([^/"\']+)/main\.html)["\']'
@@ -143,13 +147,13 @@ def extract_specs_from_chapter(chapter_path, chapter_dir_name, verbose=False):
     lines = content.splitlines()
     specs = []
 
-    # Find all #### Diagram: / #### Drawing: headings
+    # Find all spec headings (#### Diagram: / #### MicroSim: / #### Timeline: ...)
     for i, line in enumerate(lines):
         m = HEADING_RE.match(line.strip())
         if not m:
             continue
 
-        heading_type = m.group(1)   # "Diagram" or "Drawing"
+        heading_type = m.group(1)   # one of shared.SPEC_HEADING_TYPES
         title = m.group(2).strip()
 
         # Search ahead (up to 40 lines) for iframe and details block
@@ -222,7 +226,7 @@ def extract_specs_from_chapter(chapter_path, chapter_dir_name, verbose=False):
             "sim_id":       sim_id,
             "title":        title,
             "summary":      summary,
-            "heading_type":  heading_type,  # Diagram or Drawing
+            "heading_type":  heading_type,  # Diagram, Drawing, MicroSim, ...
             "chapter":      chapter_dir_name,
             "element_type": elem_type,
             "bloom_level":  bloom,

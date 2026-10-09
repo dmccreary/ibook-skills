@@ -24,6 +24,22 @@ ARROW  = "\u2192"  # →
 BULLET = "\u2022"  # •
 
 
+# ── Spec headings in chapter markdown ─────────────────────────────────
+# A MicroSim spec is a ``#### <Type>: <Title>`` heading above a
+# ``<details markdown="1">`` block.  ``Diagram`` is the standard word; the
+# others are all in use across existing textbooks.  ``Table``, ``Equation``
+# and ``Example`` headings are deliberately absent: they never carry a spec.
+# Every tool that looks for specs must use this one pattern so they agree on
+# what counts.  Group 1 is the heading type, group 2 the title.
+SPEC_HEADING_TYPES = (
+    "Diagram", "Drawing", "MicroSim", "Timeline",
+    "Chart", "Infographic", "Workflow", "Map",
+)
+SPEC_HEADING_RE = re.compile(
+    r"^####\s+(" + "|".join(SPEC_HEADING_TYPES) + r"):\s*(.+)$", re.MULTILINE
+)
+
+
 def find_project_root(start_dir=None):
     """Walk up from *start_dir* (default: cwd) to find the directory
     that contains ``mkdocs.yml``.  Returns the absolute path or raises

@@ -91,7 +91,7 @@ python3 $UTILS/extract-sim-specs.py \
 
 **What this does:**
 
-- Parses all `#### Diagram:` and `#### Drawing:` headers from the chapter's `index.md`
+- Parses all spec headers from the chapter's `index.md`: `#### Diagram:`, `#### Drawing:`, `#### MicroSim:`, `#### Timeline:`, `#### Chart:`, `#### Infographic:`, `#### Workflow:`, and `#### Map:`
 - Extracts `<details>` block content, iframe paths, sim IDs, Bloom levels, and library hints
 - Produces a JSON array of spec objects (one per sim)
 - Generates a `sim-status.json` with lifecycle states: `specified → scaffolded → implemented → validated → deployed`
@@ -175,6 +175,18 @@ python3 $UTILS/generate-sim-scaffold.py \
 - Generates `index.md` with frontmatter, iframe embed, fullscreen link, lesson plan skeleton
 - Generates `metadata.json` with Dublin Core fields and educational metadata
 - **Skips** directories that already exist (unless `--force` is used)
+
+**Subject and grade level:** the scaffolds take their subject from `site_name` in `mkdocs.yml` and their grade level from the target audience in `docs/course-description.md`. Anything the project does not state is written as a `TODO:` placeholder and reported in a warning. The subject area is never stated by a project, so always pass it, and override the other two when the derived values are wrong:
+
+```bash
+python3 $UTILS/generate-sim-scaffold.py \
+    --spec-file /tmp/ch-specs.json \
+    --project-dir $PROJECT \
+    --subject-area "Computer Science" \
+    --verbose
+```
+
+`--subject-area` takes a `subjectArea` value from the metadata schema (`Mathematics`, `Science`, `Computer Science`, `Health`, ...); `--subject` and `--grade-level` (e.g. `"9-12"`, `"Undergraduate"`) are also available.
 
 **Using `--force` for partially-built sims:**
 
@@ -557,7 +569,7 @@ python3 $UTILS/add-iframes-to-chapter.py \
 
 **What this does:**
 
-- Finds `#### Diagram:` / `#### Drawing:` headers that are missing iframe embeds
+- Finds spec headers (`#### Diagram:`, `#### MicroSim:`, `#### Timeline:`, and the other words Step 1 accepts) that are missing iframe embeds
 - Inserts `<iframe>` tags before the `<details>` block with correct relative paths
 - `--fix-heights`: Parses `.js` files to detect `createCanvas()` height and sets iframe height to canvas height + 2px
 - `--fix-paths`: Converts absolute paths (`/sims/...`) to relative (`../../sims/...`)

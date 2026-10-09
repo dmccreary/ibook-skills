@@ -46,8 +46,12 @@ Chapter Markdown
 
 ### extract-sim-specs.py
 
-Parse `#### Diagram:` / `#### Drawing:` headers from chapter markdown and
-extract `<details>` block specifications.
+Parse spec headers from chapter markdown and extract `<details>` block
+specifications. A spec header is a level-4 heading whose first word is one of
+`Diagram`, `Drawing`, `MicroSim`, `Timeline`, `Chart`, `Infographic`,
+`Workflow` or `Map` (for example `#### MicroSim: SIR Simulator`). The list is
+`SPEC_HEADING_TYPES` in `shared.py`, shared with `add-iframes-to-chapter.py`;
+add a word there if a book uses another one.
 
 ```bash
 # Extract all specs to JSON
@@ -78,7 +82,29 @@ python3 generate-sim-scaffold.py --spec-file specs.json --sim-id angle-explorer 
 
 # Force overwrite existing scaffolds
 python3 generate-sim-scaffold.py --spec-file specs.json --force
+
+# Set the course values explicitly
+python3 generate-sim-scaffold.py --spec-file specs.json \
+    --subject "Data Science" --grade-level "11-12" --subject-area "Statistics"
 ```
+
+**Subject, grade level and subject area:** each value written into `index.md`
+(`### Grade Level`) and `metadata.json` (`subject`, `gradeLevel`,
+`subjectArea`) comes from the first source that has one:
+
+1. The `--subject`, `--grade-level` and `--subject-area` flags.
+2. The project: `site_name` in `mkdocs.yml` for the subject, and the target
+   audience in `docs/course-description.md` for the grade level (a
+   `**Target Audience:**` line or a `## Target Audience` / `## Audience`
+   heading). Explicit grades such as "grades 9–12" are used as written; other
+   wording ("college freshmen", "graduate students") is mapped to the
+   metadata schema's `gradeLevel` values on a best-effort basis.
+3. A `TODO:` placeholder, with a warning naming the flag to pass.
+
+Nothing in a project states its subject area, so pass `--subject-area` (one of
+the schema's values, such as `Mathematics`, `Computer Science` or `Health`) to
+avoid `TODO: subject area`. Run with `--verbose` to see the resolved values.
+`geometry-course` keeps its original built-in values.
 
 **Library-to-CDN mapping:** p5.js 1.11.10, vis-network 9.1.9, Chart.js 4.4.4,
 Mermaid 10, Plotly 2.35.0, Leaflet 1.9.4, vis-timeline 7.7.3.
@@ -114,7 +140,8 @@ python3 generate-sims-index.py --project-dir /path/to/project
 
 ### add-iframes-to-chapter.py
 
-Find `#### Diagram:` / `#### Drawing:` entries missing iframes and insert them.
+Find spec headers (`#### Diagram:`, `#### MicroSim:`, `#### Timeline:` and the
+other words `extract-sim-specs.py` accepts) missing iframes and insert them.
 Also fixes height typos (`500xp` → `500px`) and path issues.
 
 ```bash

@@ -2,8 +2,9 @@
 """
 add-iframes-to-chapter.py — Insert missing iframes into chapter markdown.
 
-Finds ``#### Diagram:`` / ``#### Drawing:`` entries that are missing
-iframe embeds and inserts them before the ``<details>`` block.  Also
+Finds spec entries (``#### Diagram:``, ``#### Drawing:``, ``#### MicroSim:``,
+``#### Timeline:`` and the other ``shared.SPEC_HEADING_TYPES``) that are
+missing iframe embeds and inserts them before the ``<details>`` block.  Also
 provides ``--fix-heights`` and ``--fix-paths`` options for normalizing
 existing iframes.
 
@@ -20,14 +21,13 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from shared import (
-    find_project_root, kebab_case,
+    find_project_root, kebab_case, SPEC_HEADING_RE,
     GREEN, RED, YELLOW, CYAN, BOLD, DIM, RESET, CHECK, CROSS, WARN, ARROW,
 )
 
 
-HEADING_RE = re.compile(
-    r"^(####\s+(Diagram|Drawing):\s*(.+))$", re.MULTILINE
-)
+# Same spec headings extract-sim-specs.py recognizes (group 2 is the title).
+HEADING_RE = SPEC_HEADING_RE
 
 # Reused MicroSims (Status: Reused) embed absolute https:// srcs pointing at
 # another book's deployed sim. IFRAME_RE must keep matching those so no local
@@ -124,7 +124,7 @@ def process_chapter(chapter_path, project_dir, dry_run=False,
             continue
 
         heading_line = i
-        title = m.group(3).strip()
+        title = m.group(2).strip()
 
         # Search ahead (up to 40 lines) for iframe and details
         search_end = min(i + 40, len(new_lines))
