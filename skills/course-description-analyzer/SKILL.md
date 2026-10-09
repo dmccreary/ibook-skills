@@ -3,13 +3,13 @@ name: course-description-analyzer
 description: Validates or creates a course description for an intelligent textbook, scoring completeness against required elements (title, audience, prerequisites, topics, Bloom's Taxonomy outcomes). Use before running the learning-graph-generator.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
-  ibook.version: "0.04"
+  ibook.version: "0.05"
   ibook.preferred-model: "sonnet"
 ---
 
 # Course Description Analyzer
 
-**Version:** 0.04
+**Version:** 0.05
 
 ## Overview
 
@@ -25,7 +25,7 @@ Start by checking if `/docs/course-description.md` exists:
 - **File does not exist** → Follow **Creation Workflow** (Step 1)
 - **File exists** → Follow **Analysis Workflow** (Step 2)
 
-Tell the user that they are running Version 0.04 of the Course Description Analyzer Skill.
+Tell the user that they are running Version 0.05 of the Course Description Analyzer Skill.
 
 ## Step 1: Course Description Creation
 
@@ -165,21 +165,26 @@ Assess whether the course description contains sufficient detail to generate 200
 - Estimate potential concept count based on current content
 - Recommend additions if concept generation may fall short
 
-### Add course-description.md and and the course-description-assessment.md to mkdocs.yml Navigation
+### Add course-description.md and the course-description-assessment.md to mkdocs.yml Navigation
 
-After the course-description.md file has been added to the /docs direction,
+After the course-description.md file has been added to the /docs directory,
 ask the user if the new file should be added to the mkdocs.yml file.
 If the answer is yes, place the new file after the about.md file.
 
 ```yml
 nav:
-   ...
-   About: about.md
-   Course Description: course-description.md
-   ...
-   Learning Graph:
-      Course Description Assessment: learning-graph/course-description-assessment.md
+  - Home: index.md
+  - About: about.md
+  - Course Description: course-description.md
+  # ...other existing entries stay where they are...
+  - Learning Graph:
+      - Course Description Assessment: learning-graph/course-description-assessment.md
 ```
+
+Every entry in `nav` is a YAML list item, so each one must begin with `- `,
+including the entries nested under a section such as `Learning Graph`. Keep
+the indentation the file already uses. A nested entry written without the
+dash makes `mkdocs build --strict` fail with "Expected nav to be a list".
 
 ## Next Step
 
