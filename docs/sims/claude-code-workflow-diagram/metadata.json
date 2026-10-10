@@ -1,17 +1,14 @@
 {
   "title": "Claude Code Workflow Diagram",
   "creator": "Dan McCreary",
-  "subject": "High School Geometry",
+  "subject": "Agent Skills for Intelligent Textbooks",
   "description": "Interactive MicroSim for claude code workflow diagram",
   "date": "2026-02-14",
   "educational": {
     "gradeLevel": [
-      "9",
-      "10",
-      "11",
-      "12"
+      "Adult"
     ],
-    "subjectArea": "Mathematics",
+    "subjectArea": "Computer Science",
     "topic": "Claude Code Workflow Diagram",
     "learningObjectives": [
       "TODO: Add learning objectives"

@@ -1,17 +1,14 @@
 {
   "title": "Python Learning Graph Processing Pipeline",
   "creator": "Dan McCreary",
-  "subject": "High School Geometry",
+  "subject": "Agent Skills for Intelligent Textbooks",
   "description": "Interactive MicroSim for python learning graph processing pipeline",
   "date": "2026-02-14",
   "educational": {
     "gradeLevel": [
-      "9",
-      "10",
-      "11",
-      "12"
+      "Adult"
     ],
-    "subjectArea": "Mathematics",
+    "subjectArea": "Computer Science",
     "topic": "Python Learning Graph Processing Pipeline",
     "learningObjectives": [
       "TODO: Add learning objectives"

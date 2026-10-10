@@ -1,17 +1,14 @@
 {
   "title": "Interactive Directory Navigation Practice MicroSim",
   "creator": "Dan McCreary",
-  "subject": "High School Geometry",
+  "subject": "Agent Skills for Intelligent Textbooks",
   "description": "Interactive MicroSim for interactive directory navigation practice microsim",
   "date": "2026-02-14",
   "educational": {
     "gradeLevel": [
-      "9",
-      "10",
-      "11",
-      "12"
+      "Adult"
     ],
-    "subjectArea": "Mathematics",
+    "subjectArea": "Computer Science",
     "topic": "Interactive Directory Navigation Practice MicroSim",
     "learningObjectives": [
       "TODO: Add learning objectives"

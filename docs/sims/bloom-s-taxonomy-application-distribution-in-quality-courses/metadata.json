@@ -1,17 +1,14 @@
 {
   "title": "Bloom's Taxonomy Application Distribution in Quality Courses",
   "creator": "Dan McCreary",
-  "subject": "High School Geometry",
+  "subject": "Agent Skills for Intelligent Textbooks",
   "description": "Interactive MicroSim for bloom's taxonomy application distribution in quality courses",
   "date": "2026-02-14",
   "educational": {
     "gradeLevel": [
-      "9",
-      "10",
-      "11",
-      "12"
+      "Adult"
     ],
-    "subjectArea": "Mathematics",
+    "subjectArea": "Computer Science",
     "topic": "Bloom's Taxonomy Application Distribution in Quality Courses",
     "learningObjectives": [
       "TODO: Add learning objectives"
