@@ -21,7 +21,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from shared import (
-    find_project_root, kebab_case, SPEC_HEADING_RE,
+    find_project_root, kebab_case, SPEC_HEADING_RE, DETAILS_OPEN_RE,
+    spec_region_end,
     GREEN, RED, YELLOW, CYAN, BOLD, DIM, RESET, CHECK, CROSS, WARN, ARROW,
 )
 
@@ -38,7 +39,9 @@ IFRAME_RE = re.compile(
     re.IGNORECASE,
 )
 
-DETAILS_OPEN_RE = re.compile(r"<details\s+markdown=[\"']1[\"']\s*>", re.IGNORECASE)
+# How far past a spec heading to look for its iframe and details block.
+# The region also ends at the next heading; see shared.spec_region_end.
+LOOKAHEAD_LINES = 40
 
 # Fix "500xp" typo pattern
 HEIGHT_TYPO_RE = re.compile(r'height=["\'](\d+)xp["\']', re.IGNORECASE)
@@ -126,8 +129,10 @@ def process_chapter(chapter_path, project_dir, dry_run=False,
         heading_line = i
         title = m.group(2).strip()
 
-        # Search ahead (up to 40 lines) for iframe and details
-        search_end = min(i + 40, len(new_lines))
+        # Search this spec's own region for its iframe and details block:
+        # up to the next heading, so the next spec's iframe is not mistaken
+        # for this one's and the next spec's details block is not claimed.
+        search_end = spec_region_end(new_lines, i, LOOKAHEAD_LINES)
         has_iframe = False
         details_line = None
         details_text = ""

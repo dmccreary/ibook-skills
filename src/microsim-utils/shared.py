@@ -39,6 +39,49 @@ SPEC_HEADING_RE = re.compile(
     r"^####\s+(" + "|".join(SPEC_HEADING_TYPES) + r"):\s*(.+)$", re.MULTILINE
 )
 
+# ── Spec regions ──────────────────────────────────────────────────────
+# A spec owns the lines between its own heading and the next heading, and
+# nothing beyond.  Every tool that looks ahead from a spec heading for its
+# iframe or ``<details markdown="1">`` block must stop at ``spec_region_end``;
+# a fixed line count alone lets a heading with no block of its own borrow
+# the next spec's block, and with it the next spec's sim-id.
+SECTION_HEADING_RE = re.compile(r"^ {0,3}#{1,4}\s+\S")
+DETAILS_OPEN_RE    = re.compile(r"<details\s+markdown=[\"']1[\"']\s*>", re.IGNORECASE)
+DETAILS_CLOSE_RE   = re.compile(r"</details>", re.IGNORECASE)
+_ANY_DETAILS_OPEN_RE = re.compile(r"<details\b", re.IGNORECASE)
+_CODE_FENCE_RE       = re.compile(r"^(```|~~~)")
+
+
+def spec_region_end(lines, heading_idx, window):
+    """Return the exclusive end index of the lines owned by a spec heading.
+
+    The region starts on the line after *heading_idx* and ends at the next
+    spec heading, the next level 1-4 heading, or ``heading_idx + window``,
+    whichever comes first.  A ``#`` line inside a fenced code block or a
+    ``<details>`` block is text, not a heading, so it does not end the
+    region.  A spec heading always does, wherever it appears, because one
+    spec is emitted per spec heading.
+    """
+    limit = min(heading_idx + window, len(lines))
+    in_fence = False
+    details_depth = 0
+    for j in range(heading_idx + 1, limit):
+        line = lines[j]
+        stripped = line.strip()
+        if SPEC_HEADING_RE.match(stripped):
+            return j
+        if _CODE_FENCE_RE.match(stripped):
+            in_fence = not in_fence
+            continue
+        if in_fence:
+            continue
+        if details_depth == 0 and SECTION_HEADING_RE.match(line):
+            return j
+        details_depth += len(_ANY_DETAILS_OPEN_RE.findall(line))
+        details_depth -= len(DETAILS_CLOSE_RE.findall(line))
+        details_depth = max(details_depth, 0)
+    return limit
+
 
 def find_project_root(start_dir=None):
     """Walk up from *start_dir* (default: cwd) to find the directory

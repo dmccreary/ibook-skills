@@ -25,7 +25,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from shared import (
     find_project_root, kebab_case, detect_library, parse_yaml_frontmatter,
-    SPEC_HEADING_RE,
+    SPEC_HEADING_RE, DETAILS_OPEN_RE, DETAILS_CLOSE_RE, spec_region_end,
     GREEN, RED, YELLOW, CYAN, BOLD, DIM, RESET, CHECK, CROSS, WARN, ARROW,
 )
 
@@ -48,9 +48,11 @@ IFRAME_HEIGHT_RE = re.compile(
     re.IGNORECASE,
 )
 
-DETAILS_OPEN_RE  = re.compile(r"<details\s+markdown=[\"']1[\"']\s*>", re.IGNORECASE)
-DETAILS_CLOSE_RE = re.compile(r"</details>", re.IGNORECASE)
 SUMMARY_RE       = re.compile(r"<summary>(.*?)</summary>", re.IGNORECASE | re.DOTALL)
+
+# How far past a spec heading to look for its iframe and details block.
+# The region also ends at the next heading; see shared.spec_region_end.
+LOOKAHEAD_LINES = 60
 
 # Structured fields inside details blocks
 FIELD_RES = {
@@ -156,9 +158,11 @@ def extract_specs_from_chapter(chapter_path, chapter_dir_name, verbose=False):
         heading_type = m.group(1)   # one of shared.SPEC_HEADING_TYPES
         title = m.group(2).strip()
 
-        # Search ahead (up to 40 lines) for iframe and details block
+        # Search this spec's own region for its iframe and details block:
+        # up to the next heading, so a spec with no block of its own does
+        # not claim the next spec's block and sim-id.
         search_start = i + 1
-        search_end = min(i + 60, len(lines))
+        search_end = spec_region_end(lines, i, LOOKAHEAD_LINES)
         search_region = "\n".join(lines[search_start:search_end])
 
         # Find iframe

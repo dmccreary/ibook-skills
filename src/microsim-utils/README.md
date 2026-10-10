@@ -53,6 +53,14 @@ specifications. A spec header is a level-4 heading whose first word is one of
 `SPEC_HEADING_TYPES` in `shared.py`, shared with `add-iframes-to-chapter.py`;
 add a word there if a book uses another one.
 
+A spec owns only what sits between its own heading and the next heading — the
+next spec heading or any level 1-4 heading — within 60 lines. Its iframe and
+`<details markdown="1">` block are looked for there and nowhere else
+(`spec_region_end` in `shared.py`). A spec heading with no block of its own is
+still emitted, with an empty `spec_text` and a `sim_id` taken from its own
+iframe or, failing that, from its title; it never takes the next spec's block
+or sim-id.
+
 ```bash
 # Extract all specs to JSON
 python3 extract-sim-specs.py --project-dir /path/to/project --output specs.json --verbose
@@ -142,7 +150,9 @@ python3 generate-sims-index.py --project-dir /path/to/project
 
 Find spec headers (`#### Diagram:`, `#### MicroSim:`, `#### Timeline:` and the
 other words `extract-sim-specs.py` accepts) missing iframes and insert them.
-Also fixes height typos (`500xp` → `500px`) and path issues.
+Also fixes height typos (`500xp` → `500px`) and path issues. It uses the same
+spec region as `extract-sim-specs.py` (up to the next heading, within 40
+lines), so a heading with no details block of its own is left alone.
 
 ```bash
 # Single chapter, dry run
