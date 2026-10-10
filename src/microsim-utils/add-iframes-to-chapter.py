@@ -30,11 +30,22 @@ from shared import (
 # Same spec headings extract-sim-specs.py recognizes (group 2 is the title).
 HEADING_RE = SPEC_HEADING_RE
 
+# Whether a spec already has an iframe is decided by ANY_IFRAME_RE: any
+# <iframe ... src=...> counts, whatever the src points at. Chapters embed sims
+# in more shapes than "sims/<id>/main.html" -- a shared viewer with a query
+# string (sims/cld-viewer/main.html?file=x-cld.json), a nested directory
+# (sims/shared/timeline/main.html), a legacy file name
+# (sims/analog-clock/analog-clock.html) -- and a src this check cannot see gets
+# a second iframe inserted above its details block.
 # Reused MicroSims (Status: Reused) embed absolute https:// srcs pointing at
-# another book's deployed sim. IFRAME_RE must keep matching those so no local
-# iframe gets inserted, and ABS_PATH_RE must keep matching ONLY srcs that start
-# with "/sims/" so --fix-paths never rewrites an absolute https URL.
-IFRAME_RE = re.compile(
+# another book's deployed sim. ANY_IFRAME_RE must keep matching those so no
+# local iframe gets inserted, and ABS_PATH_RE must keep matching ONLY srcs that
+# start with "/sims/" so --fix-paths never rewrites an absolute https URL.
+ANY_IFRAME_RE = re.compile(r'<iframe\s[^>]*src\s*=', re.IGNORECASE)
+
+# The stricter shape --fix-heights needs: group 2 is the sim id whose
+# docs/sims/<id>/ JavaScript holds the canvas height.
+SIM_IFRAME_RE = re.compile(
     r'<iframe\s[^>]*src=["\']([^"\']+/sims/([^/"\']+)/main\.html)["\']',
     re.IGNORECASE,
 )
@@ -133,13 +144,16 @@ def process_chapter(chapter_path, project_dir, dry_run=False,
         # up to the next heading, so the next spec's iframe is not mistaken
         # for this one's and the next spec's details block is not claimed.
         search_end = spec_region_end(new_lines, i, LOOKAHEAD_LINES)
-        has_iframe = False
+        has_iframe = False      # any iframe: the spec is already embedded
+        has_sim_iframe = False  # one whose src names a sim id, for --fix-heights
         details_line = None
         details_text = ""
 
         for j in range(i + 1, search_end):
-            if IFRAME_RE.search(new_lines[j]):
+            if ANY_IFRAME_RE.search(new_lines[j]):
                 has_iframe = True
+            if SIM_IFRAME_RE.search(new_lines[j]):
+                has_sim_iframe = True
             if DETAILS_OPEN_RE.search(new_lines[j]):
                 details_line = j
                 # Grab details block text for sim_id inference
@@ -187,9 +201,9 @@ def process_chapter(chapter_path, project_dir, dry_run=False,
                 print(f"  {GREEN}{CHECK}{RESET} Inserted iframe: {sim_id}")
 
         # Fix height if iframe exists and --fix-heights
-        if has_iframe and fix_heights:
+        if has_sim_iframe and fix_heights:
             for j in range(i + 1, search_end):
-                im = IFRAME_RE.search(new_lines[j])
+                im = SIM_IFRAME_RE.search(new_lines[j])
                 if im:
                     sim_id_found = im.group(2)
                     sim_path = os.path.join(sims_dir, sim_id_found)

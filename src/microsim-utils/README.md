@@ -61,6 +61,21 @@ still emitted, with an empty `spec_text` and a `sim_id` taken from its own
 iframe or, failing that, from its title; it never takes the next spec's block
 or sim-id.
 
+`iframe_src` is reported for three src shapes, as written in the chapter:
+
+| src | `iframe_src` | `sim_id` from the iframe |
+|-----|--------------|--------------------------|
+| `../../sims/<id>/main.html` | yes | `<id>` |
+| `../../sims/<id>/main.html?file=x-cld.json` (query string or `#fragment`, e.g. the shared `cld-viewer`) | yes, query included | `<id>` |
+| `../../sims/shared/<x>/main.html` (nested below `sims/`) | yes | none — `<x>` is not a `docs/sims/` directory |
+
+The `sim_id` precedence is unchanged: a `**sim-id:**` field in the details
+block, then the iframe, then the kebab-cased title. When a spec has several
+iframes, the first whose src names a sim id wins over a nested one. Any other
+src (`sims/<id>/<other>.html`, a `posters/` URL, a malformed
+`sims/<id><br/>/main.html`) leaves `iframe_src` empty, so `has_iframe` in
+`sim-status.json` stays false for those.
+
 ```bash
 # Extract all specs to JSON
 python3 extract-sim-specs.py --project-dir /path/to/project --output specs.json --verbose
@@ -153,6 +168,15 @@ other words `extract-sim-specs.py` accepts) missing iframes and insert them.
 Also fixes height typos (`500xp` → `500px`) and path issues. It uses the same
 spec region as `extract-sim-specs.py` (up to the next heading, within 40
 lines), so a heading with no details block of its own is left alone.
+
+A spec counts as already embedded when any `<iframe ... src=...>` sits between
+its heading and its details block, whatever the src points at: a query string
+after `main.html`, a nested `sims/shared/<x>/main.html`, a legacy
+`sims/<id>/<id>.html`, or the absolute `https://` src of a Reused sim. Nothing
+is inserted for it. `--fix-heights` is narrower: it only updates an iframe
+whose src is exactly `.../sims/<id>/main.html`, because it needs `<id>` to find
+the canvas height in `docs/sims/<id>/`. `--fix-paths` only rewrites a src of
+the form `/sims/<id>/main.html`; an absolute `https://` URL is never rewritten.
 
 ```bash
 # Single chapter, dry run

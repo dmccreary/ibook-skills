@@ -36,15 +36,27 @@ from shared import (
 # add-iframes-to-chapter.py; see SPEC_HEADING_TYPES in shared.py.
 HEADING_RE = SPEC_HEADING_RE
 
+# The src shapes reported as iframe_src. Group "path" is what sits between
+# sims/ and /main.html:
+#   ../../sims/<id>/main.html              a sim directory; <id> is the sim id
+#   ../../sims/<id>/main.html?file=x.json  the same: a shared viewer handed a
+#                                          data file (query string or #fragment)
+#   ../../sims/shared/<x>/main.html        nested below sims/: reported, but
+#                                          <x> is not a docs/sims/ directory,
+#                                          so it never becomes the sim id
+# "<" and ">" are excluded so a malformed src with markup captured into it
+# (sims/<id><br/>/main.html) is not reported as a working embed.
+_SIM_SRC = r'(?P<src>[^"\']+/sims/(?P<path>[^"\'?#<>]+)/main\.html(?:[?#][^"\']*)?)'
+
 IFRAME_RE = re.compile(
-    r'<iframe\s[^>]*src=["\']([^"\']+/sims/([^/"\']+)/main\.html)["\']'
-    r'[^>]*(?:height=["\']([^"\']*)["\'])?[^>]*>',
+    r'<iframe\s[^>]*src=["\']' + _SIM_SRC + r'["\']'
+    r'[^>]*(?:height=["\'](?P<height>[^"\']*)["\'])?[^>]*>',
     re.IGNORECASE,
 )
 
 # Also match iframe where height comes before src
 IFRAME_HEIGHT_RE = re.compile(
-    r'<iframe\s[^>]*height=["\']([^"\']*)["\'][^>]*src=["\']([^"\']+/sims/([^/"\']+)/main\.html)["\']',
+    r'<iframe\s[^>]*height=["\'](?P<height>[^"\']*)["\'][^>]*src=["\']' + _SIM_SRC + r'["\']',
     re.IGNORECASE,
 )
 
@@ -67,15 +79,21 @@ FIELD_RES = {
 
 
 def _extract_iframe_info(text):
-    """Return (src_path, sim_id, height) from an iframe tag, or (None, None, None)."""
-    # Try src-first pattern
-    m = IFRAME_RE.search(text)
-    if m:
-        return m.group(1), m.group(2), m.group(3) or ""
-    # Try height-first pattern
-    m = IFRAME_HEIGHT_RE.search(text)
-    if m:
-        return m.group(2), m.group(3), m.group(1) or ""
+    """Return (src_path, sim_id, height) from an iframe tag, or (None, None, None).
+
+    The first iframe whose src names a sim id wins.  A src nested below sims/
+    (see _SIM_SRC) is reported only when the text has no such iframe, and then
+    with sim_id None: a spec may show a shared sim above its own.
+    """
+    nested = None
+    # Try src-first pattern, then height-first pattern
+    for pattern in (IFRAME_RE, IFRAME_HEIGHT_RE):
+        for m in pattern.finditer(text):
+            if "/" not in m.group("path"):
+                return m.group("src"), m.group("path"), m.group("height") or ""
+            nested = nested or m
+    if nested:
+        return nested.group("src"), None, nested.group("height") or ""
     return None, None, None
 
 
