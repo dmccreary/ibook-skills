@@ -440,7 +440,50 @@ Before finalizing, check that the announcement:
 - [ ] Is free of typos and grammatical errors
 - [ ] Provides value to the educational community
 
-### Step 10: Deliver the Announcement
+### Step 10: Verify the Social Preview Image
+
+LinkedIn renders link-preview cards from the page's `og:image` tag the
+first time it sees a URL, then caches that image **per URL** for days to
+weeks. If the preview is wrong, fixing the site afterward does nothing —
+LinkedIn keeps serving the stale cached image. Verify and (if needed)
+force a refresh *before* telling the user the announcement is ready to
+post, not after:
+
+1. **Check the live URL, not the local build.** Confirm the deployed page
+   actually serves the intended image:
+   ```bash
+   curl -s "$SITE_URL" | grep -E '(og|twitter):image'
+   ```
+   Right after a fresh `mkdocs gh-deploy`, GitHub Pages' CDN can lag the
+   new content by anywhere from a few seconds to a couple of minutes — the
+   `gh-pages` branch itself may already be correct while the public URL
+   still serves the previous page. Don't conclude the fix failed from one
+   check; poll a few times a short interval apart before escalating.
+2. **Run the project's cover-image verifier** if one is installed —
+   `~/.local/bin/bk-check-social-cover $SITE_URL` — which checks
+   `og:title`/`og:description` length and confirms `og:image` resolves to
+   `cover.png` and is reachable (HTTP 200). If `og:image` instead points
+   at `assets/images/social/...`, the project doesn't have a custom cover
+   wired up — see `book-installer`'s `social-media-preview.md` guide (the
+   `plugins/social_override.py` hook) to fix that first.
+3. **Force LinkedIn to re-scrape** with the
+   [Post Inspector](https://www.linkedin.com/post-inspector/inspect/):
+   paste in `$SITE_URL` and click **Inspect**. Do this once per URL after
+   any fix to `og:image` — including the very first time a URL is about
+   to be shared, so the first cache LinkedIn ever stores is the correct
+   one. The inspector's report also surfaces `og:title`, `og:description`,
+   and the image LinkedIn actually fetched, which doubles as a final
+   sanity check before posting.
+4. **"No publication date found" is expected and fine** for an
+   intelligent-textbook homepage — that field reads `article:published_time`,
+   which only applies when `og:type` is `article`. Material emits
+   `og:type: website` for these sites, so there's nothing to add.
+
+If the URL has already been shared once with the wrong image, re-running
+Inspect after the fix is what clears it — redeploying alone is not
+enough.
+
+### Step 11: Deliver the Announcement
 
 Output the finalized announcement text(s) ready for the user to:
 
@@ -455,6 +498,7 @@ Inform the user:
 ✅ LinkedIn announcement generated successfully!
 
 Three variations provided (full, medium, concise) - choose the one that fits your style.
+Social preview image verified via Step 10 (og:image confirmed live, LinkedIn Post Inspector re-scraped).
 
 **Next steps:**
 1. Copy your preferred version
@@ -601,9 +645,22 @@ A high-quality LinkedIn announcement should:
 
 **Solution:** Focus on the subject domain (e.g., #Mathematics for math textbooks) and general education tags
 
+**Issue:** LinkedIn preview card shows the wrong image (or `assets/images/social/...` instead of the book cover)
+
+**Solution:** See Step 10. First confirm `og:image` on the *live* URL is
+actually correct (GitHub Pages' CDN can briefly lag a fresh deploy); if
+it's pointing at an auto-generated social card rather than `cover.png`,
+install the hook from `book-installer`'s `social-media-preview.md` guide.
+Then paste the URL into the
+[LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/inspect/)
+and click Inspect — LinkedIn caches the preview image per URL, so a fixed
+`og:image` has no effect on a URL that was already scraped until you
+force a re-scrape.
+
 ## Related Skills
 
 - **book-installer (book-metrics guide)** / `bk-generate-book-metrics` - Generates the metrics file used by this skill
+- **book-installer (social-media-preview.md)** / `bk-check-social-cover` - Installs and verifies the `og:image`/`twitter:image` hook this skill's Step 10 checks before posting
 - **readme-guide.md** (this skill) - Creates GitHub README with similar content
 - **intelligent-textbook** - The workflow that creates the textbook itself
 
@@ -612,4 +669,5 @@ A high-quality LinkedIn announcement should:
 - [LinkedIn Best Practices for Posts](https://www.linkedin.com/help/linkedin/answer/a549970)
 - [LinkedIn Character Limits](https://www.linkedin.com/help/linkedin/answer/a521928)
 - [Hashtag Strategy Guide](https://www.linkedin.com/business/marketing/blog/content-marketing/hashtag-strategy-guide)
+- [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/inspect/) - Preview and force a re-scrape of a URL's `og:` tags before/after posting
 - [Open Educational Resources](https://www.oercommons.org/)
