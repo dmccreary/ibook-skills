@@ -92,6 +92,7 @@ If total controls > 5, ask: Is each control essential to the learning objective?
 - [ ] Are all labels descriptive? (Use "Gravity (m/s²)" not "g")
 - [ ] Is the title clear about what concept is being demonstrated?
 - [ ] Are value displays formatted with appropriate precision? (2 decimal places max for most values)
+- [ ] Does the MicroSim open paused (nothing moving until the learner presses Start)? Ten MicroSims on one chapter page must not all animate at once
 
 #### 5. Accessibility Considerations
 - [ ] Will the `describe()` function text make sense to a screen reader user?
@@ -506,15 +507,56 @@ text('Angle: ' + angle, 10, drawHeight+50);
 
 ### Buttons for Starting and Pausing a Simulation
 
-For example if a simulation has a state global variable `isRunning` the
-button can be created like this:
+**REQUIRED: every MicroSim opens paused.** If a simulation has a state global variable `isRunning`, it MUST be
+`false` when the page loads and the button MUST show its start label (`Start`, `Play` or `Run`). A chapter
+embeds many MicroSims at once; if each one starts running as the page loads, the page becomes distracting and
+wastes CPU. There are no exceptions. (`assets/templates/p5/bouncing-ball.js` follows this pattern.)
 
-**Buttons** (for discrete actions):
 ```javascript
-startButton = createButton(isRunning ? 'Pause' : 'Start');
-startButton.position(10, drawHeight + 15);
-startButton.mousePressed(toggleSimulation);
+let isRunning = false;        // REQUIRED: MicroSims open paused
+
+function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+
+  startButton = createButton('Start');          // the start label, never 'Pause'
+  startButton.position(10, drawHeight + 15);
+  startButton.mousePressed(toggleSimulation);
+}
+
+function draw() {
+  if (isRunning) advanceSimulation();           // time only advances while running
+  drawScene();                                  // always draw the current state
+}
+
+function toggleSimulation() {
+  isRunning = !isRunning;
+  startButton.html(isRunning ? 'Pause' : 'Start');
+}
+
+function resetSimulation() {
+  initState();
+  isRunning = false;                            // Reset returns to the paused opening state
+  startButton.html('Start');
+}
 ```
+
+**Ways this rule gets broken (check each one):**
+
+| Pitfall | Fix |
+|---------|-----|
+| A restart helper such as `readControls()` or `restart()` sets `running = true` and is also called on first load | Restart only when the *learner* changes something; keep the first call paused (e.g. `running = !firstRun`) |
+| The button is created as `'Pause'` and relabelled on the first frame | Create it with the start label |
+| Reset or "Defaults" sets `running = true` | Reset sets it to `false` and relabels the button |
+| Status text says "Running..." while the clock is stopped | Show "Paused: press Start" until the first run |
+| A one-shot intro animation, `setInterval`, `setTimeout` or a `millis()` clock runs on load | Gate it behind the same `isRunning` flag |
+| The lesson plan says "watch the default run" | Say "Press **Start** and watch ..." |
+| The paused first frame is empty (n = 0, blank plots) | Draw the initial model state, axes and a "press Start" hint so the first impression is meaningful |
+
+**Verify it** (headless browser, no input): two screenshots 1.5 s apart must be pixel-identical; after pressing
+Start they must differ; after pressing Pause they must be identical again. A learner who sees ten MicroSims on a
+chapter page should see ten still pictures.
 
 ### Use Checkboxes to Show Additional Optional Information
 
@@ -526,7 +568,10 @@ showGridCheckbox.position(10, drawHeight + 15);
 
 ### Animation Control for Iframe Embedding (REQUIRED for Animated MicroSims)
 
-When MicroSims are embedded in iframes, animations should **only run when the mouse is over the canvas**. This is important because:
+When MicroSims are embedded in iframes, animations should **only run when the mouse is over the canvas**.
+This pattern is for *ambient* animation (pulsing, highlights, idle motion). It does not replace the
+**paused-on-load** rule above: a MicroSim with a Start/Pause state still opens paused, and hover gating then
+applies on top of it once the learner presses Start. This is important because:
 
 1. **Saves CPU/battery** when user isn't interacting with the simulation
 2. **Reduces distraction** while users read surrounding content on the page
@@ -709,6 +754,7 @@ structure of this file is governed by a JSON schema file located at /src/microsi
 | windowResized() exists | Function exists and calls `resizeCanvas()` | ☐ |
 | describe() called | Accessibility description present in `setup()` | ☐ |
 | main element target | Canvas parented to `document.querySelector('main')` — **NEVER** `canvas.parent('main')` (string form looks for `id="main"` which does not exist and throws a null error) | ☐ |
+| Opens paused | If there is a Start/Pause state, `isRunning` (or equivalent) is `false` at load, the button is created with its start label, Reset sets it back to `false`, and no timer or animation advances until Start is pressed | ☐ |
 
 ### Control Placement Validation
 
@@ -1016,7 +1062,7 @@ Show two scenarios side-by-side for comparison.
 
 ### Pattern 3: System Evolution
 Observe how a system changes over time, with play/pause/reset controls.
-**Example**: Population growth with birth/death rates.
+**Example**: Population growth with birth/death rates. The MicroSim opens paused; the learner presses Start.
 
 ### Pattern 4: Interactive Construction
 Students build or modify structures to understand relationships.
@@ -1124,8 +1170,8 @@ if (position.y >= height - radius) {
 
 - Gravity slider (0-2 m/s², default: 0.5)
 - Elasticity slider (0-1, default: 0.7)
-- Start/Pause button
-- Reset button
+- Start/Pause button (the MicroSim opens paused, so the button reads Start)
+- Reset button (returns to the paused opening state)
 
 This example demonstrates all core MicroSim principles: focused scope, transparent physics, immediate feedback, and clean interface.
 

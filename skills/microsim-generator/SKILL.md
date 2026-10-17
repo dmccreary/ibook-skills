@@ -971,7 +971,30 @@ This enables counting and discovery of MicroSims across GitHub using code search
   - From chapter files (`docs/chapters/*/index.md`): `<iframe src="../../sims/[sim-name]/main.html" ...>`
   - **NEVER use absolute paths** like `/sims/...` — they break on GitHub Pages where the site is served under a subdirectory (e.g., `/geometry-course/`)
 
+**Default State: Paused on Load (REQUIRED):**
+
+Any MicroSim that has a Run/Pause state (Play/Pause, Start/Stop, Run/Pause) MUST open **paused**. This covers
+animations, simulation clocks, training loops, auto-advance and auto-play, in every generator. A chapter
+routinely embeds 5-10 MicroSims; if each one starts running as the page loads, the page is distracting, raises
+cognitive load for students and wastes CPU and battery. There are no exceptions.
+
+1. The run flag is `false` at load and the button shows its **start** label (`Start`, `Play` or `Run`), never `Pause`.
+2. The first frame is still drawn and must look meaningful (the model's initial state, with status text such as
+   "Paused: press Start"), because the draw loop keeps rendering while the clock is stopped.
+3. **Reset** returns the MicroSim to this paused opening state.
+4. A learner's own parameter change (slider, "New data") may restart and run the simulation. Page load and Reset
+   must not.
+5. Audio and microphone MicroSims start only after a click (browsers require it anyway). Never start sound on load.
+6. The documentation says so: `index.md` (the controls paragraph and activities start with "Press **Start**"),
+   `metadata.json` control descriptions, and the `describe()` text. Never write "watch the default run".
+7. Verify it: load the page, take two screenshots 1.5 s apart with no input, and confirm they are pixel-identical;
+   then press Start and confirm the picture changes, and press Pause and confirm it freezes again.
+
+See `references/p5-guide.md` ("Buttons for Starting and Pausing a Simulation") for the code pattern and the
+common ways this rule gets broken.
+
 **Quality Checklist:**
+- [ ] Opens **paused**: nothing animates, simulates, trains or plays until the learner presses Start/Play/Run (see Default State above)
 - [ ] Runs without errors in modern browsers
 - [ ] Responsive to container width
 - [ ] Controls respond immediately
