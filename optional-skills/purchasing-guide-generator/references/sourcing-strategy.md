@@ -84,6 +84,16 @@ a general caveats section nobody reads.
   banks. Buy a sample before the classroom order.
 - **Pack size mismatch.** Buying 20 of something sold in packs of 10 sometimes
   costs more than buying two packs of 10 plus shipping. Round to the pack.
+- **Display controller mismatch (SH1106 vs SSD1306).** Most 1.3-inch 128×64
+  OLEDs use the SH1106 controller, not the SSD1306 (0.96-inch) or SSD1309
+  (2.42-inch), and listings often name the wrong chip or both. The SH1106 has
+  132 columns of display memory but the panel shows only the middle 128, so an
+  SSD1306 driver draws everything shifted 2 pixels, with garbage or a stripe at
+  one edge. Teachers read it as a dead or defective display. Whenever a guide
+  lists a 1.3-inch OLED, add a tip box that names the SH1106, describes the
+  2-pixel shift, and says to use an SH1106 MicroPython driver (the common
+  `sh1106.py`). Also say which interface (7-pin SPI or 4-pin I2C) matches the
+  book's wiring, because the same listing sells both.
 
 ## Classroom arithmetic
 
