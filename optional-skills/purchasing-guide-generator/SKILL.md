@@ -262,6 +262,11 @@ figure — and which order size lands on the quoted price.}
 
 {The lead-time and bulk-buying guidance — see the section below.}
 
+#### Ordering lead time
+
+{Measured delivery times per source, the basis they come from, and how many
+weeks ahead to order — see the section below.}
+
 ### Classroom Order Worksheet
 
 | Part | Required? | Used in kits | Qty per student | Qty for 20 students | Est. cost for 20 |
@@ -395,6 +400,18 @@ Every guide closes with this guidance. Adapt the specifics, keep the substance:
   price is the real price — say so rather than quoting a number the teacher
   cannot actually use.
 
+**Ordering lead time subsection.** Every guide's Purchasing Strategy includes
+an `#### Ordering lead time` table built from **measured** deliveries (for
+example, delivery times computed from the order and delivery emails in Dan's
+Gmail), not marketplace estimates. Name the basis ("based on our 2026 orders to
+Minnesota, 75 measured"), give per-source medians and ranges (AliExpress, eBay
+split by US vs China sellers, Digi-Key, Micro Center), call out the slow tail
+(share of orders over 15 days, the worst case), and end with a concrete
+order-by recommendation — at least 3 weeks ahead for China-direct parts, 4–5
+weeks for a full classroom set so a lost package can be reordered, and
+Digi-Key or Micro Center for last-minute gaps. If no measured data exists,
+say so and label the figures as estimates.
+
 ## Reference material
 
 - `references/part-catalog.md` — house-observed price bands, search keywords,
@@ -447,5 +464,9 @@ Every guide closes with this guidance. Adapt the specifics, keep the substance:
   its license and attribution.
 - Any part still missing art has a companion `*-image-description.md`.
 - The page carries a "Prices checked {Month Year}" note.
+- Purchasing Strategy has an **Ordering lead time** subsection with measured
+  delivery times per source, the stated basis (e.g. "based on our 2026 orders
+  to Minnesota"), the slow-tail outliers, and an order-by recommendation in
+  weeks; any unmeasured figure is labeled an estimate.
 - The order worksheet totals actually add up.
 - The book's mascot does not appear anywhere in the Purchasing Guide.

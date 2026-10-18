@@ -172,6 +172,22 @@ Chinese factories and shipping largely stop. Order a semester ahead and the
 savings are free; order the week before the unit starts and you pay the Amazon
 premium for the privilege.
 
+#### Ordering lead time
+
+{Measured delivery times, not guesses. State the basis in one line, e.g.
+"Based on our 2026 orders to Minnesota (75 deliveries measured)", then:}
+
+| Source | Orders measured | Typical delivery | Notes |
+|--------|-----------------|------------------|-------|
+| AliExpress | {n} | {range} (median {m}) | {anything unusual} |
+| eBay | {n} | median {m} | {US sellers vs China sellers; share of 15+ day outliers; worst case} |
+| Digi-Key | {n or —} | {1–3 days} | Fast, authentic boards |
+| Micro Center | {n or —} | same day | In-store pickup |
+
+**Our recommendation:** order China-direct parts at least {3} weeks ahead, and
+{4–5} weeks ahead for a full classroom set so a lost package can be reordered.
+Fill last-minute gaps from Digi-Key or Micro Center.
+
 **Buy one, then buy twenty.** Order a single unit from a seller, confirm it is
 the right part, then place the classroom order with that same seller. Listings
 for commodity parts vary in quality far more than the photos suggest.
