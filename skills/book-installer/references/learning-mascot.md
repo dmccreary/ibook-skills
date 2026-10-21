@@ -566,14 +566,15 @@ Create or append to `docs/css/mascot.css`:
 
 /* ---- Mascot image floated LEFT of admonition body text ---- */
 /* The .md-typeset prefix outranks Material's `.md-typeset img { height: auto }`,
-   which otherwise stretches tall poses well past --mascot-size. */
+   which otherwise stretches tall poses well past --mascot-size.
+   Height is fixed; width follows each pose's own aspect ratio so narrow
+   poses don't sit in a square box with empty space on both sides. */
 .md-typeset img.mascot-admonition-img {
   float: left;
-  width: var(--mascot-size);
   height: var(--mascot-size);
+  width: auto;
   /* margin: top right bottom left */
   margin: 0 .5em 0 0;
-  object-fit: contain;
   pointer-events: none;  /* belt-and-suspenders; real exclusion is via glightbox skip_classes */
 }
 ```
@@ -930,6 +931,7 @@ or other instructor-facing content does not use the mascot described in CONTENT-
 ### Mascot Images Too Large/Small
 
 - Adjust `--mascot-size` CSS variable in the `:root` section of `mascot.css`
+- It sets the image **height**; the width follows each pose's aspect ratio
 - Default is 90px, which works well for most layouts
 
 ### Colors Don't Match Book Theme

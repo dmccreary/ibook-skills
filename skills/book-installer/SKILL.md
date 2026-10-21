@@ -3,14 +3,22 @@ name: book-installer
 description: Installs and configures intelligent-textbook infrastructure - scaffold a brand-new MkDocs Material textbook (init textbook), install any of 41 features (math, mascot, learning graph viewer, Google Analytics GA4, custom 404, kanban board), and generate book metrics. Routes to the appropriate installation guide.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
-  ibook.version: "1.0.1"
+  ibook.version: "1.0.2"
 ---
 
 # Book Installer
 
-**Version:** 1.0.1
+**Version:** 1.0.2
 
 ### Changelog
+
+- **v1.0.2** — The canonical mascot CSS in `references/learning-mascot.md`
+  (Step 5) now fixes the admonition image's height at `--mascot-size` and
+  sets `width: auto`, dropping the square box and `object-fit: contain`.
+  Mascot poses are portrait, so the square box shrank them and left visible
+  empty space on both sides of the bird (a 185×280 pose drew 59px wide inside
+  a 90px box in oer-evaluator). Existing books should make the same change in
+  their own `docs/css/mascot.css`.
 
 - **v1.0.1** — The canonical mascot CSS in `references/learning-mascot.md`
   (Step 5) now targets `.md-typeset img.mascot-admonition-img` instead of the
