@@ -27,3 +27,8 @@ mcp-servers/**/venv/
 # either file.
 .claude-pending-commit.txt
 .claude-pending-files.txt
+
+# skill-creator eval workspaces (<skill>-workspace/ beside each skill). They hold
+# benchmark runs, per-run outputs with nested git repos, and Python virtualenvs,
+# and can reach a gigabyte. Results worth keeping belong in the skill's evals/.
+skills/*-workspace/

@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: ai-for-ee-book-to-paper
+expected_outcome: |
+  A paper folder under papers/ in the repo with modular LaTeX (main.tex, numbered section files, references.bib), figures, and a build.sh that produces main.pdf and a test-compiled arxiv-upload.zip. The paper argues one focused thesis drawn from the book (the researcher as orchestrator of planning and execution agents), cites verified real references, includes figures, a limitations section and an AI-use disclosure, and comes with a quality-report.md scoring it on the 100-point rubric. Assumptions made without the author are recorded.

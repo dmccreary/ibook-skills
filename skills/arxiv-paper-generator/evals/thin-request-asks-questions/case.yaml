@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: thin-request-asks-questions
+expected_outcome: |
+  With no source material, data or author details, the run does not invent a paper: it does not fabricate study results, statistics or references. It reports that there is not yet enough content, gives a readiness assessment, and asks specific clarifying questions (contribution, evidence or data, authors, prior work) or records them in a brief for the author.

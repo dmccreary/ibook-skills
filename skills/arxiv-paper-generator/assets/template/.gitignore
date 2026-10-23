@@ -1,0 +1,11 @@
+# LaTeX build artifacts (./build.sh regenerates main.bbl and bundles it into arxiv-upload.zip)
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+.DS_Store

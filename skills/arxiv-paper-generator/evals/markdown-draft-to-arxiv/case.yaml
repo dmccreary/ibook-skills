@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: markdown-draft-to-arxiv
+expected_outcome: |
+  The draft's argument and contributions (DGM principles mapped to textbooks, the MicroSim performance JSON schema) are preserved and converted to modular LaTeX under papers/<slug>/ with a working build.sh, figures, and verified references (DGM, AlphaEvolve, SEAL and similar cited with real identifiers). The PDF builds cleanly, an arXiv package is produced, and a quality report gives a rubric score.
+context:
+  scaffold_script: place-files.sh
