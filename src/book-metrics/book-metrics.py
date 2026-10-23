@@ -17,8 +17,70 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Any
 from datetime import datetime
 
+try:
+    import textstat
+except ImportError:
+    textstat = None  # the Reading Level column is omitted when textstat is missing
+
 # Version of the Book Metrics Generator
-VERSION = "0.09"
+VERSION = "0.10"
+
+# Display math: \[ ... \] and $$ ... $$ (counted first so inline math is not double-counted)
+DISPLAY_MATH_PATTERN = r'\\\[.+?\\\]|\$\$.+?\$\$'
+
+# Inline math: \( ... \) and $ ... $. A $ followed by a digit is a dollar
+# amount such as $500, not a delimiter.
+INLINE_MATH_PATTERN = r'\\\(.+?\\\)|\$(?!\d)[^$\n]+?\$'
+
+
+def count_equations_in_text(content: str) -> int:
+    """Count LaTeX equations in markdown text.
+
+    Recognizes the backslash delimiters \\( ... \\) and \\[ ... \\] (the
+    currency-safe form used by books that keep $ literal for dollar amounts) as
+    well as $ ... $ and $$ ... $$. Fenced code blocks and inline code are ignored.
+
+    Args:
+        content: Markdown text
+
+    Returns:
+        Number of equations (display + inline)
+    """
+    content = re.sub(r'^(```|~~~).*?^\1', '', content, flags=re.DOTALL | re.MULTILINE)
+    content = re.sub(r'`[^`\n]*`', '', content)
+
+    display = len(re.findall(DISPLAY_MATH_PATTERN, content, flags=re.DOTALL))
+    content = re.sub(DISPLAY_MATH_PATTERN, '', content, flags=re.DOTALL)
+    inline = len(re.findall(INLINE_MATH_PATTERN, content, flags=re.DOTALL))
+    return display + inline
+
+
+def prose_only(markdown: str) -> str:
+    """Reduce markdown to running text so readability scores reflect the prose.
+
+    Removes YAML frontmatter, code, HTML, tables, headings, images, URLs, and
+    math. List items and admonition titles are kept and treated as sentences.
+    """
+    text = re.sub(r'\A---.*?\n---\n', '', markdown, flags=re.DOTALL)
+    text = re.sub(r'^(```|~~~).*?^\1', '', text, flags=re.DOTALL | re.MULTILINE)
+    text = re.sub(r'<!--.*?-->', '', text, flags=re.DOTALL)
+    text = re.sub(r'<(iframe|script|style)\b.*?(</\1>|/>)', '', text, flags=re.DOTALL)
+    text = re.sub(r'<[^>]+>', '', text)
+    text = re.sub(r'^\s*\|.*$', '', text, flags=re.MULTILINE)
+    text = re.sub(r'^#{1,6}\s+.*$', '', text, flags=re.MULTILINE)
+    text = re.sub(r'!\[[^\]]*\]\([^)]*\)(\{[^}]*\})?', '', text)
+    text = re.sub(r'\[([^\]]+)\]\([^)]*\)', r'\1', text)
+    text = re.sub(r'https?://\S+', '', text)
+    text = re.sub(r'^\s*(!!!|\?\?\?\+?)\s+[\w-]+\s*"?([^"\n]*)"?', r'\2.', text, flags=re.MULTILINE)
+    text = re.sub(r'`[^`]*`', '', text)
+    text = re.sub(DISPLAY_MATH_PATTERN, '', text, flags=re.DOTALL)
+    text = re.sub(INLINE_MATH_PATTERN, '', text, flags=re.DOTALL)
+    text = re.sub(r'(\*\*|__|\*|_)(.+?)\1', r'\2', text)
+    # Each list item stands alone, so close it with a period when it has none.
+    text = re.sub(r'^\s*(?:[-*+]|\d+\.)\s+(.*?)\s*$',
+                  lambda m: m.group(1) if re.search(r'[.!?:]$', m.group(1)) else m.group(1) + '.',
+                  text, flags=re.MULTILINE)
+    return re.sub(r'\n{2,}', '\n', text).strip()
 
 # Version of the book-metrics.json file format (see book-metrics.schema.json).
 # Bump only on a breaking change to the JSON structure, not on every code change.
@@ -265,9 +327,11 @@ class BookMetricsGenerator:
     def count_equations_in_file(self, markdown_file: Path) -> int:
         """Count LaTeX equations in a single markdown file.
 
-        Fixed to:
-        1. Remove display math before counting inline math (avoids double-counting)
-        2. Exclude dollar amounts like $500 from being counted as equations
+        Detection rules (see count_equations_in_text):
+        1. Display math is \\[ ... \\] or $$ ... $$; inline math is \\( ... \\) or $ ... $
+        2. Display math is removed before counting inline math (avoids double-counting)
+        3. A $ followed by a digit is a dollar amount like $500, not an equation
+        4. Fenced code blocks and inline code are ignored
 
         Args:
             markdown_file: Path to markdown file
@@ -277,21 +341,7 @@ class BookMetricsGenerator:
         """
         try:
             with open(markdown_file, 'r', encoding='utf-8') as f:
-                content = f.read()
-
-                # Count display math: $$...$$ (must come first)
-                display_matches = re.findall(r'\$\$[^$]+?\$\$', content, re.DOTALL)
-                display = len(display_matches)
-
-                # Remove all display math blocks to avoid double-counting
-                content_no_display = re.sub(r'\$\$[^$]+?\$\$', '', content, flags=re.DOTALL)
-
-                # Count inline math: $...$
-                # Negative lookahead (?!\d) ensures we don't match dollar amounts like $500
-                inline_matches = re.findall(r'\$(?!\d)([^\$]+?)\$', content_no_display)
-                inline = len(inline_matches)
-
-                return inline + display
+                return count_equations_in_text(f.read())
         except Exception as e:
             print(f"Warning: Could not read {markdown_file}: {e}")
             return 0
@@ -755,8 +805,27 @@ class BookMetricsGenerator:
             'words': words,
             'links': links,
             'quiz_questions': quiz_questions,
-            'references': references
+            'references': references,
+            'reading_level': self.calculate_reading_level(index_file)
         }
+
+    def calculate_reading_level(self, markdown_file: Path):
+        """Calculate the Flesch-Kincaid grade level of a chapter's prose.
+
+        Args:
+            markdown_file: Path to the chapter's index.md
+
+        Returns:
+            Grade level as a float, or None when textstat is not installed
+        """
+        if textstat is None:
+            return None
+        try:
+            with open(markdown_file, 'r', encoding='utf-8') as f:
+                return textstat.flesch_kincaid_grade(prose_only(f.read()))
+        except Exception as e:
+            print(f"Warning: Could not read {markdown_file}: {e}")
+            return None
 
     def get_aggregated_chapter_metrics(self) -> Dict[str, int]:
         """Aggregate metrics across all chapters for comparison.
@@ -903,7 +972,7 @@ class BookMetricsGenerator:
 
         md += "### Content Metrics\n\n"
         md += "- **Diagrams**: H4 headers starting with '#### Diagram:'\n"
-        md += "- **Equations**: LaTeX expressions using $ and $$ delimiters\n"
+        md += "- **Equations**: LaTeX expressions using \\( \\) and \\[ \\] delimiters (also $ and $$; dollar amounts and code are ignored)\n"
         md += "- **Total Words**: All words in markdown files (excluding code blocks and URLs)\n"
         md += "- **Links**: Markdown-formatted links `[text](url)`\n"
         md += "- **Equivalent Pages**: Based on 250 words/page + 0.25 page/diagram + 0.5 page/MicroSim\n\n"
@@ -950,24 +1019,45 @@ class BookMetricsGenerator:
         md += f"**Generated by**: Book Metrics Python Program v{VERSION}  \n"
         md += f"**Generated on**: {timestamp}\n\n"
         md += "This file contains chapter-by-chapter metrics for student-facing content.\n\n"
-        md += "| Chapter | Name | Sections | Diagrams | Equations | Words | Links | Quiz | Refs |\n"
-        md += "|---------|------|----------|----------|-----------|-------|-------|------|------|\n"
+        # The Reading Level column needs textstat; without it the column is omitted
+        reading_level_available = textstat is not None
+        if not reading_level_available:
+            print("Warning: textstat is not installed; omitting the Reading Level column "
+                  "(pip install textstat)")
+        level_header = " Reading Level |" if reading_level_available else ""
+        level_rule = "---------------|" if reading_level_available else ""
+        md += f"| Chapter | Name | Sections | Diagrams | Equations | Words |{level_header} Links | Quiz | Refs |\n"
+        md += f"|---------|------|----------|----------|-----------|-------|{level_rule}-------|------|------|\n"
 
         # Add rows for each chapter
+        reading_levels = []
         for chapter in chapters:
             metrics = self.get_chapter_metrics(chapter)
             # Create link to chapter index.md (relative to learning-graph directory)
             chapter_dir_name = chapter['path'].name
             chapter_link = f"[{metrics['name']}](../chapters/{chapter_dir_name}/index.md)"
-            md += f"| {metrics['number']} | {chapter_link} | {metrics['sections']} | {metrics['diagrams']} | {metrics['equations']} | {metrics['words']:,} | {metrics['links']} | {metrics['quiz_questions']} | {metrics['references']} |\n"
+            level_cell = ""
+            if reading_level_available:
+                level = metrics['reading_level']
+                if level is not None:
+                    reading_levels.append(level)
+                level_cell = f" {level:.1f} |" if level is not None else " n/a |"
+            md += f"| {metrics['number']} | {chapter_link} | {metrics['sections']} | {metrics['diagrams']} | {metrics['equations']} | {metrics['words']:,} |{level_cell} {metrics['links']} | {metrics['quiz_questions']} | {metrics['references']} |\n"
+
+        # Closing row: mean reading level across chapters
+        if reading_levels:
+            average = sum(reading_levels) / len(reading_levels)
+            md += f"|  | **Average** |  |  |  |  | **{average:.1f}** |  |  |  |\n"
 
         md += "\n## Metrics Explanation\n\n"
         md += "- **Chapter**: Chapter number (leading zeros removed)\n"
         md += "- **Name**: Chapter title from index.md\n"
         md += "- **Sections**: Count of H2 and H3 headers in chapter markdown files\n"
         md += "- **Diagrams**: Count of H4 headers starting with '#### Diagram:'\n"
-        md += "- **Equations**: LaTeX expressions using $ and $$ delimiters\n"
+        md += "- **Equations**: LaTeX expressions using \\( \\) and \\[ \\] delimiters (also $ and $$, ignoring dollar amounts and code), counted across all markdown files in the chapter\n"
         md += "- **Words**: Word count across all markdown files in the chapter\n"
+        if reading_level_available:
+            md += "- **Reading Level**: Flesch-Kincaid grade level of the prose in the chapter's index.md (code, tables, headings, math, and HTML removed), calculated with the Python `textstat` library; the Average row is the mean of the chapter values\n"
         md += "- **Links**: Markdown-formatted links `[text](url)`\n"
         md += "- **Quiz**: Number of quiz questions in the chapter's quiz.md (0 if none)\n"
         md += "- **Refs**: Number of references in the chapter's references.md (0 if none)\n"
