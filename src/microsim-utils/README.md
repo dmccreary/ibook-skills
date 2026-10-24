@@ -129,7 +129,7 @@ the schema's values, such as `Mathematics`, `Computer Science` or `Health`) to
 avoid `TODO: subject area`. Run with `--verbose` to see the resolved values.
 `geometry-course` keeps its original built-in values.
 
-**Library-to-CDN mapping:** p5.js 1.11.10, vis-network 9.1.9, Chart.js 4.4.4,
+**Library-to-CDN mapping:** p5.js 2.3.2, vis-network 9.1.9, Chart.js 4.4.4,
 Mermaid 10, Plotly 2.35.0, Leaflet 1.9.4, vis-timeline 7.7.3.
 
 ### update-mkdocs-nav.py
@@ -177,6 +177,18 @@ is inserted for it. `--fix-heights` is narrower: it only updates an iframe
 whose src is exactly `.../sims/<id>/main.html`, because it needs `<id>` to find
 the canvas height in `docs/sims/<id>/`. `--fix-paths` only rewrites a src of
 the form `/sims/<id>/main.html`; an absolute `https://` URL is never rewritten.
+
+An inserted embed has the same shape as the one on a sim's own `index.md`: the
+iframe with its attributes in the order `src`, `height`, `width`, `scrolling`,
+a blank line, and a Material button for the fullscreen link:
+
+```markdown
+<iframe src="../../sims/<id>/main.html" height="562px" width="100%" scrolling="no"></iframe>
+
+[Run the <Title> MicroSim Fullscreen](../../sims/<id>/main.html){ .md-button .md-button--primary }
+```
+
+The height is 450px until `--fix-heights` or `sync-iframe-heights.py` sets it.
 
 ```bash
 # Single chapter, dry run

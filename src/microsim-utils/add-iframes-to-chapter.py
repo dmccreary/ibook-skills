@@ -181,17 +181,23 @@ def process_chapter(chapter_path, project_dir, dry_run=False,
                 if canvas_h:
                     height = f"{canvas_h + 2}px"
 
+            # Same shape as the embed on a sim's own index.md: iframe attributes in the order
+            # src, height, width, scrolling, and a Material button for the fullscreen link.
             iframe_line = (
                 f'<iframe src="../../sims/{sim_id}/main.html" '
-                f'width="100%" height="{height}" scrolling="no"></iframe>'
+                f'height="{height}" width="100%" scrolling="no"></iframe>'
             )
             fullscreen_line = (
-                f'[Run {title} Fullscreen](../../sims/{sim_id}/main.html)'
+                f'[Run the {title} MicroSim Fullscreen](../../sims/{sim_id}/main.html)'
+                '{ .md-button .md-button--primary }'
             )
 
-            # Insert iframe + fullscreen link before the details block
+            # Insert iframe + blank line + fullscreen button link before the details block.
+            # The heading is normally followed by a blank line already; add one only if not.
             insert_at = details_line
-            insert_lines = ["", iframe_line, fullscreen_line, ""]
+            insert_lines = [iframe_line, "", fullscreen_line, ""]
+            if insert_at > 0 and new_lines[insert_at - 1].strip():
+                insert_lines.insert(0, "")
             for idx, il in enumerate(insert_lines):
                 new_lines.insert(insert_at + idx, il)
             offset += len(insert_lines)

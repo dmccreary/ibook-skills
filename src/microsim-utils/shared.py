@@ -183,7 +183,7 @@ def detect_library(html_content):
 
 # ── CDN mapping for scaffold generation ───────────────────────────────
 LIBRARY_CDNS = {
-    "p5.js":        "https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js",
+    "p5.js":        "https://cdn.jsdelivr.net/npm/p5@2.3.2/lib/p5.js",
     "vis-network":  "https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js",
     "vis-timeline": "https://cdn.jsdelivr.net/npm/vis-timeline@7.7.3/standalone/umd/vis-timeline-graph2d.min.js",
     "Chart.js":     "https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js",

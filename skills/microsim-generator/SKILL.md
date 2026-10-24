@@ -2,13 +2,29 @@
 name: microsim-generator
 description: Creates interactive educational MicroSims, routing to the best-matched generator - p5.js, Chart.js, Plotly, Mermaid, vis-network, timelines, maps, Venn, causal-loop/feedback-loop diagrams (CLD), concept-classifier sorting quizzes, infographic overlays with callout labels, Docker Python labs (runnable code blocks), and fact-verified statistics posters (every numeric claim checked against a cited source before rendering). Generates complete MicroSim packages with HTML, JavaScript, CSS, documentation, and metadata.
 metadata:
-  ibook.version: "1.0"
+  ibook.version: "1.0.1"
   ibook.preferred-model: "opus"
 ---
 
 # MicroSim Generator
 
-**Version:** 1.0
+**Version:** 1.0.1
+
+### Changelog
+
+- **v1.0.1** — Two fixes to the batch utilities so a new book does not inherit them.
+  `generate-sim-scaffold.py` (via `LIBRARY_CDNS` in `shared.py`) now writes
+  `p5@2.3.2` into every scaffolded `main.html`; it still wrote `p5@1.11.10` while the
+  p5 guide, the `assets/templates/p5/` templates and the concept-classifier guide all
+  said 2.3.2, so each new sim needed its CDN line edited by hand (found when 19 sims
+  were generated for oer-evaluator). `add-iframes-to-chapter.py` now inserts the same
+  embed a sim's own `index.md` uses: `<iframe src height width scrolling>`, a blank
+  line, and a `{ .md-button .md-button--primary }` fullscreen link titled "Run the
+  <Title> MicroSim Fullscreen". It used to insert attributes in a different order
+  and a plain `[Run <Title> Fullscreen](...)` link, with an extra blank line after
+  the heading, so chapters mixed two styles. Existing books can re-point old sims by
+  changing the CDN version in each `main.html`; a sim written for p5.js 1.x should be
+  re-checked first (see the p5 guide's note on the 2.x migration).
 
 ## Overview
 
@@ -570,7 +586,7 @@ python3 $UTILS/add-iframes-to-chapter.py \
 **What this does:**
 
 - Finds spec headers (`#### Diagram:`, `#### MicroSim:`, `#### Timeline:`, and the other words Step 1 accepts) that are missing iframe embeds
-- Inserts `<iframe>` tags before the `<details>` block with correct relative paths
+- Inserts `<iframe>` tags before the `<details>` block with correct relative paths, followed by a `{ .md-button .md-button--primary }` fullscreen link (the same embed shape as the sim's own `index.md`)
 - `--fix-heights`: Parses `.js` files to detect `createCanvas()` height and sets iframe height to canvas height + 2px
 - `--fix-paths`: Converts absolute paths (`/sims/...`) to relative (`../../sims/...`)
 - Fixes height typos (`500xp` → `500px`)
