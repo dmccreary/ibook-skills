@@ -28,7 +28,7 @@ Provides standardized UI control patterns: horizontal sliders in the control reg
 
 ## main.html Generation
 
-Creates a minimal HTML5 file with a `<main></main>` element that holds the canvas. Links to p5.js via CDN (currently version 2.3.2), includes the MicroSim JavaScript file, and provides a link back to the lesson plan. Maintains full compatibility with the p5.js editor so code can be pasted directly for testing.
+Creates a minimal HTML5 file with a `<main></main>` element that holds the canvas. Links to p5.js via CDN (currently version 2.3.4), includes the MicroSim JavaScript file, and provides a link back to the lesson plan. Maintains full compatibility with the p5.js editor so code can be pasted directly for testing.
 
 ## index.md Generation
 

@@ -129,7 +129,7 @@ the schema's values, such as `Mathematics`, `Computer Science` or `Health`) to
 avoid `TODO: subject area`. Run with `--verbose` to see the resolved values.
 `geometry-course` keeps its original built-in values.
 
-**Library-to-CDN mapping:** p5.js 2.3.2, vis-network 9.1.9, Chart.js 4.4.4,
+**Library-to-CDN mapping:** p5.js 2.3.4, vis-network 9.1.9, Chart.js 4.4.4,
 Mermaid 10, Plotly 2.35.0, Leaflet 1.9.4, vis-timeline 7.7.3.
 
 ### update-mkdocs-nav.py

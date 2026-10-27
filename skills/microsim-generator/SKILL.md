@@ -2,15 +2,26 @@
 name: microsim-generator
 description: Creates interactive educational MicroSims, routing to the best-matched generator - p5.js, Chart.js, Plotly, Mermaid, vis-network, timelines, maps, Venn, causal-loop/feedback-loop diagrams (CLD), concept-classifier sorting quizzes, infographic overlays with callout labels, Docker Python labs (runnable code blocks), and fact-verified statistics posters (every numeric claim checked against a cited source before rendering). Generates complete MicroSim packages with HTML, JavaScript, CSS, documentation, and metadata.
 metadata:
-  ibook.version: "1.0.1"
+  ibook.version: "1.0.2"
   ibook.preferred-model: "opus"
 ---
 
 # MicroSim Generator
 
-**Version:** 1.0.1
+**Version:** 1.0.2
 
 ### Changelog
+
+- **v1.0.2** — The default p5.js version is now 2.3.4, the newest 2.x release on npm
+  (published 2026-09-25), up from 2.3.2. Updated everywhere the skill pins it:
+  `LIBRARY_CDNS` in `src/microsim-utils/shared.py` (so scaffolded `main.html` files get
+  it), `assets/templates/p5/main-template.html`, `assets/concept-classifier/`
+  (`main-template.html` and `index-template.md`), the p5 and concept-classifier guides,
+  and the utilities README. Checked by upgrading the 15 p5 sims in oer-evaluator from
+  2.3.2 to 2.3.4: every sim opened static with no console errors, played through
+  correctly, and rendered pixel-identical screenshots, so no code changes were needed.
+  Existing books can move to 2.3.4 by changing the CDN version in each `main.html` and
+  the `version` and dependency lines in each `metadata.json`.
 
 - **v1.0.1** — Two fixes to the batch utilities so a new book does not inherit them.
   `generate-sim-scaffold.py` (via `LIBRARY_CDNS` in `shared.py`) now writes

@@ -264,7 +264,7 @@ nav:
 
 ## Technical Notes
 
-- **Framework**: p5.js 2.3.2
+- **Framework**: p5.js 2.3.4
 - **Responsive**: Width-responsive, fixed height
 - **Data loading**: Uses `await loadJSON()` inside an `async setup()` (p5.js v2 removed `preload()`)
 - **Accessibility**: Includes `describe()` for screen readers
