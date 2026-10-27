@@ -951,7 +951,7 @@ Every MicroSim must be a self-contained HTML file following this structure:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MicroSim: [Concept Name]</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;

@@ -2,15 +2,20 @@
 name: microsim-generator
 description: Creates interactive educational MicroSims, routing to the best-matched generator - p5.js, Chart.js, Plotly, Mermaid, vis-network, timelines, maps, Venn, causal-loop/feedback-loop diagrams (CLD), concept-classifier sorting quizzes, infographic overlays with callout labels, Docker Python labs (runnable code blocks), and fact-verified statistics posters (every numeric claim checked against a cited source before rendering). Generates complete MicroSim packages with HTML, JavaScript, CSS, documentation, and metadata.
 metadata:
-  ibook.version: "1.0.2"
+  ibook.version: "1.0.3"
   ibook.preferred-model: "opus"
 ---
 
 # MicroSim Generator
 
-**Version:** 1.0.2
+**Version:** 1.0.3
 
 ### Changelog
+
+- **v1.0.3** — The p5 guide's "HTML Structure (REQUIRED)" example still loaded p5.js
+  1.7.0 from cdnjs, which the 2.3.4 bump missed. It now loads `p5@2.3.4` from jsdelivr
+  like every other template, so no part of the skill points a new sim at p5.js 1.x.
+  2.3.4 is still the newest stable release on npm (2.4.0 is only at rc.1).
 
 - **v1.0.2** — The default p5.js version is now 2.3.4, the newest 2.x release on npm
   (published 2026-09-25), up from 2.3.2. Updated everywhere the skill pins it:
