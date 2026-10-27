@@ -2,15 +2,23 @@
 name: microsim-generator
 description: Creates interactive educational MicroSims, routing to the best-matched generator - p5.js, Chart.js, Plotly, Mermaid, vis-network, timelines, maps, Venn, causal-loop/feedback-loop diagrams (CLD), concept-classifier sorting quizzes, infographic overlays with callout labels, Docker Python labs (runnable code blocks), and fact-verified statistics posters (every numeric claim checked against a cited source before rendering). Generates complete MicroSim packages with HTML, JavaScript, CSS, documentation, and metadata.
 metadata:
-  ibook.version: "1.0.3"
+  ibook.version: "1.0.4"
   ibook.preferred-model: "opus"
 ---
 
 # MicroSim Generator
 
-**Version:** 1.0.3
+**Version:** 1.0.4
 
 ### Changelog
+
+- **v1.0.4** — The p5 guide now has a "p5.js 2.x Notes" section listing the 1.x patterns
+  that break under 2.3.4 and their replacements, each checked in headless Chromium:
+  defining `preload()` stops the sketch, `keyCode === LEFT_ARROW` and `keyIsDown(65)` are
+  always false, and `curveVertex()`, `createStringDict()` and the 6-argument
+  `bezierVertex()` throw. The iframe hover-gating pattern ignores touch `mouseOut` events,
+  because in 2.x lifting a finger froze the animation on tablets, which 1.x did not. The
+  dead `p5js.org/migration-guide/` link now points to the v2 transition guide.
 
 - **v1.0.3** — The p5 guide's "HTML Structure (REQUIRED)" example still loaded p5.js
   1.7.0 from cdnjs, which the 2.3.4 bump missed. It now loads `p5@2.3.4` from jsdelivr

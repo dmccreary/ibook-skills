@@ -592,9 +592,10 @@ function setup() {
   const canvas = createCanvas(canvasWidth, canvasHeight);
   canvas.parent(document.querySelector('main'));
 
-  // Track mouse enter/leave for animation control
+  // Track mouse enter/leave for animation control.
+  // In p5.js 2.x a finger lift also fires mouseOut, so ignore touch: a tap wakes the sim.
   canvas.mouseOver(() => mouseOverCanvas = true);
-  canvas.mouseOut(() => mouseOverCanvas = false);
+  canvas.mouseOut((e) => { if (e.pointerType !== 'touch') mouseOverCanvas = false; });
 
   // ... rest of setup
 }
@@ -621,6 +622,8 @@ function draw() {
 - Only the animation *progress* is paused when mouse leaves
 - Animation resumes smoothly from where it left off when mouse returns
 - This pattern applies to any continuous animation (pulsing, rotating, moving particles, etc.)
+- Phones and tablets have no hover. p5.js 2.x routes touch through pointer events, and lifting the finger fires `mouseOut`; without the `pointerType` check the animation would stop the moment the tap ends. With it, a tap wakes the animation and it keeps running.
+- Each `p5.Element` keeps only one `mouseOver()` and one `mouseOut()` handler. A second call replaces the first, so put all hover logic in one handler.
 
 ## main.html
 
@@ -673,7 +676,44 @@ version of p5.js.
 
 https://github.com/dmccreary/microsims/blob/main/src/p5-version/p5-version.py
 
-As of this guide, the default version is p5.js 2.x (currently 2.3.4). p5.js 2.x is largely backward compatible with 1.x global-mode sketches, but check the [migration guide](https://p5js.org/migration-guide/) if a sketch behaves unexpectedly after the upgrade.
+As of this guide, the default version is p5.js 2.x (currently 2.3.4). Most global-mode 2D code works unchanged from 1.x: shapes, `fill()` and `stroke()`, `text()`, the builtin DOM controls, and the `draw()` loop. The patterns in the next section did change. For the full list, see the p5.js [Teachers' Guide to the v2 transition](https://p5js.org/tutorials/v2_transition/).
+
+### p5.js 2.x Notes (REQUIRED for New Sketches)
+
+Write every new MicroSim in 2.x syntax. Each row below was checked against p5.js 2.3.4: the 1.x pattern throws an error, fails silently, or prints a p5.js warning.
+
+| Task | 1.x pattern (do not use) | 2.x pattern |
+|------|--------------------------|-------------|
+| Load `data.json`, images, fonts | `function preload() { data = loadJSON(...); }` | `async function setup()` with `data = await loadJSON('data.json');` |
+| Empty vector | `createVector()` | `createVector(0, 0)` for 2D, `createVector(0, 0, 0)` for 3D |
+| Arrow keys in `keyPressed()` | `keyCode === LEFT_ARROW` (always false: `LEFT_ARROW` is now the string `'ArrowLeft'`) | `key === 'ArrowLeft'`, or `keyIsDown(LEFT_ARROW)` in `draw()` |
+| Letter key held down | `keyIsDown(65)` (always false) | `keyIsDown('a')` |
+| Which mouse button | `mouseButton === LEFT` | `mouseButton.left` (also `.right` and `.center`) |
+| Smooth curve through points | `curveVertex()` with doubled first and last points | `splineVertex()` with no doubling; `endShape(CLOSE)` closes the loop smoothly |
+| Bezier curve | `bezierVertex(cx1, cy1, cx2, cy2, x, y)` or `quadraticVertex()` | one `bezierVertex(x, y)` call per point after a `vertex()`; `bezierOrder(2)` for quadratic |
+| Key/value lookup | `createStringDict()`, `createNumberDict()` | a plain JavaScript object, usually from `data.json` |
+
+**Loading data.** Defining a `preload()` function at all stops the sketch in 2.x, with a p5.js message that it was removed. Load files in an `async setup()` instead, keeping `updateCanvasSize()` as the first line:
+
+```javascript
+let data;
+
+async function setup() {
+  updateCanvasSize();
+  const canvas = createCanvas(canvasWidth, canvasHeight);
+  canvas.parent(document.querySelector('main'));
+  data = await loadJSON('data.json');
+  // ... create controls that depend on data here
+}
+```
+
+`draw()` does not start until `setup()` finishes, so `draw()` never sees `data` undefined, and p5.js 2.3.2 and later shows its own loading animation while a slow `setup()` runs. `loadTable()` still works but `p5.Table` is deprecated, so prefer `data.json`.
+
+**Touch.** Mouse functions and variables (`mousePressed()`, `mouseDragged()`, `mouseX`) now fire for touch as well, through the browser's pointer events, and `touches` lists every active pointer for multitouch. One side effect breaks hover gating on tablets: see the `pointerType` check in [Animation Control for Iframe Embedding](#animation-control-for-iframe-embedding-required-for-animated-microsims).
+
+**Text contrast (optional).** `bgColor.contrast(textColor)` returns `true` when the pair has enough contrast for body text under WCAG 2.1. Pass `'all'` as a second argument to get the WCAG 2.1 and APCA scores. Use it in the Accessibility Considerations step to check label colors.
+
+**The p5.js Editor.** Teachers paste `script.js` into the p5.js Editor, which defaulted to 1.x until at least August 2026. If an `async setup()` sketch does nothing there, switch the Editor's p5.js version to 2.x in its settings.
 
 ## Index.md Generation
 
@@ -773,6 +813,7 @@ structure of this file is governed by a JSON schema file located at /src/microsi
 | noStroke() before text | Every `text()` call preceded by `noStroke()` | ☐ |
 | Drawing order correct | Background → Grid → Axes → Title → Content → Controls | ☐ |
 | Variable naming | Uses standard names: `canvasWidth`, `drawHeight`, `controlHeight`, `sliderLeftMargin` | ☐ |
+| p5.js 2.x syntax | No `preload()`, bare `createVector()`, `keyCode ===` comparisons, numeric `keyIsDown()`, or `curveVertex()` (see p5.js 2.x Notes) | ☐ |
 
 ### Quick Mental Test
 
