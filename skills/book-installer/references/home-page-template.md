@@ -191,9 +191,13 @@ hide:
 .md-content__inner h1 {display: none !important;}
 </style>
 
-# Welcome
+# {{BOOK_TITLE}}
 
-Welcome to **{{BOOK_TITLE}}**.
+<figure markdown>
+  ![{{BOOK_TITLE}}: {{SUBTITLE}}. Cover image of {{ONE_SENTENCE_COVER_DESCRIPTION}}](./img/cover.png){ width="100%" }
+</figure>
+
+**{{SUBTITLE}}**
 
 {{INTRODUCTORY_PARAGRAPH}}
 
@@ -230,6 +234,36 @@ Start with [Chapter 1](chapters/01/index.md) to begin your learning journey.
 | `twitter:image` | Twitter Card image | `/img/cover.png` |
 | `hide: - toc` | Hides table of contents on home page | - |
 
+### Landing Page Title Rule (Required)
+
+The cover image already shows the book title in large type, so the page's own
+`<h1>` would repeat it directly above the image. Every landing page whose
+cover image renders the title therefore does both of these things:
+
+1. **Hide the h1 with the `<style>` block shown in Step 8.** Keep the
+   `# {{BOOK_TITLE}}` heading in the Markdown source; the CSS only hides it
+   from view.
+2. **Put the book title in the cover image's alt text.** `display: none`
+   removes the h1 from the accessibility tree, so the alt text is what tells a
+   screen-reader user the title of the page. Start the alt text with the exact
+   book title, add the subtitle if there is one, then add one sentence
+   describing what the cover shows:
+
+   ```markdown
+   ![Automating Instructional Design: A Hands-On Course. Cover image of glowing network graphs, timeline bars, and slider controls on a blue background](./img/cover.png){ width="100%" }
+   ```
+
+Rules that go with it:
+
+- **Never hide the h1 without the title in the alt text**, and never leave the
+  alt text empty (`![]()`) or use the file name.
+- **Only hide the h1 when the cover image actually renders the title.** The
+  scaffold's placeholder `cover.png` does not, so a freshly scaffolded book
+  keeps its h1 visible until the real cover is in place.
+- **Show the subtitle as a visible bold line directly below the cover figure**
+  when the image does not render it (see the Step 8 template), so sighted
+  readers also see it.
+
 ### Step 9: Verify Social Media Preview
 
 Test how the page appears when shared:
@@ -240,20 +274,14 @@ Test how the page appears when shared:
 
 Enter your deployed site URL to preview social cards.
 
-### Step 10: Add Cover Image to Navigation (Optional)
+### Step 10: Link the Cover Image (Optional)
 
-To display the cover image prominently on the home page, add to `docs/index.md`:
-
-```markdown
-<figure markdown>
-  ![{{BOOK_TITLE}}](./img/cover.png){ width="100%" }
-</figure>
-```
-
-Or with a link wrapper:
+The cover figure is already part of the Step 8 template. To make it a link to
+the first chapter, wrap it in a link and keep the alt text required by the
+Landing Page Title Rule:
 
 ```markdown
-[![{{BOOK_TITLE}}](./img/cover.png){ width="100%" }](chapters/01/index.md)
+[![{{BOOK_TITLE}}: {{SUBTITLE}}. Cover image of {{ONE_SENTENCE_COVER_DESCRIPTION}}](./img/cover.png){ width="100%" }](chapters/01/index.md)
 ```
 
 ## Complete Example: docs/index.md
@@ -272,13 +300,15 @@ hide:
 .md-content__inner h1 {display: none !important;}
 </style>
 
-# Welcome
-
-Welcome to **Automating Instructional Design**, a hands-on course for educators and training professionals.
+# Automating Instructional Design
 
 <figure markdown>
-  ![Automating Instructional Design](./img/cover.png){ width="100%" }
+  ![Automating Instructional Design: Turning Learning Objectives into MicroSims. Cover image of glowing network graphs, timeline bars, a six-level pyramid, and slider controls on a blue-to-teal background](./img/cover.png){ width="100%" }
 </figure>
+
+**Turning Learning Objectives into MicroSims**
+
+Welcome to **Automating Instructional Design**, a hands-on course for educators and training professionals.
 
 ## About This Course
 
@@ -314,6 +344,15 @@ Start with [Chapter 1: Foundations of Learning Objective Analysis](chapters/01/i
 - Use PNG for sharp graphics and text
 - Minimum 1910x1000 pixels
 - If file size is too large, use WebP or optimize PNG
+
+### Title Appears Twice, or a Screen Reader Never Announces It
+
+- Two titles stacked above the cover means the `<style>` block that hides the
+  h1 is missing or sits before the frontmatter. It must come right after the
+  closing `---`.
+- A screen reader that never announces the book title means the cover alt text
+  does not start with the title. The hidden h1 is not read, so fix the alt
+  text as described in the Landing Page Title Rule.
 
 ### Frontmatter Not Working
 

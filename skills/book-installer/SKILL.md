@@ -3,14 +3,28 @@ name: book-installer
 description: Installs and configures intelligent-textbook infrastructure - scaffold a brand-new MkDocs Material textbook (init textbook), install any of 41 features (math, mascot, learning graph viewer, Google Analytics GA4, custom 404, kanban board), and generate book metrics. Routes to the appropriate installation guide.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
-  ibook.version: "1.0.3"
+  ibook.version: "1.0.4"
 ---
 
 # Book Installer
 
-**Version:** 1.0.3
+**Version:** 1.0.4
 
 ### Changelog
+
+- **v1.0.4** — `references/home-page-template.md` now has a required
+  **Landing Page Title Rule**: when the cover image renders the book title,
+  the landing page hides the duplicate h1 with the `<style>` block and starts
+  the cover image's alt text with the exact book title, because `display: none`
+  removes the h1 from the accessibility tree and the alt text is then what a
+  screen reader announces. The rule also forbids hiding the h1 over a
+  placeholder cover that does not show the title. The Step 8 template, Step 10
+  snippet, complete example, and troubleshooting section follow the rule (the
+  old template hid a generic `# Welcome` heading and gave the cover only the
+  bare title as alt text). The scaffold `docs/index.md`, the
+  supplementary-content generator (Step 11), and the cover-image generator
+  point to the rule. Existing books should add the same `<style>` block and
+  title-first alt text to their `docs/index.md` (found in oer-evaluator).
 
 - **v1.0.3** — The init-textbook `mkdocs.yml` template's `exclude_docs` now
   lists `**/cover-image-prompt.md`. The cover-image-generator guide writes
@@ -392,6 +406,7 @@ Each guide contains:
 - Cover image design guidance (1.91:1 aspect ratio)
 - Montage element suggestions by topic
 - Social media preview optimization
+- Landing Page Title Rule: hide the duplicate h1 and put the book title in the cover image's alt text
 - Example prompts for various book themes
 
 **Prerequisites:**

@@ -6,6 +6,10 @@ image: img/cover.png
 
 # {{SITE_NAME}}
 
+<!-- Once docs/img/cover.png is the real cover and shows the book title, hide
+     this duplicate h1 and start the image's alt text with the title. See the
+     "Landing Page Title Rule" in book-installer/references/home-page-template.md. -->
+
 <figure markdown>
   ![{{SITE_NAME}} cover](./img/cover.png){ width="100%" }
 </figure>

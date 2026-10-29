@@ -381,8 +381,13 @@ image: /img/cover.png
 og:image: /img/cover.png
 ---
 
-![Your Book Title](./img/cover.png){ width="100%" }
+![Your Book Title: Subtitle. Cover image of a one-sentence description of the montage](./img/cover.png){ width="100%" }
 ```
+
+Because the cover renders the book title, apply the **Landing Page Title Rule**
+in [home-page-template.md](./home-page-template.md): hide the page's duplicate
+h1 with the `<style>` block shown there, and keep the title at the start of
+the image's alt text so screen readers still announce it.
 
 ## Troubleshooting
 

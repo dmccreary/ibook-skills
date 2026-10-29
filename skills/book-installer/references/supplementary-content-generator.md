@@ -272,7 +272,7 @@ Read references/home-page-template.md and execute its workflow for this project.
 ```
 
 When writing the landing page, incorporate:
-- The cover image at `docs/img/cover.png`
+- The cover image at `docs/img/cover.png`, following the **Landing Page Title Rule** in `home-page-template.md`: when the cover renders the book title, hide the duplicate h1 with the `<style>` block and start the image's alt text with the book title. If `cover.png` is still the scaffold placeholder, leave the h1 visible.
 - A summary stat block: number of chapters, MicroSims, glossary terms, FAQ entries
 - Quick-links to Glossary, FAQ, and About in the intro prose or a callout box
 - Any course prerequisites or target audience statement from `docs/course-description.md`
