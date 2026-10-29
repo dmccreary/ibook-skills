@@ -3,14 +3,23 @@ name: book-installer
 description: Installs and configures intelligent-textbook infrastructure - scaffold a brand-new MkDocs Material textbook (init textbook), install any of 41 features (math, mascot, learning graph viewer, Google Analytics GA4, custom 404, kanban board), and generate book metrics. Routes to the appropriate installation guide.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
-  ibook.version: "1.0.2"
+  ibook.version: "1.0.3"
 ---
 
 # Book Installer
 
-**Version:** 1.0.2
+**Version:** 1.0.3
 
 ### Changelog
+
+- **v1.0.3** — The init-textbook `mkdocs.yml` template's `exclude_docs` now
+  lists `**/cover-image-prompt.md`. The cover-image-generator guide writes
+  `docs/img/cover-image-prompt.md`, but the template only excluded
+  `cover-prompt.md`, so every new book published its cover prompt as a stray
+  page (found in oer-evaluator). Books scaffolded earlier should add the same
+  line to their own `mkdocs.yml`. This release also updates the book-metrics
+  feature description in this file to mention the Reading Level column and
+  the `\( \)` / `\[ \]` equation detection.
 
 - **v1.0.2** — The canonical mascot CSS in `references/learning-mascot.md`
   (Step 5) now fixes the admonition image's height at `--mascot-size` and
@@ -498,7 +507,7 @@ Each guide contains:
 
 **Creates:**
 - `docs/learning-graph/book-metrics.md` — Book Composition + Student-Facing Content Metrics tables
-- `docs/learning-graph/chapter-metrics.md` — per-chapter breakdown
+- `docs/learning-graph/chapter-metrics.md` — per-chapter breakdown, including a Reading Level (Flesch-Kincaid) column and an Average row
 - merges a `metrics` block of book-wide totals into `docs/learning-graph/book-metadata.json` (author fields preserved)
 
 **Uses script:** `bk-generate-book-metrics` (resolves `$BK_HOME/src/book-metrics/book-metrics.py`); fallback `python3 "$BK_HOME/src/book-metrics/book-metrics.py" docs`
@@ -506,6 +515,8 @@ Each guide contains:
 **Features:**
 - Tracks all 12 book-composition elements with Required/Recommended/Optional status
 - Counts concepts, chapters, MicroSims, stories, glossary terms, FAQs, quiz questions, references, diagrams, equations, words, links, appendices, mascot poses
+- Detects equations written as `\( \)` / `\[ \]` as well as `$` / `$$` (dollar amounts and code are ignored)
+- Adds a per-chapter reading level and the book average when `textstat` is installed
 - Estimates equivalent printed pages and records the development stage
 - Produces the totals the intelligent-textbooks case-studies index displays
 
