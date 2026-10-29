@@ -12,7 +12,8 @@ Running the metrics tool writes/updates four files in `docs/learning-graph/`:
 1. **`book-metrics.md`** — overall book statistics (Book Composition table +
    Student-Facing Content Metrics table).
 2. **`chapter-metrics.md`** — per-chapter breakdown (sections, diagrams,
-   equations, words, links, quiz questions, references).
+   equations, words, reading level, links, quiz questions, references) with a
+   closing **Average** row for the mean reading level.
 3. **`book-metrics.json`** — the **canonical, machine-readable** book-wide
    totals and the **single source of truth** for every skill that needs the
    numbers (see [Book Metrics JSON](#book-metrics-json) below). Fully owned by
@@ -45,6 +46,9 @@ Optional inputs that enrich the metrics (each is counted only if present):
 - `docs/img/mascot/` (mascot poses), `docs/appendices/` (appendix pages)
 - per-chapter `quiz.md` and `references.md`
 - `mkdocs.yml` `extra.development_stage` (development stage)
+- the Python `textstat` package (`pip install textstat`) for the chapter
+  **Reading Level** column. Without it the script prints a warning and omits the
+  column and the Average row; every other metric is unaffected.
 
 ## How to Run
 
@@ -94,7 +98,7 @@ directories (`prompts/`, `learning-graph/`):
 | Metric | Description |
 |--------|-------------|
 | Diagrams | H4 headers starting with `#### Diagram:` |
-| Equations | LaTeX expressions using `$` and `$$` delimiters |
+| Equations | LaTeX expressions: `\( … \)` and `\[ … \]` (the currency-safe form), plus `$ … $` and `$$ … $$` — see [Equation Detection](#equation-detection) |
 | Total Words | All words in markdown (excluding code blocks and URLs) |
 | Links | Markdown-formatted hyperlinks `[text](url)` |
 | Equivalent Pages | Estimated pages from words + visuals |
@@ -107,6 +111,43 @@ Pages = (Total Words ÷ 250) + (Diagrams × 0.25) + (MicroSims × 0.5)
 
 Assumptions: 250 words per printed page, each diagram 0.25 page, each MicroSim
 0.5 page.
+
+## Equation Detection
+
+Books that must keep `$` literal for dollar amounts write math with backslash
+delimiters, so the script recognizes both families. A script that only looked
+for `$` would report **0 equations** for such a book.
+
+| Kind | Delimiters |
+|------|------------|
+| Display | `\[ … \]` and `$$ … $$` (multi-line allowed) |
+| Inline | `\( … \)` and `$ … $` |
+
+Rules:
+
+1. Display math is removed before inline math is counted, so nothing is counted twice.
+2. A `$` followed by a digit (`$500`) is a dollar amount, not a delimiter. Inline
+   `$ … $` never spans a line break.
+3. Fenced code blocks and inline code are ignored, so a regex or shell snippet
+   containing `\(` or `$HOME` is not counted as an equation.
+4. The count is per markdown file and summed over every file in the chapter
+   directory, the same scope as the Words column.
+
+## Chapter Reading Level
+
+When `textstat` is installed, `chapter-metrics.md` gets a **Reading Level**
+column after Words. It is the Flesch-Kincaid grade level of the chapter's
+`index.md` prose, and the closing **Average** row is the plain mean of the
+chapter values (not weighted by length). Before scoring, the script removes
+everything that is not running text: YAML frontmatter, fenced and inline code,
+HTML and iframes, tables, headings, images, URLs, and math. List items and
+admonition titles count as sentences.
+
+Typical interpretation: a book that holds every chapter within about one grade
+of the mean has consistent prose; investigate chapters far from the mean. For a
+standalone report with notes and statistics, use `analyze-reading-levels.py`
+(see `SKILL.md`), which applies lighter stripping and so scores a little
+differently.
 
 ## Book Metrics JSON
 
@@ -253,5 +294,11 @@ nav:
   fallback otherwise.
 - **`$BK_HOME` errors** — the wrapper requires `$BK_HOME` to point at the
   `ibook-skills` checkout (e.g. `export BK_HOME=$HOME/Documents/ws/ibook-skills`).
+- **Equations show 0 but the book has math** — check the delimiters. The script
+  counts `\( \)`, `\[ \]`, `$ $` and `$$ $$`; math inside code fences is
+  ignored on purpose, and `$` followed by a digit is read as a dollar amount.
+- **No Reading Level column** — `textstat` is not installed in the Python
+  environment running the script (`pip install textstat`, or use the project's
+  `mkdocs` conda env).
 - **Word counts look off** — the script excludes code blocks and URLs; check for
   large code blocks or malformed markdown if numbers seem wrong.

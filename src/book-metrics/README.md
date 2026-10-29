@@ -9,7 +9,7 @@ This directory contains Python scripts for analyzing and generating metrics for 
 Generates comprehensive metrics for intelligent textbooks, producing two reports:
 
 - **book-metrics.md**: Overall statistics (chapters, concepts, glossary terms, FAQs, quiz questions, diagrams, equations, MicroSims, word counts, links)
-- **chapter-metrics.md**: Per-chapter breakdown of metrics
+- **chapter-metrics.md**: Per-chapter breakdown of metrics, including each chapter's Flesch-Kincaid reading level and the book average (requires `pip install textstat`; the column is omitted without it)
 
 **Usage:**
 
@@ -59,13 +59,18 @@ python /path/to/generate-equation-list.py /path/to/textbook/docs /path/to/output
 
 ## Equation Detection
 
-Both scripts use the same equation detection logic:
+`book-metrics.py` detects equations with these rules (`count_equations_in_text`):
 
-1. **Display math**: Matches `$$...$$` patterns (multiline supported)
-2. **Inline math**: Matches `$...$` patterns
+1. **Display math**: `\[...\]` and `$$...$$` (multiline supported)
+2. **Inline math**: `\(...\)` and `$...$`
 3. **Exclusions**:
    - Dollar amounts like `$500` are not counted as equations
    - Display math is removed before counting inline math to avoid double-counting
+   - Fenced code blocks and inline code are ignored
+
+The backslash forms are the currency-safe delimiters for books that keep `$`
+literal. `generate-equation-list.py` still extracts only `$...$` and `$$...$$`
+equations, so it will list nothing for a book that uses backslash delimiters.
 
 ## Directory Structure
 
@@ -132,7 +137,8 @@ nav:
 
 ### Equations not detected
 
-- Ensure equations use proper LaTeX delimiters: `$...$` or `$$...$$`
+- Ensure equations use proper LaTeX delimiters: `\(...\)`, `\[...\]`, `$...$` or `$$...$$`
+- Math inside code fences or inline code is intentionally not counted
 - Check for unbalanced delimiters
 - Inline equations must not start with a digit after the `$` (to avoid matching dollar amounts)
 
