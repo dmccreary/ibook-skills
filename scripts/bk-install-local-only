@@ -1,0 +1,124 @@
+#!/usr/bin/env bash
+#
+# bk-install-local-only
+#
+# Sets up this computer so Claude Code never uses git worktrees, cloud sessions
+# or Remote Control. Run it once on each computer; it is safe to run again.
+#
+#   1. Links scripts/hooks/block-worktrees-and-cloud.sh into ~/.claude/hooks
+#   2. Merges the hook, deny rules and settings into ~/.claude/settings.json
+#   3. Adds the local-only rule to ~/.claude/CLAUDE.md
+#   4. Reports app settings only you can change, and any stranded work here
+#
+# Requires jq.
+
+set -euo pipefail
+
+BK_HOME="${BK_HOME:-$HOME/Documents/ws/ibook-skills}"
+WS_DIR="$(dirname "$BK_HOME")"
+HOOK_SOURCE="$BK_HOME/scripts/hooks/block-worktrees-and-cloud.sh"
+HOOK_LINK="$HOME/.claude/hooks/block-worktrees-and-cloud.sh"
+SETTINGS="$HOME/.claude/settings.json"
+CLAUDE_MD="$HOME/.claude/CLAUDE.md"
+APP_CONFIG="$HOME/Library/Application Support/Claude/claude_desktop_config.json"
+RULE_MARKER="STRICT RULE — NEVER use cloud or remote sessions"
+
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+command -v jq >/dev/null || { echo -e "${RED}jq is required: brew install jq${NC}" >&2; exit 1; }
+[ -f "$HOOK_SOURCE" ] || { echo -e "${RED}Not found: $HOOK_SOURCE. Run git pull in $BK_HOME.${NC}" >&2; exit 1; }
+
+# 1. Hook
+mkdir -p "$(dirname "$HOOK_LINK")"
+ln -sf "$HOOK_SOURCE" "$HOOK_LINK"
+chmod +x "$HOOK_SOURCE"
+echo -e "${GREEN}Linked${NC} $HOOK_LINK"
+
+# 2. Settings
+[ -f "$SETTINGS" ] || echo '{}' > "$SETTINGS"
+cp "$SETTINGS" "$SETTINGS.bak.$(date +%Y%m%d-%H%M%S)"
+UPDATED=$(jq \
+  --arg cmd '~/.claude/hooks/block-worktrees-and-cloud.sh' \
+  --arg matcher 'Bash|Agent|Task|Workflow|EnterWorktree|RemoteTrigger|Edit|Write|NotebookEdit|mcp__ccd_session__(start_session|hand_off_to_session|move_to_cloud)|mcp__ccd_session_mgmt__set_remote_control' '
+  def add_hook($event; $entry):
+    .hooks[$event] = (((.hooks[$event] // []) | map(select(all(.hooks[]?; .command != $cmd)))) + [$entry]);
+  .disableRemoteControl = true
+  | .worktree.bgIsolation = "none"
+  | .permissions.deny = (((.permissions.deny // []) + [
+      "EnterWorktree",
+      "RemoteTrigger",
+      "mcp__ccd_session__move_to_cloud",
+      "mcp__ccd_session_mgmt__set_remote_control",
+      "Bash(git worktree add *)"
+    ]) | unique)
+  | add_hook("PreToolUse"; {matcher: $matcher, hooks: [{type: "command", command: $cmd}]})
+  | add_hook("WorktreeCreate"; {hooks: [{type: "command", command: $cmd}]})
+  | add_hook("SessionStart"; {hooks: [{type: "command", command: $cmd}]})
+' "$SETTINGS")
+printf '%s\n' "$UPDATED" > "$SETTINGS"
+echo -e "${GREEN}Updated${NC} $SETTINGS"
+
+# 3. CLAUDE.md
+touch "$CLAUDE_MD"
+if grep -qF "$RULE_MARKER" "$CLAUDE_MD"; then
+  echo "CLAUDE.md already has the local-only rule"
+else
+  cat >> "$CLAUDE_MD" <<EOF
+
+## Local-Only Work
+
+- **$RULE_MARKER.** Every session runs on this computer, in the main checkout (\`~/Documents/ws/{repo-name}\`) on the current branch, so no work is ever stranded on another machine or an unmerged branch.
+  - Do not use or suggest \`target: "cloud"\`, \`move_to_cloud\`, \`RemoteTrigger\`, \`/schedule\`, \`isolation: "remote"\`, \`claude --cloud\` or \`claude remote-control\`.
+  - When you start a local session with a brief, pass \`use_worktree: false\`. Leaving it out still creates a worktree if the current session has ever had one.
+  - \`~/.claude/hooks/block-worktrees-and-cloud.sh\` enforces this. If it blocks something, tell the user instead of looking for a way around it.
+EOF
+  echo -e "${GREEN}Added${NC} the local-only rule to $CLAUDE_MD"
+fi
+
+# 4. Report
+echo
+echo "App settings to check on this computer:"
+if [ -f "$APP_CONFIG" ]; then
+  if [ "$(jq -r '.preferences.epitaxyPrefs["cc-landing-worktree-enabled"] // false' "$APP_CONFIG")" = "true" ]; then
+    echo -e "  ${YELLOW}ACTION:${NC} turn off Worktree on the New Session screen"
+  else
+    echo "  OK: Worktree toggle on the New Session screen is off"
+  fi
+  PINNED=$(jq -r '(.preferences.remoteControlPinnedFolders // []) | join(", ")' "$APP_CONFIG")
+  if [ -n "$PINNED" ]; then
+    echo -e "  ${YELLOW}ACTION:${NC} turn off 'Use this computer from your phone and claude.ai' in Settings > Claude Code (folders listed: $PINNED)"
+  else
+    echo "  OK: no folders listed under 'Use this computer from your phone and claude.ai'"
+  fi
+else
+  echo "  Desktop app config not found; skipped"
+fi
+echo -e "  ${YELLOW}ACTION:${NC} in the Code tab, archive every project under Projects (cloud threads ignore these settings)"
+
+echo
+echo "Stranded work in $WS_DIR:"
+found=0
+for gitdir in "$WS_DIR"/*/.git; do
+  repo=$(dirname "$gitdir")
+  name=$(basename "$repo")
+  while IFS= read -r worktree; do
+    [ "$worktree" = "$repo" ] && continue
+    echo -e "  ${YELLOW}$name${NC}: worktree at $worktree"
+    found=1
+  done < <(git -C "$repo" worktree list --porcelain 2>/dev/null | sed -n 's/^worktree //p')
+  base=$(git -C "$repo" symbolic-ref --short HEAD 2>/dev/null || echo HEAD)
+  while IFS= read -r ref; do
+    [ -n "$ref" ] || continue
+    count=$(git -C "$repo" rev-list --count "$base..$ref" 2>/dev/null || echo 0)
+    if [ "$count" -gt 0 ]; then
+      echo -e "  ${YELLOW}$name${NC}: $ref has $count commit(s) not on $base"
+      found=1
+    fi
+  done < <(git -C "$repo" for-each-ref --format='%(refname:short)' 'refs/heads/claude/*' 'refs/remotes/*/claude/*' 2>/dev/null)
+done
+[ "$found" = 0 ] && echo "  None found"
+echo
+echo -e "${GREEN}Done.${NC} New sessions pick this up automatically."

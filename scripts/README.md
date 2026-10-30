@@ -100,6 +100,7 @@ All `bk*` scripts require `$BK_HOME` to be set and provide consistent colored ou
 
 **Environment Setup:**
 - `bk-install-mkdocs` - Install Miniconda + a `mkdocs` env with mkdocs-material
+- `bk-install-local-only` - Stop Claude Code using worktrees, cloud sessions and Remote Control on this computer
 
 **Image Processing:**
 - `bk-resize-images` - Compress images for web
@@ -148,6 +149,26 @@ bk-install-scripts
 - Links all executable `bk*` scripts
 - Reports total count and lists all installed links
 - Checks if `$HOME/.local/bin` is in PATH
+
+### bk-install-local-only
+
+Keeps Claude Code work on this computer, in the main checkout. Run it once on each computer; it is safe to run again.
+
+**Requirements:** `jq`
+
+**Usage:**
+```bash
+bk-install-local-only
+```
+
+**Features:**
+- Links `scripts/hooks/block-worktrees-and-cloud.sh` into `~/.claude/hooks`
+- Merges the hook, deny rules, `disableRemoteControl` and `worktree.bgIsolation` into `~/.claude/settings.json`, keeping a dated backup
+- Adds the local-only rule to `~/.claude/CLAUDE.md`
+- Reports the desktop app settings only you can change
+- Lists worktrees and `claude/*` branches with unmerged commits under `$BK_HOME/..`
+
+**What it cannot stop:** the desktop app's Worktree toggle acts before any hook runs, and cloud threads in a Project never read these settings. Turn off the toggle and archive your projects by hand.
 
 ### bk-install-skills
 
