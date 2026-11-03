@@ -16,7 +16,11 @@ priority order (see references/canvas-height-strategy.md for the full rationale)
                                   (last-resort fallback; the // comment is then
                                    inserted on line 2 of the .js so it is cached)
 
-Every iframe that shows the sim is then set to  CANVAS_HEIGHT + 2  (2px border):
+Every iframe that shows the sim is then set to  CANVAS_HEIGHT + BORDER, where
+BORDER is 2 x the iframe border width read from docs/css/*.css (the template's
+`border: solid 2px blue` gives +4, because MkDocs Material's border-box sizing
+draws the border inside the height). Override with --border.
+The iframe is set in:
   * the sim's own      docs/sims/<id>/index.md      (src="main.html" / "./main.html")
   * every page that embeds it, anywhere under docs/  (src=".../sims/<id>/main.html")
 
@@ -54,8 +58,34 @@ CHECK = "✔"
 ARROW = "→"
 
 # metadata.json field that stores CANVAS_HEIGHT (the content height, before the
-# +2 border). Keep this name stable — downstream agents/tools read it.
+# border allowance). Keep this name stable — downstream agents/tools read it.
 METADATA_HEIGHT_KEY = "canvasHeight"
+
+# iframe height = CANVAS_HEIGHT + BORDER_ALLOWANCE. MkDocs Material uses
+# box-sizing: border-box, so the iframe border is drawn INSIDE the height
+# attribute: a `border: solid 2px blue` rule eats 2px top + 2px bottom = 4px.
+# main() replaces this default with 2 x the width found in the site CSS.
+BORDER_ALLOWANCE = 4
+
+
+def border_allowance_from_css(docs_dir):
+    """2 x the iframe border width declared in docs/css/*.css, or None.
+
+    Matches the template rule `iframe { border: solid 2px blue; }` as well as
+    `border-width: 2px` and `border: none` / `border: 0`."""
+    rule_re = re.compile(r'(?:^|[\s,}])iframe\s*\{([^}]*)\}', re.IGNORECASE)
+    for css in sorted(glob.glob(os.path.join(docs_dir, "css", "*.css"))):
+        for body in rule_re.findall(_read(css)):
+            m = re.search(r'border(?:-width)?\s*:\s*([^;]*)', body, re.IGNORECASE)
+            if not m:
+                continue
+            value = m.group(1).strip().lower()
+            if value in ("none", "0"):
+                return 0
+            px = re.search(r'(\d+(?:\.\d+)?)px', value)
+            if px:
+                return int(round(2 * float(px.group(1))))
+    return None
 
 
 # ── Height detection ─────────────────────────────────────────────────
@@ -246,7 +276,7 @@ def sim_id_for_iframe(md_path, iframe_tag):
 
 
 def update_iframes_in_file(md_path, heights, dry_run):
-    """Rewrite every sim iframe in one markdown file to CANVAS_HEIGHT + 2.
+    """Rewrite every sim iframe in one markdown file to CANVAS_HEIGHT + border.
 
     heights: {sim_id: canvas_height}. Returns list of (sim_id, old, new)."""
     content = _read(md_path)
@@ -256,7 +286,7 @@ def update_iframes_in_file(md_path, heights, dry_run):
         sim = sim_id_for_iframe(md_path, m.group(0))
         if sim is None or sim not in heights:
             return m.group(0)
-        target = heights[sim] + 2
+        target = heights[sim] + BORDER_ALLOWANCE
         old = int(m.group(2))
         if old == target:
             return m.group(0)
@@ -303,7 +333,7 @@ def build_height_map(sims_dir, only_sim, dry_run, write_metadata, verbose):
             stats["metadata_written"] += 1
         if verbose:
             print(f"  {DIM}{sim_id}: CANVAS_HEIGHT={height} "
-                  f"(iframe={height + 2}) [{source}]{RESET}")
+                  f"(iframe={height + BORDER_ALLOWANCE}) [{source}]{RESET}")
 
     return heights, unresolved, stats
 
@@ -338,6 +368,10 @@ def main():
                          "structured store)")
     ap.add_argument("--verbose", action="store_true",
                     help="Show the resolved height/source for every sim")
+    ap.add_argument("--border", type=int, default=None,
+                    help="Pixels to add to CANVAS_HEIGHT for the iframe border "
+                         "(default: 2 x the iframe border width in docs/css/*.css, "
+                         "or 4 if no rule is found)")
     args = ap.parse_args()
 
     project_dir = find_project_root(args.project_dir)
@@ -351,6 +385,17 @@ def main():
         sys.exit(1)
 
     print(f"{BOLD}Project root:{RESET} {project_dir}")
+
+    global BORDER_ALLOWANCE
+    if args.border is not None:
+        BORDER_ALLOWANCE, border_src = args.border, "--border"
+    else:
+        css_allowance = border_allowance_from_css(docs_dir)
+        if css_allowance is not None:
+            BORDER_ALLOWANCE, border_src = css_allowance, "docs/css iframe rule"
+        else:
+            border_src = "default"
+    print(f"{BOLD}Border allowance:{RESET} +{BORDER_ALLOWANCE}px ({border_src})")
 
     heights, unresolved, stats = build_height_map(
         sims_dir, args.sim, args.dry_run, args.write_metadata, args.verbose

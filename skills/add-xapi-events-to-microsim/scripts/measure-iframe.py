@@ -8,15 +8,17 @@ main.html at each width with the metadata.json `xapi` block rewritten in flight
 statement log to overflow, and measures the document's content height.
 
     uv run --with playwright==1.58.0 python measure-iframe.py docs/sims/<name>
-    options: --widths 375,700,900   --json out.json   --margin 10
+    options: --widths 375,684,746,900   --json out.json   --margin 10
              --eval "JS"   (repeatable) run in the sim before measuring, to reach its TALLEST
                            state: a quiz mode, an open detail panel (e.g. --eval "sim.setMode('quiz')")
 
 It measures the state the page is in after load (plus any --eval). A sim whose height
 changes with its state must be measured in its tallest state, or the iframe clips there.
 
-The recommendation is the 700 px measurement (the book's content column) rounded up, with a
-warning when 375 px (phone) is much taller. A production sim should measure the same as
+The recommendation is the taller of the 684 px and 746 px measurements (the MkDocs Material
+content column in a 1440 px and a 1024 px window) rounded up, with a warning when 375 px
+(phone) is much taller. The iframe border is drawn inside the height (border-box), 2px top
+and 2px bottom, so CANVAS_HEIGHT is the recommended iframe height minus 4. A production sim should measure the same as
 before instrumenting; if it grew, the wiring added something visible.
 """
 
@@ -32,6 +34,10 @@ import sys
 import threading
 from pathlib import Path
 from typing import Any
+
+# MkDocs Material's border-box sizing draws the template's 2px iframe border inside the
+# height on top AND bottom, so the sim sees the iframe height minus 4.
+IFRAME_BORDER = 4
 
 FILL_LOG = """(n) => {
   const line = JSON.stringify({id: '00000000-0000-4000-8000-000000000000', verb: {id:
@@ -138,7 +144,7 @@ def canvas_height_source(sim: Path) -> tuple[str, int] | None:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("sim", type=Path)
-    ap.add_argument("--widths", default="375,700,900")
+    ap.add_argument("--widths", default="375,684,746,900")
     ap.add_argument("--margin", type=int, default=10, help="px added before rounding up to 10")
     ap.add_argument("--lines", type=int, default=60, help="log entries to add (fills any max-height)")
     ap.add_argument("--json", type=Path)
@@ -219,7 +225,9 @@ def main() -> int:
 
     t = {r["width"]: r["height"] for r in rows if r["teaching"]}
     pr = {r["width"]: r["height"] for r in rows if not r["teaching"]}
-    col = 700 if 700 in t else max(t)
+    # Size for the laptop column: whichever desktop width renders the sim taller.
+    desktop = [w for w in (684, 746) if w in t]
+    col = max(desktop, key=lambda w: t[w]) if desktop else max(t)
     rec = int(math.ceil((t[col] + a.margin) / 10.0) * 10)
     print()
     if not any(r["logs"] for r in rows if r["teaching"]):
@@ -230,7 +238,7 @@ def main() -> int:
               f"({int(math.ceil((t[375] + a.margin) / 10.0) * 10)}) only if the book's readers are mostly on phones.")
     pcol = pr.get(col, max(pr.values()))
     print(f"production sim: content {pcol} at {col} px" +
-          (f" vs iframe {current}: {'fits' if pcol <= current + 2 else 'CLIPPED — grow the iframe or find what the wiring added'}"
+          (f" vs iframe {current}: {'fits' if pcol <= current - IFRAME_BORDER else 'CLIPPED — grow the iframe or find what the wiring added'}"
            if current else ""))
     found = embeds(docs, sim)
     print("\nembedded by:" if found else "\nembedded by: (no iframe found)")
@@ -239,7 +247,7 @@ def main() -> int:
     src = canvas_height_source(sim)
     print(f"CANVAS_HEIGHT source: {src[0]} = {src[1]}" if src else
           "CANVAS_HEIGHT source: none found (sync-iframe-heights.py would compute one from the sketch)")
-    print(f"For a teaching sim: set CANVAS_HEIGHT to {rec - 2} in that source, then run\n"
+    print(f"For a teaching sim: set CANVAS_HEIGHT to {rec - IFRAME_BORDER} in that source, then run\n"
           f"  python3 ~/Documents/ws/ibook-skills/src/microsim-utils/sync-iframe-heights.py "
           f"--project-dir {book} --sim {sim.name}\n"
           "so EVERY embed above gets it, and a later sync cannot shrink it back.")

@@ -5,7 +5,8 @@ Own-page-only predecessor of `sync-iframe-heights.py` (which also updates chapte
 embeds and shares this same resolution order). Prefer `sync-iframe-heights.py`
 for full propagation; see `references/canvas-height-strategy.md`.
 
-Height detection (in priority order — CANVAS_HEIGHT, then iframe = it + 2px):
+Height detection (in priority order — CANVAS_HEIGHT, then iframe = it + 4px,
+the template's 2px border counted top and bottom):
   1. // CANVAS_HEIGHT: <int> comment in <sim>.js — primary for sims with a .js.
   2. "canvasHeight": <int> in metadata.json — the consistent place for sims with
      NO .js (Mermaid, vis-network, Chart.js, Leaflet, vis-timeline, custom HTML).
@@ -25,6 +26,10 @@ import re
 import glob
 import sys
 
+# MkDocs Material's border-box sizing draws the template's 2px iframe border
+# inside the height on top AND bottom, so the iframe needs 4px over the sim.
+IFRAME_BORDER = 4
+
 
 def detect_height(sim_dir, sim_name):
     """Detect the correct iframe height for a MicroSim by parsing its JS and HTML."""
@@ -35,14 +40,14 @@ def detect_height(sim_dir, sim_name):
             js_content = f.read()
 
     # PRIMARY: the universal `// CANVAS_HEIGHT: <int>` comment in the .js.
-    # The iframe height = CANVAS_HEIGHT + 2 (2px for the iframe border).
+    # The iframe height = CANVAS_HEIGHT + IFRAME_BORDER.
     canvas_height_match = re.search(
         r'^\s*//\s*CANVAS_HEIGHT\s*:\s*(\d+)\s*$',
         js_content,
         re.MULTILINE,
     )
     if canvas_height_match:
-        return int(canvas_height_match.group(1)) + 2, 'CANVAS_HEIGHT comment + 2px'
+        return int(canvas_height_match.group(1)) + IFRAME_BORDER, 'CANVAS_HEIGHT comment + border'
 
     # FALLBACK for sims with no .js comment: the structured metadata.json field.
     meta_path = os.path.join(sim_dir, 'metadata.json')
@@ -52,9 +57,9 @@ def detect_height(sim_dir, sim_name):
         except (ValueError, OSError):
             val = None
         if isinstance(val, int) and not isinstance(val, bool):
-            return val + 2, 'metadata.json canvasHeight + 2px'
+            return val + IFRAME_BORDER, 'metadata.json canvasHeight + border'
         if isinstance(val, str) and val.strip().isdigit():
-            return int(val.strip()) + 2, 'metadata.json canvasHeight + 2px'
+            return int(val.strip()) + IFRAME_BORDER, 'metadata.json canvasHeight + border'
 
     # Detect library type from main.html + read a back-compat HTML comment.
     main_html = os.path.join(sim_dir, 'main.html')
@@ -66,7 +71,7 @@ def detect_height(sim_dir, sim_name):
             r'<!--\s*CANVAS_HEIGHT\s*[:=]\s*(\d+)\s*-->', html, re.IGNORECASE
         )
         if html_comment:
-            return int(html_comment.group(1)) + 2, 'main.html CANVAS_HEIGHT + 2px'
+            return int(html_comment.group(1)) + IFRAME_BORDER, 'main.html CANVAS_HEIGHT + border'
         if 'vis-network' in html:
             is_vis = True
 
@@ -85,21 +90,21 @@ def detect_height(sim_dir, sim_name):
         # p5.js: look for createCanvas(width, height)
         canvas_match = re.search(r'createCanvas\s*\(\s*\w+\s*,\s*(\d+)', js_content)
         if canvas_match:
-            return int(canvas_match.group(1)) + 2, 'createCanvas height + 2px'
+            return int(canvas_match.group(1)) + IFRAME_BORDER, 'createCanvas height + border'
 
         # Named height variables
         h_var = re.search(
             r'(?:canvasHeight|drawHeight|cHeight)\s*=\s*(\d+)', js_content
         )
         if h_var:
-            return int(h_var.group(1)) + 2, 'named height var + 2px'
+            return int(h_var.group(1)) + IFRAME_BORDER, 'named height var + border'
 
         # Generic height variable declaration
         h_var2 = re.search(
             r'(?:let|const|var)\s+(?:h|height)\s*=\s*(\d+)', js_content
         )
         if h_var2:
-            return int(h_var2.group(1)) + 2, 'generic height var + 2px'
+            return int(h_var2.group(1)) + IFRAME_BORDER, 'generic height var + border'
 
         return None, 'could not detect height from JS'
 

@@ -611,7 +611,7 @@ python3 $UTILS/add-iframes-to-chapter.py \
 
 - Finds spec headers (`#### Diagram:`, `#### MicroSim:`, `#### Timeline:`, and the other words Step 1 accepts) that are missing iframe embeds
 - Inserts `<iframe>` tags before the `<details>` block with correct relative paths, followed by a `{ .md-button .md-button--primary }` fullscreen link (the same embed shape as the sim's own `index.md`)
-- `--fix-heights`: Parses `.js` files to detect `createCanvas()` height and sets iframe height to canvas height + 2px
+- `--fix-heights`: Parses `.js` files to detect `createCanvas()` height and sets iframe height to canvas height + 4px (the template's 2px border, top and bottom)
 - `--fix-paths`: Converts absolute paths (`/sims/...`) to relative (`../../sims/...`)
 - Fixes height typos (`500xp` → `500px`)
 

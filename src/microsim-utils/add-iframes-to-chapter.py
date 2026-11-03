@@ -54,6 +54,10 @@ SIM_IFRAME_RE = re.compile(
 # The region also ends at the next heading; see shared.spec_region_end.
 LOOKAHEAD_LINES = 40
 
+# MkDocs Material's border-box sizing draws the template's 2px iframe border
+# inside the height on top AND bottom, so the iframe needs 4px over the sim.
+IFRAME_BORDER = 4
+
 # Fix "500xp" typo pattern
 HEIGHT_TYPO_RE = re.compile(r'height=["\'](\d+)xp["\']', re.IGNORECASE)
 
@@ -179,7 +183,7 @@ def process_chapter(chapter_path, project_dir, dry_run=False,
             if fix_heights:
                 canvas_h = _read_canvas_height(sim_path)
                 if canvas_h:
-                    height = f"{canvas_h + 2}px"
+                    height = f"{canvas_h + IFRAME_BORDER}px"
 
             # Same shape as the embed on a sim's own index.md: iframe attributes in the order
             # src, height, width, scrolling, and a Material button for the fullscreen link.
@@ -215,7 +219,7 @@ def process_chapter(chapter_path, project_dir, dry_run=False,
                     sim_path = os.path.join(sims_dir, sim_id_found)
                     canvas_h = _read_canvas_height(sim_path)
                     if canvas_h:
-                        correct_h = f"{canvas_h + 2}px"
+                        correct_h = f"{canvas_h + IFRAME_BORDER}px"
                         new_lines[j] = re.sub(
                             r'height=["\'][^"\']*["\']',
                             f'height="{correct_h}"',

@@ -285,10 +285,11 @@ uv run --with playwright==1.58.0 python $SKILL_DIR/scripts/measure-iframe.py doc
 ```
 
 A teaching sim gains a panel, so its iframe must grow. The script measures a **full**
-log at 375, 700 and 900 px and recommends a height from the **700 px** measurement.
+log at 375, 684, 746 and 900 px and recommends a height from the taller of the **684 px
+and 746 px** measurements (the MkDocs content column in a 1440 px and a 1024 px window).
 
 **Size for the laptop column, not the phone.** On the published site the content column
-is 690–760 px on laptops and tablets. About 90% of the target students use laptops, and
+is 684–746 px on laptops and tablets. About 90% of the target students use laptops, and
 phones are often banned in US junior-high and high schools. The ~20% mobile traffic in
 the logs is mostly browsing the text, not using the sims (Dan, 2026-09-26). A sim that is
 taller at 375 px may scroll or clip on a phone; that's accepted. Mention it in the report,
@@ -300,11 +301,12 @@ The script also lists **every iframe in the book that embeds this sim**, not jus
 in `index.md`. Chapters embed sims too, and the teaching panel appears wherever the sim
 is shown, because the mode comes from the sim's own `metadata.json`. It also reports the
 sim's `CANVAS_HEIGHT` source. `microsim-utils`' `sync-iframe-heights.py` sets every
-embedding iframe to `CANVAS_HEIGHT + 2`. So if you edit iframe heights by hand, its next
+embedding iframe to `CANVAS_HEIGHT + 4` (the template's 2px iframe border is drawn inside
+the height, top and bottom). So if you edit iframe heights by hand, its next
 run silently shrinks them back. Instead:
 
 1. Set the sim's `CANVAS_HEIGHT` (its `// CANVAS_HEIGHT:` comment, or `canvasHeight` in
-   `metadata.json`, whichever the script reports) to the recommended height − 2.
+   `metadata.json`, whichever the script reports) to the recommended height − 4.
 2. Run `python3 ~/Documents/ws/ibook-skills/src/microsim-utils/sync-iframe-heights.py
    --project-dir . --sim <sim-name>` to update every embed.
 
@@ -397,6 +399,6 @@ Tell the user, briefly:
 | `scripts/find-concepts.py` | Candidate learning-graph concepts for a sim or search terms, with namespaced ids |
 | `scripts/install-runtime.py` | Check or install the runtime and `lrs-config.js` in a book |
 | `scripts/check-xapi.py` | Headless contract check of Full, Compact, production and `?xapi=teaching` modes |
-| `scripts/measure-iframe.py` | Iframe height with a full log at 375/700/900 px, every embed, the `CANVAS_HEIGHT` source |
+| `scripts/measure-iframe.py` | Iframe height with a full log at 375/684/746/900 px, every embed, the `CANVAS_HEIGHT` source |
 | `scripts/sync-status.py` | `status: instrumented` for each instrumented sim, plus the signal-icon CSS and tooltip if missing |
 | `scripts/check-no-runtime.py` | Each sim still renders and runs, error-free, with the xAPI runtime blocked (the p5.js-editor case) |

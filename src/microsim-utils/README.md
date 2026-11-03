@@ -15,7 +15,7 @@ These utilities eliminate repetitive work when batch-generating MicroSims:
 | `update-mkdocs-nav.py` | Regenerate MicroSims nav section | ~100K |
 | `generate-sims-index.py` | Build the `docs/sims/index.md` thumbnail gallery | ~40K |
 | `add-iframes-to-chapter.py` | Insert missing iframes + fix heights/paths | ~50K |
-| `sync-iframe-heights.py` | Set every sim iframe to `CANVAS_HEIGHT + 2` (own page + all embeds) | ~40K |
+| `sync-iframe-heights.py` | Set every sim iframe to `CANVAS_HEIGHT + border` (+4 for the template's 2px border; own page + all embeds) | ~40K |
 | `validate-sims.py` | 100-point quality rubric scoring | ~50K |
 
 ## Workflow
@@ -203,7 +203,7 @@ python3 add-iframes-to-chapter.py --all --project-dir /path/to/project --fix-hei
 
 ### sync-iframe-heights.py
 
-Set every iframe that shows a sim to `CANVAS_HEIGHT + 2` — the sim's own
+Set every iframe that shows a sim to `CANVAS_HEIGHT + border` — the sim's own
 `docs/sims/<id>/index.md` **and** every page that embeds it. `CANVAS_HEIGHT`
 is resolved per sim from the first source that has it:
 
@@ -213,7 +213,15 @@ is resolved per sim from the first source that has it:
    Plotly, custom HTML)
 3. `<!-- CANVAS_HEIGHT: <n> -->` in `main.html` (back-compat)
 4. computed `drawHeight + controlHeight` (+ `graphHeight`) from `<id>.js`,
-   then the `// CANVAS_HEIGHT` comment is inserted on line 2
+   then the `// CANVAS_HEIGHT` comment is inserted on line 2. This is wrong for
+   sims that size themselves at runtime; measure those at the 684px and 746px
+   MkDocs content widths instead.
+
+The border allowance is 2 × the iframe border width in `docs/css/*.css`.
+MkDocs Material's `border-box` sizing draws the template's
+`iframe { border: solid 2px blue; }` inside the height, top and bottom, so it
+is **+4**, not +2. The old +2 hid the bottom 2px of every sim. Override with
+`--border`.
 
 The embed scan walks every `*.md` under `docs/` and matches iframes by the
 `sims/<id>/main.html` path, so it is layout-agnostic — it handles the standard
