@@ -73,24 +73,32 @@ predator-prey               |           697 |            720 | FAIL   |         
 greenhouse-effect           |           500 |            498 | PASS   |              500
 ```
 
-- **PASS**: All controls fit within the iframe height (with 5px tolerance)
-- **FAIL**: One or more controls extend below the iframe boundary
-- **Suggested Height**: The actual content height rounded up to the nearest
-  10px, plus a 10px safety margin. If the sim's JS file contains a
-  `// CANVAS_HEIGHT = N` comment, that declared height is used instead of the
-  measured content height (responsive sims can measure taller at the test
-  viewport width than they actually render in MkDocs).
+- **PASS**: All controls fit inside the *visible* iframe area (height minus
+  the 4px border; 1px rounding tolerance)
+- **FAIL**: One or more controls extend below the visible area. Even a 2–4px
+  clip counts, because it cuts the bottom border off a button row.
+- **SLACK**: Everything fits, but more than 30px of empty iframe sits below the
+  content. Shrink the iframe to the suggested height.
+- **Suggested Height**: measured content height + 4 (the border). Exact, not
+  rounded, so it matches what `sync-iframe-heights.py` writes.
+- **`declared CANVAS_HEIGHT N != measured M`**: the `.js` comment is stale.
+  Update the comment to the measured value and re-run the sync.
 
-## Responsive Sims and CANVAS_HEIGHT
+## How the Test Matches the Real Page
 
-Some p5.js sims dynamically resize their canvas based on viewport width. The
-test viewport (700px) may not exactly match the MkDocs content column, causing
-measured heights to differ from the actual embedded height. When a sim declares
-`// CANVAS_HEIGHT = N` in its JS file, the tester trusts that value as
-authoritative. **Always sanity-check suggestions for responsive sims** — if the
-suggested height is dramatically larger than the current iframe height, the sim
-likely has dynamic sizing and needs a `CANVAS_HEIGHT` declaration rather than a
-blind height increase.
+- **Width:** the viewport is **684px**, the MkDocs Material content column in a
+  1440px window with both sidebars. Pass `--width 746` to check a 1024px
+  window too. Width-dependent sims (text wrap, wrapping button rows, Chart.js
+  aspect ratio, p5 sims that size themselves) change height with width.
+- **Height:** the viewport is the iframe height **minus 4px**. Material's
+  `border-box` sizing draws the template's 2px iframe border inside the height
+  on both top and bottom. Pass `--border 0` for a site with no iframe border.
+- **Content:** measured over all of `<body>`, because p5's `createButton` and
+  `createSlider` add controls to `<body>`, not to `<main>`.
+- **Empty space inside the canvas** (a sim that sizes itself to its tallest
+  view) can't be seen geometrically. The canvas fills the iframe either way.
+  Use [layout-reviewer.md](layout-reviewer.md) and the "size to the common
+  view" rule in [canvas-height-strategy.md](canvas-height-strategy.md).
 
 ## Fixing Failures
 

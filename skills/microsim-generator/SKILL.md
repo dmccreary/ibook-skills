@@ -560,8 +560,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 1. **The comment MUST appear within the first 10 lines** of the .js file so parsing tools can find it quickly.
 2. **The value MUST be an integer** (no `px` suffix, no expressions).
-3. **The iframe height = CANVAS_HEIGHT + 2** (2px accounts for the iframe border). The `sync-iframe-heights.py` utility adds this automatically.
-4. **For p5.js sims**, the CANVAS_HEIGHT value must equal `drawHeight + controlHeight` (plus `graphHeight` if present). Keep the existing named variables — the comment is a redundant-but-authoritative declaration for tooling.
+3. **The iframe height = CANVAS_HEIGHT + 4** for the template CSS. The `iframe { border: solid 2px blue; }` rule is drawn inside the height under Material's `border-box` sizing, on both top and bottom. The `sync-iframe-heights.py` utility adds this automatically by reading the border width from `docs/css/*.css`.
+4. **For p5.js sims**, the CANVAS_HEIGHT value must equal `drawHeight + controlHeight` (plus `graphHeight` if present). Keep the existing named variables — the comment is a redundant-but-authoritative declaration for tooling. **If the sim sizes itself at runtime** (measures text to set `drawHeight`, or lets control rows wrap and grow `controlHeight`), the initial values are not the rendered height. Measure the rendered height at the 684px and 746px MkDocs content widths and record the larger one. Size the canvas for the common view, not a rare tall one such as an end summary (see microsim-utils `references/canvas-height-strategy.md`).
 5. **When updating an existing sim**, always update the CANVAS_HEIGHT comment if you change any height-related values.
 6. **If unsure about the height**, render the sim in a browser, measure the total content height, and use that value. Err on the side of being slightly too tall (extra whitespace is better than clipped controls).
 
@@ -701,7 +701,7 @@ python3 $UTILS/sync-iframe-heights.py \
 
 - Parses each sim's `.js` file to find the `// CANVAS_HEIGHT: <value>` comment (primary source, see Step 4.4)
 - Falls back, in order, to `"canvasHeight"` in `metadata.json` (the place for sims with no `.js`), a `<!-- CANVAS_HEIGHT: -->` comment in `main.html`, then computed `drawHeight + controlHeight` from the `.js`
-- Sets the iframe height to `CANVAS_HEIGHT + 2` (2px for border)
+- Sets the iframe height to `CANVAS_HEIGHT + border` (+4 for the template's 2px iframe border, drawn inside the height on top and bottom)
 - Updates the `<iframe>` height attribute in each sim's `index.md` **and** in every page under `docs/` that embeds the sim — chapters, teacher guides, poster pages
 - Skips sims that are already correct
 
@@ -1002,7 +1002,7 @@ This enables counting and discovery of MicroSims across GitHub using code search
 - Embedded via iframe in MkDocs pages
 - Width-responsive design
 - Non-scrolling iframe container
-- Standard height: `CANVAS_HEIGHT + 2px` (where CANVAS_HEIGHT is declared in a `// CANVAS_HEIGHT: <value>` comment at the top of the .js file — see Step 4.4)
+- Standard height: `CANVAS_HEIGHT + 4px` for the template's 2px iframe border (where CANVAS_HEIGHT is declared in a `// CANVAS_HEIGHT: <value>` comment at the top of the .js file — see Step 4.4)
 - Prevent scroll hijacking:
   - Keep chapter iframes non-scrolling: `scrolling="no"`
   - Do not consume page wheel-scroll by default inside sims (for example, set Leaflet `scrollWheelZoom: false` unless explicitly requested)

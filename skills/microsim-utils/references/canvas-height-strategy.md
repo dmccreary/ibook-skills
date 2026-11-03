@@ -16,12 +16,47 @@ height of the sim (drawing area + controls + any legend/graph panel), in
 pixels. From it, one rule sets every iframe:
 
 ```
-iframe height = CANVAS_HEIGHT + 2     # +2px for the iframe border
+iframe height = CANVAS_HEIGHT + BORDER     # BORDER = 2 x the iframe border width
 ```
 
-That `+ 2` is applied identically to the sim's own `docs/sims/<id>/index.md`
+**The border counts twice.** MkDocs Material sets `box-sizing: border-box`, so
+the iframe border is drawn *inside* the `height` attribute — top and bottom.
+The book template's `docs/css/extra.css` rule `iframe { border: solid 2px blue; }`
+therefore eats **4px**, not 2. An iframe with `height="664"` shows only 660px of
+the sim. The old `+ 2` rule left the bottom 2px of every sim hidden and cut off
+controls that sat flush with the canvas edge. `sync-iframe-heights.py` now
+reads the border width from `docs/css/*.css` (default +4 when no rule is
+found; override with `--border`).
+
+`BORDER` is applied identically to the sim's own `docs/sims/<id>/index.md`
 and to every chapter/guide page that embeds the sim, so a sim is never a
 different height in two places.
+
+## Measure CANVAS_HEIGHT at the real content width
+
+The content column of a MkDocs Material page is **684px** in a 1440px window
+with both sidebars showing, and **746px** in a 1024px window (the right-hand
+table of contents disappears, so the column gets wider). Any sim whose layout
+depends on width must be measured at these widths. That includes text
+wrapping, buttons that wrap to a second row, Chart.js aspect ratios, and p5
+sims that compute `drawHeight` at runtime. Record the **larger** of the two
+heights. Never use a guessed width such as 700 or the bare
+`drawHeight + controlHeight` initial values.
+
+- **Self-sizing sims are measured, not computed.** If the `.js` sets its height
+  at runtime (a `fitDrawHeight()` that measures text, controls that wrap and
+  grow `controlHeight`), the initial `let drawHeight = …` values say nothing
+  about the rendered height. Fallback #4 below gets these wrong. Load the sim
+  at 684px and 746px, take the bottom of the lowest visible element (canvas,
+  controls, legend), and write that number to `// CANVAS_HEIGHT`.
+- **Size to the common view, not the rarest one.** A sim that sizes its canvas
+  to the tallest of several views (for example, an end-of-activity summary)
+  shows that empty space on every other view. Make the tall view compact:
+  two-column lists, drop text that repeats the diagram, or reuse the panel the
+  other views use. Don't let one rare screen set the height for all of them.
+- After changing a self-sizing sim, re-measure and re-sync; the comment is a
+  cache of a measurement and goes stale silently. `test-iframe-heights.py`
+  reports `declared CANVAS_HEIGHT … != measured …` when it does.
 
 ## Where CANVAS_HEIGHT is stored (resolution order)
 
@@ -34,7 +69,7 @@ source that has it, in this priority order:
 | 1 | `// CANVAS_HEIGHT: <n>` comment in the first ~15 lines of `<id>.js` | Any sim that ships a `.js` (p5.js, and JS-driven vis/chart/etc.) | **Primary.** Lives next to the code that determines the height. |
 | 2 | `"canvasHeight": <n>` in `<id>/metadata.json` | Sims with **no `.js`** (pure Mermaid / vis-network / Chart.js / Leaflet / vis-timeline / Plotly / custom HTML) | **The consistent structured place.** Every sim already has a `metadata.json`. This is the answer to "where does a no-JS sim store its height." |
 | 3 | `<!-- CANVAS_HEIGHT: <n> -->` comment in `main.html` | Legacy / back-compat | Some projects put the comment in the HTML host. Still read so existing sims keep working; prefer #1 or #2 going forward. |
-| 4 | computed `drawHeight + controlHeight (+ graphHeight)` from `<id>.js` | Last resort | p5 sims that forgot the comment. When used, the `// CANVAS_HEIGHT` comment is **written back** to line 2 of the `.js` so it is cached. |
+| 4 | computed `drawHeight + controlHeight (+ graphHeight)` from `<id>.js` | Last resort | p5 sims that forgot the comment. When used, the `// CANVAS_HEIGHT` comment is **written back** to line 2 of the `.js` so it is cached. **Wrong for self-sizing sims**: measure those instead (see above). |
 
 If none of these yields a height, the sim is reported as unresolved and its
 iframes are left untouched (this is also how non-sim directories like
@@ -66,7 +101,7 @@ their height only in `main.html`, run the sync script once with
 # Report what would change (nothing is written)
 python3 scripts/sync-iframe-heights.py --project-dir /path/to/project --dry-run --verbose
 
-# Apply: rewrite every sim iframe to CANVAS_HEIGHT + 2
+# Apply: rewrite every sim iframe to CANVAS_HEIGHT + BORDER (+4 for the template CSS)
 python3 scripts/sync-iframe-heights.py --project-dir /path/to/project
 
 # Also copy each resolved height into metadata.json canvasHeight (migration)

@@ -43,7 +43,7 @@ Match the user's request to the appropriate utility guide:
 | index page, microsim list, grid, directory, catalog, update the microsim listings, update the list of microsims, create a grid view, generate a listing | `references/index-generator.md` | Generate index page with grid cards |
 | TODO, todo json, extract specs, diagram specs, unimplemented, create microsim todo, todo files, extract diagrams, unimplemented microsims | `scripts/create-microsim-todo-json-files.py` | Extract unimplemented diagram specs into TODO JSON files |
 | scaffold microsims, scaffold from todo, scaffold sims, create microsim stubs, generate microsim scaffolding, stub out microsims, create scaffold files, generate scaffold from json, microsim stubs from todo | `scripts/scaffold-microsims-from-todo.py` | Generate `main.html`, `index.md`, and `metadata.json` stub files for each TODO JSON spec that does not yet have an implementation |
-| fix iframe heights, sync iframe heights, correct iframe heights, iframe height, canvas height, sync heights, update iframe heights | `scripts/sync-iframe-heights.py` | Set every sim iframe to CANVAS_HEIGHT + 2, resolving CANVAS_HEIGHT from the .js comment / metadata.json / main.html / computed vars, across the sim's own index.md and all embeds |
+| fix iframe heights, sync iframe heights, correct iframe heights, iframe height, canvas height, sync heights, update iframe heights | `scripts/sync-iframe-heights.py` | Set every sim iframe to CANVAS_HEIGHT + border (+4 for the template's 2px iframe border), resolving CANVAS_HEIGHT from the .js comment / metadata.json / main.html / computed vars, across the sim's own index.md and all embeds |
 | canvas height strategy, where is the height stored, height convention, how do iframe heights work, store height for mermaid/vis-network, metadata canvasHeight, no js height | `references/canvas-height-strategy.md` | The build-time height convention: resolution order, per-library storage, metadata.json fallback, and downstream hand-off |
 | iframe auto height, iframe auto resize, iframe postMessage, runtime iframe resize, microsim auto resize, auto-size iframe, iframe self-resize | `references/iframe-auto-height.md` | Runtime postMessage protocol so embedded MicroSims report their own height to the parent page |
 | test iframe, controls clipped, controls cut off, are controls visible, test iframe heights, verify controls fit, check if sims fit, iframe visibility | `references/iframe-tester.md` (runs `scripts/test-iframe-heights.py`) | Playwright check that every interactive control is fully visible inside the iframe at its declared height |
@@ -93,7 +93,7 @@ Three utilities touch iframe height — they are complementary, not redundant:
 
 | Utility | Question it answers | Tool |
 |---------|--------------------|------|
-| `scripts/sync-iframe-heights.py` | "Do all iframes use the sim's `CANVAS_HEIGHT` + 2?" (build-time) | Python |
+| `scripts/sync-iframe-heights.py` | "Do all iframes use the sim's `CANVAS_HEIGHT` + border?" (build-time) | Python |
 | `references/canvas-height-strategy.md` | "Where is `CANVAS_HEIGHT` stored for each library type, and how does it flow?" (convention) | Doc |
 | `references/iframe-tester.md` | "Do the controls actually fit at that height?" (geometric) | Playwright |
 | `references/layout-reviewer.md` | "Does the rendering *inside* the canvas look right?" (visual) | Claude Vision |
@@ -223,7 +223,7 @@ Each guide contains:
 
 ### sync-iframe-heights.py
 
-**Purpose:** Set every iframe that shows a sim to `CANVAS_HEIGHT + 2`, using
+**Purpose:** Set every iframe that shows a sim to `CANVAS_HEIGHT + border`, using
 each sim's resolved `CANVAS_HEIGHT` as the single source of truth. See
 [`references/canvas-height-strategy.md`](references/canvas-height-strategy.md)
 for the full convention (resolution order, per-library storage, downstream
@@ -236,8 +236,11 @@ hand-off).
   1. `// CANVAS_HEIGHT: <int>` in the first ~15 lines of `<id>.js` (primary)
   2. `"canvasHeight": <int>` in `metadata.json` (the consistent place for sims with **no `.js`** — Mermaid, vis-network, Chart.js, Leaflet, vis-timeline, Plotly, custom HTML)
   3. `<!-- CANVAS_HEIGHT: <int> -->` in `main.html` (back-compat)
-  4. computed `drawHeight + controlHeight` (+ `graphHeight`) from `<id>.js`, then **inserts** the `// CANVAS_HEIGHT` comment on line 2
-- Sets iframe height = `CANVAS_HEIGHT + 2` (2px for iframe border) in:
+  4. computed `drawHeight + controlHeight` (+ `graphHeight`) from `<id>.js`, then **inserts** the `// CANVAS_HEIGHT` comment on line 2. This is wrong for sims that size themselves at runtime. Measure those at the 684px and 746px content widths instead (see `canvas-height-strategy.md`).
+- Sets iframe height = `CANVAS_HEIGHT + border`, where border = 2 × the iframe
+  border width in `docs/css/*.css`. The template's `border: solid 2px blue`
+  gives **+4**, because Material's `border-box` sizing draws the border inside
+  the height on top and bottom. Override with `--border`. Applied in:
   - The sim's own `docs/sims/<id>/index.md`
   - **Every** page under `docs/` that embeds the sim, matched by the `sims/<id>/main.html` path. Layout-agnostic: handles the standard `docs/chapters/<chapter>/index.md` **and** the nested `docs/bands/<band>/chapters/<chapter>/index.md` used only by the health-education textbook, plus teacher guides. Poster embeds and the learning-graph viewer are never touched.
 - Reports all changes with colored output
