@@ -78,7 +78,7 @@ Each edge is a causal link between two nodes.
 - **description** — shown in the details panel.
 - **strength** — optional: `"weak"`, `"moderate"`, `"strong"`. Currently informational only.
 
-Optional fields: `delay: { present: true, duration: "weeks", description: "..." }`, `label` (overrides the polarity symbol).
+Optional fields: `delay: { present: true, duration: "weeks", description: "..." }`, `label` (overrides the polarity symbol), `curve: { type: "curvedCW" | "curvedCCW" | "straight", roundness: 0.15 }` (per-edge curve, written by the `?edit=true` curve tools; omit it to use the renderer's default; see [cld-edit-mode.md](cld-edit-mode.md)).
 
 ## loops
 

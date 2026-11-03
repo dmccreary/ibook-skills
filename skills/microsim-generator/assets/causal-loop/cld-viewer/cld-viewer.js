@@ -647,6 +647,7 @@ function wireUpControls() {
 // this gets all the URL parameters
 // file is the name of the file to load without the .json suffix
 // menu=true will show the menus (menus are hidden by default for iframe embedding)
+// edit=true shows the same menus, including Save Positions and Copy Positions
 function getURLParameter(name) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
@@ -680,8 +681,10 @@ async function loadFileFromURL() {
 
 function checkMenuParameter() {
     const menu = getURLParameter('menu');
-    // Default to false - menus hidden unless explicitly set to true
-    if (menu !== 'true') {
+    // Default to false - menus hidden unless explicitly set to true.
+    // edit=true also shows them, so the Save/Copy Positions buttons are
+    // reachable with the same suffix every CLD in the skill supports.
+    if (menu !== 'true' && getURLParameter('edit') !== 'true') {
         document.body.classList.add('menu-hidden');
     }
 }

@@ -81,6 +81,8 @@ Right after the inline div, give a button that opens the same CLD in the iframe-
 
 Use `.md-button .md-button--primary` only on the final full-system diagram's button to give it visual weight.
 
+For the author, the same viewer opens in edit mode with `?file=<id>-cld&edit=true`. Give the author that URL in your report rather than putting it in the article, and see [cld-edit-mode.md](cld-edit-mode.md).
+
 ## Status table
 
 Place this after all individual loops, before "Putting It All Together":

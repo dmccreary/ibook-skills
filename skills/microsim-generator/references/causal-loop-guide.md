@@ -19,6 +19,8 @@ When invoked on a topic (say, "make me a CLD article about supply chain bullwhip
 
 Every diagram is a live vis-network instance the reader can drag, zoom, and click to inspect. Not a static image.
 
+**Every CLD also supports an `?edit=true` URL suffix** that lets the author reposition every node and every R/B marker, reshape edge curves, and export the updated JSON. Generated coordinates are a first draft, and the author always finishes the layout by hand. See [cld-edit-mode.md](cld-edit-mode.md).
+
 ## When to use this guide
 
 Trigger on requests for any of:
@@ -30,6 +32,8 @@ Trigger on requests for any of:
 - A topic that has one or more reinforcing loops competing with balancing ones (AI race, virality, addiction, supply chain bullwhip, market dynamics, climate, organizational dysfunction)
 
 If the user just wants a single quick diagram — not an article — generate just one CLD JSON and embed it inline; skip the article structure.
+
+If the user wants a single CLD as a **standalone MicroSim** (its own `docs/sims/<sim-id>/` directory, embedded in a chapter by iframe), keep the data in `docs/sims/<sim-id>/<id>-cld.json`, fetch it from the sim's `.js`, and build in the full edit mode from [cld-edit-mode.md](cld-edit-mode.md). The reference implementation is `macos-screen-grab/docs/sims/feature-count-causal-loop/`.
 
 ## High-level workflow
 
@@ -48,6 +52,8 @@ If the user just wants a single quick diagram — not an article — generate ju
 5. **Write the article.** Follow [cld-article-structure.md](cld-article-structure.md) — frontmatter, lead, anchor example, R-loops, B-loops, status table, full system, leverage point, signals, bottom line. Required `<style>` and `<script src="../cld-inline.js">` block at the bottom.
 
 6. **Update `mkdocs.yml`.** Add a nav entry for the new article. If `cld-viewer/index.md` doesn't exist yet, add it under MicroSims.
+
+6b. **Check edit mode.** Open each CLD with `?edit=true` (for article diagrams, `cld-viewer/main.html?file=<id>-cld&edit=true`). Confirm that nodes and R/B markers drag, that the exported JSON carries the new positions, and, for a standalone sim, that the diagram is locked without the suffix. Follow the checklist in [cld-edit-mode.md](cld-edit-mode.md).
 
 7. **Read [cld-pitfalls.md](cld-pitfalls.md) before changing anything in `cld-inline.js`, `cld-viewer.js`, or the rendering setup.** Nine specific footguns are documented — they each cost real debugging hours to find. The most important one: never use one iframe per inline diagram; both Chrome and Firefox silently fail to render past the 5th–6th iframe on a single page, and there is no client-side workaround.
 
@@ -84,6 +90,7 @@ Loaded as needed, in roughly this order:
 - **[cld-layout-templates.md](cld-layout-templates.md)** — coordinate templates for 3-, 4-, 5-node loops and for hub-and-spoke. Read when placing nodes.
 - **[cld-article-structure.md](cld-article-structure.md)** — section-by-section template for the article markdown, including the required `<style>` + `<script>` boilerplate. Read when writing the article.
 - **[cld-pitfalls.md](cld-pitfalls.md)** — nine documented footguns with symptoms, root causes, and solutions. Read before modifying any rendering code or attempting an iframe-based design.
+- **[cld-edit-mode.md](cld-edit-mode.md)** — the required `?edit=true` layout editor: requirements checklist, code patterns (drag lock, curve tools, export, layout-only draft autosave), and gotchas. Read before writing any CLD's `.js`.
 
 ## Default loop count
 
@@ -109,9 +116,11 @@ That's 8–10 diagrams total, matching the reference Winner-Takes-All article. I
 - **Do not soften the `border: 2px solid blue`** on iframes or `.cld-inline` divs. It's the project-wide MicroSim standard signaling interactive content. See [cld-pitfalls.md](cld-pitfalls.md) #8.
 - **Do not modify the global `iframe` CSS rule** in `extra.css` to "look nicer." Same reason.
 - **Do not skip the `<script src="../cld-inline.js">` tag** at the bottom of the article. Without it, every `<div class="cld-inline">` is an empty bordered box.
+- **Do not ship a CLD without `?edit=true` support**, and do not let learners drag nodes in a standalone CLD MicroSim. Lock with `dragNodes: EDIT`. See [cld-edit-mode.md](cld-edit-mode.md).
+- **Do not hard-code the nodes and edges in the `.js`** of a standalone CLD. Keep them in `<id>-cld.json` so the edit-mode export is a drop-in replacement for the file.
 
 ## Confirming with the user
 
 After you've drafted the loop list (step 1) but *before* generating files, show the user the proposed loop set with one-line descriptions. They almost always have an opinion on which loops to include and what to call them, and it's much cheaper to revise the list than to revise 8 JSON files.
 
-After generating, tell the user the file paths, what `mkdocs.yml` changes you made, and remind them they can use the cld-viewer's "Save Positions" button to drag nodes into nicer positions and download an updated JSON.
+After generating, tell the user the file paths and what `mkdocs.yml` changes you made, and give them the edit URL with the repo name in the path, for example `http://127.0.0.1:8000/<repo-name>/sims/<sim-id>/main.html?edit=true`, or `.../sims/cld-viewer/main.html?file=<id>-cld&edit=true` for article diagrams. Remind them that in edit mode they can drag the nodes and R/B markers, reshape the arrows, and copy or download the updated JSON to replace the data file.

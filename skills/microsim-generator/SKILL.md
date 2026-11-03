@@ -2,15 +2,26 @@
 name: microsim-generator
 description: Creates interactive educational MicroSims, routing to the best-matched generator - p5.js, Chart.js, Plotly, Mermaid, vis-network, timelines, maps, Venn, causal-loop/feedback-loop diagrams (CLD), concept-classifier sorting quizzes, infographic overlays with callout labels, Docker Python labs (runnable code blocks), and fact-verified statistics posters (every numeric claim checked against a cited source before rendering). Generates complete MicroSim packages with HTML, JavaScript, CSS, documentation, and metadata.
 metadata:
-  ibook.version: "1.0.4"
+  ibook.version: "1.0.5"
   ibook.preferred-model: "opus"
 ---
 
 # MicroSim Generator
 
-**Version:** 1.0.4
+**Version:** 1.0.5
 
 ### Changelog
+
+- **v1.0.5** — Every causal loop diagram must now support an `?edit=true` URL suffix,
+  so the author can drag nodes and R/B markers, reshape edge curves, and export the
+  updated CLD JSON. Generated coordinates are only a first draft. The new
+  `references/cld-edit-mode.md` gives the requirements checklist, the code patterns,
+  and the gotchas found while building the reference sim
+  (`macos-screen-grab/docs/sims/feature-count-causal-loop/`). Without `edit=true`,
+  learners cannot drag the nodes. Edit-mode drafts are autosaved and restore only the
+  layout, so they never hide later text edits. The causal-loop guide, schema (new
+  `edges[].curve`), layout templates, and article structure now point to it, and the
+  bundled `cld-viewer` treats `edit=true` like `menu=true`.
 
 - **v1.0.4** — The p5 guide now has a "p5.js 2.x Notes" section listing the 1.x patterns
   that break under 2.3.4 and their replacements, each checked in headless Chromium:

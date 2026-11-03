@@ -125,4 +125,6 @@ These are starting points, not laws. Real diagrams often need adjustments:
 - Two loops sharing a node (e.g. R3 and B1 both touching `compute_scarcity`) may want that shared node placed on the boundary between their sectors.
 - For more than 8 loops, consider splitting into two diagrams rather than crowding one.
 
-The cld-viewer's **Save Positions** button is your friend: open the diagram in `?menu=true` mode, drag nodes by hand to a layout you like, click Save Positions, and the downloaded JSON has your hand-placed coordinates frozen in. Use that to iterate fast.
+Edit mode is your friend. Open any CLD with `?edit=true` (for the bundled cld-viewer, `main.html?file=<id>-cld&edit=true`, which shows its Save Positions button). Drag the nodes and R/B markers into a layout you like and save, and the exported JSON has your hand-placed coordinates frozen in. Use that to iterate fast. See [cld-edit-mode.md](cld-edit-mode.md).
+
+Size the layout to the iframe it will be embedded in. A hub-and-spoke CLD fitted into a ~750px iframe should stay within about ±400 world units horizontally and ±300 vertically. A layout twice that wide renders 16px labels at about 8px.
