@@ -1,17 +1,14 @@
 {
   "title": "CSV File Format Example with Validation",
   "creator": "Dan McCreary",
-  "subject": "High School Geometry",
+  "subject": "Agent Skills for Intelligent Textbooks",
   "description": "Interactive MicroSim for csv file format example with validation",
   "date": "2026-02-14",
   "educational": {
     "gradeLevel": [
-      "9",
-      "10",
-      "11",
-      "12"
+      "Adult"
     ],
-    "subjectArea": "Mathematics",
+    "subjectArea": "Computer Science",
     "topic": "CSV File Format Example with Validation",
     "learningObjectives": [
       "TODO: Add learning objectives"
