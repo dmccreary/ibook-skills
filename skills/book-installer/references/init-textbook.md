@@ -96,7 +96,7 @@ defaults where possible and let the user accept them with a single yes.
 |----------|---------|-------|
 | `SITE_NAME` | (none — must ask) | The book's title in title case (e.g. "Quantum Computing") |
 | `SITE_DESCRIPTION` | (none — must ask) | One-sentence description for SEO + social sharing |
-| `SITE_AUTHOR` | "Dan McCreary" | Inferred from the `git config user.name` if available |
+| `SITE_AUTHOR` | "Dan McCreary" | Always "Dan McCreary" (capital C in both Mc and Creary) for this author. Do NOT copy `git config user.name`, which is "Dan Mccreary" (lowercase c) |
 | `GITHUB_USERNAME` | "dmccreary" | Inferred from `git remote get-url origin` if available |
 | `REPO_NAME` | basename of current directory | Inferred from `pwd` |
 | `LINKEDIN_URL` | "https://www.linkedin.com/in/danmccreary/" | Author's LinkedIn — optional override |

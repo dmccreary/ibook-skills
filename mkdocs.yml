@@ -284,12 +284,14 @@ nav:
     - Tips and Tricks: workshops/tips-and-tricks.md
     - Workshop Prework: workshops/workshop-prework.md
   - Consolidation Plan: consolidation-plan/index.md
+
   - Appendices:
     - Overview: appendices/index.md
     - Installing Skills for Ollama: appendices/installing-skills-for-ollama.md
     - Skill Portability Strategy: appendices/skill-portability-strategy/index.md
     - Skill Refactor with Fable 5: appendices/skill-refactor-fable-5.md
     - Delegating Image Generation: appendices/imaging-agent-delegation.md
+    - Style Guide for Technical English: appendices/ste-style-guide.md
 
   - Glossary: glossary.md
   - FAQ: faq.md
