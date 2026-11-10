@@ -25,7 +25,7 @@ Usage:
 Optional:
   --out cover.png
   --text-model gpt-4o-mini
-  --image-model gpt-image-1.5
+  --image-model gpt-image-2.6-sunburst
   --prompt-only  (output the image prompt without generating the image)
 """
 
@@ -327,8 +327,8 @@ def main() -> None:
     parser.add_argument("--out", default=None, help="Output PNG path (default: derived from title).")
     parser.add_argument("--text-model", default=os.getenv("OPENAI_TEXT_MODEL", "gpt-4o-mini"),
                         help="Text model for planning/prompting (default: gpt-4o-mini).")
-    parser.add_argument("--image-model", default=os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-1.5"),
-                        help="Image model (default: gpt-image-1.5).")
+    parser.add_argument("--image-model", default=os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-2.6-sunburst"),
+                        help="Image model (default: gpt-image-2.6-sunburst).")
     parser.add_argument("--debug-json", default=None,
                         help="Optional path to write the intermediate cover-plan JSON.")
     parser.add_argument("--prompt-only", action="store_true",
