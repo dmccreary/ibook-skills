@@ -2,6 +2,8 @@
 
 Scripts for generating book cover images and logos using OpenAI's image generation API.
 
+Both scripts default to `gpt-image-2.6-sunburst` for high-quality image generation. Override it with `OPENAI_IMAGE_MODEL` or `--image-model`.
+
 ## Requirements
 
 ```bash
@@ -76,7 +78,7 @@ python generate-cover-openai.py \
 | `--local-prompt` | Generate prompt locally without any API calls |
 | `--open-browser` | Open ChatGPT in browser and paste prompt (implies --local-prompt) |
 | `--text-model` | Model for prompt generation (default: gpt-4o-mini) |
-| `--image-model` | Model for image generation (default: gpt-image-1.5) |
+| `--image-model` | Model for image generation (default: gpt-image-2.6-sunburst) |
 | `--debug-json` | Path to save the intermediate cover plan JSON |
 
 ### test-key.sh

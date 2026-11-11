@@ -22,7 +22,7 @@ Usage:
 Optional:
   --out logo.png
   --text-model gpt-4o-mini
-  --image-model gpt-image-1.5
+  --image-model gpt-image-2.6-sunburst
 """
 
 from __future__ import annotations
@@ -226,8 +226,8 @@ def main() -> None:
     parser.add_argument("--size", type=int, default=512, help="Output size in pixels (default: 512).")
     parser.add_argument("--text-model", default=os.getenv("OPENAI_TEXT_MODEL", "gpt-4o-mini"),
                         help="Text model for planning/prompting (default: gpt-4o-mini).")
-    parser.add_argument("--image-model", default=os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-1.5"),
-                        help="Image model (default: gpt-image-1.5).")
+    parser.add_argument("--image-model", default=os.getenv("OPENAI_IMAGE_MODEL", "gpt-image-2.6-sunburst"),
+                        help="Image model (default: gpt-image-2.6-sunburst).")
     parser.add_argument("--debug-json", default=None,
                         help="Optional path to write the intermediate logo-plan JSON.")
     args = parser.parse_args()
