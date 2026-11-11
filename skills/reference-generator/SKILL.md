@@ -1,13 +1,23 @@
 ---
 name: reference-generator
-description: Generates 10 curated academic references per chapter, prioritizing Wikipedia plus credited textbook authors known for innovative explanations, with relevance descriptions, stored in chapter references.md files. Use when an intelligent textbook chapter needs citations.
+description: Generates 10 curated academic references per chapter, prioritizing Wikipedia plus credited textbook authors known for innovative explanations, with relevance descriptions, stored in chapter references.md files, then aggregates them into a book-level docs/references.md. Use when an intelligent textbook chapter needs citations.
 metadata:
-  ibook.version: "1.0"
+  ibook.version: "1.1"
 ---
 
 # Reference Generator
 
-**Version:** 1.0
+**Version:** 1.1
+
+### Changelog
+
+- **v1.1** — Adds Step 8, the book-level `docs/references.md`. The skill
+  previously stopped at per-chapter files, which leaves a reader with no way to
+  see what the whole book rests on, and no way to find a source again without
+  remembering which chapter it was in. Several books in this workspace carry a
+  hand-written `docs/references.md` that drifts out of step with the chapters as
+  soon as either changes; generating it from the chapter files means it cannot.
+  Adds `src/book-references/build-book-references.py`.
 
 ## Overview
 
@@ -176,6 +186,51 @@ edits, `Content:` label for the chapter page) in
     - Quiz: chapters/01-chapter-folder/quiz.md
     - Annotated References: chapters/01-chapter-folder/references.md
 ```
+
+### Step 8: Generate the Book-Level References Page
+
+The per-chapter files answer "what should I read next about *this*". They do not
+answer "what does this book rest on", and they make a source impossible to find
+again unless the reader remembers which chapter cited it. A source cited by six
+chapters looks like six unrelated entries.
+
+Generate one aggregated page from the chapter files:
+
+```bash
+python3 "$BK_HOME/src/book-references/build-book-references.py" .
+```
+
+It deduplicates by URL, keeps the fullest description any chapter wrote for a
+source, and lists the chapters citing each one. Options: `--output`, `--title`,
+`--min-shared`, and `--dry-run`.
+
+**Generate it, never hand-write it.** A hand-written bibliography drifts the
+moment a chapter's references change, and nothing warns you. Re-run this after
+any change to chapter references, and after adding or removing a chapter.
+
+Then add it to `mkdocs.yml`, following the nav-editing rules in
+`$BK_HOME/skills/book-installer/references/mkdocs-nav-editing.md`:
+
+```yaml
+  - References: references.md
+```
+
+**Check the two things the script reports.** It names any chapter carrying fewer
+than five references, which usually means Step 3 was skipped or a chapter was
+added later. And compare the distinct-source count against the total citation
+count: if they are nearly equal, no source is doing work across chapters, which
+in a book with a real concept graph is a sign the chapters were researched in
+isolation rather than as one book.
+
+#### Say how the sources were handled, not only what they were
+
+For any book where a reader might act on a claim — health, safety, legal,
+financial — a list of sources is only half of what they need. Add a short
+section above the list saying how citations were handled: what evidence grading
+was used, whether citations were verified against primary sources or accepted on
+the author's confidence, what remains unchecked, and what any automated link
+checking does and does not prove. Fetching a URL tells you it resolves; it does
+not tell you the page still says what it said.
 
 ## Reference Quality Guidelines
 
