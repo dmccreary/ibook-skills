@@ -66,13 +66,19 @@ The script automatically:
   - `:white_check_mark:` for detected features
   - `:x:` for missing features
 
+Treat this output as a structural inventory, not proof that a feature works. The
+detector recognizes common MkDocs layouts and configuration patterns, but a
+project can implement the same capability through a custom hook or a different
+file structure. Verify consequential claims with the built site or a focused
+test before publishing the checklist.
+
 ### Step 4: Customize for Project
 
 Replace placeholders in the template:
 
 - `{BOOK_TITLE}` - From `site_name` in mkdocs.yml
-- `{CHAPTER_COUNT}` - Count of chapter directories
-- `{MICROSIM_COUNT}` - Count of sims directories
+- `{CHAPTER_COUNT}` - Count of chapter directories or flat numbered chapter files
+- `{MICROSIM_COUNT}` - Count of runnable sims directories containing `main.html`
 - `{GLOSSARY_TERM_COUNT}` - Count of terms in glossary.md
 - `{FAQ_COUNT}` - Count of questions in faq.md
 - `{QUIZ_COUNT}` - Count of quiz.md files
@@ -172,20 +178,20 @@ The Python script checks for features using these patterns:
 
 | Feature | Detection Method |
 |---------|-----------------|
-| Social media cards | `- social` in plugins |
+| Social media cards | `- social` in plugins or a configured social hook |
 | Edit page button | `edit_uri:` present |
 
 ### Advanced Features (from docs/)
 
 | Feature | Detection Method |
 |---------|-----------------|
-| MicroSims | `docs/sims/` directory with subdirectories |
+| MicroSims | `docs/sims/` directory with runnable subdirectories containing `main.html` |
 | MicroSim index | `docs/sims/index.md` exists |
 | Per-chapter quizzes | `quiz.md` files in chapter directories |
 | Course description | `docs/course-description.md` exists |
 | Learning graph CSV | `docs/learning-graph/*.csv` exists |
 | Learning graph JSON | `docs/learning-graph/*.json` exists |
-| Graph viewer | `docs/sims/graph-viewer/` exists |
+| Graph viewer | `docs/sims/graph-viewer/` or a `docs/learning-graph/explorer` implementation exists |
 | Concept taxonomy | `docs/learning-graph/concept-taxonomy.md` exists |
 | Book metrics | `docs/learning-graph/book-metrics.md` exists |
 | Chapter metrics | `docs/learning-graph/chapter-metrics.md` exists |
@@ -194,7 +200,7 @@ The Python script checks for features using these patterns:
 
 | Feature | Detection Method |
 |---------|-----------------|
-| Chapters | Count directories in `docs/chapters/` |
+| Chapters | Count directories or flat numbered Markdown files in `docs/chapters/` |
 | Pedagogical Agent (Mascot) | `docs/img/mascot/` directory exists with image files |
 | License page | `docs/license.md` exists |
 | Contact page | `docs/contact.md` exists |
@@ -232,9 +238,10 @@ After generation, you should:
 ### False Negatives
 
 If a feature shows as `:x:` but is actually implemented:
-- Check file paths match expected locations
+- Check whether the project uses an equivalent custom path or hook
 - Verify mkdocs.yml syntax is valid YAML
-- Ensure feature uses standard naming conventions
+- Improve the detector when the alternate implementation is reusable; do not
+  rearrange a mature book solely to satisfy a heuristic
 
 ### False Positives
 

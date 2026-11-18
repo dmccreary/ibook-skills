@@ -81,6 +81,12 @@ def get_extra_css(config: dict) -> list:
     return config.get('extra_css', []) or []
 
 
+def get_hooks(config: dict) -> list:
+    """Extract MkDocs hook paths from config."""
+    hooks = config.get('hooks', []) or []
+    return [str(hook) for hook in hooks]
+
+
 def count_files(directory: Path, pattern: str) -> int:
     """Count files matching a glob pattern."""
     if not directory.exists():
@@ -93,6 +99,64 @@ def count_directories(directory: Path) -> int:
     if not directory.exists():
         return 0
     return len([d for d in directory.iterdir() if d.is_dir()])
+
+
+def count_chapters(chapters_path: Path) -> int:
+    """Count directory-based or flat-file chapters without counting indexes."""
+    if not chapters_path.exists():
+        return 0
+
+    chapter_directories = [
+        path for path in chapters_path.iterdir()
+        if path.is_dir() and not path.name.startswith('.')
+    ]
+    if chapter_directories:
+        return len(chapter_directories)
+
+    numbered_chapters = [
+        path for path in chapters_path.glob("*.md")
+        if re.match(r'^\d+[._-].+\.md$', path.name)
+    ]
+    if numbered_chapters:
+        return len(numbered_chapters)
+
+    return len([
+        path for path in chapters_path.glob("*.md")
+        if path.name.lower() not in {"index.md", "readme.md"}
+    ])
+
+
+def count_microsims(sims_path: Path) -> int:
+    """Count runnable MicroSim directories, excluding shared utilities."""
+    if not sims_path.exists():
+        return 0
+    return len([
+        path for path in sims_path.iterdir()
+        if path.is_dir() and (path / "main.html").is_file()
+    ])
+
+
+def has_social_media_cards(project_path: Path, plugins: list, hooks: list) -> bool:
+    """Detect MkDocs social cards supplied by a plugin or a social hook."""
+    if "social" in plugins:
+        return True
+
+    return any(
+        "social" in Path(hook).name.lower() and (project_path / hook).is_file()
+        for hook in hooks
+    )
+
+
+def has_graph_viewer(docs_path: Path) -> bool:
+    """Detect the legacy MicroSim viewer or a learning-graph explorer."""
+    if (docs_path / "sims" / "graph-viewer").is_dir():
+        return True
+
+    graph_path = docs_path / "learning-graph"
+    return (
+        (graph_path / "explorer.md").is_file()
+        and any((graph_path / f"explorer.{suffix}").is_file() for suffix in ("html", "js"))
+    )
 
 
 def count_glossary_terms(glossary_path: Path) -> int:
@@ -159,6 +223,7 @@ def detect_features(project_path: Path) -> dict:
     plugins = get_plugins(config)
     extra_js = get_extra_javascript(config)
     extra_css = get_extra_css(config)
+    hooks = get_hooks(config)
     theme = config.get('theme', {})
     extra = config.get('extra', {})
 
@@ -177,8 +242,8 @@ def detect_features(project_path: Path) -> dict:
         "site_author": config.get('site_author', ''),
 
         # Counts
-        "chapter_count": count_directories(docs_path / "chapters"),
-        "microsim_count": count_directories(docs_path / "sims"),
+        "chapter_count": count_chapters(docs_path / "chapters"),
+        "microsim_count": count_microsims(docs_path / "sims"),
         "glossary_term_count": count_glossary_terms(docs_path / "glossary.md"),
         "faq_question_count": count_faq_questions(docs_path / "faq.md"),
         "quiz_file_count": count_files(docs_path, "**/quiz.md"),
@@ -244,13 +309,13 @@ def detect_features(project_path: Path) -> dict:
 
         # Publishing Features
         "publishing": {
-            "social_media_cards": "social" in plugins,
+            "social_media_cards": has_social_media_cards(project_path, plugins, hooks),
             "edit_page_button": bool(config.get('edit_uri')) or "content.action.edit" in features,
         },
 
         # Advanced Features - Interactive Learning
         "interactive_learning": {
-            "microsims": dir_exists(docs_path, "sims") and count_directories(docs_path / "sims") > 0,
+            "microsims": count_microsims(docs_path / "sims") > 0,
             "microsim_index": file_exists(docs_path / "sims", "index.md"),
             "per_chapter_quizzes": count_files(docs_path, "**/quiz.md") > 0,
         },
@@ -260,7 +325,7 @@ def detect_features(project_path: Path) -> dict:
             "course_description": file_exists(docs_path, "course-description.md"),
             "learning_graph_csv": len(list((docs_path / "learning-graph").glob("*.csv")) if dir_exists(docs_path, "learning-graph") else []) > 0,
             "learning_graph_json": len(list((docs_path / "learning-graph").glob("*.json")) if dir_exists(docs_path, "learning-graph") else []) > 0,
-            "graph_viewer": dir_exists(docs_path / "sims", "graph-viewer"),
+            "graph_viewer": has_graph_viewer(docs_path),
             "concept_taxonomy": file_exists(docs_path / "learning-graph", "concept-taxonomy.md"),
             "concept_list": file_exists(docs_path / "learning-graph", "concept-list.md"),
             "quality_metrics": file_exists(docs_path / "learning-graph", "quality-metrics.md"),
@@ -275,7 +340,7 @@ def detect_features(project_path: Path) -> dict:
 
         # Content Generation
         "content_generation": {
-            "chapters": count_directories(docs_path / "chapters") > 0,
+            "chapters": count_chapters(docs_path / "chapters") > 0,
             "pedagogical_agent": dir_exists(docs_path / "img", "mascot"),
             "prompts_collection": dir_exists(docs_path, "prompts"),
         },
