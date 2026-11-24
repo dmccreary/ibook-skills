@@ -1,13 +1,25 @@
-"""Trim transparent padding from a PNG to its visible content's bounding box.
+"""Trim a PNG to its visible content and add an exact transparent border.
 
 Usage:
     trim-padding-from-image.py <png-path> [<png-path> ...]
+
+The visible content is every pixel with alpha > THRESH. The script crops to
+that bounding box and then places it on a fully transparent canvas with
+exactly PADDING px on all four sides. The result always has 4/4/4/4 px
+content margins and fully transparent corners, which is what the mascot test
+page (docs/learning-graph/mascot-test.md) checks for.
+
+Padding is added, not just preserved: when the artwork comes within PADDING px
+of an edge (common for AI-generated poses), the canvas grows on that side.
+An earlier version only cropped and clamped at the image edge, so those
+sides kept a 2-3 px margin and the mascot test page still failed after
+running the script.
 
 Each argument must be an explicit path to a .png file. The script overwrites
 the file in place. The script does NOT walk any directory — passing zero
 arguments is an error, not a request to batch-process docs/img/mascot/.
 
-This explicit-argument design exists because the previous version silently
+This explicit-argument design exists because an earlier version silently
 ignored sys.argv and walked docs/img/mascot/, which was a footgun: the
 documented invocation pattern looked like it processed a single named file
 but actually overwrote every PNG in the mascot directory.
@@ -17,31 +29,35 @@ from pathlib import Path
 from PIL import Image
 
 THRESH = 10   # alpha <= 10 treated as padding
-PADDING = 4   # px buffer preserved after crop
+PADDING = 4   # exact transparent border on every side after trimming
 
 
 def trim(path: Path) -> None:
     img = Image.open(path).convert('RGBA')
-    alpha = img.getchannel('A')
-    px = alpha.load()
-    w, h = img.size
-    min_x, max_x, min_y, max_y = w, -1, h, -1
-    for y in range(h):
-        for x in range(w):
-            if px[x, y] > THRESH:
-                min_x = min(min_x, x); max_x = max(max_x, x)
-                min_y = min(min_y, y); max_y = max(max_y, y)
-    if max_x == -1:
+    visible = img.getchannel('A').point(lambda a: 255 if a > THRESH else 0)
+    bbox = visible.getbbox()   # (left, top, right, bottom), right/bottom exclusive
+    if bbox is None:
         print(f'skip {path.name}: image is fully transparent')
         return
-    bbox = (max(min_x - PADDING, 0), max(min_y - PADDING, 0),
-            min(max_x + PADDING, w - 1) + 1, min(max_y + PADDING, h - 1) + 1)
-    cropped = img.crop(bbox)
-    if cropped.size != img.size:
-        cropped.save(path)
-        print(f'cropped {path.name}: {img.size} -> {cropped.size}')
-    else:
-        print(f'unchanged {path.name}: already tight ({img.size})')
+
+    w, h = img.size
+    left, top, right, bottom = bbox
+    margins = (left, top, w - right, h - bottom)
+    corners = [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]
+    corners_clear = all(img.getpixel(c)[3] == 0 for c in corners)
+    if margins == (PADDING,) * 4 and corners_clear:
+        print(f'unchanged {path.name}: already {PADDING}px border ({img.size})')
+        return
+
+    content = img.crop(bbox)
+    out = Image.new('RGBA',
+                    (content.width + 2 * PADDING, content.height + 2 * PADDING),
+                    (0, 0, 0, 0))
+    out.paste(content, (PADDING, PADDING))
+    out.save(path, optimize=True)
+    print(f'trimmed {path.name}: {img.size} -> {out.size} '
+          f'(margins L/T/R/B were {"/".join(map(str, margins))}px, now '
+          f'{PADDING}px each)')
 
 
 def main(argv: list[str]) -> int:
