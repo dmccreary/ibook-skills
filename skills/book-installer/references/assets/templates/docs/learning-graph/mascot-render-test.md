@@ -143,13 +143,20 @@ swatches above still work without it.
 .mascot-test-card.pass { border-color: #43a047; }
 .mascot-test-card.fail { border-color: #e53935; }
 .mascot-test-card h2 { margin: 0 0 .6rem; }
-.mascot-test-swatches { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+/* Swatches shrink-wrap each pose: the checkerboard ends where the PNG ends,
+   so there is no empty space beside the bird and the 4 px trim border is
+   visible against the swatch outline. */
+.mascot-test-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .5rem;
+}
 .mascot-test-swatch {
-  display: grid;
-  place-items: center;
-  min-height: 13rem;
-  padding: .5rem;
-  overflow: hidden;
+  flex: 0 0 auto;
+  max-width: 100%;
+  padding: 0;
+  line-height: 0;
   border: 1px solid rgba(127, 127, 127, .5);
 }
 .mascot-test-swatch.checker {
@@ -163,7 +170,16 @@ swatches above still work without it.
   background-size: 16px 16px;
 }
 .mascot-test-swatch.dark { background: #17131f; }
-.mascot-test-swatch img { display: block; width: 100%; height: 12rem; object-fit: contain; }
+/* Height is fixed and width follows each pose's aspect ratio (same rule as
+   .md-typeset img.mascot-admonition-img in css/mascot.css), so the image box
+   never letterboxes the pose. */
+.md-typeset .mascot-test-swatch img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 12rem;
+  max-width: 100%;
+}
 .mascot-test-result { margin: .7rem 0 0; font-size: .82rem; line-height: 1.45; }
 .mascot-test-result strong { display: inline-block; margin-right: .25rem; }
 </style>

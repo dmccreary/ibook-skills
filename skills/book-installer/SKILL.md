@@ -3,14 +3,25 @@ name: book-installer
 description: Installs and configures intelligent-textbook infrastructure - scaffold a brand-new MkDocs Material textbook (init textbook), install any of 41 features (math, mascot, learning graph viewer, Google Analytics GA4, custom 404, kanban board), and generate book metrics. Routes to the appropriate installation guide.
 license: Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 metadata:
-  ibook.version: "1.0.4"
+  ibook.version: "1.0.5"
 ---
 
 # Book Installer
 
-**Version:** 1.0.4
+**Version:** 1.0.5
 
 ### Changelog
+
+- **v1.0.5** — The mascot test page template
+  (`references/assets/templates/docs/learning-graph/mascot-render-test.md`)
+  now fits each transparency swatch tightly around its pose: the image has a
+  fixed max height with `width: auto` (the same rule v1.0.2 gave
+  `mascot.css`), and the swatches drop their inner padding and stop stretching
+  to half the card. The old `width: 100%` + `object-fit: contain` box left
+  empty checkerboard on both sides of every portrait pose, and the swatch
+  outline now shows the 4 px trim border directly (found in
+  mediterranean-travels). Existing books should replace the swatch rules in
+  the `<style>` block of their `docs/learning-graph/mascot-test.md`.
 
 - **v1.0.4** — `references/home-page-template.md` now has a required
   **Landing Page Title Rule**: when the cover image renders the book title,
