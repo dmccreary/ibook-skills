@@ -11,15 +11,56 @@ Usage:
         --output docs/audio/evapotranspiration.mp3
 
 Environment:
-    ELEVENLABS_API_KEY must be set.
+    ELEVENLABS_API_KEY is read from the user's login shell (~/.zshrc) first,
+    then from this process's environment. See resolve_api_key().
 """
 
 import argparse
 import os
+import subprocess
 import sys
 import urllib.request
 import urllib.error
 import json
+
+
+def _looks_like_key(value: str) -> bool:
+    # ElevenLabs secret keys start with "sk_". A 64-character hex value is the
+    # key's ID, which the API rejects with "api_key_id_used_as_api_key".
+    return bool(value) and value.startswith("sk_")
+
+
+def _key_from_login_shell() -> str:
+    """Read ELEVENLABS_API_KEY as an interactive zsh sees it (i.e. from ~/.zshrc).
+
+    GUI apps such as the Claude desktop app inherit macOS's launchctl
+    environment rather than ~/.zshrc, so their ELEVENLABS_API_KEY can be stale
+    or wrong even when the terminal's is correct. The value is captured
+    between markers so other .zshrc output is ignored, and it is never printed.
+    """
+    shell = os.environ.get("SHELL", "/bin/zsh")
+    if "zsh" not in shell:
+        shell = "/bin/zsh"
+    try:
+        out = subprocess.run(
+            [shell, "-i", "-c", 'printf "__ELKEY__%s__ELEND__" "$ELEVENLABS_API_KEY"'],
+            capture_output=True, text=True, timeout=20, stdin=subprocess.DEVNULL,
+        ).stdout
+    except (OSError, subprocess.TimeoutExpired):
+        return ""
+    start, end = out.rfind("__ELKEY__"), out.rfind("__ELEND__")
+    return out[start + len("__ELKEY__"):end].strip() if 0 <= start < end else ""
+
+
+def resolve_api_key() -> str:
+    """Prefer the key in ~/.zshrc; fall back to the environment."""
+    for source, value in (("~/.zshrc", _key_from_login_shell()),
+                          ("environment", os.environ.get("ELEVENLABS_API_KEY", ""))):
+        if _looks_like_key(value):
+            return value
+    print("Error: no valid ELEVENLABS_API_KEY found. Set it in ~/.zshrc to the "
+          "secret key (it starts with 'sk_'), not the key's ID.", file=sys.stderr)
+    sys.exit(1)
 
 
 def slugify(term: str) -> str:
@@ -39,10 +80,7 @@ def generate_pronunciation(term: str, output_path: str,
         ssml_arpabet: Optional CMU Arpabet string. When provided, uses
             eleven_flash_v2 with SSML phoneme tags for precise control.
     """
-    api_key = os.environ.get("ELEVENLABS_API_KEY")
-    if not api_key:
-        print("Error: ELEVENLABS_API_KEY environment variable is not set.", file=sys.stderr)
-        sys.exit(1)
+    api_key = resolve_api_key()
 
     url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
     headers = {
