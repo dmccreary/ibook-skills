@@ -219,7 +219,7 @@ on semantic search, ontology strategy, and AI hardware. Beyond industry, Dan
 has mentored students as a STEM volunteer since 2014 and now applies the same
 rigor to building open educational resources. You can visit the
 [Intelligent Textbooks Case Studies](https://dmccreary.github.io/intelligent-textbooks/case-studies/)
-to see over 87 textbooks that Dan has created or co-created with other
+to see over 125 textbooks that Dan has created or co-created with other
 authors.
 
 **Selected Credentials**
