@@ -281,7 +281,7 @@ Zone position guidelines:
 
 ### Grid Step 5: Generate main.html
 
-Use `assets/infographic-overlay/grid-main-template.html`. Replace `{TITLE}` and `{PROMPT_TEXT}` (the click-to-explore instruction). The image and zones are injected by `grid-diagram.js` — there is no `<img>` tag in the template.
+Use `assets/infographic-overlay/grid-main-template.html`. Replace `{TITLE}` and `{PROMPT_TEXT}` (the click-to-explore instruction). The image and zones are injected by `grid-diagram.js` — there is no `<img>` tag in the template. `grid-diagram.js` keeps the `{PROMPT_TEXT}` you write as the Explore-mode instruction and shows it again each time the learner returns to Explore, so write one that names what the boxes compare (e.g. "Click any box to see the details. Kit A is on the left, kit B on the right."). Only an empty prompt falls back to the generic "Click on any column to learn about it."
 
 Link to `grid-overlay.css` and `grid-diagram.js`:
 

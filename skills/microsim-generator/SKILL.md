@@ -8,9 +8,17 @@ metadata:
 
 # MicroSim Generator
 
-**Version:** 1.0.5
+**Version:** 1.0.6
 
 ### Changelog
+
+- **v1.0.6** — The grid overlay engine (`assets/infographic-overlay/shared-libs/grid-diagram.js`)
+  now keeps the Explore-mode instruction written into `main.html` as `{PROMPT_TEXT}`. It used to
+  hard-code "Click on any column to learn about it." in `setMode('explore')`, which overwrote the
+  author's prompt as soon as the sim loaded. Found while building the robot-arm book's
+  `hiwonder-kit-comparison` grid sim. Books that already copied `grid-diagram.js` into
+  `docs/sims/shared-libs/` keep the old behavior until they copy the new file over. The same fix
+  is applied to the `docs/sims/shared-libs/` copy used by `grid-overlay-test`.
 
 - **v1.0.5** — Every causal loop diagram must now support an `?edit=true` URL suffix,
   so the author can drag nodes and R/B markers, reshape edge curves, and export the

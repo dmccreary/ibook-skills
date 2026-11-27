@@ -162,6 +162,10 @@ class GridDiagramSim {
     if (!this.panelEl) return;
 
     this.promptEl = document.getElementById('panel-prompt');
+    // Keep the explore instruction written in main.html ({PROMPT_TEXT} in the
+    // template) instead of replacing it with a generic one in setMode().
+    this.explorePrompt = (this.promptEl && this.promptEl.textContent.trim()) ||
+      'Click on any column to learn about it.';
     this.contentEl = document.getElementById('panel-content');
     this.panelLabelEl = document.getElementById('panel-label');
     this.panelSummaryEl = document.getElementById('panel-summary');
@@ -195,7 +199,7 @@ class GridDiagramSim {
     }
 
     if (mode === 'explore') {
-      this._showPrompt('Click on any column to learn about it.');
+      this._showPrompt(this.explorePrompt);
       if (this.scoreEl) this.scoreEl.style.display = 'none';
     } else if (mode === 'quiz') {
       this._startQuiz();
