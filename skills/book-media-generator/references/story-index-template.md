@@ -1,6 +1,6 @@
 ---
-title: {STORY_TITLE}
-description: {STORY_DESCRIPTION}
+title: "{STORY_TITLE}"
+description: "{STORY_DESCRIPTION}"
 image: /stories/{STORY_DIR_NAME}/cover.png
 og:image: /stories/{STORY_DIR_NAME}/cover.png
 twitter:image: /stories/{STORY_DIR_NAME}/cover.png

@@ -48,6 +48,7 @@ Match the user's request to the appropriate utility guide:
 | iframe auto height, iframe auto resize, iframe postMessage, runtime iframe resize, microsim auto resize, auto-size iframe, iframe self-resize | `references/iframe-auto-height.md` | Runtime postMessage protocol so embedded MicroSims report their own height to the parent page |
 | test iframe, controls clipped, controls cut off, are controls visible, test iframe heights, verify controls fit, check if sims fit, iframe visibility | `references/iframe-tester.md` (runs `scripts/test-iframe-heights.py`) | Playwright check that every interactive control is fully visible inside the iframe at its declared height |
 | review layout, layout review, looks off, looks wrong, clipped labels, overlapping controls, residual stroke, draw order, visual QA, review the sim | `references/layout-reviewer.md` | Claude Vision review of a sim's rendered layout — walks a checklist, diagnoses defects, patches source |
+| frontmatter, yaml error, mapping values are not allowed, unquoted colon, validate metadata, check frontmatter, quote titles | `scripts/validate-frontmatter.py` | Parse every page's YAML frontmatter, flag invalid YAML and unsafely unquoted values (`: `, ` #`), and `--fix` them by double-quoting. Used by the story and poster generators after writing `index.md` |
 | diagram report, diagram reports, visualization coverage, audit diagrams, audit microsims, diagram status, microsim status report | `references/diagram-reports.md` (runs `scripts/diagram-report.py`) | Generate status reports of all diagrams/MicroSims across chapters (type, status, Bloom's levels, UI complexity, difficulty) |
 
 ### Decision Tree
@@ -121,6 +122,10 @@ Report the summary output to the user (TODO specs processed, scaffolded, skipped
 python3 /path/to/skills/microsim-utils/scripts/sync-iframe-heights.py --project-dir /path/to/project --verbose
 ```
 Report the summary output to the user (sims synced, CANVAS_HEIGHT comments inserted, iframe heights updated).
+
+```bash
+python3 /path/to/skills/microsim-utils/scripts/validate-frontmatter.py docs/ [--fix]
+```
 
 ## Step 3: Execute Utility
 

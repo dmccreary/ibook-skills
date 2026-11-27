@@ -207,10 +207,17 @@ Create `docs/sims/{sim-id}/main.html` using the template in `assets/infographic-
 Create `docs/sims/{sim-id}/index.md` with documentation and an embedded iframe. Include:
 
 - A frontmatter `title:` (drives the page `<title>`, nav label, and social cards) plus `hide: toc`. **Do not add a `# Title` H1 in the page body** — `diagram.js` already renders the title as an `<h1>` inside the iframe, so a body H1 would show the title twice. See [Title Rendering](#title-rendering).
+- **Double-quote `title:` and `description:`** (e.g. `title: "Delphi: Climbing the Sacred Way"`). Poster titles usually carry a subtitle colon, and an unquoted `: ` makes the frontmatter invalid YAML, so MkDocs drops the title, description, status and social image. Escape any literal `"` as `\"`.
 - Embedded iframe (`height="640px" width="100%"`)
 - Fullscreen link
 - Usage instructions for explore, quiz, and edit modes
 - Numbered list of all labeled structures
+
+Then validate the frontmatter (exits 1 on any invalid or unsafely unquoted value; `--fix` quotes them in place):
+
+```bash
+python3 $BK_HOME/skills/microsim-utils/scripts/validate-frontmatter.py docs/sims/{sim-id}/index.md
+```
 
 ### Step 7: Update mkdocs.yml
 
@@ -425,6 +432,7 @@ appear in exactly one place. Guard against the two ways it gets duplicated:
 
 - **Text in generated images** — Always verify the image has NO text, labels, arrows, or **title/heading**. Regenerate if the LLM adds annotations.
 - **Duplicate title** — The title must appear exactly once. `diagram.js` injects an `<h1>` from `data.json.title`, so the image must have no baked-in title and `index.md` must have no `# Title` body H1 (use the frontmatter `title:` only). See [Title Rendering](#title-rendering).
+- **Unquoted colon in the title** — `title: Delphi: Climbing the Sacred Way` is invalid YAML and MkDocs silently discards the whole frontmatter. Quote it and run `validate-frontmatter.py`.
 - **Marker overlap** — Keep callout positions at least 5-8% apart. Use edit mode to fine-tune.
 - **Tiny or background-less zone chips (`showLabels: true`)** — `#image-wrapper` sets `line-height: 0` to remove the gap under the image, and the chip inherits it, so its pill background collapses to the padding and a fixed 11px font looks tiny on a large poster. Keep `line-height` on `.zone-chip`, size its font with `cqw` (the wrapper needs `container-type: inline-size`), and let it wrap (`width: max-content; max-width: calc(100% - 12px)`) so long labels in narrow zones do not spill over neighbors. After building a grid sim with `showLabels: true`, force every chip visible in the browser (`document.querySelectorAll('.zone-chip').forEach(c => c.style.opacity = 1)`) and check that no chip overflows its zone. Older sims that copied `grid-overlay.css` before this fix need the new file copied over.
 - **Missing shared-libs** — Verify `docs/sims/shared-libs/diagram.js` and `style.css` exist before testing.

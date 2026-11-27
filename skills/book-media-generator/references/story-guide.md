@@ -201,8 +201,8 @@ Use the Open Graph protocol for social media sharing:
 
 ```yaml
 ---
-title: <Catchy Title> - <Subject Name>'s <Theme>
-description: A graphic-novel story of how <brief description>...
+title: "<Catchy Title>: <Subject Name>'s <Theme>"
+description: "A graphic-novel story of how <brief description>..."
 image: /stories/{story-dir-name}/cover.png
 og:image: /stories/{story-dir-name}/cover.png
 twitter:image: /stories/{story-dir-name}/cover.png
@@ -212,6 +212,24 @@ social:
 ```
 
 Where `{story-dir-name}` is the kebab-case directory name.
+
+**Always double-quote `title:` and `description:`.** Story titles almost
+always contain a subtitle colon ("The Sultan's Sweet Tooth: Spice, Coffee and
+Turkish Delight"). Unquoted, the `: ` makes the frontmatter invalid YAML
+("mapping values are not allowed here") and MkDocs silently drops the whole
+block, so the page loses its title, description and social-card image. An
+unquoted ` #` is just as bad: everything after it becomes a YAML comment.
+Use double quotes (titles often contain apostrophes) and escape any literal
+`"` inside the value as `\"`.
+
+After writing `index.md`, validate the frontmatter before moving on:
+
+```bash
+python3 $BK_HOME/skills/microsim-utils/scripts/validate-frontmatter.py docs/stories/{story-dir-name}/index.md
+```
+
+It exits 1 and prints `file:line` for any value that is invalid or unsafely
+unquoted. Add `--fix` to double-quote the offending values in place.
 
 **Length guidance:**
 - Title: 60-70 characters max (longer titles get truncated on social media)
@@ -664,6 +682,7 @@ After completing a story, verify:
 - [ ] Every "panel X of N" identifier line uses the *actual* N for this story (not a leftover 12)
 - [ ] All image references use `.png` extension (never `.jpg` or `.md`)
 - [ ] YAML frontmatter has title, description, and og/twitter image paths
+- [ ] `title:` and `description:` are double-quoted, and `validate-frontmatter.py` exits 0 on the story's `index.md`
 - [ ] N numbered panels with consistent structure (image + prompt + narrative)
 - [ ] Epilogue includes the Challenge / Response / Lesson table
 - [ ] 2-3 subject quotes present (or in-character quotes for fictional stories)
